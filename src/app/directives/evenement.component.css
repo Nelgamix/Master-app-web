@@ -1,0 +1,14 @@
+.ev {
+	border: 2px solid black;
+	border-top: 6px solid black;
+	padding: auto 15px;
+	margin: 10px 0;
+}
+
+.ev:hover {
+	box-shadow: 0 0 8px grey;
+}
+
+.ev-dates {
+	border-right: 1px solid black;
+}

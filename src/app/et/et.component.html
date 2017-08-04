@@ -1,0 +1,90 @@
+<div class="container">
+  <div class="row">
+    <div class="col-6">
+      <span *ngIf="adeOnline" style="color: green;">ADE est en ligne!</span><span *ngIf="!adeOnline" style="color: red;">ADE est hors-ligne!</span>
+      <span style="font-weight: bold;">&nbsp;Dernière mise à jour {{lastUpdated | date:'dd-MM-y HH:mm'}}</span>
+    </div>
+    <div class="col-6">
+      <select [(ngModel)]="selectedDate" (ngModelChange)="onChangeDate($event)" class="custom-select" name="sel" style="float: right;">
+        <option [ngValue]="i" *ngFor="let i of dates">{{i.debut}} &rarr; {{i.fin}}</option>
+      </select>
+    </div>
+  </div>
+
+  <div *ngIf="!ok" style="margin-top: 70px; text-align: center;">
+    <h2>ADE est hors-ligne, et les données n'ont pas été enregistrées sur la BD, donc retente plus tard&hellip;</h2>
+    <h3 class="text-muted">Peut être que le chargement depuis le serveur a échoué, essaye d'actualiser la page si tu viens d'arriver</h3>
+  </div>
+  <div *ngIf="ok" style="margin-top: 10px;">
+    <div class="row stats">
+      <div class="col">
+        <h5>Statistiques générales</h5>
+        <table style="width: 75%; margin: auto;">
+          <tbody>
+            <tr>
+              <td class="stats-title">Total</td>
+              <td><span class="stats-text">{{stats.total}}</span> heures</td>
+            </tr>
+            <tr>
+              <td class="stats-title">Moyenne cours</td>
+              <td><span class="stats-text">{{stats['moyenne-cours']}}</span> heure(s) / cours</td>
+            </tr>
+            <tr>
+              <td class="stats-title">Moyenne semaine</td>
+              <td><span class="stats-text">{{stats['moyenne-semaine']}}</span> heures / jour</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col">
+        <h5>Début &amp; fin des cours</h5>
+        <table style="width: 60%; margin: auto;">
+          <tbody>
+            <tr *ngFor="let j of jours">
+              <td><span class="stats-title">{{j.nom}}</span></td>
+              <td><span class="stats-text">{{j.premierCours.debut | date: 'HH:mm'}} &rarr; {{j.dernierCours.fin | date: 'HH:mm'}}</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <ng-container *ngFor="let j of jours">
+      <div *ngIf="j.cours.length > 0">
+        <div class="jour-title">
+          <span class="jour-title-nom">{{j.nom}}</span>
+          <span class="jour-title-date">{{j.date | amDateFormat:'D MMMM YYYY'}}</span>&nbsp;<span class="html-bullet">&bull;</span>
+          <span class="jour-title-duree">{{j.premierCours.debut | date: 'HH:mm'}} &rarr; {{j.dernierCours.fin | date: 'HH:mm'}}&nbsp;({{j.duree}})</span>
+          <span *ngFor="let t of j.typesCount | keys" class="jour-title-type"><span class="html-bullet">&bull;&nbsp;</span>{{t.value}} {{t.key}}&nbsp;</span>
+        </div>
+        <table class="table table-sm">
+          <thead class="thead-default">
+            <tr>
+              <th>Type</th>
+              <th>Nom</th>
+              <th>Salle</th>
+              <th>Professeur</th>
+              <th>Début</th>
+              <th>Fin</th>
+              <th>Durée</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let cour of j.cours">
+              <td><span *ngIf="cour.type.length > 0">{{cour.type}}</span><span *ngIf="cour.type.length == 0">&mdash;</span></td>
+              <td><b><span *ngIf="cour.nom.length > 0">{{cour.nom}}</span><span *ngIf="cour.nom.length == 0">&mdash;</span></b></td>
+              <td><span *ngIf="cour.salle.length > 0">{{cour.salle}}</span><span *ngIf="cour.salle.length == 0">&mdash;</span></td>
+              <td><span *ngIf="cour.professeur.length > 0">{{cour.professeur}}</span><span *ngIf="cour.professeur.length == 0">&mdash;</span></td>
+              <td>{{cour.debut | amDateFormat:'HH:mm'}}</td>
+              <td>{{cour.fin | amDateFormat:'HH:mm'}}</td>
+              <td>{{cour.duree | amDateFormat:'H:mm'}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+<div class="loader" *ngIf="loading">
+  <h1>Chargement...</h1>
+</div>

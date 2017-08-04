@@ -1,0 +1,7 @@
+{
+    "name": "nico/t1",
+    "type": "project",
+    "require": {
+        "johngrogg/ics-parser": "^2.0"
+    }
+}

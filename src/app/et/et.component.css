@@ -1,0 +1,59 @@
+.container {
+	margin-top: 10px;
+}
+
+.loader {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color: rgba(0,0,0,0.5);
+	z-index: 100;
+	color: white;
+	text-align: center;
+	padding-top: 100px;
+}
+
+.jour-title {
+	font-size: 22px;
+}
+.jour-title-nom {
+	font-size: 30px;
+}
+.jour-title-date {
+	color: cornflowerblue;
+}
+.jour-title-duree {
+	color: blueviolet;
+}
+.jour-title-type {
+	color: darkorange;
+}
+
+.stats {
+	text-align: center;
+	border-radius: 4px;
+	background-color: #ccc;
+	border: 2px solid #bbb;
+	box-shadow: 0 0 10px grey;
+	margin: 12px 0;
+	padding: 8px;
+}
+
+.stats > h5 {
+	font-weight: bold;
+}
+
+.stats-title {
+	font-size: 120%;
+}
+.stats-text {
+	font-size: 110%;
+	color: mediumslateblue;
+}
+
+.html-bullet {
+	color: crimson;
+	margin: auto 2px;
+}

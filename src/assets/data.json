@@ -1,0 +1,175 @@
+{
+	"quickLinks": [
+		[
+			{
+				"titre": "ADE G1",
+				"description": "Emploi du temps (groupe 1).",
+				"lien": "https://ade6-ujf.grenet.fr/direct/index.jsp?resources=9645&projectId=2&data=1d04874d83cdeb532b5be82d6dc7b4928036957750ce9817205161f6e22f6829f9355e402da57010f6819307ed738001824027a8904c9a5cef6f1a28ea35c418c025f5e16438a90e7406158408bd7b08"
+			},
+			{
+				"titre": "ADE G2",
+				"description": "Emploi du temps (groupe 2).",
+				"lien": "https://ade6-ujf.grenet.fr/direct/index.jsp?resources=9756&projectId=2&data=1d04874d83cdeb532b5be82d6dc7b4928036957750ce9817205161f6e22f6829f9355e402da57010f6819307ed738001824027a8904c9a5cef6f1a28ea35c418c025f5e16438a90e7406158408bd7b08"
+			}
+		],
+		[
+			{
+				"titre": "Zimbra UGA",
+				"description": "La messagerie personnelle pour les étudiants de l'UGA.",
+				"lien": "https://webmail.etu.univ-grenoble-alpes.fr"
+			},
+			{
+				"titre": "Moodle",
+				"description": "Le moodle global de l'IM²AG. Regroupe les enseignements du Master.",
+				"lien": "https://im2ag-moodle.e.ujf-grenoble.fr/course/index.php?categoryid=30"
+			},
+			{
+				"titre": "Vie de la filière",
+				"description": "Toutes les informations importantes (dates, options...) du Master.",
+				"lien": "https://im2ag-moodle.e.ujf-grenoble.fr/mod/page/view.php?id=12923"
+			}
+		]
+	],
+	"otherLinks": [
+		{
+			"nom": "UGA",
+			"lien": [
+				{
+					"nom": "Portail",
+					"lien": "http://www.univ-grenoble-alpes.fr"
+				},
+				{
+					"nom": "Page du master",
+					"lien": "http://formations.univ-grenoble-alpes.fr/fr/catalogue/master-XB/sciences-technologies-sante-STS/master-informatique-program-master-informatique.html"
+				},
+				{
+					"nom": "Page de la 1ère année",
+					"lien": "http://formations.univ-grenoble-alpes.fr/fr/catalogue/master-XB/sciences-technologies-sante-STS/master-informatique-program-master-informatique/parcours-informatique-classique-1re-annee-subprogram-parcours-genie-informatique-informatique-m1-classique.html"
+				},
+				{
+					"nom": "Page de la 2ème année",
+					"lien": "http://formations.univ-grenoble-alpes.fr/fr/catalogue/master-XB/sciences-technologies-sante-STS/master-informatique-program-master-informatique/parcours-genie-informatique-classique-2e-annee-subprogram-genie-informatique-m2-classique.html"
+				}
+			]
+		}
+	],
+	"semestres": [
+		{
+			"numero": 7,
+			"ue": [
+				{
+					"nom": "Sémantique des langages de programmation et compilation (SLPC)",
+					"type": "Programmation",
+					"liens": [
+						{
+							"nom": "Moodle",
+							"lien": "https://im2ag-moodle.e.ujf-grenoble.fr/enrol/index.php?id=243"
+						},
+						{
+							"nom": "Autre",
+							"lien": "#"
+						}
+					]
+				},
+				{
+					"nom": "Génie logiciel (GL)",
+					"type": "Programmation",
+					"liens": [
+						{
+							"nom": "Site",
+							"lien": "http://lig-membres.imag.fr/lalanda/lectures/lectures.php"
+						}
+					]
+				},
+				{
+					"nom": "Conception et programmation par objets (CO)",
+					"type": "Programmation",
+					"liens": [
+						{
+							"nom": "Moodle",
+							"lien": "https://im2ag-moodle.e.ujf-grenoble.fr/course/view.php?id=204"
+						}
+					]
+				},
+				{
+					"nom": "Conception des systèmes d'exploitation et programmation concurrente (CSE)",
+					"type": "Programmation",
+					"liens": [
+						{
+							"nom": "Moodle",
+							"lien": "https://im2ag-moodle.e.ujf-grenoble.fr/course/view.php?id=104"
+						}
+					]
+				},
+				{
+					"nom": "Base de données (BD)",
+					"type": "SQL",
+					"liens": [
+						{
+							"nom": "Moodle",
+							"lien": "https://im2ag-moodle.e.ujf-grenoble.fr/course/view.php?id=67"
+						}
+					]
+				},
+				{
+					"nom": "Introduction aux réseaux",
+					"type": "Systèmes & réseaux",
+					"liens": [
+						{
+							"nom": "Moodle",
+							"lien": "https://im2ag-moodle.e.ujf-grenoble.fr/course/view.php?id=85"
+						},
+						{
+							"nom": "Site",
+							"lien": "http://lig-membres.imag.fr/sicard/M1.html"
+						}
+					]
+				},
+				{
+					"nom": "Technique des logiciels interactifs",
+					"type": "IHM",
+					"liens": [
+						{
+							"nom": "Moodle",
+							"lien": "https://im2ag-moodle.e.ujf-grenoble.fr/enrol/index.php?id=264"
+						},
+						{
+							"nom": "Archives",
+							"lien": "http://iihm.imag.fr/blanch/ens/2016-2017/M1/TLI/"
+						}
+					]
+				},
+				{
+					"nom": "Anglais scientifique écrit",
+					"type": "Général",
+					"liens": []
+				}
+			],
+			"infos": "",
+			"liens": [
+				{
+					"nom": "Démo",
+					"lien": "#"
+				}
+			]
+		},
+		{
+			"numero": 8,
+			"ue": [],
+			"infos": "",
+			"liens": []
+		},
+		{
+			"numero": 9,
+			"ue": [],
+			"infos": "",
+			"liens": []
+		},
+		{
+			"numero": 10,
+			"ue": [],
+			"infos": "Semestre de stage. Normalement aucun cours, TD ou TP ne sera proposé.",
+			"liens": []
+		}
+	]
+}

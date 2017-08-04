@@ -1,0 +1,69 @@
+<div class="container">
+	<div class="row spaced" *ngIf="!admin">
+		<div class="col">
+			<button type="button" class="btn btn-primary" style="float: right;" (click)="openLogin()">Login admin</button>
+		</div>
+	</div>
+	<div class="row" style="margin: 10px 0;">
+		<form class="form-inline">
+			<label class="custom-control custom-radio">
+				<input class="custom-control-input" type="radio" [(ngModel)]="filtre.type" value="1" name="r1">
+				<span class="custom-control-indicator"></span>
+				<span class="custom-control-description">&Eacute;vènements futurs à partir de</span>
+			</label>
+
+			<div class="form-group">
+				<div class="input-group">
+					<input class="form-control" placeholder="yyyy-mm-dd" name="filtreDate" [(ngModel)]="filtre.date" ngbDatepicker #d="ngbDatepicker">
+					<div class="input-group-addon" (click)="d.toggle()">
+						<img src="assets/calendar.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
+					</div>
+				</div>
+			</div>
+
+			<label class="custom-control custom-radio ml-4">
+				<input class="custom-control-input" type="radio" [(ngModel)]="filtre.type" value="0" name="r0">
+				<span class="custom-control-indicator"></span>
+				<span class="custom-control-description">&Eacute;vènements passés</span>
+			</label>
+		</form>
+	</div>
+
+	<div class="categ" *ngIf="(evenements | datefilter:filtre:0:7).length > 0">
+		<h3>&lt; 1 semaine</h3>
+	</div>
+	<ng-container *ngFor="let ev of evenements | datefilter:filtre:0:7">
+		<evenement [ev]="ev" [source]="this"></evenement>
+	</ng-container>
+	
+	<div class="categ" *ngIf="(evenements | datefilter:filtre:7:30).length > 0">
+		<h3>&lt; 1 mois</h3>
+	</div>
+	<ng-container *ngFor="let ev of evenements | datefilter:filtre:7:30">
+		<evenement [ev]="ev" [source]="this"></evenement>
+	</ng-container>
+
+	<div class="categ" *ngIf="(evenements | datefilter:filtre:30:365).length > 0">
+		<h3>&gt; 1 mois</h3>
+	</div>
+	<ng-container *ngFor="let ev of evenements | datefilter:filtre:30:365">
+		<evenement [ev]="ev" [source]="this"></evenement>
+	</ng-container>
+	
+	<div class="row spaced" *ngIf="admin">
+		<div class="col">
+			<button type="button" class="btn btn-success" style="float: right;" (click)="openAjout()">Ajout nouvel évènement&hellip;</button>
+		</div>
+	</div>
+</div>
+
+<div [hidden]="infoBox.state == 'inactive'" id="info-box">
+	<div class="text-center">
+		<b>Message</b>
+		<hr style="margin-top: 4px; margin-bottom: 10px;">
+	</div>
+	<div style="padding: 8px 12px; text-align: center;">
+		{{infoBox.message}}
+	</div>
+	<div [@infoBoxState]="infoBox.state" style="position: absolute; bottom: 0; height: 5px;"></div>
+</div>

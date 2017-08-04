@@ -1,0 +1,25 @@
+.take-width {
+	width: 100%;
+}
+
+.cursor-click {
+	cursor: pointer;
+}
+
+.spaced {
+	margin-top: 10px;
+}
+
+.categ {
+	margin-top: 20px;
+}
+
+#info-box {
+	position: fixed;
+	bottom: 10px;
+	right: 10px;
+	width: 320px;
+	height: 100px;
+	border: 1px solid #ccc;
+	box-shadow: 0 0 8px #aaa;
+}

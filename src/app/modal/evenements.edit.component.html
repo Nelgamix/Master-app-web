@@ -1,0 +1,62 @@
+<div class="modal-header">
+	<h5 class="modal-title"><span *ngIf="data.type == 0">Ajout</span><span *ngIf="data.type == 1">Edition</span> évènement</h5>
+	<button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+		<span aria-hidden="true">&times;</span>
+	</button>
+</div>
+<div class="modal-body">
+	<form>
+		<div class="form-group row">
+			<label class="col-2 col-form-label custom-center" for="dpd">Début</label>
+			<div class="col custom-center">
+				<div class="input-group">
+					<input class="form-control" placeholder="yyyy-mm-dd" name="dpd" [(ngModel)]="debutDate" ngbDatepicker #dd="ngbDatepicker">
+					<div class="input-group-addon" (click)="dd.toggle()">
+						<img src="assets/calendar.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
+					</div>
+				</div>
+			</div>
+			<div class="col">
+				<ngb-timepicker [(ngModel)]="debutTime" [minuteStep]="15" name="tpDebut"></ngb-timepicker>
+			</div>
+		</div>
+		<div class="form-group row">
+			<label class="col-2 col-form-label custom-center" for="dpf">Fin</label>
+			<div class="col custom-center">
+				<div class="input-group">
+					<input class="form-control" placeholder="yyyy-mm-dd" name="dpf" [(ngModel)]="finDate" [minDate]="debutDate" ngbDatepicker #df="ngbDatepicker">
+					<div class="input-group-addon" (click)="df.toggle()">
+						<img src="assets/calendar.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
+					</div>
+				</div>
+			</div>
+			<div class="col">
+				<ngb-timepicker [(ngModel)]="finTime" [minuteStep]="15" name="tpFin"></ngb-timepicker>
+			</div>
+		</div>
+		<div class="form-group row">
+			<label class="col-2 col-form-label" for="taInfo">Info</label>
+			<div class="col">
+				<textarea class="form-control" name="taInfo" id="taInfo" cols="30" rows="2" [(ngModel)]="info"></textarea>
+			</div>
+		</div>
+		<div class="form-group row">
+			<label class="col-2 col-form-label" for="iType">Type</label>
+			<div class="col">
+				<select class="form-control custom-select mb-2 mr-sm-2 mb-sm-0" id="iType" name="iType" [(ngModel)]="type">
+					<option *ngFor="let t of typesPossibles" [ngValue]="t">{{t}}</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group row">
+			<label class="col-2 col-form-label" for="iUrl">URL</label>
+			<div class="col">
+				<input class="form-control" type="text" name="iUrl" id="iUrl" [(ngModel)]="url" placeholder="URL" />
+			</div>
+		</div>
+	</form>
+</div>
+<div class="modal-footer">
+	<button type="button" class="btn btn-success" (click)="valider()">Valider</button>
+	<button type="button" class="btn btn-warning" (click)="activeModal.close('Close click')">Annuler</button>
+</div>

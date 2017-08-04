@@ -1,0 +1,14 @@
+<div class="row ev" (click)="source.open(ev.url)" [style.border-color]="ev.bgcouleur" [style.color]="ev.couleur" [class.cursor-click]="ev.url.length > 0 && !source.admin">
+	<div class="col-4 ev-dates" [style.border-color]="ev.bgcouleur">
+		<b>{{ev.type}}</b><br>
+		{{ev.debut | date:'EEEE d MMMM HH:mm'}}<br>
+		{{ev.fin | date:'EEEE d MMMM HH:mm'}}<br>
+	</div>
+	<div class="col ev-info">
+		<markdown-to-html [data]="ev.info"></markdown-to-html>
+	</div>
+	<div class="col-1" style="padding-top: 9px;" *ngIf="source.admin">
+		<button class="btn btn-sm btn-warning" type="button" (click)="source.openMod(ev)">&curren;</button>
+		<button class="btn btn-sm btn-danger" type="button" (click)="source.openDelete(ev)">&times;</button>
+	</div>
+</div>
