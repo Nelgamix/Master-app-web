@@ -1,10 +1,12 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { NgbdModalAccueilInfo } from '../modal/accueil.info.component';
+
+import * as moment from 'moment';
 
 @Component({
 	selector: 'accueil-root',
@@ -16,6 +18,8 @@ export class AccueilComponent implements OnInit {
 	otherLinks: any;
 	semestres: any;
 
+	@ViewChild('tab') tab;
+
 	constructor(private http: HttpClient, private modalService: NgbModal) {}
 
 	ngOnInit(): void {
@@ -23,6 +27,17 @@ export class AccueilComponent implements OnInit {
 			this.quickLinks = data["quickLinks"];
 			this.otherLinks = data["otherLinks"];
 			this.semestres = data["semestres"];
+
+			let now = moment();
+			if (now < moment([2018, 1, 15])) {
+				this.tab.activeId = 'tab7';
+			} else if (now < moment([2018, 7, 1])) {
+				this.tab.activeId = 'tab8';
+			} else if (now < moment([2019, 1, 15])) {
+				this.tab.activeId = 'tab9';
+			} else {
+				this.tab.activeId = 'tab10';
+			}
 		});
 	}
 

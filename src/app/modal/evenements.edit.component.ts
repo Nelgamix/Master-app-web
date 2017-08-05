@@ -8,17 +8,14 @@ import { Component, Input, OnInit } from '@angular/core';
 	styleUrls: ['./evenements.edit.component.css']
 })
 export class NgbdModalEvenementsEdit implements OnInit {
-	_debutDate: any;
+	debutDate: any;
 	debutTime: any;
-	_finDate: any;
+	finDate: any;
 	finTime: any;
 
 	info: string;
 	type: string;
 	url: string;
-
-	dd: any;
-	df: any;
 
 	@Input() data; // source: this; ev: Evenement; type: number (ajout=0, modification=1)
 
@@ -70,31 +67,6 @@ export class NgbdModalEvenementsEdit implements OnInit {
 				};
 				break;
 		}
-	}
-
-	set debutDate(value) {
-		if (value && value.year && value.month && value.day) {
-			this._debutDate = value;
-			if (this.finDate && (value.year > this.finDate.year || value.month > this.finDate.month || value.day > this.finDate.day)) {
-				this.finDate = value;
-			}
-		}
-	}
-	get debutDate() {
-		return this._debutDate;
-	}
-
-	set finDate(value) {
-		if (value && value.year && value.month && value.day) {
-			if (value.year >= this.debutDate.year && value.month >= this.debutDate.month && value.day >= this.debutDate.day) {
-				this._finDate = value;
-			} else {
-				this._finDate = this.finDate;
-			}
-		}
-	}
-	get finDate() {
-		return this._finDate;
 	}
 
 	valider(): void {

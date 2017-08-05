@@ -20,8 +20,8 @@
 		<div class="btn-group" role="group" aria-label="Autres liens" id="otherLinks">
 			<ng-container *ngFor="let l of otherLinks; let i = index">
 				<ng-container *ngIf="typeCheckArray(l.lien)">
-					<div ngbDropdown class="d-inline-block">
-						<button class="btn btn-outline-secondary btn-sm" id="otherLink{{i}}" ngbDropdownToggle>{{l.nom}}</button>
+					<div ngbDropdown class="btn-group" role="group">
+						<button class="btn btn-outline-primary btn-sm dropdown-toggle" id="otherLink{{i}}" ngbDropdownToggle>{{l.nom}}</button>
 						<div class="dropdown-menu" attr.aria-labelledby="otherLink{{i}}">
 							<a class="dropdown-item" *ngFor="let o of l.lien" href="{{o.lien}}">{{o.nom}}</a>
 						</div>
@@ -39,8 +39,8 @@
 			<img src="assets/book.svg" alt="Book icon" height="26">&nbsp;Semestres
 		</h4>
 	</div>
-	<ngb-tabset>
-		<ngb-tab title="Semestre {{s.numero}}" *ngFor="let s of semestres">
+	<ngb-tabset #tab="ngbTabset">
+		<ngb-tab id="tab{{s.numero}}" title="Semestre {{s.numero}}" *ngFor="let s of semestres">
 			<ng-template ngbTabContent>
 				<table class="table table-sm table-bordered">
 					<thead class="thead-default">

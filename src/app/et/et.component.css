@@ -13,6 +13,7 @@
 	color: white;
 	text-align: center;
 	padding-top: 100px;
+	user-select: none;
 }
 
 .jour-title {

@@ -51,6 +51,26 @@
 					"lien": "http://formations.univ-grenoble-alpes.fr/fr/catalogue/master-XB/sciences-technologies-sante-STS/master-informatique-program-master-informatique/parcours-genie-informatique-classique-2e-annee-subprogram-genie-informatique-m2-classique.html"
 				}
 			]
+		},
+		{
+			"nom": "GitHub",
+			"lien": "https://github.com/"
+		},
+		{
+			"nom": "Stack Overflow",
+			"lien": "https://stackoverflow.com/"
+		},
+		{
+			"nom": "Developpez.com",
+			"lien": "https://www.developpez.com/"
+		},
+		{
+			"nom": "Hardware.fr",
+			"lien": "http://www.hardware.fr/"
+		},
+		{
+			"nom": "GSMArena",
+			"lien": "http://www.gsmarena.com/"
 		}
 	],
 	"semestres": [

@@ -13,7 +13,7 @@
 /* SPACER */
 .spacer {
 	padding: 8px 10px;
-	margin-top: 25px;
+	margin-top: 15px;
 	margin-bottom: 15px;
 	border-bottom: 3px solid black;
 }
@@ -48,6 +48,8 @@
 	margin-right: 10px;
 	background-color: #666;
 	border: 2px solid #777;
+
+	transition: box-shadow 0.25s;
 }
 .quick-link:last-child {
 	margin-right: 0;
