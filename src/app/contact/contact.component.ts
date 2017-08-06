@@ -29,6 +29,12 @@ export class ContactComponent implements OnInit {
 		this.erreur = false;
 	}
 
+	b64EncodeUnicode(str): any {
+	    return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function(match, p1) {
+	        return String.fromCharCode(parseInt(p1, 16));
+	    }));
+	}
+
 	envoi(): void {
 		if (!this.sujet || !this.message) {
 			return;
@@ -47,7 +53,8 @@ export class ContactComponent implements OnInit {
 		}
 
 		if (this.message.length > 5) { // eventuellement escape?
-			hp = hp.set('message', this.message);
+			console.log(btoa(this.message));
+			hp = hp.set('message', this.b64EncodeUnicode(this.message));
 		} else {
 			return;
 		}
@@ -59,6 +66,7 @@ export class ContactComponent implements OnInit {
 			} else {
 				this.erreur = true;
 			}
+			console.log(data["recu"]);
 		});
 	}
 }

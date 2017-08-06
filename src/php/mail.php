@@ -62,7 +62,7 @@ Sinon ça peut passer... &hellip; &larr; <script>alert('truc');</script> (503)
 		
 		if (between(strlen($message), 0, 500))
 		{
-			return $message;
+			return stripcslashes(preg_replace('/(?<!\r)\n/', '\r\n', $message));
 		}
 
 		// else
@@ -71,12 +71,13 @@ Sinon ça peut passer... &hellip; &larr; <script>alert('truc');</script> (503)
 
 	$res = [
 		"success" => false,
-		"erreur" => ""
+		"erreur" => "",
+		"recu" => ""
 	];
 
 	$email = verif_email($_GET['email']);
 	$sujet = verif_sujet($_GET['sujet']);
-	$message = verif_message($_GET['message']);
+	$message = verif_message(base64_decode($_GET['message']));
 
 	if (isset($sujet) && isset($message))
 	{
@@ -91,10 +92,10 @@ Sinon ça peut passer... &hellip; &larr; <script>alert('truc');</script> (503)
 		$txt .= "Message (à la ligne)\r\n" . $message;
 
 		$txt = wordwrap($txt, 70, "\r\n");
-		$txt = preg_replace('/(?<!\r)\n/', '\r\n', $txt);
 
 		//echo($txt);
 		mail($to, $sb, $txt);
+		$res['recu'] = $txt;
 
 		$res['success'] = true;
 	}
