@@ -2,11 +2,6 @@
 	$to = 'nicolas.huchet@skysurf.fr, loic.houdebine@wanadoo.fr';
 	$sb = 'master.skysurf: nouveau message';
 
-	/*
-J'ai une idée: on test le champ?
-Sinon ça peut passer... &hellip; &larr; <script>alert('truc');</script> (503)
-	 */
-
 	function between($val, $min, $max, $inclusive=false)
 	{
 		if ($inclusive)

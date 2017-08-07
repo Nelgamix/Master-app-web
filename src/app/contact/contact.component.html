@@ -1,30 +1,25 @@
 <div class="container">
 	<h2 style="margin-top: 10px;">Contact</h2>
 	<div *ngIf="erreur" class="alert alert-danger" role="alert">
-	  <strong>Envoi échoué</strong> Une erreur est survenue. Réessayez.
+		<strong>Envoi échoué</strong> Une erreur est survenue. Réessayez.
 	</div>
 	<form *ngIf="!envoye">
-	  <div class="form-group">
-	    <label for="email">E-mail</label>
-	    <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="E-mail" name="email" [(ngModel)]="email">
-	    <small id="emailHelp" class="form-text text-muted">Si vous souhaitez obtenir une réponse. Non obligatoire.</small>
-	  </div>
-	  <div class="form-group">
-	    <label for="sujet">Sujet</label>
-	    <select class="form-control" id="sujet" name="sujet" [(ngModel)]="sujet">
-	      <option *ngFor="let s of sujets" value="{{s}}">{{s}}</option>
-	    </select>
-	  </div>
-	  <div class="form-group">
-	    <label for="message">Message</label>
-	    <textarea class="form-control" id="message" rows="3" name="message" [(ngModel)]="message"></textarea>
-	  </div>
-	  <!--<div class="form-group">
-	    <label for="exampleInputFile">File input</label>
-	    <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp">
-	    <small id="fileHelp" class="form-text text-muted">This is some placeholder block-level help text for the above input. It's a bit lighter and easily wraps to a new line.</small>
-	  </div>-->
-	  <button type="submit" class="btn btn-primary" (click)="envoi()">Envoyer</button>
+		<div class="form-group">
+			<label for="email">E-mail</label>
+			<input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="E-mail" name="email" [(ngModel)]="email">
+			<small id="emailHelp" class="form-text text-muted">Si vous souhaitez obtenir une réponse. Non obligatoire.</small>
+		</div>
+		<div class="form-group">
+			<label for="sujet">Sujet</label>
+			<select class="form-control" id="sujet" name="sujet" [(ngModel)]="sujet">
+				<option *ngFor="let s of sujets" value="{{s}}">{{s}}</option>
+			</select>
+		</div>
+		<div class="form-group">
+			<label for="message">Message</label>
+			<textarea class="form-control" id="message" rows="3" name="message" [(ngModel)]="message"></textarea>
+		</div>
+		<button type="submit" class="btn btn-primary" (click)="envoi()">Envoyer</button>
 	</form>
 	<div *ngIf="envoye">
 		<h3>Message envoyé!</h3>

@@ -92,8 +92,6 @@ export class EvenementsComponent implements OnInit {
 						}
 
 						this.sortDates(false);
-
-						this.showInfoBox("Les évènements ont été récupérés!");
 					}
 
 					this.admin = data['admin'];
