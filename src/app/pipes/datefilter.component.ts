@@ -13,18 +13,21 @@ export class DateFilter implements PipeTransform {
         }
 
         let now = moment();
+        let diff;
+        let dateToComp;
         if (arg.type == "0") {
         	return items.filter(item => {
-                let diff = item.debut.diff(now, 'days', true);
+                dateToComp = item.timable ? item.fin : item.debut;
+                diff = dateToComp.diff(now, 'days', true);
                 return diff <= (-1 * minDays) && diff > (-1 * maxDays);
             });
         } else if (arg.type == "1") {
         	return items.filter(item => {
-                let diff;
+                dateToComp = item.timable ? item.fin : item.debut;
                 if (now.year() == arg.date.year && now.month() == arg.date.month-1 && now.date() == arg.date.day) {
-                    diff = item.debut.diff(now, 'days', true);
+                    diff = dateToComp.diff(now, 'days', true);
                 } else {
-                    diff = item.debut.diff([arg.date.year, arg.date.month-1, arg.date.day], 'days', true);
+                    diff = dateToComp.diff([arg.date.year, arg.date.month-1, arg.date.day], 'days', true);
                 }
                 
                 return diff >= minDays && diff < maxDays;

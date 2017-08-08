@@ -1,49 +1,91 @@
 import * as moment from 'moment';
-
+/**
+ * La classe Evenement représente un évènement qui commence à une date de début,
+ * et se finit à une date de fin. Cet évènement possède des info, un type et éventuellement
+ * un url. Sa couleur est définie en fonction de son type.
+ */
 export class Evenement {
+	/**
+	 * L'id de l'évènement en BD
+	 * @type {number}
+	 */
 	id: number;
 
+	/**
+	 * La date de début
+	 * @type {moment}
+	 */
 	debut: any;
+
+	/**
+	 * La date de fin
+	 * @type {moment}
+	 */
 	fin: any;
 
+	/**
+	 * Indique si l'évènement a une fin définie ou pas
+	 * @type {boolean}
+	 */
+	timable: boolean;
+
+	/**
+	 * Les info concernant l'évènement
+	 * @type {string}
+	 */
 	info: string;
-	type: any;
+
+	/**
+	 * Le type d'évènement
+	 * @type {string}
+	 */
+	type: string;
+
+	/**
+	 * L'url d'information pour cet évènement
+	 * @type {string}
+	 */
 	url: string;
 
-	bgcouleur: string;
+	/**
+	 * La couleur affectée au type d'évènement
+	 * @type {string}
+	 */
 	couleur: string;
 
+	/**
+	 * Les couleurs en fonction des types
+	 * @type {Array}
+	 */
 	static readonly DEFC = [
 		{
 			type: "Vie de la filière",
-			couleur: "#000",
-			bgcouleur: "#91FF5A"
+			couleur: "#91FF5A"
 		},
 		{
 			type: "Examens",
-			couleur: "#000",
-			bgcouleur: "#E8A94E"
+			couleur: "#E8A94E"
 		},
 		{
 			type: "Devoirs à rendre",
-			couleur: "#000",
-			bgcouleur: "#FF6269"
+			couleur: "#FF6269"
 		},
 		{
 			type: "Vie étudiante",
-			couleur: "#000",
-			bgcouleur: "#894EE8"
+			couleur: "#894EE8"
 		},
 		{
 			type: "Autres",
-			couleur: "#000",
-			bgcouleur: "#62D5FF"
+			couleur: "#62D5FF"
 		}
 	];
 
+	/**
+	 * La couleur qui sera donnée par défaut si aucune autre n'est trouvée
+	 * @type {Object}
+	 */
 	static readonly DEFAUT = {
-		couleur: "#000",
-		bgcouleur: "#FFFFFF"
+		couleur: "#000"
 	};
 
 	constructor(e?) {
@@ -64,78 +106,116 @@ export class Evenement {
 	init(e): void {
 		this.id = e.id;
 
-		this.debut = moment(e.debut);
-		if (e.fin && e.fin != "") {
-			this.fin = moment(e.fin);
-		} else {
-			this.fin = "";
-		}
+		this.setDebut(e.debut);
+		this.setFin(e.fin);
 
-		this.info = e.info;
-		this.type = e.type;
-		this.url = e.url || "";
-
-		this.initCouleur();
+		this.setInfo(e.info);
+		this.setType(e.type);
+		this.setUrl(e.url);
 	}
 
-	getDebut(): string {
-		return this.debut.format('YYYY-MM-DD HH:mm:ss');
+	getDebutFormat(): string {
+		return this.debut ? this.debut.format('YYYY-MM-DD HH:mm:ss') : '';
 	}
 
-	getFin(): string {
-		if (this.fin) {
-			return this.fin.format('YYYY-MM-DD HH:mm:ss');
-		} else {
-			return "";
-		}
+	getFinFormat(): string {
+		return this.timable && this.fin ? this.fin.format('YYYY-MM-DD HH:mm:ss') : '';
+	}
+
+	getTimable(): boolean {
+		return this.timable ? this.timable : false;
 	}
 
 	getInfo(): string {
-		return this.info;
+		return this.info ? this.info : '';
 	}
 
 	getType(): string {
-		return this.type;
+		return this.type ? this.type : '';
 	}
 
 	getUrl(): string {
-		return this.url;
+		return this.url ? this.url : '';
 	}
 
 	setType(str): void {
-		this.type = str;
+		this.type = str ? str : '';
 
 		this.initCouleur();
 	}
 
 	setInfo(str): void {
-		this.info = str;
+		this.info = str ? str : '';
 	}
 
+	setTimable(bool): void {
+		this.timable = bool ? bool : false;
+	}
+
+	/**
+	 * Set l'url de l'évènement, uniquement si celle-ci commence par http://
+	 * @param {string} str l'url à set
+	 */
 	setUrl(str): void {
-		this.url = str;
+		let patt = /$http:\/\//;
+		if (!str || str.length == 0 || patt.test(str)) {
+			this.url = str ? str : '';
+		} else {
+			console.error('Cannot set the url, because it\'s not an url.');
+		}
 	}
 
-	setDebut(year, month, day, hour, minute): void {
-		this.debut = moment([year, month-1, day, hour, minute]);
+	/**
+	 * Set le début de l'évènement
+	 * @param {string} string la date de début de l'évènement
+	 */
+	setDebut(string): void {
+		if (string && string.length > 0) {
+			this.debut = moment(string);
+
+			if (this.debut.isValid()) {
+				if (this.timable && this.fin.diff(this.debut) < 0) {
+					this.setFin('');
+				}
+			} else {
+				this.debut = null;
+				console.error('Date de début invalide');
+			}
+		}
 	}
 
-	setFin(year, month, day, hour, minute): void {
-		this.fin = moment([year, month-1, day, hour, minute]);
+	/**
+	 * Set la fin de l'évènement.
+	 * @param {string} string la date de fin de l'évènement
+	 */
+	setFin(string): void {
+		if (!string || string.length == 0) {
+			this.timable = false;
+		} else {
+			this.fin = moment(string);
+
+			if (this.fin.isValid() && this.fin.diff(this.debut) > 0) {
+				this.timable = true;
+			} else {
+				this.fin = null;
+				this.timable = false;
+			}
+		}
 	}
 
-	initCouleur(): void {
+	/**
+	 * Initialise la couleur à partir du type de l'évènement
+	 */
+	private initCouleur(): void {
 		for (let c of Evenement.DEFC) {
 			if (c.type === this.type) {
 				this.couleur = c.couleur;
-				this.bgcouleur = c.bgcouleur;
 				break;
 			}
 		}
 
-		if (!this.couleur && !this.couleur) {
+		if (!this.couleur) {
 			this.couleur = Evenement.DEFAUT.couleur;
-			this.bgcouleur = Evenement.DEFAUT.bgcouleur;
 		}
 	}
 }

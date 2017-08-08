@@ -42,13 +42,13 @@ TODO:
 				backgroundColor: '#f00',
 				width: '0%'
 			})),
-			transition('inactive => active', animate(4000))
+			transition('inactive => active', animate(5000))
 		])
 	]
 })
 export class EvenementsComponent implements OnInit {
 	evenements: Evenement[];
-	admin: any;
+	admin: boolean;
 	filtre: any;
 
 	infoBox: any;
@@ -56,7 +56,6 @@ export class EvenementsComponent implements OnInit {
 	constructor(private http: HttpClient, private modalService: NgbModal) {}
 
 	ngOnInit(): void {
-		this.get();
 		this.admin = false;
 		this.infoBox = {
 			state: 'inactive',
@@ -68,6 +67,8 @@ export class EvenementsComponent implements OnInit {
 			type: "1", // 1 = futurs, 0 = passés
 			date: { year: now.year(), month: now.month()+1, day: now.date() }
 		}
+
+		this.get();
 	}
 
 	showInfoBox(message): void {
@@ -77,7 +78,7 @@ export class EvenementsComponent implements OnInit {
 		};
 		setTimeout(() => {
 			this.infoBox.state = 'inactive';
-		}, 4000);
+		}, 5000);
 	}
 
 	get(): void {
@@ -91,6 +92,8 @@ export class EvenementsComponent implements OnInit {
 							this.evenements.push(new Evenement(e));
 						}
 
+						console.log(data.data);
+
 						this.sortDates(false);
 					}
 
@@ -101,8 +104,8 @@ export class EvenementsComponent implements OnInit {
 			this.admin = true;
 			this.evenements.push(new Evenement({
 				id: 0,
-				debut: '2017-08-02 11:00',
-				fin: '2017-08-02 13:00',
+				debut: '2017-08-05 18:00',
+				fin: '2017-08-10 18:00',
 				info: 'Info ici',
 				type: 'Vie de la filière',
 				url: ''
@@ -155,8 +158,8 @@ export class EvenementsComponent implements OnInit {
 	insert(ev): void {
 		this.sendRequest({
 			req: 'insert',
-			debut: ev.getDebut(),
-			fin: ev.getFin(),
+			debut: ev.getDebutFormat(),
+			fin: ev.getFinFormat(),
 			info: ev.getInfo(),
 			type: ev.getType(),
 			url: ev.getUrl()
@@ -172,8 +175,8 @@ export class EvenementsComponent implements OnInit {
 		this.sendRequest({
 			req: 'update',
 			id: ev.id,
-			debut: ev.getDebut(),
-			fin: ev.getFin(),
+			debut: ev.getDebutFormat(),
+			fin: ev.getFinFormat(),
 			info: ev.getInfo(),
 			type: ev.getType(),
 			url: ev.getUrl()

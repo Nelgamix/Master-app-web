@@ -2,6 +2,8 @@ import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 
+import * as moment from 'moment';
+
 @Component({
 	selector: 'ngbd-modal-evenements-edit',
 	templateUrl: './evenements.edit.component.html',
@@ -74,10 +76,10 @@ export class NgbdModalEvenementsEdit implements OnInit {
 			return;
 		}
 
-		this.data.ev.setDebut(this.debutDate.year, this.debutDate.month, this.debutDate.day, this.debutTime ? this.debutTime.hour : 0, this.debutTime ? this.debutTime.minute : 0);
-		if (this.finDate) {
-			this.data.ev.setFin(this.finDate.year, this.finDate.month, this.finDate.day, this.finTime ? this.finTime.hour : 0, this.finTime ? this.finTime.minute : 0);
-		}
+		let debut = moment([this.debutDate.year, this.debutDate.month-1, this.debutDate.day, this.debutTime.hour, this.debutTime.minute]);
+		let fin = moment([this.finDate.year, this.finDate.month-1, this.finDate.day, this.finTime.hour, this.finTime.minute]);
+		this.data.ev.setDebut(debut.format());
+		this.data.ev.setFin(fin.format());
 
 		this.data.ev.setInfo(this.info);
 		this.data.ev.setType(this.type);

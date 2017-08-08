@@ -26,6 +26,7 @@ import { DateFilter } from './pipes/datefilter.component';
 import { KeysPipe } from './pipes/keyspipe.component';
 
 import { EvenementComponent } from './directives/evenement.component';
+import { EtCanvasComponent } from './et/etcanvas.component';
 
 const appRoutes: Routes = [
   { path: 'accueil', component: AccueilComponent },
@@ -52,7 +53,8 @@ const appRoutes: Routes = [
     NgbdModalEvenementsEdit,
     DateFilter,
     KeysPipe,
-    EvenementComponent
+    EvenementComponent,
+    EtCanvasComponent
   ],
   imports: [
     CommonModule,
