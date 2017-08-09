@@ -18,12 +18,16 @@
 
 .jour-title {
 	font-size: 22px;
+	text-align: center;
+	display: flex;
+	align-items: center;
 }
 .jour-title-nom {
 	font-size: 30px;
 }
 .jour-title-date {
-	color: cornflowerblue;
+	/*color: cornflowerblue;*/
+	color: grey;
 }
 .jour-title-duree {
 	color: blueviolet;
@@ -34,27 +38,22 @@
 
 .stats {
 	text-align: center;
-	border-radius: 4px;
+	/*border-radius: 4px;
 	background-color: #ccc;
 	border: 2px solid #bbb;
-	box-shadow: 0 0 10px grey;
+	box-shadow: 0 0 10px grey;*/
 	margin: 12px 0;
 	padding: 8px;
 }
-
-.stats > h5 {
+.stats h5 {
 	font-weight: bold;
+	text-decoration: underline;
 }
-
 .stats-title {
 	font-size: 120%;
 }
 .stats-text {
 	font-size: 110%;
-	color: mediumslateblue;
-}
-
-.html-bullet {
-	color: crimson;
-	margin: auto 2px;
+	/*color: mediumslateblue;*/
+	color: blueviolet;
 }

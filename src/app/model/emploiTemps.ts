@@ -21,7 +21,6 @@ export class EmploiTemps {
 		// Pour chaque cours, on le met au bon endroit dans les jours (pour l'affichage)
 		for (let c of this.cours) {
 			let j = c.debut.weekday();
-			//if (j > 4) continue;
 
 			if (!this.jours[j]) {
 				this.jours[j] = new Jour(c);

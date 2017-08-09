@@ -92,8 +92,6 @@ export class EvenementsComponent implements OnInit {
 							this.evenements.push(new Evenement(e));
 						}
 
-						console.log(data.data);
-
 						this.sortDates(false);
 					}
 

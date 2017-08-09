@@ -33,10 +33,7 @@ const appRoutes: Routes = [
   { path: 'et', component: EtComponent },
   { path: 'evenements', component: EvenementsComponent },
   { path: 'contact', component: ContactComponent },
-  { path: '',
-    redirectTo: '/accueil',
-    pathMatch: 'full'
-  },
+  { path: '', redirectTo: '/accueil', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent }
 ];
 

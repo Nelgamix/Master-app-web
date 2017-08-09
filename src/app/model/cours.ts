@@ -11,6 +11,14 @@ export class Cours {
 	fin: any;
 	duree: any;
 
+	couleur: string;
+
+	static readonly TYPE_COULEURS = {
+		"Cours": "crimson",
+		"TD": "dodgerblue",
+		"TP": "seagreen"
+	};
+
 	constructor(c) {
 		this.type = c.type;
 		this.nom = c.nom;
@@ -20,5 +28,8 @@ export class Cours {
 		this.debut = moment(c.debut, "DD-MM-YYYY HH:mm");
 		this.fin = moment(c.fin, "DD-MM-YYYY HH:mm");
 		this.duree = moment(c.duree, "HH:mm");
+
+		this.couleur = Cours.TYPE_COULEURS[this.type];
+		if (!this.couleur) this.couleur = "black";
 	}
 }

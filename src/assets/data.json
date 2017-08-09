@@ -1,34 +1,40 @@
 {
 	"quickLinks": [
-		[
-			{
-				"titre": "ADE G1",
-				"description": "Emploi du temps (groupe 1).",
-				"lien": "https://ade6-ujf.grenet.fr/direct/index.jsp?resources=9645&projectId=2&data=1d04874d83cdeb532b5be82d6dc7b4928036957750ce9817205161f6e22f6829f9355e402da57010f6819307ed738001824027a8904c9a5cef6f1a28ea35c418c025f5e16438a90e7406158408bd7b08"
-			},
-			{
-				"titre": "ADE G2",
-				"description": "Emploi du temps (groupe 2).",
-				"lien": "https://ade6-ujf.grenet.fr/direct/index.jsp?resources=9756&projectId=2&data=1d04874d83cdeb532b5be82d6dc7b4928036957750ce9817205161f6e22f6829f9355e402da57010f6819307ed738001824027a8904c9a5cef6f1a28ea35c418c025f5e16438a90e7406158408bd7b08"
-			}
-		],
-		[
-			{
-				"titre": "Zimbra UGA",
-				"description": "La messagerie personnelle pour les étudiants de l'UGA.",
-				"lien": "https://webmail.etu.univ-grenoble-alpes.fr"
-			},
-			{
-				"titre": "Moodle",
-				"description": "Le moodle global de l'IM²AG. Regroupe les enseignements du Master.",
-				"lien": "https://im2ag-moodle.e.ujf-grenoble.fr/course/index.php?categoryid=30"
-			},
-			{
-				"titre": "Vie de la filière",
-				"description": "Toutes les informations importantes (dates, options...) du Master.",
-				"lien": "https://im2ag-moodle.e.ujf-grenoble.fr/mod/page/view.php?id=12923"
-			}
-		]
+		{
+			"couleur": "red",
+			"liens": [
+				{
+					"titre": "ADE G1",
+					"description": "Emploi du temps (groupe 1).",
+					"lien": "https://ade6-ujf.grenet.fr/direct/index.jsp?resources=9645&projectId=2&data=1d04874d83cdeb532b5be82d6dc7b4928036957750ce9817205161f6e22f6829f9355e402da57010f6819307ed738001824027a8904c9a5cef6f1a28ea35c418c025f5e16438a90e7406158408bd7b08"
+				},
+				{
+					"titre": "ADE G2",
+					"description": "Emploi du temps (groupe 2).",
+					"lien": "https://ade6-ujf.grenet.fr/direct/index.jsp?resources=9756&projectId=2&data=1d04874d83cdeb532b5be82d6dc7b4928036957750ce9817205161f6e22f6829f9355e402da57010f6819307ed738001824027a8904c9a5cef6f1a28ea35c418c025f5e16438a90e7406158408bd7b08"
+				}
+			]
+		},
+		{
+			"couleur": "dodgerblue",
+			"liens": [
+				{
+					"titre": "Zimbra UGA",
+					"description": "La messagerie personnelle pour les étudiants de l'UGA.",
+					"lien": "https://webmail.etu.univ-grenoble-alpes.fr"
+				},
+				{
+					"titre": "Moodle",
+					"description": "Le moodle global de l'IM²AG. Regroupe les enseignements du Master.",
+					"lien": "https://im2ag-moodle.e.ujf-grenoble.fr/course/index.php?categoryid=30"
+				},
+				{
+					"titre": "Vie de la filière",
+					"description": "Toutes les informations importantes (dates, options...) du Master.",
+					"lien": "https://im2ag-moodle.e.ujf-grenoble.fr/mod/page/view.php?id=12923"
+				}
+			]
+		}
 	],
 	"otherLinks": [
 		{

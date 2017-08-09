@@ -5,7 +5,7 @@
 		</h4>
 	</div>
 	<div class="row quick-group" *ngFor="let g of quickLinks">
-		<div class="col quick-link" (click)="onClickQuickLink(l.lien)" *ngFor="let l of g">
+		<div class="col quick-link" (click)="onClickQuickLink(l.lien)" *ngFor="let l of g.liens"  [style.border-color]="getCouleur(g.couleur)">
 			<div class="quick-link-header">
 				<h5>{{l.titre}}</h5>
 			</div>

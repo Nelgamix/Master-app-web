@@ -7,6 +7,7 @@ import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgbdModalAccueilInfo } from '../modal/accueil.info.component';
 
 import * as moment from 'moment';
+import * as tinycolor from 'tinycolor2';
 
 @Component({
 	selector: 'accueil-root',
@@ -46,6 +47,10 @@ export class AccueilComponent implements OnInit {
 		// window.open(lien);
 		// Ouvrir directement (comme un <a>)
 		window.location.href = lien;
+	}
+
+	getCouleur(raw): void {
+		return tinycolor(raw).lighten().toHexString();
 	}
 
 	onClickOpenModal(semestreData): void {
