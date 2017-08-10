@@ -1,8 +1,12 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({name: 'keys'})
+@Pipe({name: 'keys', pure: false})
 export class KeysPipe implements PipeTransform {
-	transform(value, args:string[]) : any {
+	transform(value: any, args: any[] = null): any {
+        return Object.keys(value)//.map(key => value[key]);
+    }
+
+	/*transform(value, args:string[]) : any {
 		let keys = [];
 		
 		for (let key in value) {
@@ -10,5 +14,5 @@ export class KeysPipe implements PipeTransform {
 		}
 
 		return keys;
-	}
+	}*/
 }

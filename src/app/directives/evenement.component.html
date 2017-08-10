@@ -1,8 +1,8 @@
 <div class="row ev" (click)="source.open(ev.url)" [style.border-color]="ev.couleur" [class.cursor-click]="ev.url.length > 0 && !source.admin">
 	<div class="col-4 ev-dates" [style.border-color]="ev.couleur">
 		<b>{{ev.type}}</b><br>
-		{{ev.debut | date:'EEEE d MMMM HH:mm'}}<br>
-		<span *ngIf="ev.timable">{{ev.fin | date:'EEEE d MMMM HH:mm'}}</span><br>
+		{{ev.debut | date:'EEEE d MMMM HH:mm' | capitalize}}<br>
+		<span *ngIf="ev.timable">{{ev.fin | date:'EEEE d MMMM HH:mm' | capitalize}}</span><br>
 	</div>
 	<div class="col ev-info">
 		<markdown-to-html [data]="ev.info"></markdown-to-html>

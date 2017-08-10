@@ -9,20 +9,17 @@ import { NgbdModalEvenementsLogin } from '../modal/evenements.login.component';
 import { NgbdModalEvenementsEdit } from '../modal/evenements.edit.component';
 
 import {
-  trigger,
-  state,
-  style,
-  animate,
-  transition
+	trigger,
+	state,
+	style,
+	animate,
+	transition
 } from '@angular/animations';
 
 import * as moment from 'moment';
 
 /*
 TODO:
-	* Faire en sorte que les ev soit classés par date de début,
-	* Proposer de limiter la date de début aux users
-	* changer la date de fin quand la date de début change de manière a ce que la date de fin ne puisse pas être avant la date de début
 	* EDIT: vérif les champs
 	* EDIT: montrer le loading
 	* LOGIN: montrer le loading
@@ -64,8 +61,13 @@ export class EvenementsComponent implements OnInit {
 
 		let now = moment();
 		this.filtre = {
-			type: "1", // 1 = futurs, 0 = passés
-			date: { year: now.year(), month: now.month()+1, day: now.date() }
+			temporel: "1", // 1 = futurs, 0 = passés
+			date: { year: now.year(), month: now.month()+1, day: now.date() },
+			type: Evenement.DEFC
+		};
+
+		for (let f of this.filtre.type) {
+			f.actif = true;
 		}
 
 		this.get();
