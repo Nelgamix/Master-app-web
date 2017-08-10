@@ -23,7 +23,8 @@ import { NgbdModalEvenementsEdit } from './modal/evenements.edit.component';
 
 // Pipes
 import { DateFilter } from './pipes/datefilter.component';
-import { KeysPipe } from './pipes/keyspipe.component';
+import { KeysPipe } from './pipes/keys.component';
+import { ObjetPipe } from './pipes/objet.component';
 import { Capitalize } from './pipes/capitalize.component';
 
 import { EvenementComponent } from './directives/evenement.component';
@@ -51,6 +52,7 @@ const appRoutes: Routes = [
     NgbdModalEvenementsEdit,
     DateFilter,
     KeysPipe,
+    ObjetPipe,
     Capitalize,
     EvenementComponent,
     EtCanvasComponent

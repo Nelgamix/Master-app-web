@@ -56,7 +56,7 @@
             <span class="jour-title-date">{{j.date | amDateFormat:'D MMMM YYYY'}}</span>
           </div>
           <div class="col">
-            <span *ngFor="let t of j.typesCount | keys; let i = index" class="jour-title-type"><ng-container *ngIf="i > 0"> &#43; </ng-container>{{t.value}} {{t.key}}</span>
+            <span *ngFor="let t of j.typesCount | objet; let i = index" class="jour-title-type"><ng-container *ngIf="i > 0"> &#43; </ng-container>{{t.value}} {{t.key}}</span>
           </div>
           <div class="col">
             <span class="jour-title-duree">{{j.premierCours.debut | date: 'HH:mm'}} &rarr; {{j.dernierCours.fin | date: 'HH:mm'}}&nbsp;({{j.duree}})</span>
