@@ -28,7 +28,7 @@ import { ObjetPipe } from './pipes/objet.component';
 import { Capitalize } from './pipes/capitalize.component';
 
 import { EvenementComponent } from './directives/evenement.component';
-import { EtCanvasComponent } from './et/etcanvas.component';
+import { EtVisuelComponent } from './et/etvisuel.component';
 
 const appRoutes: Routes = [
   { path: 'accueil', component: AccueilComponent },
@@ -55,7 +55,7 @@ const appRoutes: Routes = [
     ObjetPipe,
     Capitalize,
     EvenementComponent,
-    EtCanvasComponent
+    EtVisuelComponent
   ],
   imports: [
     CommonModule,

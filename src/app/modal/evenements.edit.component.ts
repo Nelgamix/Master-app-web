@@ -77,9 +77,14 @@ export class NgbdModalEvenementsEdit implements OnInit {
 		}
 
 		let debut = moment([this.debutDate.year, this.debutDate.month-1, this.debutDate.day, this.debutTime.hour, this.debutTime.minute]);
-		let fin = moment([this.finDate.year, this.finDate.month-1, this.finDate.day, this.finTime.hour, this.finTime.minute]);
+		let fin;
+		if (this.finDate && this.finTime) {
+			console.log(this.finDate);
+			fin = moment([this.finDate.year, this.finDate.month-1, this.finDate.day, this.finTime.hour, this.finTime.minute]);
+		}
+
 		this.data.ev.setDebut(debut.format());
-		this.data.ev.setFin(fin.format());
+		this.data.ev.setFin(fin ? fin.format() : '');
 
 		this.data.ev.setInfo(this.info);
 		this.data.ev.setType(this.type);

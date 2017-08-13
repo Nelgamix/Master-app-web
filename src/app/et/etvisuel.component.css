@@ -1,0 +1,35 @@
+#et-visuel {
+	width: 100%;
+	height: 500px;
+	position: relative;
+}
+
+#et-visuel-table {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+}
+
+div.et-visuel-cours {
+	position: absolute;
+	border: 2px solid black;
+	width: 100%;
+	font-size: 75%;
+	line-height: 92%;
+}
+div.et-visuel-cours p {
+	margin: 0;
+	position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+}
+
+.et-visuel-colonne {
+	position: relative;
+	border-right: 1px solid black;
+	border-left: 1px solid black;
+	border-collapse: border-collapse;
+	padding: 0;
+}

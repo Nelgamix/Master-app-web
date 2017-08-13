@@ -16,6 +16,8 @@ export class EtComponent implements OnInit {
 	emploiTemps: EmploiTemps;
 	jours: Jour[]; // pour éviter d'utiliser un pipe couteux en perf
 
+	vueType = 1;
+
 	dates: any;
 	selectedDate: any;
 	adeOnline: any;

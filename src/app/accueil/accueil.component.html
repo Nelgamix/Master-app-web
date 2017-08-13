@@ -22,7 +22,7 @@
 				<ng-container *ngIf="typeCheckArray(l.lien)">
 					<div ngbDropdown class="btn-group" role="group">
 						<button class="btn btn-outline-primary btn-sm dropdown-toggle" id="otherLink{{i}}" ngbDropdownToggle>{{l.nom}}</button>
-						<div class="dropdown-menu" attr.aria-labelledby="otherLink{{i}}">
+						<div ngbDropdownMenu class="dropdown-menu" attr.aria-labelledby="otherLink{{i}}">
 							<a class="dropdown-item" *ngFor="let o of l.lien" href="{{o.lien}}">{{o.nom}}</a>
 						</div>
 					</div>

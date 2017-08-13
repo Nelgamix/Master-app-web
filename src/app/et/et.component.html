@@ -48,45 +48,62 @@
         </table>
       </div>
     </div>
-    <ng-container *ngFor="let j of jours">
-      <div *ngIf="j.cours.length > 0">
-        <div class="row jour-title">
-          <div class="col">
-            <span class="jour-title-nom">{{j.nom}}</span>
-            <span class="jour-title-date">{{j.date | amDateFormat:'D MMMM YYYY'}}</span>
-          </div>
-          <div class="col">
-            <span *ngFor="let t of j.typesCount | objet; let i = index" class="jour-title-type"><ng-container *ngIf="i > 0"> &#43; </ng-container>{{t.value}} {{t.key}}</span>
-          </div>
-          <div class="col">
-            <span class="jour-title-duree">{{j.premierCours.debut | date: 'HH:mm'}} &rarr; {{j.dernierCours.fin | date: 'HH:mm'}}&nbsp;({{j.duree}})</span>
-          </div>
+    <div class="row">
+      <div class="col">
+        <div class="btn-group" ngbRadioGroup name="radioBasic" [(ngModel)]="vueType">
+          <label ngbButtonLabel class="btn-primary">
+            <input ngbButton type="radio" [value]="1"> Tables
+          </label>
+          <label ngbButtonLabel class="btn-primary">
+            <input ngbButton type="radio" [value]="2"> Visuel
+          </label>
         </div>
-        <table class="table table-sm">
-          <thead class="thead-default">
-            <tr>
-              <th>Type</th>
-              <th>Nom</th>
-              <th>Salle</th>
-              <th>Professeur</th>
-              <th>Début</th>
-              <th>Fin</th>
-              <th>Durée</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let cour of j.cours">
-              <td><span *ngIf="cour.type.length > 0" [style.color]="cour.couleur">{{cour.type}}</span><span *ngIf="cour.type.length == 0">&mdash;</span></td>
-              <td><b><span *ngIf="cour.nom.length > 0" [style.color]="cour.couleur">{{cour.nom}}</span><span *ngIf="cour.nom.length == 0">&mdash;</span></b></td>
-              <td><span *ngIf="cour.salle.length > 0">{{cour.salle}}</span><span *ngIf="cour.salle.length == 0">&mdash;</span></td>
-              <td><span *ngIf="cour.professeur.length > 0">{{cour.professeur}}</span><span *ngIf="cour.professeur.length == 0">&mdash;</span></td>
-              <td>{{cour.debut | amDateFormat:'HH:mm'}}</td>
-              <td>{{cour.fin | amDateFormat:'HH:mm'}}</td>
-              <td>{{cour.duree | amDateFormat:'H:mm'}}</td>
-            </tr>
-          </tbody>
-        </table>
       </div>
+    </div>
+    <ng-container *ngIf="vueType == 1">
+      <ng-container *ngFor="let j of jours">
+        <div *ngIf="j.cours.length > 0">
+          <div class="row jour-title">
+            <div class="col">
+              <span class="jour-title-nom">{{j.nom}}</span>
+              <span class="jour-title-date">{{j.date | amDateFormat:'D MMMM YYYY'}}</span>
+            </div>
+            <div class="col">
+              <span *ngFor="let t of j.typesCount | objet; let i = index" class="jour-title-type"><ng-container *ngIf="i > 0"> &#43; </ng-container>{{t.value}} {{t.key}}</span>
+            </div>
+            <div class="col">
+              <span class="jour-title-duree">{{j.premierCours.debut | date: 'HH:mm'}} &rarr; {{j.dernierCours.fin | date: 'HH:mm'}}&nbsp;({{j.duree}})</span>
+            </div>
+          </div>
+          <table class="table table-sm">
+            <thead class="thead-default">
+              <tr>
+                <th>Type</th>
+                <th>Nom</th>
+                <th>Salle</th>
+                <th>Professeur</th>
+                <th>Début</th>
+                <th>Fin</th>
+                <th>Durée</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let cour of j.cours">
+                <td><span *ngIf="cour.type.length > 0" [style.color]="cour.couleur">{{cour.type}}</span><span *ngIf="cour.type.length == 0">&mdash;</span></td>
+                <td><b><span *ngIf="cour.nom.length > 0" [style.color]="cour.couleur">{{cour.nom}}</span><span *ngIf="cour.nom.length == 0">&mdash;</span></b></td>
+                <td><span *ngIf="cour.salle.length > 0">{{cour.salle}}</span><span *ngIf="cour.salle.length == 0">&mdash;</span></td>
+                <td><span *ngIf="cour.professeur.length > 0">{{cour.professeur}}</span><span *ngIf="cour.professeur.length == 0">&mdash;</span></td>
+                <td>{{cour.debut | amDateFormat:'HH:mm'}}</td>
+                <td>{{cour.fin | amDateFormat:'HH:mm'}}</td>
+                <td>{{cour.duree | amDateFormat:'H:mm'}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </ng-container>
+    </ng-container>
+    <ng-container *ngIf="vueType == 2">
+      <et-visuel [et]="emploiTemps"></et-visuel>
     </ng-container>
   </div>
 </div>
