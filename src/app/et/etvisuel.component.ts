@@ -45,8 +45,8 @@ export class EtVisuelComponent implements OnInit {
     this.jours = {};
     for (let i = 0; i < this.legendeJours.length; i++) {
       this.jours[i] = [];
-      if (this.et.jours[i]) {
-        for (const c of this.et.jours[i].cours) {
+      if (this.et.emploiTemps.jours[i]) {
+        for (const c of this.et.emploiTemps.jours[i].cours) {
           const debutConverti = (c.debut.hour() * 60 + c.debut.minute()) - this.legendeHeures.debut * 60;
           const dureeConvertie = c.duree.hour() * 60 + c.duree.minute();
           const dureeMax = this.legendeHeures.fin * 60 - this.legendeHeures.debut * 60;

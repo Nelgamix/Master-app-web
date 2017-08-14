@@ -64,7 +64,7 @@ export class EvenementsComponent implements OnInit {
     this.filtre = {
       temporel: '1', // 1 = futurs, 0 = passés
       date: {year: now.year(), month: now.month() + 1, day: now.date()},
-      type: Evenement.DEFC
+      type: Evenement.defCouleurs
     };
 
     for (const f of this.filtre.type) {

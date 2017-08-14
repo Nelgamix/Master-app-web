@@ -1,8 +1,8 @@
-import {Component, Input, ViewChild} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 
-import {NgbModal, NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 import {NgbdModalAccueilInfo} from '../modal/accueil.info.component';
 

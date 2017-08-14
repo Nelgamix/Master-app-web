@@ -64,10 +64,12 @@
         <h5>Début &amp; fin des cours</h5>
         <table style="width: 75%; margin: auto;">
           <tbody>
-            <tr *ngFor="let j of emploiTempsService.jours">
-              <td><span class="stat-titre">{{j.nom}}</span></td>
-              <td><span class="stat-donnee">{{j.premierCours.debut | date: 'HH:mm'}} &rarr; {{j.dernierCours.fin | date: 'HH:mm'}}</span></td>
-            </tr>
+            <ng-container *ngFor="let j of emploiTempsService.emploiTemps.jours">
+              <tr *ngIf="j">
+                <td><span class="stat-titre">{{j.nom}}</span></td>
+                <td><span class="stat-donnee">{{j.premierCours.debut | date: 'HH:mm'}} &rarr; {{j.dernierCours.fin | date: 'HH:mm'}}</span></td>
+              </tr>
+            </ng-container>
           </tbody>
         </table>
       </div>

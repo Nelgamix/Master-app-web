@@ -1,5 +1,5 @@
-<div class="row" *ngFor="let j of et.jours">
-  <ng-container *ngIf="j.cours.length > 0">
+<div class="row" *ngFor="let j of et.emploiTemps.jours">
+  <ng-container *ngIf="j && j.cours.length > 0">
     <div class="col-2">
       <div class="row">
         <div class="col jour-title-nom">

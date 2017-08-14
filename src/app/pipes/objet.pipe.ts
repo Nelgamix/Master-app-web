@@ -1,14 +1,16 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import {Pipe, PipeTransform} from '@angular/core';
 
 @Pipe({name: 'objet', pure: false})
 export class ObjetPipe implements PipeTransform {
-	transform(value, args:string[]) : any {
-		let keys = [];
-		
-		for (let key in value) {
-			keys.push({key: key, value: value[key]});
-		}
+  transform(value, args: string[]): any {
+    const keys = [];
 
-		return keys;
-	}
+    for (const key in value) {
+      if (value.hasOwnProperty(key)) {
+        keys.push({key: key, value: value[key]});
+      }
+    }
+
+    return keys;
+  }
 }
