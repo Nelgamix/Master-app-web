@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container contenu">
 	<div class="row spaced" *ngIf="!admin">
 		<div class="col">
 			<button type="button" class="btn btn-primary" style="float: right;" (click)="openLogin()">Login admin</button>
@@ -44,7 +44,7 @@
 	<ng-container *ngFor="let ev of evenements | datefilter:filtre:0:7">
 		<evenement [ev]="ev" [source]="this"></evenement>
 	</ng-container>
-	
+
 	<div class="categ" *ngIf="(evenements | datefilter:filtre:7:30).length > 0">
 		<h3>&lt; 1 mois</h3>
 	</div>
@@ -58,7 +58,7 @@
 	<ng-container *ngFor="let ev of evenements | datefilter:filtre:30:365">
 		<evenement [ev]="ev" [source]="this"></evenement>
 	</ng-container>
-	
+
 	<div class="row spaced" *ngIf="admin">
 		<div class="col">
 			<button type="button" class="btn btn-success" style="float: right;" (click)="openAjout()">Ajout nouvel évènement&hellip;</button>

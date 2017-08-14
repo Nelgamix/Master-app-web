@@ -1,7 +1,3 @@
-.container {
-	margin-top: 10px;
-}
-
 .loader {
 	position: absolute;
 	top: 0;
@@ -16,26 +12,11 @@
 	user-select: none;
 }
 
-.jour-title {
-	font-size: 22px;
-	text-align: center;
-	display: flex;
-	align-items: center;
-}
-.jour-title-nom {
-	font-size: 30px;
-}
-.jour-title-date {
-	color: grey;
-}
-.jour-title-duree {
-	color: blueviolet;
-}
-.jour-title-type {
-	color: darkorange;
+#form-selection-date {
+  float: right;
 }
 
-.stats {
+/*.stats {
 	text-align: center;
 	margin: 12px 0;
 	padding: 8px;
@@ -50,4 +31,18 @@
 .stats-text {
 	font-size: 110%;
 	color: blueviolet;
+}*/
+
+.stat-titre {
+  font-size: 120%;
+}
+.stat-donnee {
+  font-size: 110%;
+  color: blueviolet;
+}
+
+.heading {
+  box-shadow: 0 0 6px grey;
+  margin: 20px;
+  padding: 12px;
 }

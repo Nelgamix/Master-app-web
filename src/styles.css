@@ -1,1 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+  background: url(https://images.vexels.com/media/users/3/125451/raw/36d209584ab7692cbca7ff9910691a3e-abstract-gray-polygonal-background.jpg) no-repeat center;
+  background-size: cover;
+}
+
+.container.contenu {
+  background-color: rgba(255, 255, 255, 0.6);
+  padding-top: 8px;
+  padding-bottom: 20px;
+
+  box-shadow: 0 8px 8px grey;
+}
+
+.take-width {
+  width: 100%;
+}

@@ -1,0 +1,12 @@
+.jour-title-nom {
+  font-size: 30px;
+}
+.jour-title-date {
+  color: grey;
+}
+.jour-title-duree {
+  color: blueviolet;
+}
+.jour-title-type {
+  color: darkorange;
+}

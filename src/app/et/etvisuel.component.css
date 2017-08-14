@@ -30,6 +30,6 @@ div.et-visuel-cours p {
 	position: relative;
 	border-right: 1px solid black;
 	border-left: 1px solid black;
-	border-collapse: border-collapse;
+	border-collapse: collapse;
 	padding: 0;
 }

@@ -1,13 +1,18 @@
-<div class="container">
+<div class="container contenu">
   <div class="row">
     <div class="col-6">
-      <span *ngIf="adeOnline" style="color: green;">ADE est en ligne!</span><span *ngIf="!adeOnline" style="color: red;">ADE est hors-ligne!</span>
+      <span *ngIf="adeOnline" style="color: green;">ADE est en ligne!</span>
+      <span *ngIf="!adeOnline" style="color: red;">ADE est hors-ligne!</span>
       <span style="font-weight: bold;">&nbsp;Dernière mise à jour {{lastUpdated | date:'dd-MM-y HH:mm'}}</span>
     </div>
+
     <div class="col-6">
-      <select [(ngModel)]="selectedDate" (ngModelChange)="onChangeDate($event)" class="custom-select" name="sel" style="float: right;">
-        <option [ngValue]="i" *ngFor="let i of dates">{{i.debut}} &rarr; {{i.fin}}</option>
-      </select>
+      <form class="form-inline" id="form-selection-date">
+        <label for="selDate" class="mr-2">Sélection de la semaine</label>
+        <select [(ngModel)]="selectedDate" (ngModelChange)="onChangeDate($event)" class="custom-select" name="selDate" id="selDate">
+          <option [ngValue]="i" *ngFor="let i of dates">{{i.debut}} &rarr; {{i.fin}}</option>
+        </select>
+      </form>
     </div>
   </div>
 
@@ -15,95 +20,62 @@
     <h2>ADE est hors-ligne, et les données n'ont pas été enregistrées sur la BD, donc retente plus tard&hellip;</h2>
     <h3 class="text-muted">Peut être que le chargement depuis le serveur a échoué, essaye d'actualiser la page si tu viens d'arriver</h3>
   </div>
+
   <div *ngIf="ok" style="margin-top: 10px;">
-    <div class="row stats">
-      <div class="col">
-        <h5>Statistiques générales</h5>
-        <table style="width: 75%; margin: auto;">
-          <tbody>
-            <tr>
-              <td class="stats-title">Total</td>
-              <td><span class="stats-text">{{stats.total}}</span> heures</td>
-            </tr>
-            <tr>
-              <td class="stats-title">Moyenne cours</td>
-              <td><span class="stats-text">{{stats['moyenne-cours']}}</span> heure(s) / cours</td>
-            </tr>
-            <tr>
-              <td class="stats-title">Moyenne semaine</td>
-              <td><span class="stats-text">{{stats['moyenne-semaine']}}</span> heures / jour</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="col">
-        <h5>Début &amp; fin des cours</h5>
-        <table style="width: 60%; margin: auto;">
-          <tbody>
-            <tr *ngFor="let j of jours">
-              <td><span class="stats-title">{{j.nom}}</span></td>
-              <td><span class="stats-text">{{j.premierCours.debut | date: 'HH:mm'}} &rarr; {{j.dernierCours.fin | date: 'HH:mm'}}</span></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
     <div class="row">
-      <div class="col">
-        <div class="btn-group" ngbRadioGroup name="radioBasic" [(ngModel)]="vueType">
-          <label ngbButtonLabel class="btn-primary">
-            <input ngbButton type="radio" [value]="1"> Tables
-          </label>
-          <label ngbButtonLabel class="btn-primary">
-            <input ngbButton type="radio" [value]="2"> Visuel
-          </label>
-        </div>
-      </div>
-    </div>
-    <ng-container *ngIf="vueType == 1">
-      <ng-container *ngFor="let j of jours">
-        <div *ngIf="j.cours.length > 0">
-          <div class="row jour-title">
-            <div class="col">
-              <span class="jour-title-nom">{{j.nom}}</span>
-              <span class="jour-title-date">{{j.date | amDateFormat:'D MMMM YYYY'}}</span>
+      <div class="col-7 heading">
+        <div class="row">
+          <div class="col-4">
+            <h5>Statistiques</h5>
+            <div class="row">
+              <div class="col-12">
+                <span class="stat-donnee">{{stats.total}}</span> heures
+              </div>
             </div>
-            <div class="col">
-              <span *ngFor="let t of j.typesCount | objet; let i = index" class="jour-title-type"><ng-container *ngIf="i > 0"> &#43; </ng-container>{{t.value}} {{t.key}}</span>
+            <div class="row">
+              <div class="col-12">
+                <span class="stat-donnee">{{stats['moyenne-cours']}}</span> heure(s) / cours
+              </div>
             </div>
-            <div class="col">
-              <span class="jour-title-duree">{{j.premierCours.debut | date: 'HH:mm'}} &rarr; {{j.dernierCours.fin | date: 'HH:mm'}}&nbsp;({{j.duree}})</span>
+            <div class="row">
+              <div class="col-12">
+                <span class="stat-donnee">{{stats['moyenne-semaine']}}</span> heures / jour
+              </div>
             </div>
           </div>
-          <table class="table table-sm">
-            <thead class="thead-default">
-              <tr>
-                <th>Type</th>
-                <th>Nom</th>
-                <th>Salle</th>
-                <th>Professeur</th>
-                <th>Début</th>
-                <th>Fin</th>
-                <th>Durée</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let cour of j.cours">
-                <td><span *ngIf="cour.type.length > 0" [style.color]="cour.couleur">{{cour.type}}</span><span *ngIf="cour.type.length == 0">&mdash;</span></td>
-                <td><b><span *ngIf="cour.nom.length > 0" [style.color]="cour.couleur">{{cour.nom}}</span><span *ngIf="cour.nom.length == 0">&mdash;</span></b></td>
-                <td><span *ngIf="cour.salle.length > 0">{{cour.salle}}</span><span *ngIf="cour.salle.length == 0">&mdash;</span></td>
-                <td><span *ngIf="cour.professeur.length > 0">{{cour.professeur}}</span><span *ngIf="cour.professeur.length == 0">&mdash;</span></td>
-                <td>{{cour.debut | amDateFormat:'HH:mm'}}</td>
-                <td>{{cour.fin | amDateFormat:'HH:mm'}}</td>
-                <td>{{cour.duree | amDateFormat:'H:mm'}}</td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="col-4">
+            <h5>Vue</h5>
+            <div class="btn-group" ngbRadioGroup name="radioBasic" [(ngModel)]="vueType">
+              <label ngbButtonLabel class="btn-primary">
+                <input ngbButton type="radio" [value]="1"> Tables
+              </label>
+              <label ngbButtonLabel class="btn-primary">
+                <input ngbButton type="radio" [value]="2"> Visuel
+              </label>
+            </div>
+          </div>
+          <div class="col-4">
+            <h5>Exclusions</h5>
+          </div>
         </div>
-      </ng-container>
-    </ng-container>
-    <ng-container *ngIf="vueType == 2">
-      <et-visuel [et]="emploiTemps"></et-visuel>
+      </div>
+
+      <div class="col-4 heading">
+        <h5>Début &amp; fin des cours</h5>
+        <table style="width: 75%; margin: auto;">
+          <tbody>
+            <tr *ngFor="let j of emploiTempsService.jours">
+              <td><span class="stat-titre">{{j.nom}}</span></td>
+              <td><span class="stat-donnee">{{j.premierCours.debut | date: 'HH:mm'}} &rarr; {{j.dernierCours.fin | date: 'HH:mm'}}</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <ng-container [ngSwitch]="vueType">
+      <et-table *ngSwitchCase="1"></et-table>
+      <et-visuel *ngSwitchCase="2"></et-visuel>
     </ng-container>
   </div>
 </div>
