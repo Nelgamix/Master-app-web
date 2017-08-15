@@ -3,11 +3,11 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
-  selector: 'ngbd-modal-evenements-login',
-  templateUrl: './evenements.login.component.html',
-  styleUrls: ['./evenements.login.component.css']
+  selector: 'modal-evenements-login',
+  templateUrl: './evenements-login.component.html',
+  styleUrls: ['./evenements-login.component.css']
 })
-export class NgbdModalEvenementsLogin implements OnInit {
+export class ModalEvenementsLoginComponent implements OnInit {
   motdepasse: string;
   incorrect: any;
 

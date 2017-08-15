@@ -1,7 +1,7 @@
 import {Pipe, PipeTransform} from '@angular/core';
 
 @Pipe({name: 'objet', pure: false})
-export class ObjetPipe implements PipeTransform {
+export class Objet implements PipeTransform {
   transform(value, args: string[]): any {
     const keys = [];
 

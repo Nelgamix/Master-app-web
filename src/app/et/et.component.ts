@@ -2,10 +2,12 @@ import {Component} from '@angular/core';
 import {OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {CookieService} from 'ngx-cookie-service';
+
+import {EmploiTempsService} from '../services/emploi-temps.service';
+import {ModalEtExclusionsComponent} from '../modal/et-exclusions.component';
 
 import * as moment from 'moment';
-import {EmploiTempsService} from '../services/emploi-temps.service';
-import {ModalEtExclusionsComponent} from "../modal/et-exclusions.component";
 
 @Component({
   selector: 'et-root',
@@ -13,6 +15,8 @@ import {ModalEtExclusionsComponent} from "../modal/et-exclusions.component";
   styleUrls: ['./et.component.css']
 })
 export class EtComponent implements OnInit {
+  readonly exclusionsCookie = 'et-exclusions';
+
   vueType = 1;
 
   dates: any;
@@ -25,11 +29,17 @@ export class EtComponent implements OnInit {
 
   exclusions = [];
 
-  constructor(private http: HttpClient, public emploiTempsService: EmploiTempsService, private modalService: NgbModal) {
+  constructor(private http: HttpClient,
+              public emploiTempsService: EmploiTempsService,
+              private modalService: NgbModal,
+              private cookiesService: CookieService) {
   }
 
   ngOnInit(): void {
     this.getDates();
+    if (this.cookiesService.check(this.exclusionsCookie)) {
+      this.exclusions = JSON.parse(this.cookiesService.get(this.exclusionsCookie));
+    }
   }
 
   /**
@@ -109,9 +119,9 @@ export class EtComponent implements OnInit {
     modalRef.componentInstance.exclusions = this.exclusions;
     modalRef.result.then(r => {
       this.emploiTempsService.filterExclusions(this.exclusions);
+      this.cookiesService.set(this.exclusionsCookie, JSON.stringify(this.exclusions));
     }, r => {
       this.emploiTempsService.filterExclusions(this.exclusions);
-      console.warn(r);
     });
   }
 }

@@ -5,8 +5,8 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 import {Evenement} from '../model/evenement';
-import {NgbdModalEvenementsLogin} from '../modal/evenements.login.component';
-import {NgbdModalEvenementsEdit} from '../modal/evenements.edit.component';
+import {ModalEvenementsLoginComponent} from '../modal/evenements-login.component';
+import {ModalEvenementsEditComponent} from '../modal/evenements-edit.component';
 
 import {
   trigger,
@@ -62,7 +62,7 @@ export class EvenementsComponent implements OnInit {
 
     const now = moment();
     this.filtre = {
-      temporel: '1', // 1 = futurs, 0 = passés
+      temporel: 1, // 1 = futurs, 0 = passés
       date: {year: now.year(), month: now.month() + 1, day: now.date()},
       type: Evenement.defCouleurs
     };
@@ -210,14 +210,16 @@ export class EvenementsComponent implements OnInit {
   sendRequest(reqOpt, cb): void {
     let hp = new HttpParams();
     for (const c in reqOpt) {
-      hp = hp.set(c, reqOpt[c]);
+      if (reqOpt.hasOwnProperty(c)) {
+        hp = hp.set(c, reqOpt[c]);
+      }
     }
 
     this.http.get('php/ev.php', {params: hp}).subscribe(cb);
   }
 
   openLogin(): void {
-    const modalRefLogin = this.modalService.open(NgbdModalEvenementsLogin);
+    const modalRefLogin = this.modalService.open(ModalEvenementsLoginComponent);
     modalRefLogin.componentInstance.inObj = this;
   }
 
@@ -235,7 +237,7 @@ export class EvenementsComponent implements OnInit {
   }
 
   openEdit(type: number, ev: Evenement): void {
-    const modalRefEdit = this.modalService.open(NgbdModalEvenementsEdit, {size: 'lg'});
+    const modalRefEdit = this.modalService.open(ModalEvenementsEditComponent, {size: 'lg'});
     modalRefEdit.componentInstance.data = {
       source: this,
       ev: ev,

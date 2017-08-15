@@ -7,7 +7,7 @@
 	<div class="row" style="margin: 10px 0;">
 		<form class="form-inline">
 			<label class="custom-control custom-radio">
-				<input class="custom-control-input" type="radio" [(ngModel)]="filtre.temporel" value="1" name="r1">
+				<input class="custom-control-input" type="radio" [(ngModel)]="filtre.temporel" [value]="1" name="r1">
 				<span class="custom-control-indicator"></span>
 				<span class="custom-control-description">&Eacute;vènements futurs à partir de</span>
 			</label>
@@ -22,7 +22,7 @@
 			</div>
 
 			<label class="custom-control custom-radio ml-4">
-				<input class="custom-control-input" type="radio" [(ngModel)]="filtre.temporel" value="0" name="r0">
+				<input class="custom-control-input" type="radio" [(ngModel)]="filtre.temporel" [value]="0" name="r0">
 				<span class="custom-control-indicator"></span>
 				<span class="custom-control-description">&Eacute;vènements passés</span>
 			</label>

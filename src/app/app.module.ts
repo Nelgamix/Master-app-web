@@ -8,7 +8,9 @@ import {MomentModule} from 'angular2-moment';
 import {FormsModule} from '@angular/forms';
 import {MarkdownToHtmlModule} from 'ng2-markdown-to-html';
 import {CommonModule} from '@angular/common';
+import {CookieService} from 'ngx-cookie-service';
 
+// Components
 import {AppComponent} from './app.component';
 import {AccueilComponent} from './accueil/accueil.component';
 import {EtComponent} from './et/et.component';
@@ -17,14 +19,15 @@ import {ContactComponent} from './contact/contact.component';
 import {PageNotFoundComponent} from './pagenotfound/pagenotfound.component';
 
 // Modal
-import {NgbdModalAccueilInfo} from './modal/accueil.info.component';
-import {NgbdModalEvenementsLogin} from './modal/evenements.login.component';
-import {NgbdModalEvenementsEdit} from './modal/evenements.edit.component';
+import {ModalAccueilInfoComponent} from './modal/accueil-info.component';
+import {ModalEvenementsLoginComponent} from './modal/evenements-login.component';
+import {ModalEvenementsEditComponent} from './modal/evenements-edit.component';
+import {ModalEtExclusionsComponent} from './modal/et-exclusions.component';
 
 // Pipes
 import {DateFilter} from './pipes/datefilter.pipe';
-import {KeysPipe} from './pipes/keys.pipe';
-import {ObjetPipe} from './pipes/objet.pipe';
+import {Keys} from './pipes/keys.pipe';
+import {Objet} from './pipes/objet.pipe';
 import {Capitalize} from './pipes/capitalize.pipe';
 
 // Services
@@ -34,7 +37,6 @@ import {EmploiTempsService} from './services/emploi-temps.service';
 import {EvenementComponent} from './evenements/evenement.component';
 import {EtVisuelComponent} from './et/etvisuel.component';
 import {EtTableComponent} from './et/ettable.component';
-import {ModalEtExclusionsComponent} from './modal/et-exclusions.component';
 
 const appRoutes: Routes = [
   {path: 'accueil', component: AccueilComponent},
@@ -53,13 +55,13 @@ const appRoutes: Routes = [
     EvenementsComponent,
     ContactComponent,
     PageNotFoundComponent,
-    NgbdModalAccueilInfo,
-    NgbdModalEvenementsLogin,
-    NgbdModalEvenementsEdit,
+    ModalAccueilInfoComponent,
+    ModalEvenementsLoginComponent,
+    ModalEvenementsEditComponent,
     ModalEtExclusionsComponent,
     DateFilter,
-    KeysPipe,
-    ObjetPipe,
+    Keys,
+    Objet,
     Capitalize,
     EvenementComponent,
     EtVisuelComponent,
@@ -78,13 +80,14 @@ const appRoutes: Routes = [
   ],
   providers: [
     {provide: LOCALE_ID, useValue: 'fr-FR'},
-    EmploiTempsService
+    EmploiTempsService,
+    CookieService
   ],
   bootstrap: [AppComponent],
   entryComponents: [
-    NgbdModalAccueilInfo,
-    NgbdModalEvenementsLogin,
-    NgbdModalEvenementsEdit,
+    ModalAccueilInfoComponent,
+    ModalEvenementsLoginComponent,
+    ModalEvenementsEditComponent,
     ModalEtExclusionsComponent
   ]
 })

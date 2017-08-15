@@ -5,11 +5,11 @@ import {Component, Input, OnInit} from '@angular/core';
 import * as moment from 'moment';
 
 @Component({
-  selector: 'ngbd-modal-evenements-edit',
-  templateUrl: './evenements.edit.component.html',
-  styleUrls: ['./evenements.edit.component.css']
+  selector: 'modal-evenements-edit',
+  templateUrl: './evenements-edit.component.html',
+  styleUrls: ['./evenements-edit.component.css']
 })
-export class NgbdModalEvenementsEdit implements OnInit {
+export class ModalEvenementsEditComponent implements OnInit {
   debutDate: any;
   debutTime: any;
   finDate: any;
@@ -41,7 +41,7 @@ export class NgbdModalEvenementsEdit implements OnInit {
   }
 
   initDate(d, which): void { // which: 0 pour début, 1 pour fin
-    if (!d || d == '') {
+    if (!d || d === '') {
       return;
     }
 
@@ -91,7 +91,7 @@ export class NgbdModalEvenementsEdit implements OnInit {
     this.data.ev.setType(this.type);
     this.data.ev.setUrl(this.url);
 
-    if (this.data.type == 0) { // Ajout
+    if (this.data.type === 0) { // Ajout
       this.data.source.insert(this.data.ev);
     } else {
       this.data.source.update(this.data.ev);
