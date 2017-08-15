@@ -13,17 +13,27 @@ export class Jour {
   typesCount: any;
 
   constructor(cours) {
-    this.nom = this.capitalizeFirstLetter(cours.debut.format('dddd'));
+    this.nom = Jour.capitalizeFirstLetter(cours.debut.format('dddd'));
     this.date = cours.debut;
     this.cours = [];
   }
 
-  ajouterCours(cours: Cours): void {
-    this.cours.push(cours);
+  static capitalizeFirstLetter(string): string {
+    return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
-  capitalizeFirstLetter(string): string {
-      return string.charAt(0).toUpperCase() + string.slice(1);
+  get coursActifs() {
+    const cs = [];
+    for (const c of this.cours) {
+      if (!c.exclu) {
+        cs.push(c);
+      }
+    }
+    return cs;
+  }
+
+  ajouterCours(cours: Cours): void {
+    this.cours.push(cours);
   }
 
   analyse(): void {
@@ -35,7 +45,7 @@ export class Jour {
   compteDuree(): void {
     const total = moment.duration(0);
 
-    for (const c of this.cours) {
+    for (const c of this.coursActifs) {
       total.add(moment.duration(c.fin.diff(c.debut)));
     }
 
@@ -44,8 +54,8 @@ export class Jour {
 
   compteTypes(): void {
     const o = {};
-    for (const c of this.cours) {
-      if (c.type == '') {
+    for (const c of this.coursActifs) {
+      if (c.type === '') {
         continue;
       }
 
@@ -60,13 +70,26 @@ export class Jour {
   }
 
   debutFin(): void {
-    if (this.cours.length > 0) {
-      this.cours.sort(this.sortCours('fin'));
-      this.dernierCours = this.cours[this.cours.length - 1];
+    const cs = this.coursActifs;
 
-      this.cours.sort(this.sortCours('debut'));
-      this.premierCours = this.cours[0];
+    if (cs.length < 1) {
+      return;
     }
+
+    let minDeb = cs[0];
+    let maxFin = cs[0];
+    for (const c of cs) {
+      if (c.debut.diff(minDeb.debut) < 0) {
+        minDeb = c;
+      }
+
+      if (c.fin.diff(maxFin.fin) > 0) {
+        maxFin = c;
+      }
+    }
+
+    this.premierCours = minDeb;
+    this.dernierCours = maxFin;
   }
 
   sortCours(field): any {

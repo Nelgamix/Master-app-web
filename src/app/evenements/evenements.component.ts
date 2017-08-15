@@ -1,8 +1,8 @@
-import {Component, Input} from '@angular/core';
+import {Component} from '@angular/core';
 import {OnInit} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 
-import {NgbModal, NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 import {Evenement} from '../model/evenement';
 import {NgbdModalEvenementsLogin} from '../modal/evenements.login.component';
@@ -84,7 +84,7 @@ export class EvenementsComponent implements OnInit {
     }, 5000);
   }
 
-  get (): void {
+  get(): void {
     this.evenements = [];
     const test = false;
     if (!test) {

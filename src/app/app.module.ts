@@ -31,9 +31,10 @@ import {Capitalize} from './pipes/capitalize.pipe';
 import {EmploiTempsService} from './services/emploi-temps.service';
 
 // Autres
-import {EvenementComponent} from './directives/evenement.component';
+import {EvenementComponent} from './evenements/evenement.component';
 import {EtVisuelComponent} from './et/etvisuel.component';
 import {EtTableComponent} from './et/ettable.component';
+import {ModalEtExclusionsComponent} from './modal/et-exclusions.component';
 
 const appRoutes: Routes = [
   {path: 'accueil', component: AccueilComponent},
@@ -55,6 +56,7 @@ const appRoutes: Routes = [
     NgbdModalAccueilInfo,
     NgbdModalEvenementsLogin,
     NgbdModalEvenementsEdit,
+    ModalEtExclusionsComponent,
     DateFilter,
     KeysPipe,
     ObjetPipe,
@@ -82,7 +84,8 @@ const appRoutes: Routes = [
   entryComponents: [
     NgbdModalAccueilInfo,
     NgbdModalEvenementsLogin,
-    NgbdModalEvenementsEdit
+    NgbdModalEvenementsEdit,
+    ModalEtExclusionsComponent
   ]
 })
 export class AppModule {

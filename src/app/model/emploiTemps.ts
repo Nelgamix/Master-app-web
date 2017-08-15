@@ -31,9 +31,25 @@ export class EmploiTemps {
       this.jours[j].ajouterCours(c);
     }
 
+    this.analyse();
+  }
+
+  analyse(): void {
     for (const j of this.jours) {
       if (j) {
         j.analyse();
+      }
+    }
+  }
+
+  filterExclusions(exclusions) {
+    for (const e of exclusions) {
+      if (e.contient.length > 0) { // TODO: Delete if there is nothing
+        for (const c of this.cours) {
+          if (c[e.type].includes(e.contient)) {
+            c.exclu = true;
+          }
+        }
       }
     }
   }

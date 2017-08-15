@@ -37,7 +37,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let cour of j.cours">
+        <tr *ngFor="let cour of j.cours" [class.exclu]="cour.exclu">
           <td><span *ngIf="cour.type.length > 0" [style.color]="cour.couleur">{{cour.type}}</span><span *ngIf="cour.type.length == 0">&mdash;</span></td>
           <td><b><span *ngIf="cour.nom.length > 0" [style.color]="cour.couleur">{{cour.nom}}</span><span *ngIf="cour.nom.length == 0">&mdash;</span></b></td>
           <td><span *ngIf="cour.salle.length > 0">{{cour.salle}}</span><span *ngIf="cour.salle.length == 0">&mdash;</span></td>

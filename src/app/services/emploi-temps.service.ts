@@ -27,4 +27,9 @@ export class EmploiTempsService {
     this.emploiTemps.init(cours);
     this.notifyObserver();
   }
+
+  filterExclusions(exclusions) {
+    this.emploiTemps.filterExclusions(exclusions);
+    this.emploiTemps.analyse();
+  }
 }

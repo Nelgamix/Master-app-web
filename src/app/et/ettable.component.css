@@ -10,3 +10,8 @@
 .jour-title-type {
   color: darkorange;
 }
+
+.exclu {
+  opacity: 0.5;
+  text-decoration: line-through;
+}

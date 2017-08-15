@@ -33,3 +33,10 @@ div.et-visuel-cours p {
 	border-collapse: collapse;
 	padding: 0;
 }
+
+.exclu {
+  opacity: 0.5;
+}
+.exclu > p {
+  text-decoration: line-through;
+}

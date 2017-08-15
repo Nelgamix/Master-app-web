@@ -56,6 +56,16 @@
           </div>
           <div class="col-4">
             <h5>Exclusions</h5>
+            <div class="row" *ngFor="let e of exclusions">
+              <div class="col-12">
+                {{e.type}}: {{e.contient}}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <button class="btn btn-warning take-width" (click)="openExclusions()">Configurer</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>

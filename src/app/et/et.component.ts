@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
-import { OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {Component} from '@angular/core';
+import {OnInit} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 import * as moment from 'moment';
 import {EmploiTempsService} from '../services/emploi-temps.service';
+import {ModalEtExclusionsComponent} from "../modal/et-exclusions.component";
 
 @Component({
   selector: 'et-root',
@@ -21,7 +23,9 @@ export class EtComponent implements OnInit {
   loading: any;
   stats: any;
 
-  constructor(private http: HttpClient, public emploiTempsService: EmploiTempsService) {
+  exclusions = [];
+
+  constructor(private http: HttpClient, public emploiTempsService: EmploiTempsService, private modalService: NgbModal) {
   }
 
   ngOnInit(): void {
@@ -97,5 +101,17 @@ export class EtComponent implements OnInit {
     const cours = res['cours'];
 
     this.emploiTempsService.loadCours(cours);
+    this.emploiTempsService.filterExclusions(this.exclusions);
+  }
+
+  openExclusions() {
+    const modalRef = this.modalService.open(ModalEtExclusionsComponent);
+    modalRef.componentInstance.exclusions = this.exclusions;
+    modalRef.result.then(r => {
+      this.emploiTempsService.filterExclusions(this.exclusions);
+    }, r => {
+      this.emploiTempsService.filterExclusions(this.exclusions);
+      console.warn(r);
+    });
   }
 }
