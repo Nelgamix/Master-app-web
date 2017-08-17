@@ -9,7 +9,7 @@ export class Jour {
 
   premierCours: Cours;
   dernierCours: Cours;
-  duree: string;
+  duree: any; // moment duration
   typesCount: any;
 
   constructor(cours) {
@@ -49,7 +49,7 @@ export class Jour {
       total.add(moment.duration(c.fin.diff(c.debut)));
     }
 
-    this.duree = total.hours() + ':' + (total.minutes() >= 10 ? total.minutes() : '0' + total.minutes());
+    this.duree = total;
   }
 
   compteTypes(): void {

@@ -26,6 +26,7 @@ import {ModalEtExclusionsComponent} from './modal/et-exclusions.component';
 
 // Pipes
 import {DateFilter} from './pipes/datefilter.pipe';
+import {Duree} from './pipes/duree.pipe';
 import {Keys} from './pipes/keys.pipe';
 import {Objet} from './pipes/objet.pipe';
 import {Capitalize} from './pipes/capitalize.pipe';
@@ -60,6 +61,7 @@ const appRoutes: Routes = [
     ModalEvenementsEditComponent,
     ModalEtExclusionsComponent,
     DateFilter,
+    Duree,
     Keys,
     Objet,
     Capitalize,

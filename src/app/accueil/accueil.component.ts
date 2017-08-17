@@ -65,10 +65,6 @@ export class AccueilComponent implements OnInit, OnDestroy {
     }
   }
 
-  getCouleur(raw): void {
-    return tinycolor(raw).lighten().toHexString();
-  }
-
   onClickOpenModal(semestreData): void {
     const modalRef = this.modalService.open(ModalAccueilInfoComponent);
     modalRef.componentInstance.data = semestreData;

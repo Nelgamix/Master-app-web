@@ -11,9 +11,9 @@
           {{j.date | amDateFormat:'D MMMM YYYY'}}
         </div>
       </div>
-      <div class="row">
+      <div class="row" *ngIf="j.duree.asMinutes() > 0">
         <div class="col jour-title-duree">
-          {{j.premierCours.debut | date: 'HH:mm'}} &rarr; {{j.dernierCours.fin | date: 'HH:mm'}}&nbsp;({{j.duree}})
+          {{j.premierCours.debut | date: 'HH:mm'}} &rarr; {{j.dernierCours.fin | date: 'HH:mm'}}&nbsp;({{j.duree | duree}})
         </div>
       </div>
       <div class="row" *ngFor="let t of j.typesCount | objet">

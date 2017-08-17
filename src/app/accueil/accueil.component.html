@@ -17,8 +17,11 @@
 
       <hr>
 
-      <div class="row quick-group" *ngFor="let g of quickLinks">
-        <div class="col quick-link" (click)="openWeb(l.lien)" *ngFor="let l of g.liens"  [style.border-color]="getCouleur(g.couleur)">
+      <div class="row quick-group" *ngFor="let g of quickLinks; let i = index"
+           [class.red]="i == 0"
+           [class.blue]="i == 1"
+           [class.default]="i > 1">
+        <div class="col quick-link" (click)="openWeb(l.lien)" *ngFor="let l of g.liens">
           <div class="quick-link-header">
             <h5>{{l.titre}}</h5>
           </div>

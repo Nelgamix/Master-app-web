@@ -21,6 +21,25 @@
 	box-shadow: 0 8px 5px -5px #0088FF;
 }*/
 
+.quick-group.red > .quick-link {
+  border-color: red;
+}
+.quick-group.red > .quick-link:hover {
+  box-shadow: 0 0 18px 0 rgba(255,0,0,0.7);
+}
+.quick-group.blue > .quick-link {
+  border-color: dodgerblue;
+}
+.quick-group.blue > .quick-link:hover {
+  box-shadow: 0 0 18px 0 rgba(30,144,255,0.7);
+}
+.quick-group.default > .quick-link {
+  border-color: black;
+}
+.quick-group.default > .quick-link:hover {
+  box-shadow: 0 0 18px 0 rgba(0,0,0,0.7);
+}
+
 .btn:hover, .dropdown-item {
   cursor: pointer;
 }
@@ -49,7 +68,6 @@
 	margin-right: 0;
 }
 .quick-link:hover {
-	box-shadow: 0 0 18px 0 rgba(0,0,0,0.7);
 	z-index: 10;
   cursor: pointer;
 }

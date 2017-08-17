@@ -75,7 +75,7 @@
         <table style="width: 75%; margin: auto;">
           <tbody>
             <ng-container *ngFor="let j of emploiTempsService.emploiTemps.jours">
-              <tr *ngIf="j">
+              <tr *ngIf="j && j.duree.asMinutes() > 0">
                 <td><span class="stat-titre">{{j.nom}}</span></td>
                 <td><span class="stat-donnee">{{j.premierCours.debut | date: 'HH:mm'}} &rarr; {{j.dernierCours.fin | date: 'HH:mm'}}</span></td>
               </tr>
