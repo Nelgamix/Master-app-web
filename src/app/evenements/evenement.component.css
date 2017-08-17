@@ -3,6 +3,8 @@
 	border-top: 6px solid black;
 	padding: auto 15px;
 	margin: 10px 0;
+
+  transition: box-shadow 0.1s;
 }
 
 .ev:hover {

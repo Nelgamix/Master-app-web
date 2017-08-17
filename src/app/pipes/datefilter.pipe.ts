@@ -12,19 +12,18 @@ export class DateFilter implements PipeTransform {
       return items;
     }
 
-    if (!minDays) {
-      minDays = 0;
-    }
-
-    if (!maxDays) {
-      maxDays = 365;
+    if (!minDays && !maxDays) {
+      return items.filter(item => {
+        const n = moment();
+        return item.timable && item.debut.diff(n) < 0 && item.fin.diff(n) > 0;
+      });
     }
 
     const now = moment();
     let diff;
     let dateToComp;
     switch (arg.temporel) {
-      case 0:
+      case 0: // passés
         return items.filter(item => {
           for (const f of arg.type) {
             if (f.type === item.type && !f.actif) {
@@ -36,7 +35,7 @@ export class DateFilter implements PipeTransform {
           diff = dateToComp.diff(now, 'days', true);
           return diff <= (-1 * minDays) && diff > (-1 * maxDays);
         });
-      case 1:
+      case 1: // futurs
         return items.filter(item => {
           for (const f of arg.type) {
             if (f.type === item.type && !f.actif) {
@@ -44,7 +43,7 @@ export class DateFilter implements PipeTransform {
             }
           }
 
-          dateToComp = item.timable ? item.fin : item.debut;
+          dateToComp = item.debut;
           if (now.year() === arg.date.year && now.month() === arg.date.month - 1 && now.date() === arg.date.day) {
             diff = dateToComp.diff(now, 'days', true);
           } else {
