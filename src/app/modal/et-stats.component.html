@@ -1,0 +1,19 @@
+<div class="modal-header">
+  <h4 class="modal-title">Statistiques</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="row" *ngFor="let s of stats | objet">
+    <div class="col-8">
+      {{s.value.title}}
+    </div>
+    <div class="col-4">
+      {{toString(s.value.value)}}
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-dark" (click)="activeModal.close('Close click')">Fermer</button>
+</div>

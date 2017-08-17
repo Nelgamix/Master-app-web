@@ -8,6 +8,7 @@ import {EmploiTempsService} from '../services/emploi-temps.service';
 import {ModalEtExclusionsComponent} from '../modal/et-exclusions.component';
 
 import * as moment from 'moment';
+import {ModalEtStatsComponent} from "../modal/et-stats.component";
 
 @Component({
   selector: 'et-root',
@@ -123,5 +124,10 @@ export class EtComponent implements OnInit {
     }, r => {
       this.emploiTempsService.filterExclusions(this.exclusions);
     });
+  }
+
+  openStats() {
+    const modalRef = this.modalService.open(ModalEtStatsComponent);
+    modalRef.componentInstance.stats = this.emploiTempsService.emploiTemps.stats;
   }
 }

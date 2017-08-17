@@ -23,6 +23,7 @@ import {ModalAccueilInfoComponent} from './modal/accueil-info.component';
 import {ModalEvenementsLoginComponent} from './modal/evenements-login.component';
 import {ModalEvenementsEditComponent} from './modal/evenements-edit.component';
 import {ModalEtExclusionsComponent} from './modal/et-exclusions.component';
+import {ModalEtStatsComponent} from './modal/et-stats.component';
 
 // Pipes
 import {DateFilter} from './pipes/datefilter.pipe';
@@ -60,6 +61,7 @@ const appRoutes: Routes = [
     ModalEvenementsLoginComponent,
     ModalEvenementsEditComponent,
     ModalEtExclusionsComponent,
+    ModalEtStatsComponent,
     DateFilter,
     Duree,
     Keys,
@@ -90,7 +92,8 @@ const appRoutes: Routes = [
     ModalAccueilInfoComponent,
     ModalEvenementsLoginComponent,
     ModalEvenementsEditComponent,
-    ModalEtExclusionsComponent
+    ModalEtExclusionsComponent,
+    ModalEtStatsComponent
   ]
 })
 export class AppModule {

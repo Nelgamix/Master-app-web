@@ -29,27 +29,32 @@
             <h5>Statistiques</h5>
             <div class="row">
               <div class="col-12">
-                <span class="stat-donnee">{{stats.total}}</span> heures
+                <span class="stat-donnee">{{emploiTempsService.emploiTemps.stats['duree'].value | duree}}</span> heures
               </div>
             </div>
             <div class="row">
               <div class="col-12">
-                <span class="stat-donnee">{{stats['moyenne-cours']}}</span> heure(s) / cours
+                <span class="stat-donnee">{{emploiTempsService.emploiTemps.stats['moyenneCours'].value | duree}}</span> heure(s) / cours
               </div>
             </div>
             <div class="row">
               <div class="col-12">
-                <span class="stat-donnee">{{stats['moyenne-semaine']}}</span> heures / jour
+                <span class="stat-donnee">{{emploiTempsService.emploiTemps.stats['moyenneJours'].value | duree}}</span> heures / jour
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <button type="button" class="btn btn-success take-width mt-2" (click)="openStats()">Autres stats</button>
               </div>
             </div>
           </div>
           <div class="col-4">
             <h5>Vue</h5>
-            <div class="btn-group" ngbRadioGroup name="radioBasic" [(ngModel)]="vueType">
-              <label ngbButtonLabel class="btn-primary">
+            <div class="btn-group take-width" ngbRadioGroup name="radioBasic" [(ngModel)]="vueType">
+              <label ngbButtonLabel class="btn-primary take-width">
                 <input ngbButton type="radio" [value]="1"> Tables
               </label>
-              <label ngbButtonLabel class="btn-primary">
+              <label ngbButtonLabel class="btn-primary take-width">
                 <input ngbButton type="radio" [value]="2"> Visuel
               </label>
             </div>
