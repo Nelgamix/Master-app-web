@@ -1,10 +1,10 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container">
     <a class="navbar-brand" routerLink="/">Master App</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
+    <button class="navbar-toggler hidden-sm-up" type="button" (click)="isNavbarCollapsed = !isNavbarCollapsed" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+      &#9776;
     </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div [ngbCollapse]="isNavbarCollapsed" class="collapse navbar-collapse" id="navbar">
       <div class="navbar-nav">
         <a class="nav-item nav-link" routerLink="/accueil" routerLinkActive="active">Accueil</a>
         <a class="nav-item nav-link" routerLink="/et" routerLinkActive="active">Emploi du temps</a>
@@ -14,4 +14,5 @@
     </div>
   </div>
 </nav>
+
 <router-outlet></router-outlet>

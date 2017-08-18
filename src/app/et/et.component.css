@@ -1,3 +1,7 @@
+select:hover, .btn:hover {
+  cursor: pointer;
+}
+
 .loader {
 	position: absolute;
 	top: 0;
@@ -15,23 +19,6 @@
 #form-selection-date {
   float: right;
 }
-
-/*.stats {
-	text-align: center;
-	margin: 12px 0;
-	padding: 8px;
-}
-.stats h5 {
-	font-weight: bold;
-	text-decoration: underline;
-}
-.stats-title {
-	font-size: 120%;
-}
-.stats-text {
-	font-size: 110%;
-	color: blueviolet;
-}*/
 
 .stat-titre {
   font-size: 120%;

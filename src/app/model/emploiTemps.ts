@@ -83,7 +83,7 @@ export class EmploiTemps {
 
   filterExclusions(exclusions) {
     for (const e of exclusions) {
-      if (e.contient.length === 0) { // TODO: Delete if there is nothing
+      if (e.contient.length === 0) {
         exclusions.splice(exclusions.indexOf(e), 1);
         continue;
       }
