@@ -33,3 +33,14 @@ select:hover, .btn:hover {
   margin: 20px;
   padding: 12px;
 }
+
+.ade-status {
+  font-size: 110%;
+  margin-right: 10px;
+  margin-left: 6px;
+}
+
+.last-updated {
+  font-size: 105%;
+  font-weight: bold;
+}

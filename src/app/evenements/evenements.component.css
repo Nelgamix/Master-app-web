@@ -26,3 +26,8 @@ label.custom-checkbox:hover, label.custom-radio:hover, .btn:hover, .cursor-click
 	margin-right: 0;
 	margin-bottom: .25rem;
 }
+
+#admin-log {
+  position: absolute;
+  right: 15px;
+}

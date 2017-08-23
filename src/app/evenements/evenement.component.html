@@ -2,7 +2,7 @@
   <div *ngIf="limitHeight" class="hider" (click)="limitHeight = false">
     <div>&hellip;</div>
   </div>
-	<div class="col-4 ev-dates" [style.border-color]="ev.couleur">
+	<div class="col-3 ev-dates" [style.border-color]="ev.couleur">
 		<b>{{ev.type}}</b><br>
 		{{ev.debut | date:'EEEE d MMMM HH:mm' | capitalize}}<br>
 		<span *ngIf="ev.timable">{{ev.fin | date:'EEEE d MMMM HH:mm' | capitalize}}</span><br>

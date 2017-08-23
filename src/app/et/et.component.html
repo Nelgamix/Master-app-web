@@ -1,9 +1,9 @@
 <div class="container contenu">
   <div class="row">
     <div class="col-6">
-      <span *ngIf="adeOnline" style="color: green;">ADE est en ligne!</span>
-      <span *ngIf="!adeOnline" style="color: red;">ADE est hors-ligne!</span>
-      <span style="font-weight: bold;">&nbsp;Dernière mise à jour {{lastUpdated | date:'dd-MM-y HH:mm'}}</span>
+      <span class="align-middle ade-status" *ngIf="adeOnline" style="color: green;">ADE est en ligne!</span>
+      <span class="align-middle ade-status" *ngIf="!adeOnline" style="color: red;">ADE est hors-ligne!</span>
+      <span class="align-middle last-updated">Dernière mise à jour {{lastUpdated | amTimeAgo}}</span> <!-- ou date:'dd-MM-y HH:mm' -->
     </div>
 
     <div class="col-6">
@@ -75,7 +75,7 @@
         </div>
       </div>
 
-      <div class="col-4 heading">
+      <div class="col heading">
         <h5>Début &amp; fin des cours</h5>
         <table style="width: 75%; margin: auto;">
           <tbody>

@@ -1,26 +1,3 @@
-/* SPACER */
-/*.spacer {
-	padding: 8px 10px;
-	margin-top: 15px;
-	margin-bottom: 15px;
-	border-bottom: 3px solid black;
-}
-.spacer > h4 {
-	padding: 0;
-	margin: 0;
-	text-align: center;
-}
-.spacer-ql.spacer {
-	border-bottom: 3px solid red;
-	color: red;
-	box-shadow: 0 8px 5px -5px red;
-}
-.spacer-semestres.spacer {
-	border-bottom: 3px solid #0088FF;
-	color: #0088FF;
-	box-shadow: 0 8px 5px -5px #0088FF;
-}*/
-
 .quick-group.red > .quick-link {
   border-color: red;
 }
@@ -44,6 +21,17 @@
   cursor: pointer;
 }
 
+#parametres {
+  position: absolute;
+  right: 0;
+}
+#parametres label {
+  z-index: 1;
+  cursor: pointer;
+}
+#section-quick-links {
+  margin-top: 10px;
+}
 #section-semestres {
   margin-top: 20px;
 }
