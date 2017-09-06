@@ -157,7 +157,7 @@ export class Evenement {
    * @param {string} str l'url à set
    */
   setUrl(str): void {
-    const patt = /$http:\/\//;
+    const patt = /^http(s)?:\/\//;
     if (!str || str.length === 0 || patt.test(str)) {
       this.url = str ? str : '';
     } else {

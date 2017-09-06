@@ -80,7 +80,6 @@ export class ModalEvenementsEditComponent implements OnInit {
     const debut = moment([this.debutDate.year, this.debutDate.month - 1, this.debutDate.day, this.debutTime.hour, this.debutTime.minute]);
     let fin;
     if (this.finDate && this.finTime) {
-      console.log(this.finDate);
       fin = moment([this.finDate.year, this.finDate.month - 1, this.finDate.day, this.finTime.hour, this.finTime.minute]);
     }
 

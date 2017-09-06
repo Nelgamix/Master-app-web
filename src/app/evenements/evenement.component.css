@@ -41,3 +41,10 @@
   font-size: 150%;
   transition: color 0.2s;
 }
+
+#url-domain {
+  padding-left: 6px;
+  margin-bottom: 0;
+  border: 1px dashed #888;
+  border-radius: 4px;
+}

@@ -9,6 +9,9 @@
 	</div>
 	<div class="col ev-info">
 		<markdown-to-html [data]="ev.info"></markdown-to-html>
+    <p id="url-domain" *ngIf="source.admin && ev.url?.length > 0">
+      URL: <a href="{{ev.url}}">{{urlDomain}}</a>
+    </p>
 	</div>
 	<div class="col-1" style="padding-top: 9px;" *ngIf="source.admin">
 		<button class="btn btn-sm btn-warning" type="button" (click)="source.openMod(ev)">&curren;</button>
