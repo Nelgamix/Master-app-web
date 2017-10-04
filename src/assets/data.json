@@ -1,6 +1,7 @@
 {
 	"quickLinks": [
 		{
+			"couleur": "red",
 			"liens": [
 				{
 					"titre": "ADE G1",
@@ -15,6 +16,7 @@
 			]
 		},
 		{
+			"couleur": "dodgerblue",
 			"liens": [
 				{
 					"titre": "Zimbra UGA",

@@ -14,7 +14,7 @@
 						<div class="et-visuel-cours" *ngFor="let c of jours[i]" [class.exclu]="c.cours.exclu" [style.top]="c.position.top + '%'" [style.height]="c.position.height + '%'" [style.border-color]="c.cours.couleur">
 							<p>
 								<b>{{c.cours.nom}}</b><br>
-								{{c.cours.salle}}<br>
+								<ng-container *ngFor="let s of c.cours.salles; let i = index"><ng-container *ngIf="i > 0">&nbsp;</ng-container>{{s.salle}}</ng-container><br>
 								{{c.cours.professeur}}<br>
 								{{c.cours.debut | amDateFormat:'HH:mm'}} - {{c.cours.fin | amDateFormat:'HH:mm'}}
 							</p>

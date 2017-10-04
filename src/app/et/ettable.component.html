@@ -38,10 +38,30 @@
         </thead>
         <tbody>
         <tr *ngFor="let cour of j.cours" [class.exclu]="cour.exclu">
-          <td><span *ngIf="cour.type.length > 0" [style.color]="cour.couleur">{{cour.type}}</span><span *ngIf="cour.type.length == 0">&mdash;</span></td>
-          <td><b><span *ngIf="cour.nom.length > 0" [style.color]="cour.couleur">{{cour.nom}}</span><span *ngIf="cour.nom.length == 0">&mdash;</span></b></td>
-          <td><span *ngIf="cour.salle.length > 0">{{cour.salle}}</span><span *ngIf="cour.salle.length == 0">&mdash;</span></td>
-          <td><span *ngIf="cour.professeur.length > 0">{{cour.professeur}}</span><span *ngIf="cour.professeur.length == 0">&mdash;</span></td>
+          <td>
+            <span *ngIf="cour.type.length > 0" [style.color]="cour.couleur">{{cour.type}}</span>
+            <span *ngIf="cour.type.length == 0">&mdash;</span>
+          </td>
+          <td>
+            <b>
+              <span *ngIf="cour.nom.length > 0" [style.color]="cour.couleur">{{cour.nom}}</span>
+              <span *ngIf="cour.nom.length == 0">&mdash;</span>
+            </b>
+          </td>
+          <td>
+            <span *ngFor="let c of cour.salles">
+              <span *ngIf="c.batiment.length > 0" class="badge badge-primary">{{c.batiment}}</span>
+              <span *ngIf="c.salle.length > 0">{{c.salle}}</span>
+              <span *ngIf="c.salle.length == 0">&mdash;</span>
+            </span>
+            <span *ngIf="cour.salles.length > 0 && cour.salles_types.length > 0"> / </span>
+            <span *ngFor="let f of cour.salles_types" class="badge badge-secondary">
+              <span>{{f}}</span>
+            </span>
+          </td>
+          <td>
+            <span *ngIf="cour.professeur.length > 0">{{cour.professeur}}</span><span *ngIf="cour.professeur.length == 0">&mdash;</span>
+          </td>
           <td>{{cour.debut | amDateFormat:'HH:mm'}}</td>
           <td>{{cour.fin | amDateFormat:'HH:mm'}}</td>
           <td>{{cour.duree | amDateFormat:'H:mm'}}</td>
