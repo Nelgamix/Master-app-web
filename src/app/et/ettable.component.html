@@ -34,6 +34,7 @@
           <th>Début</th>
           <th>Fin</th>
           <th>Durée</th>
+          <th>Groupe(s)</th>
         </tr>
         </thead>
         <tbody>
@@ -49,12 +50,12 @@
             </b>
           </td>
           <td>
-            <span *ngFor="let c of cour.salles">
+            <span *ngIf="cour.salles.length == 0">&mdash;</span>
+            <span *ngFor="let c of cour.salles; let i = index">
+              <span *ngIf="i > 0">+</span>
               <span *ngIf="c.batiment.length > 0" class="badge badge-primary">{{c.batiment}}</span>
               <span *ngIf="c.salle.length > 0">{{c.salle}}</span>
-              <span *ngIf="c.salle.length == 0">&mdash;</span>
             </span>
-            <span *ngIf="cour.salles.length > 0 && cour.salles_types.length > 0"> / </span>
             <span *ngFor="let f of cour.salles_types" class="badge badge-secondary">
               <span>{{f}}</span>
             </span>
@@ -65,6 +66,7 @@
           <td>{{cour.debut | amDateFormat:'HH:mm'}}</td>
           <td>{{cour.fin | amDateFormat:'HH:mm'}}</td>
           <td>{{cour.duree | amDateFormat:'H:mm'}}</td>
+          <td><span *ngFor="let g of cour.groupe; let i = index"><span *ngIf="i > 0">, </span>{{g}}</span></td>
         </tr>
         </tbody>
       </table>

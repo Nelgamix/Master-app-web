@@ -2,7 +2,6 @@
     /*
     TODO:
         * Testing
-        * Add stats
         * Doc
     */
     // ADE URL EX: http://ade6-ujf-ro.grenet.fr/jsp/custom/modules/plannings/anonymous_cal.jsp?resources=9645&projectId=2&calType=ical&firstDate=2017-09-11&lastDate=2017-09-15
@@ -21,7 +20,7 @@
     define("YEARCOLUMN", "year");
     define("DATACOLUMN", "data");
 
-    define("URLADE", "http://ade6-ujf-ro.grenet.fr/jsp/custom/modules/plannings/anonymous_cal.jsp?resources=9645&projectId=2&calType=ical&firstDate=%s&lastDate=%s");
+    define("URLADE", "http://ade6-ujf-ro.grenet.fr/jsp/custom/modules/plannings/anonymous_cal.jsp?resources=9756&projectId=2&calType=ical&firstDate=%s&lastDate=%s");
 
     /**
     * Utils
@@ -30,7 +29,12 @@
     {
         public static function clean($string)
         {
-            return trim(preg_replace('/\s+/S', " ", $string));
+            return trim(preg_replace('/\s+/S', " ", preg_replace("/-/", "", $string)));
+        }
+
+        public static function deploy_array($array)
+        {
+            return implode(', ', $array);
         }
     }
 
@@ -84,6 +88,7 @@
         private $salle;
         private $duree;
         private $type;
+        private $groupe;
 
         public function jsonSerialize() {
             return [
@@ -94,7 +99,8 @@
                 'professeur' => $this->professeur,
                 'description' => $this->description,
                 'salle' => $this->salle,
-                'type' => $this->type
+                'type' => $this->type,
+                'groupe' => Utils::deploy_array($this->groupe)
             ];
         }
 
@@ -110,9 +116,10 @@
             $this->professeur = "";
             $this->duree = $debut->diff($fin);
             $this->type = "";
+            $this->groupe = [];
 
             // Analyse
-            if (preg_match("/([A-Z]+ [A-Z][a-z|éèàî-]+)/", $this->description, $matches) > 0)
+            if (preg_match("/\b(?!INFO)[A-Z]+ [A-Z][a-z|éèàî-]+/", $this->description, $matches) > 0)
             {
                 $this->professeur = $matches[0];
             }
@@ -121,7 +128,7 @@
             $found = false;
             foreach ($a as $ab)
             {
-                if (preg_match("/(TD|TP|Cours)/", $this->$ab, $matches) > 0)
+                if (preg_match("/(TP|TD)\/(TP|TD)|TD|TP|Cours/", $this->$ab, $matches) > 0)
                 {
                     $this->type = $matches[0];
                     $found = true;
@@ -134,6 +141,35 @@
                 foreach ($a as $ab)
                 {
                     $this->$ab = str_replace($this->type, "", $this->$ab);
+                }
+            }
+
+            if (preg_match_all("/G([0-9])|R([0-9])|GRP ([0-9a-z])|GROUPE ([0-9a-z])/i", $this->nom, $matches, PREG_SET_ORDER) > 0)
+            {
+                foreach ($matches as $match)
+                {
+                    for ($i = 1; $i < count($match); $i++)
+                    {
+                        if ($match[$i] !== "")
+                        {
+                            $this->groupe[] = $match[$i];
+                            break;
+                        }
+                    }
+                    
+                    $this->nom = str_replace($match[0], "", $this->nom);
+                }
+            }
+
+            if ($this->salle == "") // on regarde dans le nom
+            {
+                if (preg_match_all("/(?:salle )?([a-z0-9]+ [a-z]?[0-9]+)/i", $this->nom, $matches, PREG_SET_ORDER) > 0)
+                {
+                    foreach ($matches as $match)
+                    {
+                        $this->salle .= $match[1];
+                        $this->nom = str_replace($match[0], "", $this->nom);
+                    }
                 }
             }
 

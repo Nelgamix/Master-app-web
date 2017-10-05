@@ -1,4 +1,4 @@
-label.custom-checkbox:hover, label.custom-radio:hover, .btn:hover, .cursor-click {
+label.custom-checkbox:hover, label.custom-radio:hover, .btn:hover {
 	cursor: pointer;
 }
 

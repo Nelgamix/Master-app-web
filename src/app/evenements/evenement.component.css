@@ -1,3 +1,7 @@
+.cursor-click {
+  cursor: pointer;
+}
+
 .ev {
 	border: 2px solid black;
 	border-top: 6px solid black;

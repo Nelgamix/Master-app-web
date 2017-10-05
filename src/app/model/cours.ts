@@ -11,6 +11,7 @@ export class Cours {
   nom: string;
   professeur: string;
   description: string;
+  groupe: string[];
 
   salles: any;
   salles_types: string[];
@@ -28,10 +29,16 @@ export class Cours {
     this.professeur = c.professeur;
     this.description = c.description;
 
+    // Groupes
+    this.groupe = [];
+    for (const g of c.groupe.split(', ')) {
+      this.groupe.push(g);
+    }
+
     // Analyse la salle (et le batiment)
     this.salles = [];
     const batreg = /(IM2AG|DLST)/g;
-    const sallereg = /(F[0-9]+)/g;
+    const sallereg = /((?:F)?[0-9]{3})/g;
     const stypereg = /(Amphi|TD|TP|PC)/ig;
 
     const batm = [];
