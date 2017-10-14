@@ -54,7 +54,7 @@
         {
             $str = $interval->format("%H:%i");
             $strsp = explode(":", $str);
-            
+
             $this->minutes += (60 * intval($strsp[0]));
             $this->minutes += intval($strsp[1]);
         }
@@ -156,7 +156,7 @@
                             break;
                         }
                     }
-                    
+
                     $this->nom = str_replace($match[0], "", $this->nom);
                 }
             }
@@ -245,7 +245,7 @@
         {
             $need_ade = false;
 
-            if ($this->connect_to_db()) // On se connecte à la BD
+            if (!$need_ade && $this->connect_to_db()) // On se connecte à la BD
             {
                 if ($this->init_from_db() && $this->data_in_db) // les données ont été récup depuis la BD
                 {
@@ -341,7 +341,7 @@
             }
 
             $events = $this->ical->sortEventsWithOrder($this->ical->events());
-            
+
             foreach ($events as $event)
             {
                 $this->ajout_cours($event);
@@ -357,7 +357,7 @@
         {
             $dtstart = $this->ical->iCalDateToDateTime($event->dtstart_array[3], true);
             $dtend = $this->ical->iCalDateToDateTime($event->dtend_array[3], true);
-            
+
             $dtstart->setTimezone(new DateTimeZone("Europe/Paris"));
             $dtend->setTimezone(new DateTimeZone("Europe/Paris"));
 
@@ -509,7 +509,7 @@
             //$this->ade_online = false; // Pour tester en cas d'offline
 
             $this->ok = $this->data->init($this->ade_online);
-            
+
             return true;
         }
     }
@@ -521,7 +521,7 @@
     {
         $week = 37;
     }
-    
+
     if (!isset($year) || $year < 2017 || $year > 2018)
     {
         $year = 2017;

@@ -7,8 +7,9 @@ import {HttpClientModule} from '@angular/common/http';
 import {MomentModule} from 'angular2-moment';
 import {FormsModule} from '@angular/forms';
 import {MarkdownToHtmlModule} from 'ng2-markdown-to-html';
-import {CommonModule} from '@angular/common';
+import {CommonModule, registerLocaleData} from '@angular/common';
 import {CookieService} from 'ngx-cookie-service';
+import localeFR from '@angular/common/locales/fr';
 
 // Components
 import {AppComponent} from './app.component';
@@ -34,6 +35,7 @@ import {Capitalize} from './pipes/capitalize.pipe';
 
 // Services
 import {EmploiTempsService} from './services/emploi-temps.service';
+import {DatesService} from './services/dates.service';
 
 // Autres
 import {EvenementComponent} from './evenements/evenement.component';
@@ -48,6 +50,8 @@ const appRoutes: Routes = [
   {path: '', redirectTo: '/accueil', pathMatch: 'full'},
   {path: '**', component: PageNotFoundComponent}
 ];
+
+registerLocaleData(localeFR);
 
 @NgModule({
   declarations: [
@@ -83,8 +87,9 @@ const appRoutes: Routes = [
     MomentModule
   ],
   providers: [
-    {provide: LOCALE_ID, useValue: 'fr-FR'},
+    {provide: LOCALE_ID, useValue: 'fr'},
     EmploiTempsService,
+    DatesService,
     CookieService
   ],
   bootstrap: [AppComponent],

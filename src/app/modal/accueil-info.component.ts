@@ -2,7 +2,7 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {Component, Input} from '@angular/core';
 
 @Component({
-  selector: 'modal-accueil-info',
+  selector: 'app-modal-accueil-info',
   templateUrl: './accueil-info.component.html',
   styleUrls: ['./accueil-info.component.css']
 })

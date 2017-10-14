@@ -3,7 +3,7 @@ import {AfterViewInit, Component, ElementRef, Input, ViewChild} from '@angular/c
 import {Evenement} from '../model/evenement';
 
 @Component({
-  selector: 'evenement',
+  selector: 'app-evenement',
   templateUrl: './evenement.component.html',
   styleUrls: ['./evenement.component.css']
 })

@@ -5,7 +5,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import * as moment from 'moment';
 
 @Component({
-  selector: 'modal-evenements-edit',
+  selector: 'app-modal-evenements-edit',
   templateUrl: './evenements-edit.component.html',
   styleUrls: ['./evenements-edit.component.css']
 })

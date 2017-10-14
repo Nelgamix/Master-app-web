@@ -9,7 +9,7 @@ import * as moment from 'moment';
 import * as tinycolor from 'tinycolor2';
 
 @Component({
-  selector: 'accueil-root',
+  selector: 'app-accueil-root',
   templateUrl: './accueil.component.html',
   styleUrls: ['./accueil.component.css']
 })

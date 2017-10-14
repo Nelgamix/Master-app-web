@@ -6,8 +6,8 @@
 	while (intval($first_d->format('Y')) < $annee_scolaire+1 || intval($first_d->format("m")) < 8)
 	{
 		$d = $first_d->format("Y-m-d");
-		$w = $first_d->format("W");
-		$y = $first_d->format("Y");
+		$w = intval($first_d->format("W"));
+		$y = intval($first_d->format("Y"));
 		$f = $first_d->modify('+4 days')->format("Y-m-d");
 		$a[] = [
 			"week" => $w,

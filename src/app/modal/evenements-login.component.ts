@@ -3,7 +3,7 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
-  selector: 'modal-evenements-login',
+  selector: 'app-modal-evenements-login',
   templateUrl: './evenements-login.component.html',
   styleUrls: ['./evenements-login.component.css']
 })

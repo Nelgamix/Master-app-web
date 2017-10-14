@@ -2,7 +2,7 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {Component, Input} from '@angular/core';
 
 @Component({
-  selector: 'modal-et-exclusions',
+  selector: 'app-modal-et-exclusions',
   templateUrl: './et-exclusions.component.html'
 })
 export class ModalEtExclusionsComponent {

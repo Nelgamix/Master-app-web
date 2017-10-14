@@ -3,7 +3,7 @@ import {OnInit} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 
 @Component({
-  selector: 'contact-root',
+  selector: 'app-contact-root',
   templateUrl: './contact.component.html',
   styleUrls: ['./contact.component.css']
 })

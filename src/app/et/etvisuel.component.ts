@@ -3,7 +3,7 @@ import {Component, OnInit} from '@angular/core';
 import {EmploiTempsService} from '../services/emploi-temps.service';
 
 @Component({
-  selector: 'et-visuel',
+  selector: 'app-et-visuel',
   templateUrl: './etvisuel.component.html',
   styleUrls: ['./etvisuel.component.css']
 })

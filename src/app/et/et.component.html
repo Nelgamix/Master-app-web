@@ -1,45 +1,45 @@
 <div class="container contenu">
   <div class="row">
     <div class="col-6">
-      <span class="align-middle ade-status" *ngIf="adeOnline" style="color: green;">ADE est en ligne!</span>
-      <span class="align-middle ade-status" *ngIf="!adeOnline" style="color: red;">ADE est hors-ligne!</span>
-      <span class="align-middle last-updated">Dernière mise à jour {{lastUpdated | amTimeAgo}}</span> <!-- ou date:'dd-MM-y HH:mm' -->
+      <span class="align-middle ade-status" *ngIf="etService.metadata['adeOnline']" style="color: green;">ADE est en ligne!</span>
+      <span class="align-middle ade-status" *ngIf="!etService.metadata['adeOnline']" style="color: red;">ADE est hors-ligne!</span>
+      <span class="align-middle last-updated">Dernière mise à jour {{etService.metadata['lastUpdated'] | amTimeAgo}}</span> <!-- ou date:'dd-MM-y HH:mm' -->
     </div>
 
     <div class="col-6">
       <form class="form-inline" id="form-selection-date">
         <label for="selDate" class="mr-2">Sélection de la semaine</label>
         <select [(ngModel)]="selectedDate" (ngModelChange)="onChangeDate($event)" class="custom-select" name="selDate" id="selDate">
-          <option [ngValue]="i" *ngFor="let i of dates">{{i.debut}} &rarr; {{i.fin}}</option>
+          <option [ngValue]="i" *ngFor="let i of datesService.dates">{{i.debut}} &rarr; {{i.fin}}</option>
         </select>
       </form>
     </div>
   </div>
 
-  <div *ngIf="!ok" style="margin-top: 70px; text-align: center;">
+  <div *ngIf="!etService.metadata['ok']" style="margin-top: 70px; text-align: center;">
     <h2>ADE est hors-ligne, et les données n'ont pas été enregistrées sur la BD, donc retente plus tard&hellip;</h2>
     <h3 class="text-muted">Peut être que le chargement depuis le serveur a échoué, essaye d'actualiser la page si tu viens d'arriver</h3>
   </div>
 
-  <div *ngIf="ok" style="margin-top: 10px;">
+  <div *ngIf="etService.metadata['ok']" style="margin-top: 10px;">
     <div class="row">
       <div class="col-7 heading">
         <div class="row">
-          <div class="col-4">
+          <div class="col-md-4 col-sm-12">
             <h5>Statistiques</h5>
             <div class="row">
               <div class="col-12">
-                <span class="stat-donnee">{{emploiTempsService.emploiTemps.stats['duree'].value | duree}}</span> heures
+                <span class="stat-donnee">{{etService.emploiTemps.stats['duree'].value | duree}}</span> heures
               </div>
             </div>
             <div class="row">
               <div class="col-12">
-                <span class="stat-donnee">{{emploiTempsService.emploiTemps.stats['moyenneCours'].value | duree}}</span> heure(s) / cours
+                <span class="stat-donnee">{{etService.emploiTemps.stats['moyenneCours'].value | duree}}</span> heure(s) / cours
               </div>
             </div>
             <div class="row">
               <div class="col-12">
-                <span class="stat-donnee">{{emploiTempsService.emploiTemps.stats['moyenneJours'].value | duree}}</span> heures / jour
+                <span class="stat-donnee">{{etService.emploiTemps.stats['moyenneJours'].value | duree}}</span> heures / jour
               </div>
             </div>
             <div class="row">
@@ -48,7 +48,7 @@
               </div>
             </div>
           </div>
-          <div class="col-4">
+          <div class="col-md-4 col-sm-12">
             <h5>Vue</h5>
             <div class="btn-group take-width" ngbRadioGroup name="radioBasic" [(ngModel)]="vueType">
               <label ngbButtonLabel class="btn-primary take-width">
@@ -59,7 +59,7 @@
               </label>
             </div>
           </div>
-          <div class="col-4">
+          <div class="col-md-4 col-sm-12">
             <h5>Exclusions</h5>
             <div class="row" *ngFor="let e of exclusions">
               <div class="col-12">
@@ -79,7 +79,7 @@
         <h5>Début &amp; fin des cours</h5>
         <table style="width: 75%; margin: auto;">
           <tbody>
-            <ng-container *ngFor="let j of emploiTempsService.emploiTemps.jours">
+            <ng-container *ngFor="let j of etService.emploiTemps.jours">
               <tr *ngIf="j && j.duree.asMinutes() > 0">
                 <td><span class="stat-titre">{{j.nom}}</span></td>
                 <td><span class="stat-donnee">{{j.premierCours.debut | date: 'HH:mm'}} &rarr; {{j.dernierCours.fin | date: 'HH:mm'}}</span></td>
@@ -91,8 +91,8 @@
     </div>
 
     <ng-container [ngSwitch]="vueType">
-      <et-table *ngSwitchCase="1"></et-table>
-      <et-visuel *ngSwitchCase="2"></et-visuel>
+      <app-et-table *ngSwitchCase="1"></app-et-table>
+      <app-et-visuel *ngSwitchCase="2"></app-et-visuel>
     </ng-container>
   </div>
 </div>

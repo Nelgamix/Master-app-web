@@ -26,7 +26,7 @@ TODO:
  */
 
 @Component({
-  selector: 'evenements-root',
+  selector: 'app-evenements',
   templateUrl: './evenements.component.html',
   styleUrls: ['./evenements.component.css'],
   animations: [

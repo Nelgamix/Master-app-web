@@ -42,28 +42,28 @@
     <h3>En cours</h3>
   </div>
   <ng-container *ngFor="let ev of evenements | datefilter:filtre">
-    <evenement [ev]="ev" [source]="this"></evenement>
+    <app-evenement [ev]="ev" [source]="this"></app-evenement>
   </ng-container>
 
 	<div class="categ" *ngIf="(evenements | datefilter:filtre:0:7).length > 0">
 		<h3>Moins d'une semaine</h3>
 	</div>
 	<ng-container *ngFor="let ev of evenements | datefilter:filtre:0:7">
-		<evenement [ev]="ev" [source]="this"></evenement>
+		<app-evenement [ev]="ev" [source]="this"></app-evenement>
 	</ng-container>
 
 	<div class="categ" *ngIf="(evenements | datefilter:filtre:7:30).length > 0">
 		<h3>Entre une semaine et un mois</h3>
 	</div>
 	<ng-container *ngFor="let ev of evenements | datefilter:filtre:7:30">
-		<evenement [ev]="ev" [source]="this"></evenement>
+		<app-evenement [ev]="ev" [source]="this"></app-evenement>
 	</ng-container>
 
 	<div class="categ" *ngIf="(evenements | datefilter:filtre:30:365).length > 0">
 		<h3>Plus d'un mois</h3>
 	</div>
 	<ng-container *ngFor="let ev of evenements | datefilter:filtre:30:365">
-		<evenement [ev]="ev" [source]="this"></evenement>
+		<app-evenement [ev]="ev" [source]="this"></app-evenement>
 	</ng-container>
 
 	<div class="row spaced" *ngIf="admin">

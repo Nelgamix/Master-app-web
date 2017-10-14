@@ -4,7 +4,7 @@ import * as moment from 'moment';
 import {Duree} from '../pipes/duree.pipe';
 
 @Component({
-  selector: 'modal-et-stats',
+  selector: 'app-modal-et-stats',
   templateUrl: './et-stats.component.html'
 })
 export class ModalEtStatsComponent {

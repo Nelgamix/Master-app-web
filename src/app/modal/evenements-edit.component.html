@@ -7,7 +7,7 @@
 <div class="modal-body">
 	<form>
 		<div class="form-group row">
-			<label class="col-2 col-form-label custom-center" for="dpd">Début</label>
+			<label class="col-2 col-form-label custom-center">Début</label>
 			<div class="col custom-center">
 				<div class="input-group">
 					<input class="form-control" placeholder="yyyy-mm-dd" name="dpd" [(ngModel)]="debutDate" ngbDatepicker #dd="ngbDatepicker">
@@ -21,7 +21,7 @@
 			</div>
 		</div>
 		<div class="form-group row">
-			<label class="col-2 col-form-label custom-center" for="dpf">Fin</label>
+			<label class="col-2 col-form-label custom-center">Fin</label>
 			<div class="col custom-center">
 				<div class="input-group">
 					<input class="form-control" placeholder="yyyy-mm-dd" name="dpf" [(ngModel)]="finDate" [minDate]="debutDate" ngbDatepicker #df="ngbDatepicker">
