@@ -72,6 +72,7 @@ export class EtComponent implements OnInit {
     });
   }
 
+  // TODO: tweak to not call entire function each time
   getWeekProgress() {
     if (!this.datesService.semaineSelectionnee) {
       return 0;

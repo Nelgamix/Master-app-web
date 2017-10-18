@@ -2,6 +2,13 @@ select:hover, .btn:hover {
   cursor: pointer;
 }
 
+#head-title {
+  border-top: 1px solid grey;
+  border-bottom: 1px solid grey;
+  box-shadow: 0 0 4px grey;
+  background-color: rgba(0, 0, 0, .1);
+}
+
 .loader {
 	position: absolute;
 	top: 0;
@@ -36,6 +43,7 @@ select:hover, .btn:hover {
   box-shadow: 0 0 6px grey;
   margin: 20px;
   padding: 12px;
+  background-color: rgba(0, 127, 255, .02);
 }
 
 .ade-status {
@@ -46,5 +54,5 @@ select:hover, .btn:hover {
 
 .last-updated {
   font-size: 105%;
-  font-weight: bold;
+  /*font-weight: bold;*/
 }

@@ -1,9 +1,9 @@
 <div class="container contenu">
-  <div class="row">
+  <div class="row mb-2">
     <div class="col-md-6 col-sm-12">
       <span class="align-middle ade-status" *ngIf="etService.metadata['adeOnline']" style="color: green;">ADE est en ligne!</span>
       <span class="align-middle ade-status" *ngIf="!etService.metadata['adeOnline']" style="color: red;">ADE est hors-ligne!</span>
-      <span class="align-middle last-updated">Dernière mise à jour {{etService.metadata['lastUpdated'] | amTimeAgo}}</span> <!-- ou date:'dd-MM-y HH:mm' -->
+      <span class="align-middle last-updated">Dernière mise à jour <b>{{etService.metadata['lastUpdated'] | amTimeAgo}}</b></span> <!-- ou date:'dd-MM-y HH:mm' -->
     </div>
 
     <div class="col-md-6 col-sm-12">
@@ -16,98 +16,112 @@
     </div>
   </div>
 
-  <div *ngIf="!etService.metadata['ok']" style="margin-top: 70px; text-align: center;">
-    <h2>ADE est hors-ligne, et les données n'ont pas été enregistrées sur la BD, donc retente plus tard&hellip;</h2>
-    <h3 class="text-muted">Peut être que le chargement depuis le serveur a échoué, essaye d'actualiser la page si tu viens d'arriver</h3>
+  <div *ngIf="!etService.metadata['ok']" class="row mt-5">
+    <div class="col text-center">
+      <h2>ADE est hors-ligne, et les données n'ont pas été enregistrées sur la BD, donc retente plus tard&hellip;</h2>
+      <h3 class="text-muted">Peut être que le chargement depuis le serveur a échoué, essaye d'actualiser la page si tu viens d'arriver</h3>
+    </div>
   </div>
 
-  <div *ngIf="etService.metadata['ok']" style="margin-top: 10px;">
-    <div class="row">
-      <div class="col h3 week-header">
-        Semaine du <span class="text-primary">{{datesService.semaineSelectionnee.debut | amDateFormat:'D MMMM YYYY'}}</span>
-        au <span class="text-primary">{{datesService.semaineSelectionnee.fin | amDateFormat:'D MMMM YYYY'}}</span>
-      </div>
-    </div>
-
-    <div class="row">
+  <ng-container *ngIf="etService.metadata['ok']">
+    <div class="row mb-2 pt-2 pb-2" id="head-title">
       <div class="col">
-        <ngb-progressbar type="info" [value]="getWeekProgress()" [striped]="true">Progression de la semaine <b>{{getWeekProgress()}}%</b></ngb-progressbar>
+        <div class="row mb-2">
+          <div class="col h3 week-header">
+            Semaine du <span class="text-primary">{{datesService.semaineSelectionnee.debut | amDateFormat:'D MMMM YYYY'}}</span>
+            au <span class="text-primary">{{datesService.semaineSelectionnee.fin | amDateFormat:'D MMMM YYYY'}}</span>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <ngb-progressbar type="info" [value]="getWeekProgress()" [striped]="true">Progression de la semaine <b>{{getWeekProgress()}}%</b></ngb-progressbar>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="row">
-      <div class="col-md-7 col-sm-12 heading">
-        <div class="row">
-          <div class="col-md-4 col-sm-12 mb-3">
-            <h5>Statistiques</h5>
-            <div class="row">
-              <div class="col-12">
-                <span class="stat-donnee">{{etService.emploiTemps.stats['duree'].value | duree}}</span> heures
+    <div class="row mt-4" *ngIf="etService.emploiTemps.cours.length == 0; else elseBlock">
+      <div class="col text-center">
+        <h3>Aucun cours cette semaine.</h3>
+      </div>
+    </div>
+
+    <ng-template #elseBlock>
+      <div class="row">
+        <div class="col-md-7 col-sm-12 heading">
+          <div class="row">
+            <div class="col-md-4 col-sm-12 mb-3">
+              <h5>Statistiques</h5>
+              <div class="row">
+                <div class="col-12">
+                  <span class="stat-donnee">{{etService.emploiTemps.stats['duree'].value | duree}}</span> heures
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <span class="stat-donnee">{{etService.emploiTemps.stats['moyenneCours'].value | duree}}</span> heure(s) / cours
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <span class="stat-donnee">{{etService.emploiTemps.stats['moyenneJours'].value | duree}}</span> heures / jour
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <button type="button" class="btn btn-success take-width mt-2" (click)="openStats()">Autres stats</button>
+                </div>
               </div>
             </div>
-            <div class="row">
-              <div class="col-12">
-                <span class="stat-donnee">{{etService.emploiTemps.stats['moyenneCours'].value | duree}}</span> heure(s) / cours
+            <div class="col-md-4 col-sm-12 mb-3">
+              <h5>Vue</h5>
+              <div class="btn-group take-width" ngbRadioGroup name="radioBasic" [(ngModel)]="vueType">
+                <label ngbButtonLabel class="btn-primary take-width">
+                  <input ngbButton type="radio" [value]="1"> Tables
+                </label>
+                <label ngbButtonLabel class="btn-primary take-width">
+                  <input ngbButton type="radio" [value]="2"> Visuel
+                </label>
               </div>
             </div>
-            <div class="row">
-              <div class="col-12">
-                <span class="stat-donnee">{{etService.emploiTemps.stats['moyenneJours'].value | duree}}</span> heures / jour
+            <div class="col-md-4 col-sm-12 mb-3">
+              <h5>Exclusions</h5>
+              <div class="row" *ngFor="let e of exclusions">
+                <div class="col-12">
+                  {{e.type}}: {{e.contient}}
+                </div>
               </div>
-            </div>
-            <div class="row">
-              <div class="col-12">
-                <button type="button" class="btn btn-success take-width mt-2" (click)="openStats()">Autres stats</button>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4 col-sm-12 mb-3">
-            <h5>Vue</h5>
-            <div class="btn-group take-width" ngbRadioGroup name="radioBasic" [(ngModel)]="vueType">
-              <label ngbButtonLabel class="btn-primary take-width">
-                <input ngbButton type="radio" [value]="1"> Tables
-              </label>
-              <label ngbButtonLabel class="btn-primary take-width">
-                <input ngbButton type="radio" [value]="2"> Visuel
-              </label>
-            </div>
-          </div>
-          <div class="col-md-4 col-sm-12 mb-3">
-            <h5>Exclusions</h5>
-            <div class="row" *ngFor="let e of exclusions">
-              <div class="col-12">
-                {{e.type}}: {{e.contient}}
-              </div>
-            </div>
-            <div class="row">
-              <div class="col">
-                <button class="btn btn-warning take-width" (click)="openExclusions()">Configurer</button>
+              <div class="row">
+                <div class="col">
+                  <button class="btn btn-warning take-width" (click)="openExclusions()">Configurer</button>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="col heading">
-        <h5>Début &amp; fin des cours</h5>
-        <table style="width: 75%; margin: auto;">
-          <tbody>
+        <div class="col heading">
+          <h5>Début &amp; fin des cours</h5>
+          <table style="width: 75%; margin: auto;">
+            <tbody>
             <ng-container *ngFor="let j of etService.emploiTemps.jours">
               <tr *ngIf="j && j.duree.asMinutes() > 0">
                 <td><span class="stat-titre">{{j.nom}}</span></td>
                 <td><span class="stat-donnee">{{j.premierCours.debut | date: 'HH:mm'}} &rarr; {{j.dernierCours.fin | date: 'HH:mm'}}</span></td>
               </tr>
             </ng-container>
-          </tbody>
-        </table>
+            </tbody>
+          </table>
+        </div>
       </div>
-    </div>
 
-    <ng-container [ngSwitch]="vueType">
-      <app-et-table *ngSwitchCase="1"></app-et-table>
-      <app-et-visuel *ngSwitchCase="2"></app-et-visuel>
-    </ng-container>
-  </div>
+      <ng-container [ngSwitch]="vueType">
+        <app-et-table *ngSwitchCase="1"></app-et-table>
+        <app-et-visuel *ngSwitchCase="2"></app-et-visuel>
+      </ng-container>
+    </ng-template>
+  </ng-container>
 </div>
 
 <div class="loader" *ngIf="loading">
