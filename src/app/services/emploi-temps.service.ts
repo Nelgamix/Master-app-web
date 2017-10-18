@@ -3,6 +3,7 @@ import {Injectable} from '@angular/core';
 import {EmploiTemps} from '../model/emploiTemps';
 import {HttpClient} from '@angular/common/http';
 import * as moment from 'moment';
+import {GlobalVariable} from '../globals';
 
 @Injectable()
 export class EmploiTempsService {
@@ -44,8 +45,7 @@ export class EmploiTempsService {
   }
 
   updateData(date, cb) {
-    const local = 0;
-    if (local) {
+    if (GlobalVariable.LOCAL_DEV) {
       this.http.get('assets/etServiceTest.json').subscribe(data => this.loadData(data, cb));
     } else {
       this.http.get('php/ical.php?year=' + date.year + '&week=' + date.week).subscribe(data => this.loadData(data, cb));

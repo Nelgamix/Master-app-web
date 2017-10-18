@@ -1,16 +1,16 @@
 <div class="container contenu">
   <div class="row">
-    <div class="col-6">
+    <div class="col-md-6 col-sm-12">
       <span class="align-middle ade-status" *ngIf="etService.metadata['adeOnline']" style="color: green;">ADE est en ligne!</span>
       <span class="align-middle ade-status" *ngIf="!etService.metadata['adeOnline']" style="color: red;">ADE est hors-ligne!</span>
       <span class="align-middle last-updated">Dernière mise à jour {{etService.metadata['lastUpdated'] | amTimeAgo}}</span> <!-- ou date:'dd-MM-y HH:mm' -->
     </div>
 
-    <div class="col-6">
+    <div class="col-md-6 col-sm-12">
       <form class="form-inline" id="form-selection-date">
         <label for="selDate" class="mr-2">Sélection de la semaine</label>
         <select [(ngModel)]="selectedDate" (ngModelChange)="onChangeDate($event)" class="custom-select" name="selDate" id="selDate">
-          <option [ngValue]="i" *ngFor="let i of datesService.dates">{{i.debut}} &rarr; {{i.fin}}</option>
+          <option [ngValue]="i" *ngFor="let i of datesService.semaines">{{i.debut | amDateFormat:'YYYY-MM-DD'}} &rarr; {{i.fin | amDateFormat:'YYYY-MM-DD'}}</option>
         </select>
       </form>
     </div>
@@ -23,9 +23,22 @@
 
   <div *ngIf="etService.metadata['ok']" style="margin-top: 10px;">
     <div class="row">
-      <div class="col-7 heading">
+      <div class="col h3 week-header">
+        Semaine du <span class="text-primary">{{datesService.semaineSelectionnee.debut | amDateFormat:'D MMMM YYYY'}}</span>
+        au <span class="text-primary">{{datesService.semaineSelectionnee.fin | amDateFormat:'D MMMM YYYY'}}</span>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <ngb-progressbar type="info" [value]="getWeekProgress()" [striped]="true">Progression de la semaine <b>{{getWeekProgress()}}%</b></ngb-progressbar>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-7 col-sm-12 heading">
         <div class="row">
-          <div class="col-md-4 col-sm-12">
+          <div class="col-md-4 col-sm-12 mb-3">
             <h5>Statistiques</h5>
             <div class="row">
               <div class="col-12">
@@ -48,7 +61,7 @@
               </div>
             </div>
           </div>
-          <div class="col-md-4 col-sm-12">
+          <div class="col-md-4 col-sm-12 mb-3">
             <h5>Vue</h5>
             <div class="btn-group take-width" ngbRadioGroup name="radioBasic" [(ngModel)]="vueType">
               <label ngbButtonLabel class="btn-primary take-width">
@@ -59,7 +72,7 @@
               </label>
             </div>
           </div>
-          <div class="col-md-4 col-sm-12">
+          <div class="col-md-4 col-sm-12 mb-3">
             <h5>Exclusions</h5>
             <div class="row" *ngFor="let e of exclusions">
               <div class="col-12">

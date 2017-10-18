@@ -1,13 +1,12 @@
-<div class="row mb-2">
+<div class="row mb-3">
   <div class="col">
-    Couleurs:
-    <span class="demo-cm">Cours</span>
-    <span class="demo-td">TD</span>
-    <span class="demo-tp">TP</span>
-    <span class="demo-autre">Autre</span>
+    <input type="text" class="form-control" placeholder="Recherche..." [(ngModel)]="sSearchFor">
+  </div>
+  <div class="col">
+    <button type="button" class="btn btn-outline-secondary float-right" [ngbPopover]="helpContent" popoverTitle="Code couleur" placement="left">Code couleur</button>
   </div>
 </div>
-<div class="row" *ngFor="let j of et.emploiTemps.jours">
+<div class="row mb-3 jour" *ngFor="let j of et.emploiTemps.jours">
   <ng-container *ngIf="j && j.cours.length > 0">
     <div class="col-12">
       <div class="row titre">
@@ -15,14 +14,17 @@
           <span class="jour-title-nom">{{j.nom}}</span> <span class="jour-title-date">{{j.date | amDateFormat:'D MMMM YYYY'}}</span>
         </div>
       </div>
-      <div class="row stats mb-1">
+      <div class="row stats mb-2">
         <div class="col-12">
           <span class="jour-stats-duree">{{j.premierCours.debut | date: 'HH:mm'}}&rarr;{{j.dernierCours.fin | date: 'HH:mm'}} ({{j.duree | duree}})</span>,
           <span *ngFor="let t of j.typesCount | objet; let i = index"><span *ngIf="i > 0">, </span><span class="jour-stats-type">{{t.value}}&nbsp;{{t.key}}</span></span>
         </div>
       </div>
       <div class="row">
-        <div class="col-lg-3 col-md-4 col-sm-6 mb-2" *ngFor="let cours of j.cours" [class.exclu]="cours.exclu">
+        <div class="col no-cours mb-2" *ngIf="(j.cours|coursfilter:sSearchFor).length == 0">
+          Aucun cours trouvé.
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6 mb-2" *ngFor="let cours of j.cours | coursfilter:sSearchFor" [class.exclu]="cours.exclu">
           <div class="cours" [class.td]="cours.type == 'TD'" [class.tp]="cours.type == 'TP'" [class.cm]="cours.type == 'Cours'" ngbPopover="{{getPopoverDetails(cours)}}" popoverTitle="{{getPopoverTitle(cours)}}" triggers="mouseenter:mouseleave">
             <div class="row">
               <div class="col-12 unoverflow temps">
@@ -53,3 +55,10 @@
     </div>
   </ng-container>
 </div>
+
+<ng-template #helpContent>
+  <span class="demo-cm">Cours</span>
+  <span class="demo-td">TD</span>
+  <span class="demo-tp">TP</span>
+  <span class="demo-autre">Autre</span>
+</ng-template>

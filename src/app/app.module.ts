@@ -28,6 +28,7 @@ import {ModalEtStatsComponent} from './modal/et-stats.component';
 
 // Pipes
 import {DateFilter} from './pipes/datefilter.pipe';
+import {CoursFilter} from './pipes/coursfilter.pipe';
 import {Duree} from './pipes/duree.pipe';
 import {Keys} from './pipes/keys.pipe';
 import {Objet} from './pipes/objet.pipe';
@@ -67,6 +68,7 @@ registerLocaleData(localeFR);
     ModalEtExclusionsComponent,
     ModalEtStatsComponent,
     DateFilter,
+    CoursFilter,
     Duree,
     Keys,
     Objet,

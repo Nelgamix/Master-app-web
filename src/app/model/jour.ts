@@ -14,7 +14,7 @@ export class Jour {
 
   constructor(cours) {
     this.nom = Jour.capitalizeFirstLetter(cours.debut.format('dddd'));
-    this.date = cours.debut;
+    this.date = cours.debut.clone().hours(0).minutes(0).seconds(0);
     this.cours = [];
   }
 

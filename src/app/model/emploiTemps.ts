@@ -7,6 +7,9 @@ export class EmploiTemps {
   cours: Cours[];
   jours: Jour[];
 
+  premierJour: Jour;
+  dernierJour: Jour;
+
   stats: {};
 
   constructor() {
@@ -79,6 +82,9 @@ export class EmploiTemps {
     this.stats['moyenneJours'] = {title: 'Moyenne par jour', value: moyenneJours};
     this.stats['nombreCours'] = {title: 'Nombre de cours', value: nombreCours};
     this.stats['nombreJours'] = {title: 'Nombre de jours', value: nombreJours};
+
+    this.premierJour = this.jours[0];
+    this.dernierJour = this.jours[this.jours.length - 1];
   }
 
   filterExclusions(exclusions) {

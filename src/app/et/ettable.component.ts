@@ -8,9 +8,10 @@ import {EmploiTempsService} from '../services/emploi-temps.service';
   styleUrls: ['./ettable.component.css']
 })
 export class EtTableComponent {
-  sHideDuration: boolean;
+  sSearchFor: string;
+
   constructor(public et: EmploiTempsService) {
-    this.sHideDuration = false;
+    this.sSearchFor = '';
   }
 
   getPopoverDetails(cours) {

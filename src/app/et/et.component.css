@@ -16,6 +16,10 @@ select:hover, .btn:hover {
 	user-select: none;
 }
 
+.week-header {
+  text-align: center;
+}
+
 #form-selection-date {
   float: right;
 }

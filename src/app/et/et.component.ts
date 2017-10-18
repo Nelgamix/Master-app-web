@@ -9,6 +9,8 @@ import {ModalEtExclusionsComponent} from '../modal/et-exclusions.component';
 import {ModalEtStatsComponent} from '../modal/et-stats.component';
 import {DatesService} from '../services/dates.service';
 
+import * as moment from 'moment';
+
 @Component({
   selector: 'app-et-root',
   templateUrl: './et.component.html',
@@ -20,7 +22,7 @@ export class EtComponent implements OnInit {
   vueType = 1;
   loading: any;
   exclusions = [];
-  selectedDate;
+  selectedDate: any;
 
   constructor(public etService: EmploiTempsService,
               public datesService: DatesService,
@@ -41,8 +43,8 @@ export class EtComponent implements OnInit {
    */
   private getDates(): void {
     this.datesService.updateDates(() => {
-      this.selectedDate = this.datesService.dateProche;
-      this.onChangeDate(this.datesService.dateProche);
+      this.selectedDate = this.datesService.semaineProche;
+      this.onChangeDate(this.datesService.semaineProche);
     });
   }
 
@@ -52,6 +54,7 @@ export class EtComponent implements OnInit {
    */
   onChangeDate(date): void {
     this.loading = true;
+    this.datesService.semaineSelectionnee = date;
     this.etService.updateData(date, () => {
       this.loading = false;
       this.etService.filterExclusions(this.exclusions);
@@ -67,6 +70,24 @@ export class EtComponent implements OnInit {
     }, r => {
       this.etService.filterExclusions(this.exclusions);
     });
+  }
+
+  getWeekProgress() {
+    if (!this.datesService.semaineSelectionnee) {
+      return 0;
+    }
+
+    const first = this.datesService.semaineSelectionnee.debut;
+    const last = this.datesService.semaineSelectionnee.fin;
+    const n = moment();
+
+    if (n.diff(first) < 0) {
+      return 0;
+    } else if (last.diff(n) < 0) {
+      return 100;
+    } else {
+      return (n.diff(first, 'days') / (last.diff(first, 'days'))) * 100;
+    }
   }
 
   openStats() {

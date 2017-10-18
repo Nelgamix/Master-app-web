@@ -12,7 +12,12 @@
 					"titre": "ADE G2",
 					"description": "Emploi du temps (groupe 2).",
 					"lien": "https://ade6-ujf.grenet.fr/direct/index.jsp?resources=9756&projectId=2&data=1d04874d83cdeb532b5be82d6dc7b4928036957750ce9817205161f6e22f6829f9355e402da57010f6819307ed738001824027a8904c9a5cef6f1a28ea35c418c025f5e16438a90e7406158408bd7b08"
-				}
+				},
+        {
+          "titre": "ADE G3",
+          "description": "Emploi du temps (groupe 3).",
+          "lien": "https://ade6-ujf.grenet.fr/direct/index.jsp?resources=12710&projectId=2&data=1d04874d83cdeb532b5be82d6dc7b4928036957750ce9817205161f6e22f6829f9355e402da57010f6819307ed738001824027a8904c9a5cef6f1a28ea35c418c025f5e16438a90e7406158408bd7b08"
+        }
 			]
 		},
 		{
@@ -84,8 +89,8 @@
 			"numero": 7,
 			"ue": [
 				{
-					"nom": "Sémantique des langages de programmation et compilation (SLPC)",
-					"type": "Programmation",
+					"nom": "SLPC | Sémantique des langages de programmation et compilation",
+					"type": "Général",
 					"liens": [
 						{
 							"nom": "Moodle",
@@ -98,8 +103,8 @@
 					]
 				},
 				{
-					"nom": "Génie logiciel (GL)",
-					"type": "Programmation",
+					"nom": "GL | Génie logiciel",
+					"type": "Général",
 					"liens": [
 						{
 							"nom": "Site",
@@ -108,8 +113,8 @@
 					]
 				},
 				{
-					"nom": "Conception et programmation par objets (CO)",
-					"type": "Programmation",
+					"nom": "CO | Conception et programmation par objets",
+					"type": "Conception",
 					"liens": [
 						{
 							"nom": "Moodle",
@@ -118,7 +123,7 @@
 					]
 				},
 				{
-					"nom": "Conception des systèmes d'exploitation et programmation concurrente (CSE)",
+					"nom": "CSE | Conception des systèmes d'exploitation et programmation concurrente",
 					"type": "Programmation",
 					"liens": [
 						{
@@ -128,8 +133,8 @@
 					]
 				},
 				{
-					"nom": "Base de données (BD)",
-					"type": "SQL",
+					"nom": "BD | Base de données",
+					"type": "Base de données",
 					"liens": [
 						{
 							"nom": "Moodle",
@@ -138,8 +143,8 @@
 					]
 				},
 				{
-					"nom": "Introduction aux réseaux",
-					"type": "Systèmes & réseaux",
+					"nom": "IR | Introduction aux réseaux",
+					"type": "Réseaux",
 					"liens": [
 						{
 							"nom": "Moodle",
@@ -152,7 +157,7 @@
 					]
 				},
 				{
-					"nom": "Technique des logiciels interactifs",
+					"nom": "TLI | Technique des logiciels interactifs",
 					"type": "IHM",
 					"liens": [
 						{
@@ -160,8 +165,8 @@
 							"lien": "https://im2ag-moodle.e.ujf-grenoble.fr/enrol/index.php?id=264"
 						},
 						{
-							"nom": "Archives",
-							"lien": "http://iihm.imag.fr/blanch/ens/2016-2017/M1/TLI/"
+							"nom": "Site",
+							"lien": "http://iihm.imag.fr/BLANCH/M1/TLI/"
 						}
 					]
 				},
@@ -174,7 +179,7 @@
 			"infos": "",
 			"liens": [
 				{
-					"nom": "Démo",
+					"nom": "Test (pas de lien)",
 					"lien": "#"
 				}
 			]
@@ -194,7 +199,7 @@
 		{
 			"numero": 10,
 			"ue": [],
-			"infos": "Semestre de stage. Normalement aucun cours, TD ou TP ne sera proposé.",
+			"infos": "Semestre de stage. Aucun cours, TD ou TP ne sera proposé.",
 			"liens": []
 		}
 	]
