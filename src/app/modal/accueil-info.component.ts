@@ -1,5 +1,6 @@
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {Component, Input} from '@angular/core';
+import {Semestre} from "../model/accueil/semestre";
 
 @Component({
   selector: 'app-modal-accueil-info',
@@ -7,7 +8,7 @@ import {Component, Input} from '@angular/core';
   styleUrls: ['./accueil-info.component.css']
 })
 export class ModalAccueilInfoComponent {
-  @Input() data;
+  @Input() data: Semestre;
 
   constructor(public activeModal: NgbActiveModal) {
   }

@@ -1,87 +1,81 @@
 {
-	"quickLinks": [
-		{
-			"couleur": "red",
-			"liens": [
-				{
-					"titre": "ADE G1",
-					"description": "Emploi du temps (groupe 1).",
-					"lien": "https://ade6-ujf.grenet.fr/direct/index.jsp?resources=9645&projectId=2&data=1d04874d83cdeb532b5be82d6dc7b4928036957750ce9817205161f6e22f6829f9355e402da57010f6819307ed738001824027a8904c9a5cef6f1a28ea35c418c025f5e16438a90e7406158408bd7b08"
-				},
-				{
-					"titre": "ADE G2",
-					"description": "Emploi du temps (groupe 2).",
-					"lien": "https://ade6-ujf.grenet.fr/direct/index.jsp?resources=9756&projectId=2&data=1d04874d83cdeb532b5be82d6dc7b4928036957750ce9817205161f6e22f6829f9355e402da57010f6819307ed738001824027a8904c9a5cef6f1a28ea35c418c025f5e16438a90e7406158408bd7b08"
-				},
-        {
-          "titre": "ADE G3",
-          "description": "Emploi du temps (groupe 3).",
-          "lien": "https://ade6-ujf.grenet.fr/direct/index.jsp?resources=12710&projectId=2&data=1d04874d83cdeb532b5be82d6dc7b4928036957750ce9817205161f6e22f6829f9355e402da57010f6819307ed738001824027a8904c9a5cef6f1a28ea35c418c025f5e16438a90e7406158408bd7b08"
-        }
-			]
-		},
-		{
-			"couleur": "dodgerblue",
-			"liens": [
-				{
-					"titre": "Zimbra UGA",
-					"description": "La messagerie personnelle pour les étudiants de l'UGA.",
-					"lien": "https://webmail.etu.univ-grenoble-alpes.fr"
-				},
-				{
-					"titre": "Moodle",
-					"description": "Le moodle global de l'IM²AG. Regroupe les enseignements du Master.",
-					"lien": "https://im2ag-moodle.e.ujf-grenoble.fr/course/index.php?categoryid=30"
-				},
-				{
-					"titre": "Vie de la filière",
-					"description": "Toutes les informations importantes (dates, options...) du Master.",
-					"lien": "https://im2ag-moodle.e.ujf-grenoble.fr/mod/page/view.php?id=12923"
-				}
-			]
-		}
+	"primaire": [
+		[
+      {
+        "nom": "ADE G1",
+        "description": "Emploi du temps (groupe 1).",
+        "url": "https://ade6-ujf.grenet.fr/direct/index.jsp?resources=9645&projectId=2&data=1d04874d83cdeb532b5be82d6dc7b4928036957750ce9817205161f6e22f6829f9355e402da57010f6819307ed738001824027a8904c9a5cef6f1a28ea35c418c025f5e16438a90e7406158408bd7b08"
+      },
+      {
+        "nom": "ADE G2",
+        "description": "Emploi du temps (groupe 2).",
+        "url": "https://ade6-ujf.grenet.fr/direct/index.jsp?resources=9756&projectId=2&data=1d04874d83cdeb532b5be82d6dc7b4928036957750ce9817205161f6e22f6829f9355e402da57010f6819307ed738001824027a8904c9a5cef6f1a28ea35c418c025f5e16438a90e7406158408bd7b08"
+      },
+      {
+        "nom": "ADE G3",
+        "description": "Emploi du temps (groupe 3).",
+        "url": "https://ade6-ujf.grenet.fr/direct/index.jsp?resources=12710&projectId=2&data=1d04874d83cdeb532b5be82d6dc7b4928036957750ce9817205161f6e22f6829f9355e402da57010f6819307ed738001824027a8904c9a5cef6f1a28ea35c418c025f5e16438a90e7406158408bd7b08"
+      }
+    ],
+		[
+      {
+        "nom": "Zimbra UGA",
+        "description": "La messagerie personnelle pour les étudiants de l'UGA.",
+        "url": "https://webmail.etu.univ-grenoble-alpes.fr"
+      },
+      {
+        "nom": "Moodle",
+        "description": "Le moodle global de l'IM²AG. Regroupe les enseignements du Master.",
+        "url": "https://im2ag-moodle.e.ujf-grenoble.fr/course/index.php?categoryid=30"
+      },
+      {
+        "nom": "Vie de la filière",
+        "description": "Toutes les informations importantes (dates, options...) du Master.",
+        "url": "https://im2ag-moodle.e.ujf-grenoble.fr/mod/page/view.php?id=12923"
+      }
+    ]
 	],
-	"otherLinks": [
+	"secondaire": [
 		{
 			"nom": "UGA",
-			"lien": [
+			"liens": [
 				{
 					"nom": "Portail",
-					"lien": "http://www.univ-grenoble-alpes.fr"
+					"url": "http://www.univ-grenoble-alpes.fr"
 				},
 				{
 					"nom": "Page du master",
-					"lien": "http://formations.univ-grenoble-alpes.fr/fr/catalogue/master-XB/sciences-technologies-sante-STS/master-informatique-program-master-informatique.html"
+					"url": "http://formations.univ-grenoble-alpes.fr/fr/catalogue/master-XB/sciences-technologies-sante-STS/master-informatique-program-master-informatique.html"
 				},
 				{
 					"nom": "Page de la 1ère année",
-					"lien": "http://formations.univ-grenoble-alpes.fr/fr/catalogue/master-XB/sciences-technologies-sante-STS/master-informatique-program-master-informatique/parcours-informatique-classique-1re-annee-subprogram-parcours-genie-informatique-informatique-m1-classique.html"
+					"url": "http://formations.univ-grenoble-alpes.fr/fr/catalogue/master-XB/sciences-technologies-sante-STS/master-informatique-program-master-informatique/parcours-informatique-classique-1re-annee-subprogram-parcours-genie-informatique-informatique-m1-classique.html"
 				},
 				{
 					"nom": "Page de la 2ème année",
-					"lien": "http://formations.univ-grenoble-alpes.fr/fr/catalogue/master-XB/sciences-technologies-sante-STS/master-informatique-program-master-informatique/parcours-genie-informatique-classique-2e-annee-subprogram-genie-informatique-m2-classique.html"
+					"url": "http://formations.univ-grenoble-alpes.fr/fr/catalogue/master-XB/sciences-technologies-sante-STS/master-informatique-program-master-informatique/parcours-genie-informatique-classique-2e-annee-subprogram-genie-informatique-m2-classique.html"
 				}
 			]
 		},
 		{
 			"nom": "GitHub",
-			"lien": "https://github.com/"
+			"url": "https://github.com/"
 		},
 		{
 			"nom": "Stack Overflow",
-			"lien": "https://stackoverflow.com/"
+			"url": "https://stackoverflow.com/"
 		},
 		{
 			"nom": "Developpez.com",
-			"lien": "https://www.developpez.com/"
+			"url": "https://www.developpez.com/"
 		},
 		{
 			"nom": "Hardware.fr",
-			"lien": "http://www.hardware.fr/"
+			"url": "http://www.hardware.fr/"
 		},
 		{
 			"nom": "GSMArena",
-			"lien": "http://www.gsmarena.com/"
+			"url": "http://www.gsmarena.com/"
 		}
 	],
 	"semestres": [
@@ -89,84 +83,91 @@
 			"numero": 7,
 			"ue": [
 				{
-					"nom": "SLPC | Sémantique des langages de programmation et compilation",
+					"nom": "Sémantique des langages de programmation et compilation",
+          "initiales": "SLPC",
 					"type": "Général",
 					"liens": [
 						{
 							"nom": "Moodle",
-							"lien": "https://im2ag-moodle.e.ujf-grenoble.fr/enrol/index.php?id=243"
+							"url": "https://im2ag-moodle.e.ujf-grenoble.fr/enrol/index.php?id=243"
 						},
 						{
 							"nom": "Autre",
-							"lien": "#"
+							"url": "#"
 						}
 					]
 				},
 				{
-					"nom": "GL | Génie logiciel",
+					"nom": "Génie logiciel",
+          "initiales": "GL",
 					"type": "Général",
 					"liens": [
 						{
 							"nom": "Site",
-							"lien": "http://lig-membres.imag.fr/lalanda/lectures/lectures.php"
+							"url": "http://lig-membres.imag.fr/lalanda/lectures/lectures.php"
 						}
 					]
 				},
 				{
-					"nom": "CO | Conception et programmation par objets",
+					"nom": "Conception et programmation par objets",
+          "initiales": "CO",
 					"type": "Conception",
 					"liens": [
 						{
 							"nom": "Moodle",
-							"lien": "https://im2ag-moodle.e.ujf-grenoble.fr/course/view.php?id=204"
+							"url": "https://im2ag-moodle.e.ujf-grenoble.fr/course/view.php?id=204"
 						}
 					]
 				},
 				{
-					"nom": "CSE | Conception des systèmes d'exploitation et programmation concurrente",
+					"nom": "Conception des systèmes d'exploitation et programmation concurrente",
+          "initiales": "CSE",
 					"type": "Programmation",
 					"liens": [
 						{
 							"nom": "Moodle",
-							"lien": "https://im2ag-moodle.e.ujf-grenoble.fr/course/view.php?id=104"
+							"url": "https://im2ag-moodle.e.ujf-grenoble.fr/course/view.php?id=104"
 						}
 					]
 				},
 				{
-					"nom": "BD | Base de données",
+					"nom": "Base de données",
+          "initiales": "BD",
 					"type": "Base de données",
 					"liens": [
 						{
 							"nom": "Moodle",
-							"lien": "https://im2ag-moodle.e.ujf-grenoble.fr/course/view.php?id=67"
+							"url": "https://im2ag-moodle.e.ujf-grenoble.fr/course/view.php?id=67"
 						}
 					]
 				},
 				{
-					"nom": "IR | Introduction aux réseaux",
+					"nom": "Introduction aux réseaux",
+          "initiales": "IR",
 					"type": "Réseaux",
 					"liens": [
 						{
 							"nom": "Moodle",
-							"lien": "https://im2ag-moodle.e.ujf-grenoble.fr/course/view.php?id=85"
+							"url": "https://im2ag-moodle.e.ujf-grenoble.fr/course/view.php?id=85"
 						},
 						{
 							"nom": "Site",
-							"lien": "http://lig-membres.imag.fr/sicard/M1.html"
+							"url": "http://lig-membres.imag.fr/sicard/M1.html"
 						}
 					]
 				},
 				{
-					"nom": "TLI | Technique des logiciels interactifs",
+					"nom": "Technique des logiciels interactifs",
+          "initiales": "TLI",
 					"type": "IHM",
 					"liens": [
 						{
 							"nom": "Moodle",
-							"lien": "https://im2ag-moodle.e.ujf-grenoble.fr/enrol/index.php?id=264"
+							"url": "https://im2ag-moodle.e.ujf-grenoble.fr/enrol/index.php?id=264"
 						},
 						{
 							"nom": "Site",
-							"lien": "http://iihm.imag.fr/BLANCH/M1/TLI/"
+							"url": "http://iihm.imag.fr/BLANCH/M1/TLI/"
 						}
 					]
 				},
@@ -180,7 +181,7 @@
 			"liens": [
 				{
 					"nom": "Test (pas de lien)",
-					"lien": "#"
+					"url": "#"
 				}
 			]
 		},

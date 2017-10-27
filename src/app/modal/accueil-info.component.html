@@ -1,5 +1,5 @@
 <div class="modal-header">
-	<h5 class="modal-title">Liens additionnels &amp; infos du semestre {{data.numero}}</h5>
+	<h5 class="modal-title">Liens additionnels &amp; infos du semestre {{data.getNumero()}}</h5>
 	<button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
 		<span aria-hidden="true">&times;</span>
 	</button>
@@ -7,22 +7,22 @@
 <div class="modal-body">
 	<div>
 		<h4>Informations</h4>
-		<ng-container *ngIf="data.infos.length == 0">
+		<ng-container *ngIf="data.getInfos().length == 0">
 			<span style="font-style: italic;">Aucune information fournie&hellip;</span>
 		</ng-container>
-		<ng-container *ngIf="data.infos.length > 0">
-			<p>{{data.infos}}</p>
+		<ng-container *ngIf="data.getInfos().length > 0">
+			<p>{{data.getInfos()}}</p>
 		</ng-container>
 	</div>
 	<hr />
 	<div>
 		<h4>Liens</h4>
-		<ng-container *ngIf="data.liens.length == 0">
+		<ng-container *ngIf="data.getLiens().length == 0">
 			<span style="font-style: italic;">Aucun lien fourni&hellip;</span>
 		</ng-container>
-		<ng-container *ngIf="data.liens.length > 0">
-			<ng-container *ngFor="let l of data.liens">
-				<a class="btn btn-warning btn-sm" style="width: 100%;" href="{{l.lien}}" *ngIf="l.nom.length > 0">{{l.nom}}</a>
+		<ng-container *ngIf="data.getLiens().length > 0">
+			<ng-container *ngFor="let l of data.getLiens()">
+				<a class="btn btn-warning btn-sm" style="width: 100%;" href="{{l.getUrl()}}" *ngIf="l.getNom().length > 0">{{l.getNom()}}</a>
 			</ng-container>
 		</ng-container>
 	</div>

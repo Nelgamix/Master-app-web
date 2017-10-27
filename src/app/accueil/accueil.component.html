@@ -1,93 +1,80 @@
 <div class="container contenu">
-  <div class="row" id="parametres">
-    <div class="col text-right">
-      <label class="custom-control custom-checkbox">
-        <input type="checkbox" class="custom-control-input" [(ngModel)]="openInNewTab">
-        <span class="custom-control-indicator"></span>
-        <span class="custom-control-description">Ouvrir les liens dans un nouvel onglet</span>
-      </label>
-    </div>
-  </div>
-
-  <div class="row" id="section-quick-links">
+  <div class="row titre">
     <div class="col">
-      <h4>
-        <img src="assets/earth-globe.svg" alt="Earth icon" height="26">&nbsp;Quick Links
-      </h4>
-
-      <hr>
-
-      <div class="row quick-group" *ngFor="let g of quickLinks; let i = index"
-           [class.red]="i == 0"
-           [class.blue]="i == 1"
-           [class.default]="i > 1">
-        <div class="col quick-link" (click)="openWeb(l.lien)" *ngFor="let l of g.liens">
-          <div class="quick-link-header">
-            <h5>{{l.titre}}</h5>
-          </div>
-          <div class="quick-link-text">
-            {{l.description}}
-          </div>
+      <h3>Liens importants</h3>
+    </div>
+  </div>
+  <div class="row mb-2 mt-1">
+    <div class="col-lg-4 col-md-6 col-sm-12 mb-1" *ngFor="let l of liensPrimaires">
+      <a class="quick-link" href="{{l.getUrl()}}">
+        <div>
+          <h5><b>{{l.getNom()}}</b></h5>
         </div>
-      </div>
+        <div>
+          {{l.getDescription()}}
+        </div>
+      </a>
     </div>
   </div>
 
-  <div class="row" id="section-semestres">
-    <div class="col-2">
-      <h5>Liens additionnels</h5>
-
-      <div class="row lien-additionnel" *ngFor="let l of otherLinks; let i = index">
-        <div class="col-12" *ngIf="typeCheckArray(l.lien)">
-          <div ngbDropdown>
-            <button class="btn btn-outline-primary btn-sm take-width" id="dropdown{{i}}" ngbDropdownToggle>{{l.nom}}</button>
-            <div ngbDropdownMenu attr.aria-labelledby="dropdown{{i}}">
-              <button class="dropdown-item" *ngFor="let o of l.lien" (click)="openWeb(o.lien)">{{o.nom}}</button>
-            </div>
+  <div class="row titre">
+    <div class="col">
+      <h3>Liens secondaires</h3>
+    </div>
+  </div>
+  <div class="row mb-2">
+    <div class="col">
+      <ng-container *ngFor="let g of groupesSecondaires; let i = index">
+        <div ngbDropdown>
+          <button class="btn btn-outline-warning m-1" id="dropdown{{i}}" ngbDropdownToggle>{{g.getNom()}}</button>
+          <div ngbDropdownMenu attr.aria-labelledby="dropdown{{i}}">
+            <a class="dropdown-item" *ngFor="let o of g.getLiens()" href="{{o.getUrl()}}">{{o.nom}}</a>
           </div>
         </div>
-        <div class="col-12" *ngIf="!typeCheckArray(l.lien)">
-          <button class="btn btn-outline-primary btn-sm take-width" (click)="openWeb(l.lien)">{{l.nom}}</button>
-        </div>
-      </div>
+      </ng-container>
     </div>
+  </div>
+  <div class="row mb-2">
+    <div class="col">
+      <a class="btn btn-outline-primary m-1" href="{{l.getUrl()}}" *ngFor="let l of liensSecondaires">{{l.getNom()}}</a>
+    </div>
+  </div>
 
-    <div class="col-10">
-      <h4>
-        <img src="assets/book.svg" alt="Book icon" height="26">&nbsp;Semestres
-      </h4>
-
-      <hr>
-
+  <div class="row titre">
+    <div class="col">
+      <h3>Semestres</h3>
+    </div>
+  </div>
+  <div class="row mb-1">
+    <div class="col">
       <ngb-tabset #tab="ngbTabset">
-        <ngb-tab id="tab{{s.numero}}" title="Semestre {{s.numero}}" *ngFor="let s of semestres">
+        <ngb-tab id="tab{{s.getNumero()}}" title="Semestre {{s.getNumero()}}" *ngFor="let s of semestres">
           <ng-template ngbTabContent>
-            <table class="table table-sm table-bordered table-responsive">
-              <thead>
-              <tr>
-                <th>UE</th>
-                <th>Type</th>
-                <th>Liens</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr *ngFor="let u of s.ue">
-                <td style="font-weight: bold;">{{u.nom}}</td>
-                <td style="font-style: italic;">{{u.type}}</td>
-                <td>
-                  <ng-container *ngFor="let l of u.liens; let i = index">
-                    <a class="btn btn-sm" href="{{l.lien}}" [class.btn-primary]="i==0" [class.btn-info]="i==1" [class.btn-default]="i>=2">
-                      {{l.nom}}
-                    </a>
-                  </ng-container>
-                </td>
-              </tr>
-              </tbody>
-            </table>
+            <div class="row">
+              <div class="col-lg-6 col-md-6 mb-1" *ngFor="let ue of s.getUe()">
+                <div class="ue">
+                  <div class="row">
+                    <div class="col text-center unoverflow">
+                      <span *ngIf="ue.getInitiales().length > 0">[{{ue.getInitiales()}}] </span>{{ue.getNom()}}
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col text-center">
+                      <i>{{ue.getTypeS()}}</i>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col text-center">
+                      <a href="{{l.getUrl()}}" class="btn btn-sm btn-outline-info m-1" *ngFor="let l of ue.getLiens()">{{l.getNom()}}</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
             <div class="liensAdd">
               <h5>Liens additionnels &amp; infos</h5>
               <button class="btn btn-outline-primary btn-sm take-width" type="button" (click)="onClickOpenModal(s)">
-                Voir les infos &amp; liens du semestre {{s.numero}}
+                Voir les infos &amp; liens du semestre {{s.getNumero()}}
               </button>
             </div>
           </ng-template>

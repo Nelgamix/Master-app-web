@@ -6,7 +6,11 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ModalAccueilInfoComponent} from '../modal/accueil-info.component';
 
 import * as moment from 'moment';
-import * as tinycolor from 'tinycolor2';
+import {Semestre} from '../model/accueil/semestre';
+import {Lien} from '../model/accueil/lien';
+import {Groupe} from '../model/accueil/groupe';
+import {UeType} from '../model/accueil/ueType';
+import {UE} from '../model/accueil/ue';
 
 @Component({
   selector: 'app-accueil-root',
@@ -14,29 +18,23 @@ import * as tinycolor from 'tinycolor2';
   styleUrls: ['./accueil.component.css']
 })
 export class AccueilComponent implements OnInit, OnDestroy {
-  readonly openInNewTabCookie = 'accueil-oint';
-
-  quickLinks: any;
-  otherLinks: any;
-  semestres: any;
-
-  openInNewTab: boolean;
+  semestres: Array<Semestre> = [];
+  liensPrimaires: Array<Lien> = [];
+  liensSecondaires: Array<Lien> = [];
+  groupesSecondaires: Array<Groupe> = [];
 
   @ViewChild('tab') tab;
 
   constructor(private http: HttpClient, private modalService: NgbModal, private cookiesService: CookieService) {
-    this.openInNewTab = false;
+  }
+
+  private static parseLien(lien: string): Lien {
+    return new Lien(lien['nom'], lien['description'], lien['url']);
   }
 
   ngOnInit(): void {
-    if (this.cookiesService.check(this.openInNewTabCookie)) {
-      this.openInNewTab = JSON.parse(this.cookiesService.get(this.openInNewTabCookie));
-    }
-
     this.http.get('assets/data.json').subscribe(data => {
-      this.quickLinks = data['quickLinks'];
-      this.otherLinks = data['otherLinks'];
-      this.semestres = data['semestres'];
+      this.parseData(data);
 
       const now = moment();
       if (now < moment([2018, 1, 15])) {
@@ -52,25 +50,68 @@ export class AccueilComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.cookiesService.set(this.openInNewTabCookie, JSON.stringify(this.openInNewTab));
   }
 
-  openWeb(lien): void {
-    if (!this.openInNewTab) {
-      // Ouvrir directement (comme un <a>)
-      window.location.href = lien;
-    } else {
-      // Ouvrir nouvel onglet
-      window.open(lien);
+  private parseData(data: any): void {
+    const semestres: Array<Semestre> = [];
+    const liensPrimaires: Array<Lien> = [];
+    const liensSecondaires: Array<Lien> = [];
+    const groupesSecondaires: Array<Groupe> = [];
+
+    for (const g of data['primaire']) { // pour chaque groupe
+      for (const l of g) { // pour chaque lien
+        liensPrimaires.push(AccueilComponent.parseLien(l));
+      }
     }
+
+    let gtmp;
+    for (const l of data['secondaire']) { // pour chaque lien
+      if (l['liens'] != null) {
+        gtmp = new Groupe(l['nom']);
+        for (const ll of l['liens']) {
+          gtmp.ajoutLien(AccueilComponent.parseLien(ll));
+        }
+
+        groupesSecondaires.push(gtmp);
+      } else {
+        liensSecondaires.push(AccueilComponent.parseLien(l));
+      }
+    }
+
+    let stmp, uetmp, ttmp;
+    for (const s of data['semestres']) {
+      stmp = new Semestre(s['numero'], s['infos']);
+      for (const ue of s['ue']) {
+        for (const t in UeType) {
+          if (isNaN(Number(t)) && UeType[t] === ue['type']) {
+            ttmp = UeType[t];
+            break;
+          }
+        }
+
+        uetmp = new UE(ue['nom'], ue['initiales'], ttmp);
+        for (const l of ue['liens']) {
+          uetmp.ajoutLien(AccueilComponent.parseLien(l));
+        }
+
+        stmp.ajoutUe(uetmp);
+      }
+
+      for (const l of s['liens']) {
+        stmp.ajoutLien(AccueilComponent.parseLien(l));
+      }
+
+      semestres.push(stmp);
+    }
+
+    this.semestres = semestres;
+    this.liensPrimaires = liensPrimaires;
+    this.liensSecondaires = liensSecondaires;
+    this.groupesSecondaires = groupesSecondaires;
   }
 
   onClickOpenModal(semestreData): void {
     const modalRef = this.modalService.open(ModalAccueilInfoComponent);
     modalRef.componentInstance.data = semestreData;
-  }
-
-  typeCheckArray(val) {
-    return val instanceof Array;
   }
 }

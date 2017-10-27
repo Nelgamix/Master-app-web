@@ -1,5 +1,3 @@
-import {Component} from '@angular/core';
-import {OnInit} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {CookieService} from 'ngx-cookie-service';
 
@@ -10,6 +8,7 @@ import {ModalEtStatsComponent} from '../modal/et-stats.component';
 import {DatesService} from '../services/dates.service';
 
 import * as moment from 'moment';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-et-root',
@@ -23,6 +22,7 @@ export class EtComponent implements OnInit {
   loading: any;
   exclusions = [];
   selectedDate: any;
+  weekProgress: number;
 
   constructor(public etService: EmploiTempsService,
               public datesService: DatesService,
@@ -59,6 +59,7 @@ export class EtComponent implements OnInit {
       this.loading = false;
       this.etService.filterExclusions(this.exclusions);
     });
+    this.updateWeekProgress();
   }
 
   openExclusions() {
@@ -72,23 +73,25 @@ export class EtComponent implements OnInit {
     });
   }
 
-  // TODO: tweak to not call entire function each time
-  getWeekProgress() {
+  private updateWeekProgress(): void {
+    let wp;
     if (!this.datesService.semaineSelectionnee) {
-      return 0;
-    }
-
-    const first = this.datesService.semaineSelectionnee.debut;
-    const last = this.datesService.semaineSelectionnee.fin;
-    const n = moment();
-
-    if (n.diff(first) < 0) {
-      return 0;
-    } else if (last.diff(n) < 0) {
-      return 100;
+      wp = -1;
     } else {
-      return (n.diff(first, 'days') / (last.diff(first, 'days'))) * 100;
+      const first = this.datesService.semaineSelectionnee.debut.clone().add(8, 'h');
+      const last = this.datesService.semaineSelectionnee.fin.clone().add(18, 'h');
+      const n = moment();
+
+      if (n.diff(first) < 0) {
+        wp = 0;
+      } else if (last.diff(n) < 0) {
+        wp = 100;
+      } else {
+        wp = (n.diff(first, 'minutes') / (last.diff(first, 'minutes'))) * 100;
+      }
     }
+
+    this.weekProgress = wp;
   }
 
   openStats() {

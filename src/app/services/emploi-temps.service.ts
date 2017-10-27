@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 
-import {EmploiTemps} from '../model/emploiTemps';
+import {EmploiTemps} from '../model/et/emploiTemps';
 import {HttpClient} from '@angular/common/http';
 import * as moment from 'moment';
 import {GlobalVariable} from '../globals';

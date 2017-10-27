@@ -35,7 +35,7 @@
 
         <div class="row">
           <div class="col">
-            <ngb-progressbar type="info" [value]="getWeekProgress()" [striped]="true">Progression de la semaine <b>{{getWeekProgress()}}%</b></ngb-progressbar>
+            <ngb-progressbar type="info" [value]="weekProgress" [striped]="true">Progression de la semaine&nbsp;<b>{{weekProgress | number}}%</b></ngb-progressbar>
           </div>
         </div>
       </div>

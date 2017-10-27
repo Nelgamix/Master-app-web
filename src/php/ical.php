@@ -1,15 +1,9 @@
 <?php
-    /*
-    TODO:
-        * Testing
-        * Doc
-    */
-    // ADE URL EX: http://ade6-ujf-ro.grenet.fr/jsp/custom/modules/plannings/anonymous_cal.jsp?resources=9645&projectId=2&calType=ical&firstDate=2017-09-11&lastDate=2017-09-15
-
     require_once 'vendor/autoload.php';
     use ICal\ICal;
 
-    define("URLTIMEOUT", 4);
+    define("URLTIMEOUT", 4); // request timeout before considering that ADE is down
+    define("REFRESHINTERVAL", 3*60); // Refresh ical each REFRESHINTERVAL minutes
 
     define("SERVERNAME", "db692101902.db.1and1.com");
     define("DBNAME", "db692101902");
@@ -250,7 +244,7 @@
                 if ($this->init_from_db() && $this->data_in_db) // les données ont été récup depuis la BD
                 {
                     $d = clone $this->updated;
-                    $d->modify("+12 hours");
+                    $d->modify("+" . REFRESHINTERVAL . " minutes");
                     $now = new DateTime("now");
 
                     if ($now > $d && $ade_online) // On doit update depuis ADE
