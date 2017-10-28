@@ -17,6 +17,7 @@ import {
 } from '@angular/animations';
 
 import * as moment from 'moment';
+import {GlobalVariable} from "../globals";
 
 /*
 TODO:
@@ -86,8 +87,7 @@ export class EvenementsComponent implements OnInit {
 
   get(): void {
     this.evenements = [];
-    const test = false;
-    if (!test) {
+    if (!GlobalVariable.LOCAL_DEV) {
       this.sendRequest({req: 'get'}, data => {
         if (data && data.success) {
           if (data.success) {
@@ -109,7 +109,7 @@ export class EvenementsComponent implements OnInit {
         fin: '2017-08-10 18:00',
         info: 'Info ici',
         type: 'Vie de la filière',
-        url: ''
+        url: 'http://www.google.fr/search?q=le%20lien%20marche'
       }));
       this.evenements.push(new Evenement({
         id: 0,
@@ -125,7 +125,7 @@ export class EvenementsComponent implements OnInit {
         fin: '2017-08-15 13:00',
         info: 'Info ici',
         type: 'Devoirs à rendre',
-        url: ''
+        url: 'http://www.google.fr/search?q=autre%20lien%20ici'
       }));
       this.evenements.push(new Evenement({
         id: 0,
