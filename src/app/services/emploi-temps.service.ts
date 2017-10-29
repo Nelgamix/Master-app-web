@@ -46,7 +46,7 @@ export class EmploiTempsService {
 
   updateData(date, cb) {
     if (GlobalVariable.LOCAL_DEV) {
-      this.http.get('assets/etServiceTest.json').subscribe(data => this.loadData(data, cb));
+      this.http.get('assets/offline/etServiceTest.json').subscribe(data => this.loadData(data, cb));
     } else {
       this.http.get('php/ical.php?year=' + date.year + '&week=' + date.week).subscribe(data => this.loadData(data, cb));
     }

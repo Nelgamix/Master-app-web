@@ -1,4 +1,3 @@
-import {RouterModule, Routes} from '@angular/router';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NgModule, LOCALE_ID} from '@angular/core';
@@ -42,15 +41,7 @@ import {DatesService} from './services/dates.service';
 import {EvenementComponent} from './evenements/evenement.component';
 import {EtVisuelComponent} from './et/etvisuel.component';
 import {EtTableComponent} from './et/ettable.component';
-
-const appRoutes: Routes = [
-  {path: 'accueil', component: AccueilComponent},
-  {path: 'et', component: EtComponent},
-  {path: 'evenements', component: EvenementsComponent},
-  {path: 'contact', component: ContactComponent},
-  {path: '', redirectTo: '/accueil', pathMatch: 'full'},
-  {path: '**', component: PageNotFoundComponent}
-];
+import {AppRoutingModule} from './app-routing.module';
 
 registerLocaleData(localeFR);
 
@@ -79,7 +70,7 @@ registerLocaleData(localeFR);
   ],
   imports: [
     CommonModule,
-    RouterModule.forRoot(appRoutes/*, {useHash: true}*/),
+    AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
@@ -103,5 +94,4 @@ registerLocaleData(localeFR);
     ModalEtStatsComponent
   ]
 })
-export class AppModule {
-}
+export class AppModule {}

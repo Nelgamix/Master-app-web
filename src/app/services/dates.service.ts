@@ -25,9 +25,11 @@ export class DatesService {
     this.premiereSemaine = this.semaines[0]; // première semaine dispo dans les dates
     this.derniereSemaine = this.semaines[this.semaines.length - 1]; // dernière semaine dispo
 
-    if (nowYear < this.premiereSemaine.year || (nowYear === this.premiereSemaine.year && nowWeek < this.premiereSemaine.week)) { // on est avant
+    if (nowYear < this.premiereSemaine.year ||
+       (nowYear === this.premiereSemaine.year && nowWeek < this.premiereSemaine.week)) { // on est avant
       this.semaineProche = this.premiereSemaine;
-    } else if (nowYear > this.derniereSemaine.year || (nowYear === this.derniereSemaine.year && nowWeek > this.derniereSemaine.week)) { // on est après
+    } else if (nowYear > this.derniereSemaine.year ||
+              (nowYear === this.derniereSemaine.year && nowWeek > this.derniereSemaine.week)) { // on est après
       this.semaineProche = this.derniereSemaine;
     } else { // on est dedans
       for (const d of this.semaines) {
@@ -76,7 +78,7 @@ export class DatesService {
 
   updateDates(cb) {
     if (GlobalVariable.LOCAL_DEV) {
-      this.http.get('assets/datesServiceTest.json').subscribe(data => this.loadDates(data, cb));
+      this.http.get('assets/offline/datesServiceTest.json').subscribe(data => this.loadDates(data, cb));
     } else {
       this.http.get('php/dates.php').subscribe(data => this.loadDates(data, cb));
     }
