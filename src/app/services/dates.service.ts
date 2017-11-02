@@ -76,6 +76,30 @@ export class DatesService {
     }
   }
 
+  nextWeek(): void {
+    if (this.semaineSelectionnee === this.derniereSemaine) {
+      return;
+    }
+
+    this.semaineSelectionnee = this.semaines[this.semaines.indexOf(this.semaineSelectionnee) + 1];
+  }
+
+  previousWeek(): void {
+    if (this.semaineSelectionnee === this.premiereSemaine) {
+      return;
+    }
+
+    this.semaineSelectionnee = this.semaines[this.semaines.indexOf(this.semaineSelectionnee) - 1];
+  }
+
+  nowWeek(): void {
+    if (this.semaineProche === null) {
+      return;
+    }
+
+    this.semaineSelectionnee = this.semaineProche;
+  }
+
   updateDates(cb) {
     if (GlobalVariable.LOCAL_DEV) {
       this.http.get('assets/offline/datesServiceTest.json').subscribe(data => this.loadDates(data, cb));

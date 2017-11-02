@@ -94,6 +94,24 @@ export class EtComponent implements OnInit {
     this.weekProgress = wp;
   }
 
+  previousWeek() {
+    this.datesService.previousWeek();
+    this.updateSemaine();
+  }
+  nextWeek() {
+    this.datesService.nextWeek();
+    this.updateSemaine();
+  }
+  nowWeek() {
+    this.datesService.nowWeek();
+    this.updateSemaine();
+  }
+
+  private updateSemaine() {
+    this.selectedDate = this.datesService.semaineSelectionnee;
+    this.onChangeDate(this.selectedDate);
+  }
+
   openStats() {
     const modalRef = this.modalService.open(ModalEtStatsComponent);
     modalRef.componentInstance.stats = this.etService.emploiTemps.stats;

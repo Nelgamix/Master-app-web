@@ -1,17 +1,20 @@
 <div class="container contenu">
   <div class="row mb-2">
-    <div class="col-md-6 col-sm-12">
+    <div class="col-md-5 col-sm-12">
       <span class="align-middle ade-status" *ngIf="etService.metadata['adeOnline']" style="color: green;">ADE est en ligne!</span>
       <span class="align-middle ade-status" *ngIf="!etService.metadata['adeOnline']" style="color: red;">ADE est hors-ligne!</span>
       <span class="align-middle last-updated">Dernière mise à jour <b>{{etService.metadata['lastUpdated'] | amTimeAgo}}</b></span> <!-- ou date:'dd-MM-y HH:mm' -->
     </div>
 
-    <div class="col-md-6 col-sm-12">
+    <div class="col-md-7 col-sm-12">
       <form class="form-inline" id="form-selection-date">
         <label for="selDate" class="mr-2">Sélection de la semaine</label>
+        <button class="btn btn-outline-danger mr-2" (click)="nowWeek()">&#8630;</button>
+        <button class="btn btn-light" (click)="previousWeek()">&lArr;</button>
         <select [(ngModel)]="selectedDate" (ngModelChange)="onChangeDate($event)" class="custom-select" name="selDate" id="selDate">
           <option [ngValue]="i" *ngFor="let i of datesService.semaines">{{i.debut | amDateFormat:'YYYY-MM-DD'}} &rarr; {{i.fin | amDateFormat:'YYYY-MM-DD'}}</option>
         </select>
+        <button class="btn btn-light" (click)="nextWeek()">&rArr;</button>
       </form>
     </div>
   </div>
