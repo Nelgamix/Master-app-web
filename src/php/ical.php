@@ -2,19 +2,34 @@
     require_once 'vendor/autoload.php';
     use ICal\ICal;
 
-    define("URLTIMEOUT", 4); // request timeout before considering that ADE is down
-    define("REFRESHINTERVAL", 3*60); // Refresh ical each REFRESHINTERVAL minutes
+    define("DEBUG", false);
+    define("TRUEOUTPUT", true);
 
-    define("SERVERNAME", "db692101902.db.1and1.com");
-    define("DBNAME", "db692101902");
-    define("USERNAME", "dbo692101902");
-    define("PASSWORD", "eE_8O*fdNQ");
+    define("URLTIMEOUT", 4); // request timeout before considering that ADE is down
+    define("REFRESHINTERVAL", 2*60); // Refresh ical each REFRESHINTERVAL minutes
+
+    define("SERVERNAME", "skysurfoatnico.mysql.db");
+    define("DBNAME", "skysurfoatnico");
+    define("USERNAME", "skysurfoatnico");
+    define("PASSWORD", "eE80fdNQ");
     define("TABLENAME", "masteret");
     define("WEEKCOLUMN", "week");
     define("YEARCOLUMN", "year");
     define("DATACOLUMN", "data");
 
     define("URLADE", "http://ade6-ujf-ro.grenet.fr/jsp/custom/modules/plannings/anonymous_cal.jsp?resources=9756&projectId=2&calType=ical&firstDate=%s&lastDate=%s");
+
+    $weboutput = false;
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
+
+    function debug($msg)
+    {
+        if (DEBUG)
+        {
+            echo($GLOBALS['weboutput'] ? str_replace("\n", "<br>", $msg) : $msg);
+        }
+    }
 
     /**
     * Utils
@@ -86,14 +101,14 @@
 
         public function jsonSerialize() {
             return [
-                'nom' => $this->nom,
+                'nom' => mb_convert_encoding($this->nom, "UTF-8"),
                 'debut' => $this->debut->format(self::FORMAT_JOUR),
                 'fin' => $this->fin->format(self::FORMAT_JOUR),
                 'duree' => $this->duree->format(self::FORMAT_DUREE),
-                'professeur' => $this->professeur,
-                'description' => $this->description,
-                'salle' => $this->salle,
-                'type' => $this->type,
+                'professeur' => mb_convert_encoding($this->professeur, "UTF-8"),
+                'description' => mb_convert_encoding($this->description, "UTF-8"),
+                'salle' => mb_convert_encoding($this->salle, "UTF-8"),
+                'type' => mb_convert_encoding($this->type, "UTF-8"),
                 'groupe' => Utils::deploy_array($this->groupe)
             ];
         }
@@ -221,12 +236,15 @@
         {
             $this->year = $year;
             $this->week = $week;
+            debug("Creation d'ICal... ");
             $this->ical = new ICal();
+            debug("OK\n");
 
             $diw = $this->days_in_week($this->year, $this->week);
             $debut = $diw[0];
             $fin = $diw[4];
             $this->url = sprintf(URLADE, $debut, $fin);
+            debug("Fin creation Data\n");
         }
 
         private function reset_data()
@@ -238,6 +256,7 @@
         public function init($ade_online)
         {
             $need_ade = false;
+            debug("Initialisation de Data !\n");
 
             if (!$need_ade && $this->connect_to_db()) // On se connecte à la BD
             {
@@ -284,6 +303,7 @@
 
         private function init_from_db()
         {
+            debug("Initialisation depuis la BD... ");
             if (!isset($this->conn))
             {
                 return false;
@@ -312,16 +332,19 @@
                     $this->data_in_db = false;
                 }
 
+                debug("OK\n");
                 return true;
             }
             catch (PDOException $e)
             {
+                debug("NOK\n");
                 return false;
             }
         }
 
         private function init_from_ical()
         {
+            debug("Initialisation depuis l'ICal... ");
             $this->reset_data();
 
             try
@@ -331,6 +354,7 @@
             }
             catch (\Exception $e)
             {
+                debug("NOK\n");
                 return false;
             }
 
@@ -344,11 +368,13 @@
             $this->updated = new DateTime("now");
             $this->calculate_stats();
 
+            debug("OK\n");
             return true;
         }
 
         private function ajout_cours($event)
         {
+            debug("Ajout d'un nouveau cours... ");
             $dtstart = $this->ical->iCalDateToDateTime($event->dtstart_array[3], true);
             $dtend = $this->ical->iCalDateToDateTime($event->dtend_array[3], true);
 
@@ -356,10 +382,12 @@
             $dtend->setTimezone(new DateTimeZone("Europe/Paris"));
 
             $this->cours[] = new Cours($event->summary, $dtstart, $dtend, $event->description, $event->location);
+            debug("OK (".count($this->cours).")\n");
         }
 
         private function calculate_stats()
         {
+            debug("Calculate stats... ");
             $this->stats = null;
             $total = new HoursDuration();
 
@@ -383,36 +411,47 @@
                 "moyenne-cours" => $moyenne_cours->format(),
                 "moyenne-semaine" => $moyenne_semaine->format()
             ];
+
+            debug("OK\n");
         }
 
         private function connect_to_db()
         {
+            debug("Tentative de connexion a la BD... ");
+            $ok = false;
             try
             {
                 $dom = "mysql:host=".SERVERNAME.";dbname=".DBNAME;
+                debug("Connexion vers '".$dom."' (usr '".USERNAME."' mdp '".PASSWORD."')\n");
                 $this->conn = new PDO($dom, USERNAME, PASSWORD);
                 $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                return true;
+                $ok = true;
             }
             catch(PDOException $e)
             {
-                return false;
+                debug("error: ".$e->getMessage()." ");
             }
+
+            debug("'$ok'\n");
+            return $ok;
         }
 
         private function write_on_db()
         {
+            debug("Write on DB... ");
             if (!isset($this->conn))
             {
+                debug("NOK\n");
                 return false;
             }
 
+            $jsn = json_encode($this->jsonSerialize());
             if ($this->data_in_db)
             {
                 $u = $this->conn->prepare("UPDATE `".TABLENAME."` SET ".DATACOLUMN." = :data WHERE ".WEEKCOLUMN." = :week AND ".YEARCOLUMN." = :year");
                 $u->bindParam(':week', $this->week);
                 $u->bindParam(':year', $this->year);
-                $u->bindParam(':data', json_encode($this->jsonSerialize()));
+                $u->bindParam(':data', $jsn);
 
                 $u->execute();
             }
@@ -421,10 +460,11 @@
                 $i = $this->conn->prepare("INSERT INTO `".TABLENAME."` (".WEEKCOLUMN.", ".YEARCOLUMN.", ".DATACOLUMN.") VALUES (:week, :year, :data)");
                 $i->bindParam(':week', $this->week);
                 $i->bindParam(':year', $this->year);
-                $i->bindParam(':data', json_encode($this->jsonSerialize()));
+                $i->bindParam(':data', $jsn);
 
                 $i->execute();
             }
+            debug("OK\n");
         }
 
         public function get_url()
@@ -480,6 +520,7 @@
         public function __construct($year, $week)
         {
             ini_set('default_socket_timeout', URLTIMEOUT);
+            debug("Creation de Data, avec les meme parametres...\n");
             $this->data = new Data($year, $week);
         }
 
@@ -508,24 +549,50 @@
         }
     }
 
-    $week = intval($_GET['week']);
-    $year = intval($_GET['year']);
-
-    if (!isset($week) || $week < 1 || $week > 52)
+    if (isset($_GET['weboutput']))
     {
-        $week = 37;
+        $weboutput = true;
     }
 
-    if (!isset($year) || $year < 2017 || $year > 2018)
+    if (!isset($_GET['week']))
     {
-        $year = 2017;
+        $week = 4;
+    }
+    else
+    {
+        $week = intval($_GET['week']);
     }
 
+    if (!isset($_GET['year']))
+    {
+        $year = 2018;
+    }
+    else
+    {
+        $year = intval($_GET['year']);
+    }
+
+    if ($week < 1 || $week > 52)
+    {
+        $week = 4;
+    }
+
+    if ($year < 2017 || $year > 2018)
+    {
+        $year = 2018;
+    }
+
+    debug("Creation de l'ET avec week $week, et year $year...\n");
     $et = new ET($year, $week);
+    debug("Fin creation ET\n");
 
     $res = $et->get_response();
-    if ($res)
+    debug("ET get response: '$res'\n");
+    if ($res && TRUEOUTPUT)
     {
+        debug("-- Affichage ET --\n");
         $et->print();
+        debug("-- Fin ET --\n");
     }
+    debug("End script\n");
 ?>
