@@ -8,20 +8,21 @@
     "packages": [
         {
             "name": "johngrogg/ics-parser",
-            "version": "v2.1.1",
+            "version": "v2.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/u01jmg3/ics-parser.git",
-                "reference": "8bc8bd80d903512b1d9f249e621412792fa461a7"
+                "reference": "d47176d7edbe94764a0316801646b1faf2abb81f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/u01jmg3/ics-parser/zipball/8bc8bd80d903512b1d9f249e621412792fa461a7",
-                "reference": "8bc8bd80d903512b1d9f249e621412792fa461a7",
+                "url": "https://api.github.com/repos/u01jmg3/ics-parser/zipball/d47176d7edbe94764a0316801646b1faf2abb81f",
+                "reference": "d47176d7edbe94764a0316801646b1faf2abb81f",
                 "shasum": ""
             },
             "require": {
-                "nesbot/carbon": "~1.18",
+                "ext-mbstring": "*",
+                "nesbot/carbon": "~1.22",
                 "php": ">=5.3.0"
             },
             "require-dev": {
@@ -63,7 +64,7 @@
                 "ics-parser",
                 "ifb"
             ],
-            "time": "2017-09-28T07:57:09+00:00"
+            "time": "2017-12-19T10:46:26+00:00"
         },
         {
             "name": "nesbot/carbon",
@@ -179,16 +180,16 @@
         },
         {
             "name": "symfony/translation",
-            "version": "v3.4.2",
+            "version": "v3.4.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/translation.git",
-                "reference": "4c5d5582baf2829751a5207659329c1f52eedeb6"
+                "reference": "17b5962d252b2d6d1d37a2485ebb7ddc5b2bef0a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/translation/zipball/4c5d5582baf2829751a5207659329c1f52eedeb6",
-                "reference": "4c5d5582baf2829751a5207659329c1f52eedeb6",
+                "url": "https://api.github.com/repos/symfony/translation/zipball/17b5962d252b2d6d1d37a2485ebb7ddc5b2bef0a",
+                "reference": "17b5962d252b2d6d1d37a2485ebb7ddc5b2bef0a",
                 "shasum": ""
             },
             "require": {
@@ -243,7 +244,7 @@
             ],
             "description": "Symfony Translation Component",
             "homepage": "https://symfony.com",
-            "time": "2017-12-12T08:27:14+00:00"
+            "time": "2018-01-03T07:37:34+00:00"
         }
     ],
     "packages-dev": [],

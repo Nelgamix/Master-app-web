@@ -1,104 +1,88 @@
 <?php
-	$to = 'nicolas.huchet@skysurf.fr, loic.houdebine@wanadoo.fr';
-	$sb = 'master.skysurf: nouveau message';
 
-	function between($val, $min, $max, $inclusive=false)
-	{
-		if ($inclusive)
-		{
-			return $min <= $val && $val <= $max;
-		}
-		else
-		{
-			return $min < $val && $val < $max;
-		}
-	}
+$to = 'contact@skysurf.ovh, loic.houdebine@wanadoo.fr';
+$sb = 'master.skysurf: nouveau message';
 
-	// les vérifs retournent null si le champ est mauvais, sinon le champ est corrigé et renvoyé
-	function verif_email($email)
-	{
-		if (!isset($email))
-		{
-			return null;
-		}
+function between($val, $min, $max, $inclusive = false)
+{
+    if ($inclusive) {
+        return $min <= $val && $val <= $max;
+    } else {
+        return $min < $val && $val < $max;
+    }
+}
 
-		if (filter_var($email, FILTER_VALIDATE_EMAIL))
-		{
-			return $email;
-		}
-		else
-		{
-			return null;
-		}
-	}
+// les vérifs retournent null si le champ est mauvais, sinon le champ est corrigé et renvoyé
+function verif_email($email)
+{
+    if (!isset($email)) {
+        return null;
+    }
 
-	function verif_sujet($sujet)
-	{
-		if (!isset($sujet))
-		{
-			return null;
-		}
-		
-		if (between(strlen($sujet), 0, 30))
-		{
-			return $sujet;
-		}
+    if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        return $email;
+    } else {
+        return null;
+    }
+}
 
-		// else
-		return null;
-	}
+function verif_sujet($sujet)
+{
+    if (!isset($sujet)) {
+        return null;
+    }
 
-	function verif_message($message)
-	{
-		if (!isset($message))
-		{
-			return null;
-		}
-		
-		if (between(strlen($message), 0, 500))
-		{
-			return stripcslashes(preg_replace('/(?<!\r)\n/', '\r\n', $message));
-		}
+    if (between(strlen($sujet), 0, 30)) {
+        return $sujet;
+    }
 
-		// else
-		return null;
-	}
+    // else
+    return null;
+}
 
-	$res = [
-		"success" => false,
-		"erreur" => "",
-		"recu" => ""
-	];
+function verif_message($message)
+{
+    if (!isset($message)) {
+        return null;
+    }
 
-	$email = verif_email($_GET['email']);
-	$sujet = verif_sujet($_GET['sujet']);
-	$message = verif_message(base64_decode($_GET['message']));
+    if (between(strlen($message), 0, 500)) {
+        return stripcslashes(preg_replace('/(?<!\r)\n/', '\r\n', $message));
+    }
 
-	if (isset($sujet) && isset($message))
-	{
-		$sb .= ' (sujet: ' . $sujet . ')';
-		$txt = "";
-		if (isset($email))
-		{
-			$txt .= "Email de l'auteur: " . $email . "\r\n";
-		}
+    // else
+    return null;
+}
 
-		$txt .= "Sujet du message: " . $sujet . "\r\n";
-		$txt .= "Message (à la ligne)\r\n" . $message;
+$res = [
+    "success" => false,
+    "erreur" => "",
+    "recu" => ""
+];
 
-		$txt = wordwrap($txt, 70, "\r\n");
+$email = verif_email($_GET['email']);
+$sujet = verif_sujet($_GET['sujet']);
+$message = verif_message(base64_decode($_GET['message']));
 
-		//echo($txt);
-		mail($to, $sb, $txt);
-		$res['recu'] = $txt;
+if (isset($sujet) && isset($message)) {
+    $sb .= ' (sujet: ' . $sujet . ')';
+    $txt = "";
+    if (isset($email)) {
+        $txt .= "Email de l'auteur: " . $email . "\r\n";
+    }
 
-		$res['success'] = true;
-	}
-	else
-	{
-		$res['success'] = false;
-		$res['erreur'] = "Sujet ou message non spécifié";
-	}
+    $txt .= "Sujet du message: " . $sujet . "\r\n";
+    $txt .= "Message (à la ligne)\r\n" . $message;
 
-	echo(json_encode($res));
-?>
+    $txt = wordwrap($txt, 70, "\r\n");
+
+    mail($to, $sb, $txt);
+    $res['recu'] = $txt;
+
+    $res['success'] = true;
+} else {
+    $res['success'] = false;
+    $res['erreur'] = "Sujet ou message non spécifié";
+}
+
+echo(json_encode($res));

@@ -1,5 +1,122 @@
 [
     {
+        "name": "johngrogg/ics-parser",
+        "version": "v2.1.2",
+        "version_normalized": "2.1.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/u01jmg3/ics-parser.git",
+            "reference": "d47176d7edbe94764a0316801646b1faf2abb81f"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/u01jmg3/ics-parser/zipball/d47176d7edbe94764a0316801646b1faf2abb81f",
+            "reference": "d47176d7edbe94764a0316801646b1faf2abb81f",
+            "shasum": ""
+        },
+        "require": {
+            "ext-mbstring": "*",
+            "nesbot/carbon": "~1.22",
+            "php": ">=5.3.0"
+        },
+        "require-dev": {
+            "squizlabs/php_codesniffer": "^3.0"
+        },
+        "time": "2017-12-19T10:46:26+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "ICal": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Martin Thoma",
+                "email": "info@martin-thoma.de",
+                "role": "Original Developer"
+            },
+            {
+                "name": "John Grogg",
+                "email": "john.grogg@gmail.com",
+                "role": "Developer/Prior Owner"
+            },
+            {
+                "name": "Jonathan Goode",
+                "role": "Developer/Owner"
+            }
+        ],
+        "description": "ICS Parser",
+        "homepage": "https://github.com/u01jmg3/ics-parser",
+        "keywords": [
+            "iCalendar",
+            "ical",
+            "ical-parser",
+            "ics",
+            "ics-parser",
+            "ifb"
+        ]
+    },
+    {
+        "name": "nesbot/carbon",
+        "version": "1.22.1",
+        "version_normalized": "1.22.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/briannesbitt/Carbon.git",
+            "reference": "7cdf42c0b1cc763ab7e4c33c47a24e27c66bfccc"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/7cdf42c0b1cc763ab7e4c33c47a24e27c66bfccc",
+            "reference": "7cdf42c0b1cc763ab7e4c33c47a24e27c66bfccc",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.0",
+            "symfony/translation": "~2.6 || ~3.0"
+        },
+        "require-dev": {
+            "friendsofphp/php-cs-fixer": "~2",
+            "phpunit/phpunit": "~4.0 || ~5.0"
+        },
+        "time": "2017-01-16T07:55:07+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.23-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Carbon\\": "src/Carbon/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Brian Nesbitt",
+                "email": "brian@nesbot.com",
+                "homepage": "http://nesbot.com"
+            }
+        ],
+        "description": "A simple API extension for DateTime.",
+        "homepage": "http://carbon.nesbot.com",
+        "keywords": [
+            "date",
+            "datetime",
+            "time"
+        ]
+    },
+    {
         "name": "symfony/polyfill-mbstring",
         "version": "v1.6.0",
         "version_normalized": "1.6.0.0",
@@ -62,17 +179,17 @@
     },
     {
         "name": "symfony/translation",
-        "version": "v3.4.2",
-        "version_normalized": "3.4.2.0",
+        "version": "v3.4.3",
+        "version_normalized": "3.4.3.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/translation.git",
-            "reference": "4c5d5582baf2829751a5207659329c1f52eedeb6"
+            "reference": "17b5962d252b2d6d1d37a2485ebb7ddc5b2bef0a"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/translation/zipball/4c5d5582baf2829751a5207659329c1f52eedeb6",
-            "reference": "4c5d5582baf2829751a5207659329c1f52eedeb6",
+            "url": "https://api.github.com/repos/symfony/translation/zipball/17b5962d252b2d6d1d37a2485ebb7ddc5b2bef0a",
+            "reference": "17b5962d252b2d6d1d37a2485ebb7ddc5b2bef0a",
             "shasum": ""
         },
         "require": {
@@ -97,7 +214,7 @@
             "symfony/config": "",
             "symfony/yaml": ""
         },
-        "time": "2017-12-12T08:27:14+00:00",
+        "time": "2018-01-03T07:37:34+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -129,121 +246,5 @@
         ],
         "description": "Symfony Translation Component",
         "homepage": "https://symfony.com"
-    },
-    {
-        "name": "nesbot/carbon",
-        "version": "1.22.1",
-        "version_normalized": "1.22.1.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/briannesbitt/Carbon.git",
-            "reference": "7cdf42c0b1cc763ab7e4c33c47a24e27c66bfccc"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/7cdf42c0b1cc763ab7e4c33c47a24e27c66bfccc",
-            "reference": "7cdf42c0b1cc763ab7e4c33c47a24e27c66bfccc",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.0",
-            "symfony/translation": "~2.6 || ~3.0"
-        },
-        "require-dev": {
-            "friendsofphp/php-cs-fixer": "~2",
-            "phpunit/phpunit": "~4.0 || ~5.0"
-        },
-        "time": "2017-01-16T07:55:07+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "1.23-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Carbon\\": "src/Carbon/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Brian Nesbitt",
-                "email": "brian@nesbot.com",
-                "homepage": "http://nesbot.com"
-            }
-        ],
-        "description": "A simple API extension for DateTime.",
-        "homepage": "http://carbon.nesbot.com",
-        "keywords": [
-            "date",
-            "datetime",
-            "time"
-        ]
-    },
-    {
-        "name": "johngrogg/ics-parser",
-        "version": "v2.1.1",
-        "version_normalized": "2.1.1.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/u01jmg3/ics-parser.git",
-            "reference": "8bc8bd80d903512b1d9f249e621412792fa461a7"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/u01jmg3/ics-parser/zipball/8bc8bd80d903512b1d9f249e621412792fa461a7",
-            "reference": "8bc8bd80d903512b1d9f249e621412792fa461a7",
-            "shasum": ""
-        },
-        "require": {
-            "nesbot/carbon": "~1.18",
-            "php": ">=5.3.0"
-        },
-        "require-dev": {
-            "squizlabs/php_codesniffer": "^3.0"
-        },
-        "time": "2017-09-28T07:57:09+00:00",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-0": {
-                "ICal": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Martin Thoma",
-                "email": "info@martin-thoma.de",
-                "role": "Original Developer"
-            },
-            {
-                "name": "John Grogg",
-                "email": "john.grogg@gmail.com",
-                "role": "Developer/Prior Owner"
-            },
-            {
-                "name": "Jonathan Goode",
-                "role": "Developer/Owner"
-            }
-        ],
-        "description": "ICS Parser",
-        "homepage": "https://github.com/u01jmg3/ics-parser",
-        "keywords": [
-            "iCalendar",
-            "ical",
-            "ical-parser",
-            "ics",
-            "ics-parser",
-            "ifb"
-        ]
     }
 ]
