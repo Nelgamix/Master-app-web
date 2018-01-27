@@ -15,8 +15,8 @@ define("URLCOLUMN", "url");
 // Don't touch this, only things above
 define("TABLECREATE", "CREATE TABLE IF NOT EXISTS " . TABLENAME . " ("
     . IDCOLUMN . " INT PRIMARY KEY AUTO_INCREMENT,"
-    . BEGINCOLUMN . " DATE NOT NULL,"
-    . ENDCOLUMN . " DATE,"
+    . BEGINCOLUMN . " DATETIME NOT NULL,"
+    . ENDCOLUMN . " DATETIME,"
     . INFOCOLUMN . " TEXT DEFAULT NULL,"
     . TYPECOLUMN . " VARCHAR(64) DEFAULT NULL,"
     . URLCOLUMN . " VARCHAR(255) DEFAULT NULL"
@@ -90,12 +90,12 @@ class DB
         try {
             Commons::debug_section("Connexion à la DB");
             $dom = DB;
-            Commons::debugline("Serveur: " . $dom);
+            Commons::debug_line("Serveur: " . $dom);
             $this->conn = new PDO($dom, USERNAME, PASSWORD, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
-            Commons::debugline("PDO connexion créée");
+            Commons::debug_line("PDO connexion créée");
             $this->connected = true;
             $this->conn->exec(TABLECREATE);
-            Commons::debugline("Requête création table envoyée.");
+            Commons::debug_line("Requête création table envoyée.");
         } catch (PDOException $e) {
             $this->connected = false;
         }
@@ -124,12 +124,18 @@ class DB
             return false;
         }
 
+        $debut = $ev->getSQL('debut');
+        $fin = $ev->getSQL('fin');
+        $info = $ev->getSQL('info');
+        $type = $ev->getSQL('type');
+        $url = $ev->getSQL('url');
+
         $s = $this->conn->prepare("INSERT INTO `" . TABLENAME . "` (`" . BEGINCOLUMN . "`, `" . ENDCOLUMN . "`, `" . INFOCOLUMN . "`, `" . TYPECOLUMN . "`, `" . URLCOLUMN . "`) VALUES (:debut, :fin, :info, :type, :url)");
-        $s->bindParam(":debut", $ev->getSQL('debut'));
-        $s->bindParam(":fin", $ev->getSQL('fin'));
-        $s->bindParam(":info", $ev->getSQL('info'));
-        $s->bindParam(":type", $ev->getSQL('type'));
-        $s->bindParam(":url", $ev->getSQL('url'));
+        $s->bindParam(":debut", $debut);
+        $s->bindParam(":fin", $fin);
+        $s->bindParam(":info", $info);
+        $s->bindParam(":type", $type);
+        $s->bindParam(":url", $url);
 
         return $s->execute();
     }
@@ -140,13 +146,20 @@ class DB
             return false;
         }
 
+        $id = $ev->getSQL('id');
+        $debut = $ev->getSQL('debut');
+        $fin = $ev->getSQL('fin');
+        $info = $ev->getSQL('info');
+        $type = $ev->getSQL('type');
+        $url = $ev->getSQL('url');
+
         $s = $this->conn->prepare("UPDATE `" . TABLENAME . "` SET `" . BEGINCOLUMN . "` = :debut, `" . ENDCOLUMN . "` = :fin, `" . INFOCOLUMN . "` = :info, `" . TYPECOLUMN . "` = :type, `" . URLCOLUMN . "` = :url WHERE `" . IDCOLUMN . "` = :id");
-        $s->bindParam(":id", $ev->getSQL('id'));
-        $s->bindParam(":debut", $ev->getSQL('debut'));
-        $s->bindParam(":fin", $ev->getSQL('fin'));
-        $s->bindParam(":info", $ev->getSQL('info'));
-        $s->bindParam(":type", $ev->getSQL('type'));
-        $s->bindParam(":url", $ev->getSQL('url'));
+        $s->bindParam(":id", $id);
+        $s->bindParam(":debut", $debut);
+        $s->bindParam(":fin", $fin);
+        $s->bindParam(":info", $info);
+        $s->bindParam(":type", $type);
+        $s->bindParam(":url", $url);
 
         return $s->execute();
     }

@@ -233,7 +233,7 @@ class Data implements JsonSerializable
     public function init($ade_online)
     {
         $need_ade = false;
-        Commons::debugline("Initialisation de Data");
+        Commons::debug_line("Initialisation de Data");
 
         if (!$need_ade && $this->connect_to_db()) // On se connecte à la BD
         {
@@ -270,17 +270,17 @@ class Data implements JsonSerializable
 
     private function connect_to_db()
     {
-        Commons::debugline("Tentative de connexion a la BD");
+        Commons::debug_line("Tentative de connexion a la BD");
         $ok = false;
         try {
             $dom = DB;
-            Commons::debugline("Connexion vers '" . $dom . "' (usr '" . USERNAME . "' mdp '" . PASSWORD . "')");
+            Commons::debug_line("Connexion vers '" . $dom . "' (usr '" . USERNAME . "' mdp '" . PASSWORD . "')");
             $this->conn = new PDO($dom, USERNAME, PASSWORD);
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->conn->exec(TABLECREATE);
             $ok = true;
         } catch (PDOException $e) {
-            Commons::debugline("error: " . $e->getMessage());
+            Commons::debug_line("error: " . $e->getMessage());
         }
 
         return $ok;
@@ -288,7 +288,7 @@ class Data implements JsonSerializable
 
     private function init_from_db()
     {
-        Commons::debugline("Initialisation depuis la BD");
+        Commons::debug_line("Initialisation depuis la BD");
         if (!isset($this->conn)) {
             return false;
         }
@@ -326,7 +326,7 @@ class Data implements JsonSerializable
 
     private function init_from_ical()
     {
-        Commons::debugline("Initialisation depuis l'ICal");
+        Commons::debug_line("Initialisation depuis l'ICal");
         $this->reset_data();
 
         try {
@@ -350,7 +350,7 @@ class Data implements JsonSerializable
 
     private function ajout_cours($event)
     {
-        Commons::debugline("Ajout d'un nouveau cours");
+        Commons::debug_line("Ajout d'un nouveau cours");
         $dtstart = $this->ical->iCalDateToDateTime($event->dtstart_array[3], true);
         $dtend = $this->ical->iCalDateToDateTime($event->dtend_array[3], true);
 
@@ -362,7 +362,7 @@ class Data implements JsonSerializable
 
     private function calculate_stats()
     {
-        Commons::debugline("Calculate stats");
+        Commons::debug_line("Calculate stats");
         $this->stats = null;
         $total = new HoursDuration();
 
@@ -388,7 +388,7 @@ class Data implements JsonSerializable
 
     private function write_on_db()
     {
-        Commons::debugline("Write on DB");
+        Commons::debug_line("Write on DB");
         if (!isset($this->conn)) {
             return false;
         }
@@ -444,9 +444,9 @@ class ET implements JsonSerializable
 
     public function __construct($year, $week)
     {
-        Commons::debugline("week $week, year $year");
+        Commons::debug_line("week $week, year $year");
         ini_set('default_socket_timeout', URLTIMEOUT);
-        Commons::debugline("Creation de Data");
+        Commons::debug_line("Creation de Data");
         $this->data = new Data($year, $week);
     }
 
@@ -475,15 +475,23 @@ class ET implements JsonSerializable
     }
 
     /**
-     * returns 1 if url works (website online), 0 if not
+     * Test url, returns true if online & working, false otherwise
+     * @param String $url the url to test
+     * @return bool       true if ADE online & working
      */
-    private function test_url($url)
+    private function test_url(String $url)
     {
         Commons::debug_section("test ade");
         $headers = get_headers($url, 1)[0];
-        Commons::debug("ADE code ");
         $code = explode(" ", $headers)[1];
-        Commons::debugline($code);
+        if ($code == null) {
+            $code = 401;
+            Commons::debug_line("ADE down");
+        } else {
+            Commons::debug("ADE code ");
+            Commons::debug_line($code);
+        }
+
         return (200 <= $code) && ($code < 400);
     }
 }
@@ -510,7 +518,7 @@ if ($year < 2017 || $year > 2018) {
 
 Commons::debug_section("Creation de l'ET");
 $et = new ET($year, $week);
-Commons::debugline("Fin creation ET");
+Commons::debug_line("Fin creation ET");
 
 $res = $et->get_response();
 if ($res) {

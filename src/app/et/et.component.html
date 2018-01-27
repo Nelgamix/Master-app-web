@@ -1,21 +1,25 @@
 <div class="container contenu">
   <div class="row mb-2">
-    <div class="col-md-5 col-sm-12">
+    <div class="col-md-6 col-sm-12">
       <span class="align-middle ade-status" *ngIf="etService.metadata['adeOnline']" style="color: green;">ADE est en ligne!</span>
       <span class="align-middle ade-status" *ngIf="!etService.metadata['adeOnline']" style="color: red;">ADE est hors-ligne!</span>
-      <span class="align-middle last-updated">Dernière mise à jour <b>{{etService.metadata['lastUpdated'] | amTimeAgo}}</b></span> <!-- ou date:'dd-MM-y HH:mm' -->
+      <span class="align-middle last-updated">Dernière mise à jour <b>{{etService.metadata['lastUpdated'] | amTimeAgo}}</b></span>
     </div>
-
-    <div class="col-md-7 col-sm-12">
-      <form class="form-inline" id="form-selection-date">
-        <label for="selDate" class="mr-2">Sélection de la semaine</label>
-        <button class="btn btn-outline-danger mr-2" (click)="nowWeek()">&#8630;</button>
-        <button class="btn btn-light" (click)="previousWeek()">&lArr;</button>
-        <select [(ngModel)]="selectedDate" (ngModelChange)="onChangeDate($event)" class="custom-select" name="selDate" id="selDate">
-          <option [ngValue]="i" *ngFor="let i of datesService.semaines">{{i.debut | amDateFormat:'YYYY-MM-DD'}} &rarr; {{i.fin | amDateFormat:'YYYY-MM-DD'}}</option>
-        </select>
-        <button class="btn btn-light" (click)="nextWeek()">&rArr;</button>
-      </form>
+    <div class="col-md-6 col-sm-12">
+      <div class="form-row" id="form-selection-date">
+        <div class="col-auto">
+          <button class="btn btn-danger mr-2" (click)="nowWeek()">&#8630;</button>
+          <button class="btn btn-secondary" (click)="previousWeek()">&lArr;</button>
+        </div>
+        <div class="col-auto">
+          <select [(ngModel)]="selectedDate" (ngModelChange)="onChangeDate($event)" class="custom-select form-control" name="selDate" id="selDate">
+            <option [ngValue]="i" *ngFor="let i of datesService.semaines">{{i.debut | amDateFormat:'YYYY-MM-DD'}} &rarr; {{i.fin | amDateFormat:'YYYY-MM-DD'}}</option>
+          </select>
+        </div>
+        <div class="col-auto">
+          <button class="btn btn-secondary" (click)="nextWeek()">&rArr;</button>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -79,7 +83,7 @@
             </div>
             <div class="col-md-4 col-sm-12 mb-3">
               <h5>Vue</h5>
-              <div class="btn-group take-width" ngbRadioGroup name="radioBasic" [(ngModel)]="vueType">
+              <div class="btn-group btn-group-toggle take-width" ngbRadioGroup name="radioBasic" [(ngModel)]="vueType">
                 <label ngbButtonLabel class="btn-primary take-width">
                   <input ngbButton type="radio" [value]="1"> Tables
                 </label>

@@ -31,7 +31,7 @@
       {
         "nom": "Vie de la filière",
         "description": "Toutes les informations importantes (dates, options...) du Master.",
-        "url": "https://im2ag-moodle.e.ujf-grenoble.fr/mod/page/view.php?id=12923"
+        "url": "https://im2ag-moodle.e.ujf-grenoble.fr/course/view.php?id=292"
       }
     ]
 	],
@@ -94,10 +94,6 @@
 						{
 							"nom": "Moodle",
 							"url": "https://im2ag-moodle.e.ujf-grenoble.fr/enrol/index.php?id=243"
-						},
-						{
-							"nom": "Autre",
-							"url": "#"
 						}
 					]
 				},
@@ -219,8 +215,95 @@
 		},
 		{
 			"numero": 8,
-			"ue": [],
-			"infos": "",
+			"ue": [
+        {
+          "nom": "Cybersécurité",
+          "initiales": "CS",
+          "type": "Sécurité",
+          "liens": []
+        },
+        {
+          "nom": "Robotics",
+          "initiales": "R",
+          "type": "Général",
+          "liens": [
+            {
+              "nom": "Site",
+              "url": "http://lig-membres.imag.fr/aycard/html/Enseignement/M1/Robotics2/index.html"
+            }
+          ]
+        },
+        {
+          "nom": "Introduction à l'administration des réseaux",
+          "initiales": "IRES",
+          "type": "Réseaux",
+          "liens": [
+            {
+              "nom": "Moodle",
+              "url": "https://im2ag-moodle.e.ujf-grenoble.fr/course/view.php?id=86"
+            }
+          ]
+        },
+        {
+          "nom": "DevOps",
+          "initiales": "DO",
+          "type": "Général",
+          "liens": [
+            {
+              "nom": "Moodle",
+              "url": "https://im2ag-moodle.e.ujf-grenoble.fr/course/view.php?id=101"
+            },
+            {
+              "nom": "Site",
+              "url": "https://tropars.github.io/teaching/"
+            }
+          ]
+        },
+        {
+          "nom": "Cryptologie",
+          "initiales": "",
+          "type": "Sécurité",
+          "liens": [
+            {
+              "nom": "Site",
+              "url": "https://ljk.imag.fr/membres/Pierre.Karpman/tea.html"
+            }
+          ]
+        },
+        {
+          "nom": "Complexité algorithmique de problèmes",
+          "initiales": "",
+          "type": "Général",
+          "liens": [
+            {
+              "nom": "Moodle",
+              "url": "https://im2ag-moodle.e.ujf-grenoble.fr/course/view.php?id=297"
+            },
+            {
+              "nom": "Site",
+              "url": "http://caseine.org/course/view.php?id=102"
+            }
+          ]
+        },
+        {
+          "nom": "Introduction to distributed systems",
+          "initiales": "IDS",
+          "type": "Réseaux",
+          "liens": [
+            {
+              "nom": "Moodle",
+              "url": "https://im2ag-moodle.e.ujf-grenoble.fr/course/view.php?id=333"
+            }
+          ]
+        },
+        {
+          "nom": "Ergonomie des IHM",
+          "initiales": "EIHM",
+          "type": "IHM",
+          "liens": []
+        }
+      ],
+			"infos": "Mot de passe Moodle DevOps: DEVOPS_2018",
 			"liens": []
 		},
 		{

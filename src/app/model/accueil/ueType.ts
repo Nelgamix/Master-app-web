@@ -3,6 +3,7 @@ export enum UeType {
   BASE_DE_DONNEE = 'Base de données',
   PROGRAMMATION = 'Programmation',
   CONCEPTION = 'Conception',
+  SECURITE = 'Sécurité',
   RESEAUX = 'Réseaux',
   IHM = 'IHM'
 }

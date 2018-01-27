@@ -37,11 +37,11 @@ export class AccueilComponent implements OnInit, OnDestroy {
       this.parseData(data);
 
       const now = moment();
-      if (now < moment([2018, 1, 15])) {
+      if (now.isBefore(moment([2018, 0, 15]))) {
         this.tab.activeId = 'tab7';
-      } else if (now < moment([2018, 7, 1])) {
+      } else if (now.isBefore(moment([2018, 6, 1]))) {
         this.tab.activeId = 'tab8';
-      } else if (now < moment([2019, 1, 15])) {
+      } else if (now.isBefore(moment([2019, 0, 15]))) {
         this.tab.activeId = 'tab9';
       } else {
         this.tab.activeId = 'tab10';
