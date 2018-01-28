@@ -1,14 +1,13 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {NgModule, LOCALE_ID} from '@angular/core';
+import {NgModule} from '@angular/core';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {HttpClientModule} from '@angular/common/http';
 import {MomentModule} from 'angular2-moment';
 import {FormsModule} from '@angular/forms';
 import {MarkdownToHtmlModule} from 'ng2-markdown-to-html';
-import {CommonModule, registerLocaleData} from '@angular/common';
+import {CommonModule} from '@angular/common';
 import {CookieService} from 'ngx-cookie-service';
-import localeFR from '@angular/common/locales/fr';
 
 // Components
 import {AppComponent} from './app.component';
@@ -42,8 +41,6 @@ import {EvenementComponent} from './evenements/evenement.component';
 import {EtVisuelComponent} from './et/etvisuel.component';
 import {EtTableComponent} from './et/ettable.component';
 import {AppRoutingModule} from './app-routing.module';
-
-registerLocaleData(localeFR);
 
 @NgModule({
   declarations: [
@@ -80,7 +77,6 @@ registerLocaleData(localeFR);
     MomentModule
   ],
   providers: [
-    {provide: LOCALE_ID, useValue: 'fr'},
     EmploiTempsService,
     DatesService,
     CookieService
