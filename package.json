@@ -5,8 +5,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
-    "build prod": "ng build --prod",
+    "build dev": "ng build --bh /~kryoxem/dist/",
+    "build prod": "ng build --prod --bh /",
     "test": "ng test",
     "version": "ng -v",
     "lint": "ng lint",
