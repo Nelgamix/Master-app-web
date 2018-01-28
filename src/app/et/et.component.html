@@ -1,11 +1,11 @@
 <div class="container contenu">
   <div class="row mb-2">
-    <div class="col-md-6 col-sm-12">
+    <div class="col-md-7 col-sm-12">
       <span class="align-middle ade-status" *ngIf="etService.metadata['adeOnline']" style="color: green;">ADE est en ligne!</span>
       <span class="align-middle ade-status" *ngIf="!etService.metadata['adeOnline']" style="color: red;">ADE est hors-ligne!</span>
       <span class="align-middle last-updated">Dernière mise à jour <b>{{etService.metadata['lastUpdated'] | amTimeAgo}}</b></span>
     </div>
-    <div class="col-md-6 col-sm-12">
+    <div class="col-md-5 col-sm-12">
       <div class="form-row" id="form-selection-date">
         <div class="col-auto">
           <button class="btn btn-danger mr-2" (click)="nowWeek()">&#8630;</button>

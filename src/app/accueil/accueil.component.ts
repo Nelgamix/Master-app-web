@@ -1,7 +1,7 @@
 import {Component, OnInit, OnDestroy, ViewChild} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {CookieService} from 'ngx-cookie-service';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {NgbModal, NgbTabsetConfig} from '@ng-bootstrap/ng-bootstrap';
 
 import {ModalAccueilInfoComponent} from '../modal/accueil-info.component';
 
@@ -15,7 +15,8 @@ import {UE} from '../model/accueil/ue';
 @Component({
   selector: 'app-accueil-root',
   templateUrl: './accueil.component.html',
-  styleUrls: ['./accueil.component.css']
+  styleUrls: ['./accueil.component.css'],
+  providers: [NgbTabsetConfig]
 })
 export class AccueilComponent implements OnInit, OnDestroy {
   semestres: Array<Semestre> = [];
@@ -25,7 +26,12 @@ export class AccueilComponent implements OnInit, OnDestroy {
 
   @ViewChild('tab') tab;
 
-  constructor(private http: HttpClient, private modalService: NgbModal, private cookiesService: CookieService) {
+  constructor(private http: HttpClient,
+              private modalService: NgbModal,
+              private cookiesService: CookieService,
+              private tabConfig: NgbTabsetConfig) {
+    tabConfig.justify = 'fill';
+    tabConfig.type = 'pills';
   }
 
   private static parseLien(lien: string): Lien {

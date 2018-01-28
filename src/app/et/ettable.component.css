@@ -4,7 +4,6 @@
 
 .cours {
   text-align: center;
-  border-radius: 4px;
   background-color: rgba(140, 140, 140, 0.4);
   border: 2px solid rgba(140, 140, 140, 0.2);
   transition: box-shadow 0.2s;
@@ -42,7 +41,7 @@
 }
 
 .demo-cm, .demo-td, .demo-tp, .demo-autre {
-  padding: 6px;
+  padding: 2px 6px;
   border-radius: 4px;
 }
 
@@ -89,8 +88,7 @@
   font-weight: bold;
 }
 .cours .nom {
-  font-size: 125%;
-  text-decoration: underline;
+  font-size: 110%;
 }
 .cours .professeur {
 }

@@ -24,29 +24,22 @@
         <div class="col no-cours mb-2" *ngIf="(j.cours|coursfilter:sSearchFor).length == 0">
           Aucun cours trouvé.
         </div>
-        <div class="col-lg-3 col-md-4 col-sm-6 mb-2" *ngFor="let cours of j.cours | coursfilter:sSearchFor" [class.exclu]="cours.exclu">
-          <div class="cours" [class.td]="cours.type == 'TD'" [class.tp]="cours.type == 'TP'" [class.cm]="cours.type == 'Cours'" ngbPopover="{{getPopoverDetails(cours)}}" popoverTitle="{{getPopoverTitle(cours)}}" triggers="mouseenter:mouseleave">
-            <div class="row">
-              <div class="col-12 unoverflow temps">
-                {{cours.debut | amDateFormat:'HH:mm'}}&rarr;{{cours.fin | amDateFormat:'HH:mm'}}
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-12 unoverflow nom">
-                {{cours.nom}}
-                <ng-container *ngFor="let g of cours.groupe">
-                  <span *ngIf="g.length > 0">G{{g}}</span>
-                </ng-container>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-12 unoverflow professeur">
-                {{cours.professeur}}
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-12 unoverflow salles">
-                <span *ngFor="let s of cours.salles">{{s.batiment}} {{s.salle}}</span>
+        <div class="col-12">
+          <div class="row" *ngFor="let cours of j.cours | coursfilter:sSearchFor">
+            <div class="col-12" [class.exclu]="cours.exclu">
+              <div class="row cours" [class.td]="cours.type == 'TD'" [class.tp]="cours.type == 'TP'" [class.cm]="cours.type == 'Cours'">
+                <div class="col-lg-2 col-md-12 temps">
+                  {{cours.debut | amDateFormat:'HH:mm'}}&rarr;{{cours.fin | amDateFormat:'HH:mm'}}
+                </div>
+                <div class="col-lg-4 col-md-12 nom">
+                  {{cours.nom}}
+                </div>
+                <div class="col-lg-3 col-md-12 professeur">
+                  {{cours.professeur}}
+                </div>
+                <div class="col-lg-3 col-md-12 salles">
+                  <span *ngFor="let s of cours.salles">{{s.batiment}} {{s.salle}}</span>
+                </div>
               </div>
             </div>
           </div>
