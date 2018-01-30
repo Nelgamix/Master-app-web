@@ -2,8 +2,14 @@
 
 session_start();
 
-require_once "commons.php";
+// Common imports
+require_once 'commons.php';
 
+// Class imports
+require_once 'EV/DB.php';
+require_once 'EV/Evenement.php';
+
+// Define
 define("TABLENAME", "masterev");
 define("IDCOLUMN", "id");
 define("BEGINCOLUMN", "debut");
@@ -22,6 +28,7 @@ define("TABLECREATE", "CREATE TABLE IF NOT EXISTS " . TABLENAME . " ("
     . URLCOLUMN . " VARCHAR(255) DEFAULT NULL"
     . ")");
 
+// Les mots de passe disponibles
 define("ADMINMDP", [
     "mdptest",
     "loictest"
@@ -29,152 +36,6 @@ define("ADMINMDP", [
 
 if (!isset($_SESSION['admin'])) {
     $_SESSION['admin'] = false;
-}
-
-/**
- * Evenement
- */
-class Evenement implements JsonSerializable
-{
-    // Format pour insérer une datetime dans une BD SQL: "Y-m-d H:i:s" (année-mois-jour heure:minutes:secondes)
-    public $id; // id unique dans la DB
-    public $debut; // doit être set
-    public $fin; // peut être vide ('null')
-    public $info; // infos de l'évènement
-    public $type; // type de l'évènement (ex: DS, TP noté, ...)
-    public $url; // url associé (optionnel)
-
-    public function jsonSerialize()
-    {
-        return [
-            IDCOLUMN => $this->id,
-            BEGINCOLUMN => $this->debut,
-            ENDCOLUMN => $this->fin,
-            INFOCOLUMN => $this->info,
-            TYPECOLUMN => $this->type,
-            URLCOLUMN => $this->url
-        ];
-    }
-
-    public function getSQL($champ)
-    {
-        if (!isset($this->$champ) || (is_string($this->$champ) && $this->$champ == "")) {
-            return null;
-        } else {
-            return $this->$champ;
-        }
-    }
-}
-
-/**
- * DB
- */
-class DB
-{
-    /**
-     * @var PDO
-     */
-    private $conn;
-    private $connected;
-
-    function __construct()
-    {
-        $this->connected = false;
-        $this->init();
-    }
-
-    private function init()
-    {
-        $this->conn = null;
-
-        try {
-            Commons::debug_section("Connexion à la DB");
-            $dom = DB;
-            Commons::debug_line("Serveur: " . $dom);
-            $this->conn = new PDO($dom, USERNAME, PASSWORD, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
-            Commons::debug_line("PDO connexion créée");
-            $this->connected = true;
-            $this->conn->exec(TABLECREATE);
-            Commons::debug_line("Requête création table envoyée.");
-        } catch (PDOException $e) {
-            $this->connected = false;
-        }
-    }
-
-    public function select()
-    {
-        if (!$this->connected) {
-            return null;
-        }
-
-        $results = [];
-
-        $s = $this->conn->prepare("SELECT `" . IDCOLUMN . "`, `" . BEGINCOLUMN . "`, `" . ENDCOLUMN . "`, `" . INFOCOLUMN . "`, `" . TYPECOLUMN . "`, `" . URLCOLUMN . "` FROM `" . TABLENAME . "`");
-
-        if ($s->execute() && $s->rowCount() > 0) {
-            $results = $s->fetchAll(PDO::FETCH_CLASS, "Evenement");
-        }
-
-        return $results;
-    }
-
-    public function insert(Evenement $ev)
-    {
-        if (!$this->connected) {
-            return false;
-        }
-
-        $debut = $ev->getSQL('debut');
-        $fin = $ev->getSQL('fin');
-        $info = $ev->getSQL('info');
-        $type = $ev->getSQL('type');
-        $url = $ev->getSQL('url');
-
-        $s = $this->conn->prepare("INSERT INTO `" . TABLENAME . "` (`" . BEGINCOLUMN . "`, `" . ENDCOLUMN . "`, `" . INFOCOLUMN . "`, `" . TYPECOLUMN . "`, `" . URLCOLUMN . "`) VALUES (:debut, :fin, :info, :type, :url)");
-        $s->bindParam(":debut", $debut);
-        $s->bindParam(":fin", $fin);
-        $s->bindParam(":info", $info);
-        $s->bindParam(":type", $type);
-        $s->bindParam(":url", $url);
-
-        return $s->execute();
-    }
-
-    public function update(Evenement $ev)
-    {
-        if (!$this->connected) {
-            return false;
-        }
-
-        $id = $ev->getSQL('id');
-        $debut = $ev->getSQL('debut');
-        $fin = $ev->getSQL('fin');
-        $info = $ev->getSQL('info');
-        $type = $ev->getSQL('type');
-        $url = $ev->getSQL('url');
-
-        $s = $this->conn->prepare("UPDATE `" . TABLENAME . "` SET `" . BEGINCOLUMN . "` = :debut, `" . ENDCOLUMN . "` = :fin, `" . INFOCOLUMN . "` = :info, `" . TYPECOLUMN . "` = :type, `" . URLCOLUMN . "` = :url WHERE `" . IDCOLUMN . "` = :id");
-        $s->bindParam(":id", $id);
-        $s->bindParam(":debut", $debut);
-        $s->bindParam(":fin", $fin);
-        $s->bindParam(":info", $info);
-        $s->bindParam(":type", $type);
-        $s->bindParam(":url", $url);
-
-        return $s->execute();
-    }
-
-    public function delete($id)
-    {
-        if (!$this->connected) {
-            return false;
-        }
-
-        $s = $this->conn->prepare("DELETE FROM `" . TABLENAME . "` WHERE `" . IDCOLUMN . "` = :id");
-        $s->bindParam(":id", $id);
-
-        return $s->execute();
-    }
 }
 
 function test_mdp($mdp)

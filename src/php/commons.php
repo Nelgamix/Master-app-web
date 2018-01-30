@@ -1,6 +1,6 @@
 <?php
 
-define("DEBUG", false); // print debug messages
+define("DEBUG", true); // print debug messages
 define("DEBUGWEB", false); // if debug = true, then all debug messages will be formatted as html
 define("LOCAL", true); // local installation?
 define("TRUEOUTPUT", true); // show final result?
@@ -14,7 +14,7 @@ define("PASSWORD", "eE80fdNQ");
 // Don't change this
 define("LOCALDB", "mysql:host=localhost;dbname=" . DBNAME);
 define("WEBDB", "mysql:host=" . SERVERNAME . ";dbname=" . DBNAME);
-define("DB" , (LOCAL ? LOCALDB : WEBDB));
+define("DB", (LOCAL ? LOCALDB : WEBDB));
 
 $section_number = 1;
 
