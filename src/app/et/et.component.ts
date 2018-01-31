@@ -16,8 +16,6 @@ import {Component, OnInit} from '@angular/core';
   styleUrls: ['./et.component.css']
 })
 export class EtComponent implements OnInit {
-  readonly exclusionsCookie = 'et-exclusions';
-
   vueType = 1;
   loading: any;
   exclusions = [];
@@ -26,15 +24,13 @@ export class EtComponent implements OnInit {
 
   constructor(public etService: EmploiTempsService,
               public datesService: DatesService,
-              private modalService: NgbModal,
-              private cookiesService: CookieService) {
+              private modalService: NgbModal) {
+    etService.registerObserver(this);
   }
 
   ngOnInit(): void {
     this.getDates();
-    if (this.cookiesService.check(this.exclusionsCookie)) {
-      this.exclusions = JSON.parse(this.cookiesService.get(this.exclusionsCookie));
-    }
+    this.exclusions = this.etService.initFromCookies();
   }
 
   /**
@@ -64,12 +60,11 @@ export class EtComponent implements OnInit {
 
   openExclusions() {
     const modalRef = this.modalService.open(ModalEtExclusionsComponent);
-    modalRef.componentInstance.exclusions = this.exclusions;
+    modalRef.componentInstance.exclusions = Object.assign([], this.exclusions);
     modalRef.result.then(r => {
-      this.etService.filterExclusions(this.exclusions);
-      this.cookiesService.set(this.exclusionsCookie, JSON.stringify(this.exclusions));
+      this.etService.filterExclusions(r);
     }, r => {
-      this.etService.filterExclusions(this.exclusions);
+      // this.etService.filterExclusions(this.exclusions);
     });
   }
 
@@ -115,5 +110,9 @@ export class EtComponent implements OnInit {
   openStats() {
     const modalRef = this.modalService.open(ModalEtStatsComponent);
     modalRef.componentInstance.stats = this.etService.emploiTemps.stats;
+  }
+
+  changed(): void {
+    this.exclusions = this.etService.exclusions;
   }
 }

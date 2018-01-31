@@ -64,10 +64,12 @@ $email = verif_email($_GET['email']);
 $sujet = verif_sujet($_GET['sujet']);
 $message = verif_message(base64_decode($_GET['message']));
 
-if (isset($sujet) && isset($message)) {
+if (isset($sujet) && isset($message))
+{
     $sb .= ' (sujet: ' . $sujet . ')';
     $txt = "";
-    if (isset($email)) {
+    if (isset($email))
+    {
         $txt .= "Email de l'auteur: " . $email . "\r\n";
     }
 

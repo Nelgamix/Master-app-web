@@ -54,7 +54,11 @@
 				{
 					"nom": "Page de la 2ème année",
 					"url": "http://formations.univ-grenoble-alpes.fr/fr/catalogue/master-XB/sciences-technologies-sante-STS/master-informatique-program-master-informatique/parcours-genie-informatique-classique-2e-annee-subprogram-genie-informatique-m2-classique.html"
-				}
+				},
+        {
+          "nom": "LEO",
+          "url": "https://leo.univ-grenoble-alpes.fr/"
+        }
 			]
 		},
 		{

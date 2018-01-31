@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Kryoxem
- * Date: 30/01/2018
- * Time: 12:10
- */
 
 class DB
 {
@@ -34,6 +28,7 @@ class DB
             $this->conn->exec(TABLECREATE);
             Commons::debug_line("Requête création table envoyée.");
         } catch (PDOException $e) {
+            Commons::debug_line("Connexion échouée. Raison: " . $e->getMessage());
             $this->connected = false;
         }
     }

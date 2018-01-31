@@ -48,6 +48,23 @@ function test_mdp($mdp)
     return false;
 }
 
+// Récup options de la commandline
+$longoptions = [
+    "req:",
+    "debut:",
+    "fin:",
+    "info:",
+    "url:",
+    "psw:",
+];
+$in = getopt("", $longoptions);
+
+// Récup options de _GET
+foreach ($_GET as $k => $v)
+{
+    $in[$k] = $v;
+}
+
 $res = [
     "success" => false, // requête réussie ?
     "error" => "", // si requête ratée, pourquoi ?
@@ -56,33 +73,41 @@ $res = [
     "data" => null // les données en cas de besoin (pour un get par ex.)
 ];
 
-foreach ($_GET as $key => $value) {
+// Loop to print all elements
+Commons::debug_section("Inputs");
+foreach ($in as $k => $v)
+{
+    Commons::debug_line(" $k = $v");
     $res['request'][] = [
-        "key" => $key,
-        "value" => $value
+        "key" => $k,
+        "value" => $v
     ];
 }
 
 $db = new DB();
 
-if (!isset($_GET['req'])) {
+if (!isset($in['req'])) {
+    Commons::debug_line("Pas de requête spécifiée.");
     $res['success'] = false;
     $res['error'] = "Aucune méthode spécifiée (il faut set req=??? dans l'url et donner les paramètres nécessaires).";
 } else {
-    switch ($_GET['req']) {
+    Commons::debug_section("Traitement de la requête.");
+    Commons::debug_line("Requête de ${in['req']} spécifiée.");
+
+    switch ($in['req']) {
         case 'insert':
-            if (!$_SESSION['admin'] || !(isset($_GET['debut']) && isset($_GET['fin']) && isset($_GET['info']) && isset($_GET['type']) && isset($_GET['url']))) {
+            if (!$_SESSION['admin'] || !(isset($in['debut']) && isset($in['fin']) && isset($in['info']) && isset($in['type']) && isset($in['url']))) {
                 $res['success'] = false;
                 $res['error'] = "(INSERT): Non admin ou tous les champs ne sont pas remplis.";
                 break;
             }
 
             $ev = new Evenement();
-            $ev->debut = $_GET['debut'];
-            $ev->fin = $_GET['fin'];
-            $ev->info = $_GET['info'];
-            $ev->type = $_GET['type'];
-            $ev->url = $_GET['url'];
+            $ev->debut = $in['debut'];
+            $ev->fin = $in['fin'];
+            $ev->info = $in['info'];
+            $ev->type = $in['type'];
+            $ev->url = $in['url'];
 
             if ($db->insert($ev)) {
                 $res['success'] = true;
@@ -107,19 +132,19 @@ if (!isset($_GET['req'])) {
             break;
 
         case 'update':
-            if (!$_SESSION['admin'] || !(isset($_GET['id']) && isset($_GET['debut']) && isset($_GET['fin']) && isset($_GET['info']) && isset($_GET['type']) && isset($_GET['url']))) {
+            if (!$_SESSION['admin'] || !(isset($in['id']) && isset($in['debut']) && isset($in['fin']) && isset($in['info']) && isset($in['type']) && isset($in['url']))) {
                 $res['success'] = false;
                 $res['error'] = "(UPDATE): Non admin ou tous les champs ne sont pas remplis.";
                 break;
             }
 
             $ev = new Evenement();
-            $ev->id = $_GET['id'];
-            $ev->debut = $_GET['debut'];
-            $ev->fin = $_GET['fin'];
-            $ev->info = $_GET['info'];
-            $ev->type = $_GET['type'];
-            $ev->url = $_GET['url'];
+            $ev->id = $in['id'];
+            $ev->debut = $in['debut'];
+            $ev->fin = $in['fin'];
+            $ev->info = $in['info'];
+            $ev->type = $in['type'];
+            $ev->url = $in['url'];
 
             if ($db->update($ev)) {
                 $res['success'] = true;
@@ -131,13 +156,13 @@ if (!isset($_GET['req'])) {
             break;
 
         case 'delete':
-            if (!$_SESSION['admin'] || !(isset($_GET['id']))) {
+            if (!$_SESSION['admin'] || !(isset($in['id']))) {
                 $res['success'] = false;
                 $res['error'] = "(DELETE): Non admin ou tous les champs ne sont pas remplis.";
                 break;
             }
 
-            $id = $_GET['id'];
+            $id = $in['id'];
 
             if ($db->delete($id)) {
                 $res['success'] = true;
@@ -149,13 +174,13 @@ if (!isset($_GET['req'])) {
             break;
 
         case 'login':
-            if ($_SESSION['admin'] || !(isset($_GET['psw']))) {
+            if ($_SESSION['admin'] || !(isset($in['psw']))) {
                 $res['success'] = false;
                 $res['error'] = "(LOGIN): Déjà admin ou tous les champs ne sont pas remplis.";
                 break;
             }
 
-            if (test_mdp($_GET['psw'])) {
+            if (test_mdp($in['psw'])) {
                 $_SESSION['admin'] = true;
                 $res['success'] = true;
             } else {

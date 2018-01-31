@@ -18,8 +18,22 @@ export class ModalEtExclusionsComponent {
   constructor(public activeModal: NgbActiveModal) {
   }
 
+  valider(): void {
+    const it = this.exclusions[Symbol.iterator];
+    let i = 0;
+    while (i < this.exclusions.length) {
+      const e = this.exclusions[i];
+      if (this.typesPossible.indexOf(e['type']) < 0 || e['contient'].length === 0) {
+        this.exclusions.splice(i, 1);
+      } else {
+        i++;
+      }
+    }
+    this.activeModal.close(this.exclusions);
+  }
+
   ajoutExclusion(): void {
-    this.exclusions.push({nom: 'nom', contient: ''});
+    this.exclusions.push({type: 'nom', contient: '', supprime: false});
   }
 
   suppressionExclusion(e): void {

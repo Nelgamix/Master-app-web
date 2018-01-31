@@ -11,7 +11,7 @@
 				<td width="5%" style="padding-right: 8px;"><span style="float: right;">{{l}} h</span></td>
 				<ng-container *ngIf="i == 0">
 					<td class="et-visuel-colonne" style="text-align: center;" attr.width="{{95/legendeJours.length}}%" *ngFor="let j of legendeJours; let i = index" attr.rowspan="{{legendeHeures.legendes.length}}">
-						<div class="et-visuel-cours" *ngFor="let c of jours[i]" [class.exclu]="c.cours.exclu" [style.top]="c.position.top + '%'" [style.height]="c.position.height + '%'" [style.border-color]="c.cours.couleur">
+						<div class="et-visuel-cours" *ngFor="let c of jours[i]" [class.cache]="c.cours.cache" [style.top]="c.position.top + '%'" [style.height]="c.position.height + '%'" [style.border-color]="c.cours.couleur">
 							<p>
 								<b>{{c.cours.nom}}</b><br>
 								<ng-container *ngFor="let s of c.cours.salles; let i = index"><ng-container *ngIf="i > 0">&nbsp;</ng-container>{{s.salle}}</ng-container><br>

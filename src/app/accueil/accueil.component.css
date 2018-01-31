@@ -20,7 +20,7 @@
   width: 100%;
   height: 100%;
 	padding: 8px 14px;
-	border-radius: 6px;
+	border-radius: .2rem;
 	border: 2px solid #222;
   border-top-color: red;
   color: black;
@@ -41,7 +41,7 @@
   padding: 6px 30px;
   width: 100%;
   height: 100%;
-  border-radius: 6px;
+  border-radius: .2rem;
   background: linear-gradient(to bottom, rgba(70,70,70,.1), rgba(255,255,255,.1));
 }
 
@@ -56,12 +56,6 @@
 }
 .ue .type {
   font-style: italic;
-}
-
-.unoverflow {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .lien-additionnel {

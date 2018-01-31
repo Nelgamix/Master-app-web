@@ -34,9 +34,9 @@ div.et-visuel-cours p {
 	padding: 0;
 }
 
-.exclu {
+.cache {
   opacity: 0.5;
 }
-.exclu > p {
+.cache > p {
   text-decoration: line-through;
 }

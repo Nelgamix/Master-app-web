@@ -21,7 +21,8 @@ export class Cours {
   duree: any;
 
   couleur: string;
-  exclu: boolean;
+  cache: boolean;
+  supprime: boolean;
 
   constructor(c) {
     this.type = c.type;
@@ -76,6 +77,7 @@ export class Cours {
     if (!this.couleur) {
       this.couleur = 'black';
     }
-    this.exclu = false;
+    this.cache = false;
+    this.supprime = false;
   }
 }

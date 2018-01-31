@@ -18,3 +18,13 @@ body {
 .take-width {
   width: 100%;
 }
+
+.capitalize {
+  text-transform: capitalize;
+}
+
+.unoverflow {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

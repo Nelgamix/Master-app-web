@@ -96,7 +96,11 @@
   font-style: italic;
 }
 
-.exclu {
+.cache {
   opacity: 0.5;
   text-decoration: line-through;
+}
+
+.supprime {
+  display: none;
 }

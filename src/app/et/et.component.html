@@ -56,9 +56,9 @@
 
     <ng-template #elseBlock>
       <div class="row">
-        <div class="col-md-7 col-sm-12 heading">
+        <div class="col-md-8 col-sm-12 heading">
           <div class="row">
-            <div class="col-md-4 col-sm-12 mb-3">
+            <div class="col-md-4 col-sm-12">
               <h5>Statistiques</h5>
               <div class="row">
                 <div class="col-12">
@@ -80,8 +80,20 @@
                   <button type="button" class="btn btn-success take-width mt-2" (click)="openStats()">Autres stats</button>
                 </div>
               </div>
+              <div class="row mt-2">
+                <div class="col">
+                  <div class="btn-group btn-group-toggle take-width" ngbRadioGroup name="radioBasic" [(ngModel)]="vueType">
+                    <label ngbButtonLabel class="btn-primary take-width">
+                      <input ngbButton type="radio" [value]="1"> Tables
+                    </label>
+                    <label ngbButtonLabel class="btn-primary take-width">
+                      <input ngbButton type="radio" [value]="2"> Visuel
+                    </label>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="col-md-4 col-sm-12 mb-3">
+            <!--<div class="col-md-4 col-sm-12 mb-3">
               <h5>Vue</h5>
               <div class="btn-group btn-group-toggle take-width" ngbRadioGroup name="radioBasic" [(ngModel)]="vueType">
                 <label ngbButtonLabel class="btn-primary take-width">
@@ -91,15 +103,20 @@
                   <input ngbButton type="radio" [value]="2"> Visuel
                 </label>
               </div>
-            </div>
-            <div class="col-md-4 col-sm-12 mb-3">
+            </div>-->
+            <div class="col-md-8 col-sm-12">
               <h5>Exclusions</h5>
-              <div class="row" *ngFor="let e of exclusions">
+              <div class="row" *ngFor="let e of (exclusions ? exclusions.slice(0, 5) : [])">
                 <div class="col-12">
-                  {{e.type}}: {{e.contient}}
+                  <b class="capitalize">{{e.type}}</b>: {{e.contient}} <span style="font-style: italic" *ngIf="e.supprime">[Hidden]</span>
                 </div>
               </div>
-              <div class="row">
+              <div class="row" *ngIf="exclusions.length > 5">
+                <div class="col-12">
+                  &hellip; + <b>{{exclusions.length - 5}}</b> éléments
+                </div>
+              </div>
+              <div class="row mt-2">
                 <div class="col">
                   <button class="btn btn-warning take-width" (click)="openExclusions()">Configurer</button>
                 </div>
@@ -110,12 +127,12 @@
 
         <div class="col heading">
           <h5>Début &amp; fin des cours</h5>
-          <table style="width: 75%; margin: auto;">
+          <table style="width: 85%; margin: auto;">
             <tbody>
             <ng-container *ngFor="let j of etService.emploiTemps.jours">
               <tr *ngIf="j && j.duree.asMinutes() > 0">
                 <td><span class="stat-titre">{{j.nom}}</span></td>
-                <td><span class="stat-donnee">{{j.premierCours.debut | date: 'HH:mm'}} &rarr; {{j.dernierCours.fin | date: 'HH:mm'}}</span></td>
+                <td style="text-align: right"><span class="stat-donnee">{{j.premierCours.debut | date: 'HH:mm'}} &rarr; {{j.dernierCours.fin | date: 'HH:mm'}}</span></td>
               </tr>
             </ng-container>
             </tbody>

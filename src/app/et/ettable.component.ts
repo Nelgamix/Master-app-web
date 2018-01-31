@@ -14,7 +14,7 @@ export class EtTableComponent {
     this.sSearchFor = '';
   }
 
-  getPopoverDetails(cours) {
+  /*getPopoverDetails(cours) {
     let a = '';
 
     a += 'Salles: ';
@@ -31,5 +31,5 @@ export class EtTableComponent {
     a += cours.type + ' ' + cours.nom;
 
     return a;
-  }
+  }*/
 }

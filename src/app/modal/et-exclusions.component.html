@@ -6,7 +6,39 @@
 </div>
 <div class="modal-body">
   <form>
-    <div class="form-row mb-2" *ngFor="let e of exclusions; let i = index">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Texte</th>
+          <th>Hide</th>
+          <th>X</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let e of exclusions; let i = index">
+          <td>
+            <select id="s{{i}}" name="s{{i}}" [(ngModel)]="e.type" class="form-control">
+              <option *ngFor="let o of typesPossible" value="{{o}}">{{o}}</option>
+            </select>
+          </td>
+          <td>
+            <input id="i{{i}}" name="i{{i}}" class="form-control" placeholder="Contient" [(ngModel)]="e.contient">
+          </td>
+          <td>
+            <div class="btn-group btn-group-toggle">
+              <label class="btn-primary" ngbButtonLabel>
+                <input name="c{{i}}" type="checkbox" ngbButton [(ngModel)]="e.supprime"> H
+              </label>
+            </div>
+          </td>
+          <td>
+            <button type="button" class="btn btn-danger" (click)="suppressionExclusion(e)">&times;</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <!--<div class="form-row mb-2" *ngFor="let e of exclusions; let i = index">
       <div class="col-4">
         <select id="s{{i}}" name="s{{i}}" [(ngModel)]="e.type" class="form-control">
           <option *ngFor="let o of typesPossible" value="{{o}}">{{o}}</option>
@@ -18,10 +50,11 @@
       <div class="col-1">
         <button type="button" class="btn btn-danger take-width" (click)="suppressionExclusion(e)">&times;</button>
       </div>
-    </div>
+    </div>-->
   </form>
   <button type="button" class="btn btn-primary take-width" (click)="ajoutExclusion()">Ajouter une exclusion</button>
 </div>
 <div class="modal-footer">
-  <button type="button" class="btn btn-success" (click)="activeModal.close('Close click')">Valider</button>
+  <button type="button" class="btn btn-danger" (click)="activeModal.dismiss('Cancel')">Annuler</button>
+  <button type="button" class="btn btn-success" (click)="valider()">Valider</button>
 </div>

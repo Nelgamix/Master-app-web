@@ -26,8 +26,11 @@
         </div>
         <div class="col-12">
           <div class="row" *ngFor="let cours of j.cours | coursfilter:sSearchFor">
-            <div class="col-12" [class.exclu]="cours.exclu">
+            <div class="col-12" [class.cache]="cours.cache" [class.supprime]="cours.supprime">
               <div class="row cours" [class.td]="cours.type == 'TD'" [class.tp]="cours.type == 'TP'" [class.cm]="cours.type == 'Cours'">
+                <div *ngIf="!cours.cache" style="position: absolute; left: 10px; z-index: 10">
+                  <span (click)="et.exclure(cours)" style="color: red">X</span>
+                </div>
                 <div class="col-lg-2 col-md-12 temps">
                   {{cours.debut | amDateFormat:'HH:mm'}}&rarr;{{cours.fin | amDateFormat:'HH:mm'}}
                 </div>

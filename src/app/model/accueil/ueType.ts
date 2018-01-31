@@ -5,5 +5,6 @@ export enum UeType {
   CONCEPTION = 'Conception',
   SECURITE = 'Sécurité',
   RESEAUX = 'Réseaux',
+  PROJET = 'Projet',
   IHM = 'IHM'
 }

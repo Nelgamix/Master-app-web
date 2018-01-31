@@ -25,7 +25,7 @@ export class Jour {
   get coursActifs() {
     const cs = [];
     for (const c of this.cours) {
-      if (!c.exclu) {
+      if (!c.cache && !c.supprime) {
         cs.push(c);
       }
     }

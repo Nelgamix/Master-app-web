@@ -1,6 +1,6 @@
 <?php
 
-define("DEBUG", true); // print debug messages
+define("DEBUG", false); // print debug messages
 define("DEBUGWEB", false); // if debug = true, then all debug messages will be formatted as html
 define("LOCAL", true); // local installation?
 define("TRUEOUTPUT", true); // show final result?

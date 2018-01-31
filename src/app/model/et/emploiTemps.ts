@@ -60,7 +60,7 @@ export class EmploiTemps {
     let nombreJours = 0;
 
     // Pré-traitement
-    // vide
+    // rien
 
     // Traitement
     for (const j of this.jours) {
@@ -88,16 +88,19 @@ export class EmploiTemps {
   }
 
   filterExclusions(exclusions) {
-    for (const e of exclusions) {
-      if (e.contient.length === 0) {
-        exclusions.splice(exclusions.indexOf(e), 1);
-        continue;
-      }
+    for (const c of this.cours) {
+      c.cache = false;
+      c.supprime = false;
+    }
 
-      // else
+    for (const e of exclusions) {
       for (const c of this.cours) {
         if (c[e.type].includes(e.contient)) {
-          c.exclu = true;
+          if (e.supprime) {
+            c.supprime = true;
+          } else {
+            c.cache = true;
+          }
         }
       }
     }
