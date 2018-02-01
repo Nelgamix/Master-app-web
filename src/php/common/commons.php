@@ -40,8 +40,13 @@ class Commons {
         Commons::$section_number++;
     }
 
+    public static function light_clean($string)
+    {
+        return trim(preg_replace('/\s+/S', " ", $string));
+    }
+
     public static function clean($string) {
-        return trim(preg_replace('/\s+/S', " ", preg_replace("/-/", "", $string)));
+        return Commons::light_clean(preg_replace("/-/", "", $string));
     }
 
     public static function deploy_array($array) {

@@ -2,12 +2,12 @@ import * as moment from 'moment';
 
 export class Cours {
   static readonly typeCouleurs = {
-    'Cours': 'crimson',
+    'CM': 'crimson',
     'TD': 'dodgerblue',
     'TP': 'seagreen'
   };
 
-  type: string;
+  type: string[];
   nom: string;
   professeur: string;
   description: string;
@@ -25,7 +25,7 @@ export class Cours {
   supprime: boolean;
 
   constructor(c) {
-    this.type = c.type;
+    this.type = c.type.split('/');
     this.nom = c.nom;
     this.professeur = c.professeur;
     this.description = c.description;
@@ -39,7 +39,7 @@ export class Cours {
     // Analyse la salle (et le batiment)
     this.salles = [];
     const batreg = /(IM2AG|DLST)/g;
-    const sallereg = /((?:F)?[0-9]{3})/g;
+    const sallereg = /(FABLAB)|((?:F)?[0-9]{3})/g;
     const stypereg = /(Amphi|TD|TP|PC)/ig;
 
     const batm = [];
@@ -73,7 +73,7 @@ export class Cours {
     this.duree = moment(c.duree, 'HH:mm');
 
     // Couleur
-    this.couleur = Cours.typeCouleurs[this.type];
+    this.couleur = Cours.typeCouleurs[this.type[0]];
     if (!this.couleur) {
       this.couleur = 'black';
     }

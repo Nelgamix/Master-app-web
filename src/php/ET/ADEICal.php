@@ -35,6 +35,14 @@ class ADEICal
         }
 
         $events = $this->ical->sortEventsWithOrder($this->ical->events());
+        if (FLUSHICAL)
+        {
+            Commons::debug_section("Flush ical");
+            foreach ($events as $event)
+            {
+                Commons::debug_line($event->description);
+            }
+        }
 
         Commons::debug_section("Ajout des cours");
         foreach ($events as $event) {
@@ -96,7 +104,7 @@ class ADEICal
             "debut" => $dtstart,
             "fin" => $dtend,
             "duree" => $dtstart->diff($dtend),
-            "description" => Commons::clean(preg_replace("/\(Exporté le.+\)/", "", $event->description)),
+            "description" => Commons::light_clean(preg_replace("/\(Exporté le.+\)/", "", $event->description)),
             "professeur" => "",
             "salle" => $event->location,
             "type" => "",
@@ -104,14 +112,14 @@ class ADEICal
         ];
 
         // Analyse
-        if (preg_match("/\b(?!INFO)[A-Z]+ [A-Z][a-z|éèàîô-]+/", $objcours['description'], $matches) > 0) {
+        if (preg_match("/\b(?!INFO|MOSIG)[A-Z|-]+ [A-Z][a-z|éèàîô]+(-[A-Z][a-z]+)?/", $objcours['description'], $matches) > 0) {
             $objcours['professeur'] = $matches[0];
         }
 
         $a = ["nom", "salle", "description"]; // On recherche le type dans ces éléments de la classe
         $found = false;
         foreach ($a as $ab) {
-            if (preg_match("/(C|TP|TD)\/(C|TP|TD)|TD|TP|Cours/", $objcours[$ab], $matches) > 0) {
+            if (preg_match("/(C|Cours|TD)\/(TD|TP)|TD|TP|Cours/", $objcours[$ab], $matches) > 0) {
                 $objcours['type'] = $matches[0];
                 $found = true;
                 break;
@@ -149,14 +157,17 @@ class ADEICal
 
         if (substr($objcours['nom'], 0, 2) === "C ") // on a reconnu un Cours
         {
-            $objcours['type'] = 'Cours';
+            $objcours['type'] = 'CM';
             $objcours['nom'] = substr($objcours['nom'], 2, strlen($objcours['nom']) - 2);
         }
+
+        $objcours['type'] = str_replace('Cours', 'CM', $objcours['type']);
+        $objcours['type'] = str_replace('C/', 'CM/', $objcours['type']);
 
         $objcours['nom'] = str_replace('&amp;', '&', $objcours['nom']);
         $objcours['nom'] = Commons::clean($objcours['nom']);
         $objcours['salle'] = Commons::clean($objcours['salle']);
-        $objcours['description'] = Commons::clean($objcours['professeur']);
+        $objcours['description'] = Commons::clean($objcours['description']);
 
         $this->cours[] =
                 new Cours($objcours['nom'],

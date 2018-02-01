@@ -1,10 +1,10 @@
 <?php
 
 // Partie commune
-define("DEBUG", true); // print debug messages
+define("DEBUG", false); // print debug messages
 define("DEBUGWEB", false); // if debug = true, then all debug messages will be formatted as html
 define("TRUEOUTPUT", true); // show final result?
-define("LOCAL", true); // local installation?
+define("LOCAL", false); // local installation?
 
 // Evenements infos
 define("SERVERNAME", "skysurfoatnico.mysql.db");
@@ -25,8 +25,9 @@ define("ADMINMDP", [
 ]);
 
 // Partie ET
-define("URLTIMEOUT", 4); // request timeout before considering that ADE is down
+define("URLTIMEOUT", 5); // request timeout before considering that ADE is down
 define("REFRESHINTERVAL", 2 * 60); // Refresh ical each REFRESHINTERVAL minutes
-define("DISCARDDB", true); // disable DB (as if DB was offline)
+define("DISCARDDB", false); // disable DB (as if DB was offline)
 define("DISCARDADE", false); // disable ADE (as if ADE was offline)
+define("FLUSHICAL", false);
 define("URLADE", "http://ade6-ujf-ro.grenet.fr/jsp/custom/modules/plannings/anonymous_cal.jsp?resources=9756&projectId=2&calType=ical&firstDate=%s&lastDate=%s");
