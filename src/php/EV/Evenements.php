@@ -9,7 +9,7 @@ class Evenements
 
     function __construct()
     {
-        $this->db = new DB();
+        $this->db = new BD();
         $this->db->connect();
         $this->db->exec(TABLECREATE);
     }

@@ -1,6 +1,6 @@
 <?php
 
-require_once 'DB.php';
+require_once 'BD.php';
 require_once __DIR__.'/../config.php';
 
 $section_number = 1;

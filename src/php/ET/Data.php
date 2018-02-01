@@ -23,7 +23,7 @@ class Data implements JsonSerializable
     public function __construct($year, $week)
     {
         // Ouverture de connexion à la BD
-        $this->db = new DB();
+        $this->db = new BD();
         if (!$this->connect_to_db()) {
             Commons::debug_line("Connexion échouée.");
         }

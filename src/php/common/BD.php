@@ -2,7 +2,7 @@
 
 require_once 'commons.php';
 
-class DB
+class BD
 {
     /**
      * @var PDO
