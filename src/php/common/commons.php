@@ -1,20 +1,7 @@
 <?php
 
-define("DEBUG", false); // print debug messages
-define("DEBUGWEB", false); // if debug = true, then all debug messages will be formatted as html
-define("LOCAL", true); // local installation?
-define("TRUEOUTPUT", true); // show final result?
-
-// DB infos
-define("SERVERNAME", "skysurfoatnico.mysql.db");
-define("DBNAME", "skysurfoatnico");
-define("USERNAME", "skysurfoatnico");
-define("PASSWORD", "eE80fdNQ");
-
-// Don't change this
-define("LOCALDB", "mysql:host=localhost;dbname=" . DBNAME);
-define("WEBDB", "mysql:host=" . SERVERNAME . ";dbname=" . DBNAME);
-define("DB", (LOCAL ? LOCALDB : WEBDB));
+require_once 'DB.php';
+require_once __DIR__.'/../config.php';
 
 $section_number = 1;
 
@@ -59,5 +46,33 @@ class Commons {
 
     public static function deploy_array($array) {
         return implode(', ', $array);
+    }
+
+    public static function check_in_range($val, $min, $max) {
+        return ($val >= $min && $val <= $max);
+    }
+
+    public static function parse_args($opts, $get)
+    {
+        $in = getopt("", $opts);
+
+        // Récup options de _GET
+        foreach ($get as $k => $v)
+        {
+            $in[$k] = $v;
+        }
+
+        // Loop to print all elements
+        Commons::debug_section("Arguments");
+        foreach ($in as $k => $v)
+        {
+            Commons::debug_line("$k = $v");
+            $res['request'][] = [
+                "key" => $k,
+                "value" => $v
+            ];
+        }
+
+        return $in;
     }
 }

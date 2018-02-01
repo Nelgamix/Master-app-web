@@ -1,13 +1,10 @@
 <?php
 
 require_once 'vendor/autoload.php';
-require_once 'commons.php';
+require_once 'common/commons.php';
 
+require_once 'config.php';
 require_once 'ET/ET.php';
-
-define("URLTIMEOUT", 4); // request timeout before considering that ADE is down
-define("REFRESHINTERVAL", 2 * 60); // Refresh ical each REFRESHINTERVAL minutes
-define("DISCARDDB", true);
 
 define("TABLENAME", "masteret");
 define("WEEKCOLUMN", "week");
@@ -21,29 +18,47 @@ define("TABLECREATE", "CREATE TABLE IF NOT EXISTS " . TABLENAME . " ("
     . DATACOLUMN . " TEXT DEFAULT NULL,"
     . "PRIMARY KEY (" . WEEKCOLUMN . "," . YEARCOLUMN . "))");
 
-if (!isset($_GET['week'])) {
-    $week = 4;
+// Récup options de la commandline
+$longoptions = [
+    "week:",
+    "year:"
+];
+$in = Commons::parse_args($longoptions, $_GET);
+
+// Parser les arguments en int
+try {
+    // Check for arg
+    if (!isset($in['week'])
+            || !isset($in['year'])) {
+        throw new Exception("arguments non donnés");
+    }
+
+    // Check for int
+    if (!ctype_digit($in['week'])
+            || !ctype_digit($in['year'])) {
+        throw new Exception("arguments non entiers");
+    }
+
+    // Parse
+    $in['year'] = intval($in['year']);
+    $in['week'] = intval($in['week']);
+
+    // Check for range
+    if (!Commons::check_in_range($in['week'], 0, 52)
+            || !Commons::check_in_range($in['year'], 2017, 2018)) {
+        throw new Exception("arguments externes à l'intervalle");
+    }
+} catch (Exception $e) {
+    Commons::debug_line("Valeur d'entrée invalide: " . $e->getMessage());
+    Commons::output("{}");
+    exit(0);
+}
+
+$et = new ET($in['year'], $in['week']);
+$res = $et->init();
+
+if ($res && $et->ok) {
+    Commons::output(json_encode($et));
 } else {
-    $week = intval($_GET['week']);
-}
-
-if (!isset($_GET['year'])) {
-    $year = 2018;
-} else {
-    $year = intval($_GET['year']);
-}
-
-if ($week < 1 || $week > 52) {
-    $week = 4;
-}
-
-if ($year < 2017 || $year > 2018) {
-    $year = 2018;
-}
-
-$et = new ET($year, $week);
-$res = $et->get_response();
-
-if ($res) {
-    $et->print();
+    Commons::output("{}");
 }

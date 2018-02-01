@@ -3,11 +3,11 @@
 session_start();
 
 // Common imports
-require_once 'commons.php';
+require_once 'common/commons.php';
+require_once 'config.php';
 
 // Class imports
-require_once 'EV/DB.php';
-require_once 'EV/Evenement.php';
+require_once 'EV/Evenements.php';
 
 // Define
 define("TABLENAME", "masterev");
@@ -27,12 +27,6 @@ define("TABLECREATE", "CREATE TABLE IF NOT EXISTS " . TABLENAME . " ("
     . TYPECOLUMN . " VARCHAR(64) DEFAULT NULL,"
     . URLCOLUMN . " VARCHAR(255) DEFAULT NULL"
     . ")");
-
-// Les mots de passe disponibles
-define("ADMINMDP", [
-    "mdptest",
-    "loictest"
-]);
 
 if (!isset($_SESSION['admin'])) {
     $_SESSION['admin'] = false;
@@ -55,15 +49,9 @@ $longoptions = [
     "fin:",
     "info:",
     "url:",
-    "psw:",
+    "psw:"
 ];
-$in = getopt("", $longoptions);
-
-// Récup options de _GET
-foreach ($_GET as $k => $v)
-{
-    $in[$k] = $v;
-}
+$in = Commons::parse_args($longoptions, $_GET);
 
 $res = [
     "success" => false, // requête réussie ?
@@ -73,25 +61,22 @@ $res = [
     "data" => null // les données en cas de besoin (pour un get par ex.)
 ];
 
-// Loop to print all elements
-Commons::debug_section("Inputs");
 foreach ($in as $k => $v)
 {
-    Commons::debug_line(" $k = $v");
     $res['request'][] = [
         "key" => $k,
         "value" => $v
     ];
 }
 
-$db = new DB();
+$evs = new Evenements();
 
+Commons::debug_section("Traitement de la requete");
 if (!isset($in['req'])) {
     Commons::debug_line("Pas de requête spécifiée.");
     $res['success'] = false;
     $res['error'] = "Aucune méthode spécifiée (il faut set req=??? dans l'url et donner les paramètres nécessaires).";
 } else {
-    Commons::debug_section("Traitement de la requête.");
     Commons::debug_line("Requête de ${in['req']} spécifiée.");
 
     switch ($in['req']) {
@@ -109,7 +94,7 @@ if (!isset($in['req'])) {
             $ev->type = $in['type'];
             $ev->url = $in['url'];
 
-            if ($db->insert($ev)) {
+            if ($evs->insert($ev)) {
                 $res['success'] = true;
             } else {
                 $res['success'] = false;
@@ -119,7 +104,7 @@ if (!isset($in['req'])) {
             break;
 
         case 'get':
-            $get = $db->select();
+            $get = $evs->select();
 
             if (isset($get)) {
                 $res['data'] = $get;
@@ -146,7 +131,7 @@ if (!isset($in['req'])) {
             $ev->type = $in['type'];
             $ev->url = $in['url'];
 
-            if ($db->update($ev)) {
+            if ($evs->update($ev)) {
                 $res['success'] = true;
             } else {
                 $res['success'] = false;
@@ -164,7 +149,7 @@ if (!isset($in['req'])) {
 
             $id = $in['id'];
 
-            if ($db->delete($id)) {
+            if ($evs->delete($id)) {
                 $res['success'] = true;
             } else {
                 $res['success'] = false;

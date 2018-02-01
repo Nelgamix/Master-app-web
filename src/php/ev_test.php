@@ -1,9 +1,9 @@
 <?php
 
-require_once 'commons.php';
+require_once 'common/commons.php';
 
 define("SCRIPT", "C:\\xampp\\php\\php.exe ev.php");
-define("OUTPUT_SCRIPT", false);
+define("OUTPUT_SCRIPT", true);
 
 if (strlen(session_id() > 0)) session_destroy();
 

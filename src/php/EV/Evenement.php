@@ -3,7 +3,7 @@
 class Evenement implements JsonSerializable
 {
     // Format pour insérer une datetime dans une BD SQL: "Y-m-d H:i:s" (année-mois-jour heure:minutes:secondes)
-    public $id; // id unique dans la DB
+    public $id; // id unique dans la Evenements
     public $debut; // doit être set
     public $fin; // peut être vide ('null')
     public $info; // infos de l'évènement
