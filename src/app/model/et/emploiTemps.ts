@@ -54,6 +54,7 @@ export class EmploiTemps {
 
     // Declarations
     const duree = moment.duration(0); // Nombre d'heures total
+    const types = [];
     let moyenneCours; // Moyenne de la durée d'un cours
     let moyenneJours; // Moyenne d'heure de cours par jour
     let nombreCours = 0;
@@ -67,8 +68,14 @@ export class EmploiTemps {
       if (j) {
         nombreJours++;
         nombreCours += j.coursActifs.length;
-
         duree.add(j.duree);
+        for (const t in j.typesCount) {
+          if (types.hasOwnProperty(t)) {
+            types[t] += j.typesCount[t];
+          } else {
+            types[t] = j.typesCount[t];
+          }
+        }
       }
     }
 
@@ -82,6 +89,9 @@ export class EmploiTemps {
     this.stats['moyenneJours'] = {title: 'Moyenne par jour', value: moyenneJours};
     this.stats['nombreCours'] = {title: 'Nombre de cours', value: nombreCours};
     this.stats['nombreJours'] = {title: 'Nombre de jours', value: nombreJours};
+    for (const t in types) {
+      this.stats['nb' + t.replace('/', '_')] = {title: 'Nombre de ' + t, value: types[t]};
+    }
 
     this.premierJour = this.jours[0];
     this.dernierJour = this.jours[this.jours.length - 1];

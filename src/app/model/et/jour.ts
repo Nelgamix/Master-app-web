@@ -55,14 +55,15 @@ export class Jour {
   compteTypes(): void {
     const o = {};
     for (const c of this.coursActifs) {
-      if (c.type === '') {
+      if (c.type.length === 0) {
         continue;
       }
 
-      if (o[c.type]) {
-        o[c.type] += 1;
+      const typestring = c.type.join('/');
+      if (o.hasOwnProperty(typestring)) {
+        o[typestring] += 1;
       } else {
-        o[c.type] = 1;
+        o[typestring] = 1;
       }
     }
 

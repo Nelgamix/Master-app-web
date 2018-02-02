@@ -7,6 +7,7 @@ export class Cours {
     'TP': 'seagreen'
   };
 
+  hash_id: number;
   type: string[];
   nom: string;
   professeur: string;
@@ -79,5 +80,17 @@ export class Cours {
     }
     this.cache = false;
     this.supprime = false;
+
+    /*
+    Calcule le hash du cours.
+    Se base uniquement sur l'heure de début et de fin, ainsi que sur le nom du cours.
+    Ainsi, un cours qui a le même nom, ainsi que les mêmes horaires qu'un autre (mais un prof différent par exemple),
+    aura le même hashcode. C'est intentionnel, puisqu'on cherche à identifier les cours et non pas ce qui les composent.
+     */
+    this.hash_id = 0;
+    this.hash_id += this.debut.hour() + this.debut.minute() + this.fin.hour() + this.fin.minute();
+    for (let i = 0; i < this.nom.length; i++) {
+      this.hash_id += this.nom[i].charCodeAt(0);
+    }
   }
 }

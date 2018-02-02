@@ -284,7 +284,7 @@
               "url": "https://im2ag-moodle.e.ujf-grenoble.fr/course/view.php?id=297"
             },
             {
-              "nom": "Site",
+              "nom": "Caseine",
               "url": "http://caseine.org/course/view.php?id=102"
             }
           ]
@@ -304,7 +304,12 @@
           "nom": "Ergonomie des IHM",
           "initiales": "EIHM",
           "type": "IHM",
-          "liens": []
+          "liens": [
+            {
+              "nom": "Moodle",
+              "url": "https://im2ag-moodle.e.ujf-grenoble.fr/course/view.php?id=264"
+            }
+          ]
         }
       ],
 			"infos": "Mot de passe Moodle DevOps: DEVOPS_2018",
