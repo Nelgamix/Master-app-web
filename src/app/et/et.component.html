@@ -56,7 +56,7 @@
 
     <ng-template #elseBlock>
       <div class="row">
-        <div class="col-md-8 col-sm-12 heading">
+        <div class="col-md-7 col-sm-12 heading">
           <div class="row">
             <div class="col-md-4 col-sm-12 mb-2">
               <h5>Statistiques</h5>
@@ -93,17 +93,7 @@
                 </div>
               </div>
             </div>
-            <!--<div class="col-md-4 col-sm-12 mb-3">
-              <h5>Vue</h5>
-              <div class="btn-group btn-group-toggle take-width" ngbRadioGroup name="radioBasic" [(ngModel)]="vueType">
-                <label ngbButtonLabel class="btn-primary take-width">
-                  <input ngbButton type="radio" [value]="1"> Tables
-                </label>
-                <label ngbButtonLabel class="btn-primary take-width">
-                  <input ngbButton type="radio" [value]="2"> Visuel
-                </label>
-              </div>
-            </div>-->
+
             <div class="col-md-8 col-sm-12 mb-2">
               <h5>Exclusions</h5>
               <div class="row" *ngFor="let e of (exclusions ? exclusions.slice(0, 5) : [])">
@@ -127,7 +117,7 @@
 
         <div class="col heading">
           <h5>Début &amp; fin des cours</h5>
-          <table style="width: 85%; margin: auto;">
+          <table style="width: 85%; margin: auto auto 10px;">
             <tbody>
             <ng-container *ngFor="let j of etService.emploiTemps.jours">
               <tr *ngIf="j && j.duree.asMinutes() > 0">
@@ -137,6 +127,10 @@
             </ng-container>
             </tbody>
           </table>
+          <div>
+            <span *ngIf="etService.coursActuel"><b>Cours actuel</b>: {{etService.coursActuel.nom}} en <span *ngFor="let s of etService.coursActuel.salles">{{s.batiment}} {{s.salle}}</span></span>
+            <span *ngIf="etService.prochainCours"><b>Prochain cours</b>: {{etService.prochainCours.nom}} en <span *ngFor="let s of etService.prochainCours.salles">{{s.batiment}} {{s.salle}}</span></span>
+          </div>
         </div>
       </div>
 

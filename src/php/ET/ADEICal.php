@@ -112,7 +112,7 @@ class ADEICal
         ];
 
         // Analyse
-        if (preg_match("/\b(?!INFO|MOSIG)[A-Z|-]+ [A-Z][a-z|éèàîô]+(-[A-Z][a-z]+)?/", $objcours['description'], $matches) > 0) {
+        if (preg_match("/\b(?!INFO|MOSIG|ORCO)[A-Z|-]+ [A-Z][a-z|éèëàîïô]+(-[A-Z][a-z]+)?/", $objcours['description'], $matches) > 0) {
             $objcours['professeur'] = $matches[0];
         }
 

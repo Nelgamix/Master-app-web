@@ -15,6 +15,9 @@ export class EmploiTempsService {
   emploiTemps: EmploiTemps;
   exclusions: any[];
 
+  coursActuel: Cours;
+  prochainCours: Cours;
+
   observers: any[];
 
   constructor(private http: HttpClient,
@@ -56,6 +59,35 @@ export class EmploiTempsService {
     const cours = res['cours'];
 
     this.emploiTemps.init(cours);
+    const now = moment();
+    let lastCours: Cours = null;
+    this.coursActuel = null;
+
+    // Calcule md
+    for (const j of this.emploiTemps.jours) {
+      if (now.isBefore(j.premierCours.debut)) { // on est avant ce jour.
+        this.prochainCours = j.premierCours;
+        break;
+      } else if (now.isAfter(j.dernierCours.fin)) { // on est après ce jour.
+        continue;
+      } else { // on est dans ce jour: on doit trouver le bon cours.
+        for (const c of j.coursActifs) { // on parcours les cours
+          if (now.isBetween(c.debut, c.fin)) { // on a trouvé le cours actuel
+            this.coursActuel = c;
+          }
+
+          if (now.isAfter(c.debut)) { // si le cours qu'on analyse est après now, alors c'est le cours d'avant qui est le plus proche.
+            this.prochainCours = lastCours;
+            break;
+          }
+
+          lastCours = c;
+        }
+
+        break;
+      }
+    }
+
     this.notifyObserver();
 
     if (cb && cb instanceof Function) {
