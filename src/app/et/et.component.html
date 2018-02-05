@@ -140,12 +140,12 @@
             </tbody>
           </table>
           <div>
-            <dl>
+            <dl class="mb-0">
               <dt *ngIf="etService.coursActuel">Cours actuel</dt>
-              <dd *ngIf="etService.coursActuel">{{etService.coursActuel.nom}} en <span *ngFor="let s of etService.coursActuel.salles">{{s.batiment}} {{s.salle}}</span></dd>
+              <dd class="mb-0" *ngIf="etService.coursActuel">{{etService.coursActuel.nom}} en <span *ngFor="let s of etService.coursActuel.salles">{{s.batiment}} {{s.salle}}</span></dd>
 
               <dt *ngIf="etService.prochainCours">Cours suivant</dt>
-              <dd *ngIf="etService.prochainCours">{{etService.prochainCours.nom}} en <span *ngFor="let s of etService.prochainCours.salles">{{s.batiment}} {{s.salle}}</span></dd>
+              <dd class="mb-0" *ngIf="etService.prochainCours">{{etService.prochainCours.nom}} en <span *ngFor="let s of etService.prochainCours.salles">{{s.batiment}} {{s.salle}}</span></dd>
             </dl>
           </div>
         </div>

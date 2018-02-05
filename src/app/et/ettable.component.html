@@ -14,14 +14,14 @@
           <span class="jour-title-nom">{{j.nom}}</span> <span class="jour-title-date">{{j.date | amDateFormat:'D MMMM YYYY'}}</span>
         </div>
       </div>
-      <div class="row stats mb-2">
+      <div class="row stats mb-2" *ngIf="j.coursActifs.length > 0">
         <div class="col-12">
           <span class="jour-stats-duree">{{j.premierCours.debut | date: 'HH:mm'}}&rarr;{{j.dernierCours.fin | date: 'HH:mm'}} ({{j.duree | duree}})</span>,
           <span *ngFor="let t of j.typesCount | objet; let i = index"><span *ngIf="i > 0">, </span><span class="jour-stats-type">{{t.value}}&nbsp;{{t.key}}</span></span>
         </div>
       </div>
       <div class="row">
-        <div class="col no-cours mb-2" *ngIf="j.coursActifs.length === 0 || (j.coursActifs|coursfilter:sSearchFor).length == 0">
+        <div class="col no-cours mb-2" *ngIf="j.cours.length === 0 || (j.coursActifs|coursfilter:sSearchFor).length == 0">
           Aucun cours trouvé.
         </div>
         <div class="col-12">
