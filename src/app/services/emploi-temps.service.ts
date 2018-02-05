@@ -17,6 +17,7 @@ export class EmploiTempsService {
 
   coursActuel: Cours;
   prochainCours: Cours;
+  prochainCoursTimer: any;
 
   observers: any[];
 
@@ -109,7 +110,7 @@ export class EmploiTempsService {
       if (j) {
         if (now.isBefore(j.premierCours.debut)) { // on est avant ce jour.
           this.prochainCours = j.premierCours;
-          // this.prochainCoursTimer = moment.duration(now.diff(this.prochainCours.debut)).timer({start: true}, () => null);
+          this.prochainCoursTimer = moment.duration(now.diff(this.prochainCours.debut));
           break;
         } else if (now.isAfter(j.dernierCours.fin)) { // on est après ce jour.
           continue;

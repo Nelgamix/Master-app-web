@@ -2,34 +2,86 @@ import { Cours } from './cours';
 
 import * as moment from 'moment';
 
+/**
+ * Représente un jour dans l'emploi du temps.
+ */
 export class Jour {
+  /**
+   * Le nom du jour.
+   * Ex: 'Lundi'
+   */
   nom: string;
+
+  /**
+   * La date correspond au jour.
+   */
   date: any;
+
+  /**
+   * Les cours qui ont lieu ce jour.
+   * Regroupe donc tous les cours de coursActifs, coursCaches, et coursSupprimes
+   * coursActifs U coursCaches U coursSupprimes = cours
+   */
   cours: Cours[];
 
+  /**
+   * Les cours actifs qui ont lieu dans ce jour.
+   */
+  coursActifs: Cours[];
+
+  /**
+   * Les cours cachés qui ont lieu dans ce jour.
+   */
+  coursCaches: Cours[];
+
+  /**
+   * Les cours supprimes qui ont lieu dans ce jour.
+   */
+  coursSupprimes: Cours[];
+
+  /**
+   * Le premier cours de la journée.
+   */
   premierCours: Cours;
+
+  /**
+   * Le dernier cours de la journée.
+   */
   dernierCours: Cours;
+
+  /**
+   * La durée (sous forme de moment.duration) de la journée
+   */
   duree: any; // moment duration
+
+  /**
+   * Un objet contenant le compte des différents types de cours.
+   * Ex: {'TD': 4, 'CM': 2}
+   */
   typesCount: any;
 
+  /**
+   * Construit le jour, à partir d'un cours.
+   * Ce cours sert à déterminer la date, ainsi que le nom du jour.
+   * @param cours le cours pour la création du jour.
+   */
   constructor(cours) {
     this.nom = Jour.capitalizeFirstLetter(cours.debut.format('dddd'));
     this.date = cours.debut.clone().hours(0).minutes(0).seconds(0);
+
     this.cours = [];
+    this.coursActifs = [];
+    this.coursCaches = [];
+    this.coursSupprimes = [];
   }
 
-  static capitalizeFirstLetter(string): string {
+  /**
+   * Capitalise la chaîne de caractères. (= passe le premier caractère en majuscule)
+   * @param string la chaîne de caractère à capitaliser
+   * @returns {string}
+   */
+  private static capitalizeFirstLetter(string): string {
     return string.charAt(0).toUpperCase() + string.slice(1);
-  }
-
-  get coursActifs() {
-    const cs = [];
-    for (const c of this.cours) {
-      if (!c.cache && !c.supprime) {
-        cs.push(c);
-      }
-    }
-    return cs;
   }
 
   ajouterCours(cours: Cours): void {
@@ -37,12 +89,36 @@ export class Jour {
   }
 
   analyse(): void {
+    this.trierCours();
+
     this.compteDuree();
     this.compteTypes();
     this.debutFin();
   }
 
-  compteDuree(): void {
+  /**
+   * Trie les cours selon le fait qu'ils soient actifs, cachés, ou supprimés.
+   * Ne fait que les ranger dans le bon array.
+   */
+  private trierCours(): void {
+    // Remettre à zéro
+    this.coursActifs.splice(0, this.coursActifs.length);
+    this.coursCaches.splice(0, this.coursCaches.length);
+    this.coursSupprimes.splice(0, this.coursSupprimes.length);
+
+    // Faire le tri
+    for (const c of this.cours) {
+      if (c.cache) {
+        this.coursCaches.push(c);
+      } else if (c.supprime) {
+        this.coursSupprimes.push(c);
+      } else {
+        this.coursActifs.push(c);
+      }
+    }
+  }
+
+  private compteDuree(): void {
     const total = moment.duration(0);
 
     for (const c of this.coursActifs) {
@@ -52,7 +128,7 @@ export class Jour {
     this.duree = total;
   }
 
-  compteTypes(): void {
+  private compteTypes(): void {
     const o = {};
     for (const c of this.coursActifs) {
       if (c.type.length === 0) {
@@ -70,7 +146,7 @@ export class Jour {
     this.typesCount = o;
   }
 
-  debutFin(): void {
+  private debutFin(): void {
     const cs = this.coursActifs;
 
     if (cs.length < 1) {
@@ -93,7 +169,7 @@ export class Jour {
     this.dernierCours = maxFin;
   }
 
-  sortCours(field): any {
+  private sortCours(field): any {
     return function(left, right) {
         return left[field].diff(right[field]) > 0;
     };

@@ -115,7 +115,7 @@
               </div>
               <div class="row" *ngIf="exclusions.length > 5">
                 <div class="col-12">
-                  &hellip; + <b>{{exclusions.length - 5}}</b> éléments
+                  + <b>{{exclusions.length - 5}}</b> éléments
                 </div>
               </div>
               <div class="row mt-2">
@@ -144,8 +144,8 @@
               <dt *ngIf="etService.coursActuel">Cours actuel</dt>
               <dd class="mb-0" *ngIf="etService.coursActuel">{{etService.coursActuel.nom}} en <span *ngFor="let s of etService.coursActuel.salles">{{s.batiment}} {{s.salle}}</span></dd>
 
-              <dt *ngIf="etService.prochainCours">Cours suivant</dt>
-              <dd class="mb-0" *ngIf="etService.prochainCours">{{etService.prochainCours.nom}} en <span *ngFor="let s of etService.prochainCours.salles">{{s.batiment}} {{s.salle}}</span></dd>
+              <dt *ngIf="etService.prochainCours">Cours suivant <span style="font-size: 75%; color: gray">dans {{etService.prochainCoursTimer | amDuration:'milliseconds'}}</span></dt>
+              <dd class="mb-0" *ngIf="etService.prochainCours"><b>{{etService.prochainCours.nom}}</b> en <span *ngFor="let s of etService.prochainCours.salles">{{s.batiment}} {{s.salle}}</span></dd>
             </dl>
           </div>
         </div>
