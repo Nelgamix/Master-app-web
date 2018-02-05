@@ -53,42 +53,17 @@ export class EmploiTempsService {
     this.metadata['adeOnline'] = data['ade-online'];
     this.metadata['ok'] = data['ok'];
 
-    const res = data['data'];
-    this.metadata['stats'] = res['stats'];
-    this.metadata['lastUpdated'] = moment(res['updated'], 'DD-MM-YYYY HH:mm');
-    const cours = res['cours'];
+    if (this.metadata['ok']) {
+      const res = data['data'];
+      this.metadata['stats'] = res['stats'];
+      this.metadata['lastUpdated'] = moment(res['updated'], 'DD-MM-YYYY HH:mm');
+      const cours = res['cours'];
 
-    this.emploiTemps.init(cours);
-    const now = moment();
-    let lastCours: Cours = null;
-    this.coursActuel = null;
+      this.emploiTemps.init(cours);
+      this.analyse();
 
-    // Calcule md
-    for (const j of this.emploiTemps.jours) {
-      if (now.isBefore(j.premierCours.debut)) { // on est avant ce jour.
-        this.prochainCours = j.premierCours;
-        break;
-      } else if (now.isAfter(j.dernierCours.fin)) { // on est après ce jour.
-        continue;
-      } else { // on est dans ce jour: on doit trouver le bon cours.
-        for (const c of j.coursActifs) { // on parcours les cours
-          if (now.isBetween(c.debut, c.fin)) { // on a trouvé le cours actuel
-            this.coursActuel = c;
-          }
-
-          if (now.isAfter(c.debut)) { // si le cours qu'on analyse est après now, alors c'est le cours d'avant qui est le plus proche.
-            this.prochainCours = lastCours;
-            break;
-          }
-
-          lastCours = c;
-        }
-
-        break;
-      }
+      this.notifyObserver();
     }
-
-    this.notifyObserver();
 
     if (cb && cb instanceof Function) {
       cb();
@@ -111,11 +86,50 @@ export class EmploiTempsService {
   filterExclusions(exclusions: any[]) {
     if (exclusions !== this.exclusions) {
       this.exclusions.splice(0, this.exclusions.length); // remove all (clear)
-      for (const e of exclusions) this.exclusions.push(e);
+      for (const e of exclusions) {
+        this.exclusions.push(e);
+      }
     }
 
     this.emploiTemps.filterExclusions(this.exclusions);
-    this.emploiTemps.analyse();
+    this.analyse();
     this.sauvegardeCookies(this.exclusions);
+  }
+
+  analyse(): void {
+    this.emploiTemps.analyse();
+
+    const now = moment();
+    let lastCours: Cours = null;
+    this.coursActuel = null;
+    this.prochainCours = null;
+
+    // Calcule cours actuel, prochain cours
+    for (const j of this.emploiTemps.jours) {
+      if (j) {
+        if (now.isBefore(j.premierCours.debut)) { // on est avant ce jour.
+          this.prochainCours = j.premierCours;
+          // this.prochainCoursTimer = moment.duration(now.diff(this.prochainCours.debut)).timer({start: true}, () => null);
+          break;
+        } else if (now.isAfter(j.dernierCours.fin)) { // on est après ce jour.
+          continue;
+        } else { // on est dans ce jour: on doit trouver le bon cours.
+          for (const c of j.coursActifs) { // on parcours les cours
+            if (now.isBetween(c.debut, c.fin)) { // on a trouvé le cours actuel
+              this.coursActuel = c;
+            }
+
+            if (now.isAfter(c.debut)) { // si le cours qu'on analyse est après now, alors c'est le cours d'avant qui est le plus proche.
+              this.prochainCours = lastCours;
+              break;
+            }
+
+            lastCours = c;
+          }
+
+          break;
+        }
+      }
+    }
   }
 }

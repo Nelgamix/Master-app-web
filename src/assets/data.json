@@ -224,7 +224,12 @@
           "nom": "Cybersécurité",
           "initiales": "CS",
           "type": "Sécurité",
-          "liens": []
+          "liens": [
+            {
+              "nom": "Site",
+              "url": "https://www-fourier.ujf-grenoble.fr/~pev/cybersec/"
+            }
+          ]
         },
         {
           "nom": "Robotics",
@@ -312,7 +317,7 @@
           ]
         }
       ],
-			"infos": "Mot de passe Moodle DevOps: DEVOPS_2018",
+			"infos": "Mot de passe Moodle DevOps: DEVOPS_2018\nLogin CS: M1Info_M2GI_2018, Quantum_or_not_quantum?",
 			"liens": []
 		},
 		{

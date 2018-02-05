@@ -1,8 +1,12 @@
 <div class="container contenu">
   <div class="row mb-2">
     <div class="col-md-7 col-sm-12">
+      <span class="align-middle ade-status" *ngIf="etService.metadata['ok']" style="color: green;">OK</span>
+      <span class="align-middle ade-status" *ngIf="!etService.metadata['ok']" style="color: red;">NON OK</span>
+
       <span class="align-middle ade-status" *ngIf="etService.metadata['adeOnline']" style="color: green;">ADE est en ligne!</span>
       <span class="align-middle ade-status" *ngIf="!etService.metadata['adeOnline']" style="color: red;">ADE est hors-ligne!</span>
+
       <span class="align-middle last-updated">Dernière mise à jour <b>{{etService.metadata['lastUpdated'] | amTimeAgo}}</b></span>
     </div>
     <div class="col-md-5 col-sm-12">
@@ -33,10 +37,18 @@
   <ng-container *ngIf="etService.metadata['ok']">
     <div class="row mb-2 pt-2 pb-2" id="head-title">
       <div class="col">
-        <div class="row mb-2">
-          <div class="col h3 week-header">
+        <div class="row">
+          <div class="col h3 week-header mb-1">
             Semaine du <span class="text-primary">{{datesService.semaineSelectionnee.debut | amDateFormat:'D MMMM YYYY'}}</span>
             au <span class="text-primary">{{datesService.semaineSelectionnee.fin | amDateFormat:'D MMMM YYYY'}}</span>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col h6 week-header mb-1" [ngSwitch]="infoSemaine.placement">
+            <span *ngSwitchCase="-1">Dans {{infoSemaine.date | amDuration:'milliseconds'}}</span>
+            <span *ngSwitchCase="0">Commencée depuis {{infoSemaine.date | amDuration:'milliseconds'}}</span>
+            <span *ngSwitchCase="1">Finie depuis {{infoSemaine.date | amDuration:'milliseconds'}}</span>
           </div>
         </div>
 
@@ -128,8 +140,13 @@
             </tbody>
           </table>
           <div>
-            <span *ngIf="etService.coursActuel"><b>Cours actuel</b>: {{etService.coursActuel.nom}} en <span *ngFor="let s of etService.coursActuel.salles">{{s.batiment}} {{s.salle}}</span></span>
-            <span *ngIf="etService.prochainCours"><b>Prochain cours</b>: {{etService.prochainCours.nom}} en <span *ngFor="let s of etService.prochainCours.salles">{{s.batiment}} {{s.salle}}</span></span>
+            <dl>
+              <dt *ngIf="etService.coursActuel">Cours actuel</dt>
+              <dd *ngIf="etService.coursActuel">{{etService.coursActuel.nom}} en <span *ngFor="let s of etService.coursActuel.salles">{{s.batiment}} {{s.salle}}</span></dd>
+
+              <dt *ngIf="etService.prochainCours">Cours suivant</dt>
+              <dd *ngIf="etService.prochainCours">{{etService.prochainCours.nom}} en <span *ngFor="let s of etService.prochainCours.salles">{{s.batiment}} {{s.salle}}</span></dd>
+            </dl>
           </div>
         </div>
       </div>

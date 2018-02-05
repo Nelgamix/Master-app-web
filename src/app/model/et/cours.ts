@@ -1,5 +1,8 @@
 import * as moment from 'moment';
 
+/**
+ * Représente un cours.
+ */
 export class Cours {
   static readonly typeCouleurs = {
     'CM': 'crimson',
@@ -7,22 +10,82 @@ export class Cours {
     'TP': 'seagreen'
   };
 
+  /**
+   * L'id unique du cours.
+   * Se base uniquement sur l'heure de début et de fin, ainsi que sur le nom du cours.
+   * Ainsi, un cours qui a le même nom, ainsi que les mêmes horaires qu'un autre (mais un prof différent par exemple),
+   * aura le même hashcode. C'est intentionnel, puisqu'on cherche à identifier les cours et non pas ce qui les composent.
+   */
   hash_id: number;
+
+  /**
+   * Les types qui composent ce cours.
+   * Par exemple: 'TD', 'TP'.
+   * C'est forcément des strings qui incluent: 'CM', 'TD', ou 'TP'
+   */
   type: string[];
+
+  /**
+   * Le nom du cours.
+   * Ex: 'GEONUM' ou 'Intro to cryptology & coding'
+   */
   nom: string;
+
+  /**
+   * Le professeur qui dispense le cours.
+   * Ex: 'ROUSSET Marie-Christine'
+   */
   professeur: string;
+
+  /**
+   * La description associée au cours.
+   */
   description: string;
+
+  /**
+   * Un array qui contient tous les groupes concernés par le cours.
+   */
   groupe: string[];
 
+  /**
+   * Les salles dans lesquelles se déroule le cours.
+   */
   salles: any;
+
+  /**
+   * Le type des salles.
+   */
   salles_types: string[];
 
+  /**
+   * Date de début.
+   */
   debut: any;
+
+  /**
+   * Date de fin du cours
+   */
   fin: any;
+
+  /**
+   * Durée du cours: fin - début.
+   */
   duree: any;
 
+  /**
+   * La couleur à afficher pour le cours.
+   * Dépend du type du cours.
+   */
   couleur: string;
+
+  /**
+   * Réprésente le fait que le cours soit caché par l'utilisateur.
+   */
   cache: boolean;
+
+  /**
+   * Représente le fait que le cours soit supprimé par l'utilisateur.
+   */
   supprime: boolean;
 
   constructor(c) {

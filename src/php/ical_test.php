@@ -33,7 +33,7 @@ assert(isset($out), "out should exist");
 exec_script($out, "--week 56 --year 2018");
 assert(isset($out), "out should exist");
 
-// 2018 5
-exec_script($out, "--week 5 --year 2018");
+// normal test
+exec_script($out, "--week 7 --year 2018");
 assert($out['ok'] == true, "ok should be true");
 assert($out['data'] != null, "data should be present");

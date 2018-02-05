@@ -16,11 +16,19 @@ class ET implements JsonSerializable
 
     public function jsonSerialize()
     {
-        return [
-            "ade-online" => $this->ade_online,
-            "ok" => $this->ok,
-            "data" => $this->data
-        ];
+        if ($this->ok) {
+            return [
+                "ade-online" => $this->ade_online,
+                "ok" => $this->ok,
+                "data" => $this->data
+            ];
+        } else {
+            return [
+                "ade-online" => $this->ade_online,
+                "ok" => $this->ok,
+                "data" => []
+            ];
+        }
     }
 
     public function init()

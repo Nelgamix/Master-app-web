@@ -26,6 +26,7 @@
       ],
       "scripts": [
         "../node_modules/moment/min/moment.min.js",
+        "../node_modules/moment-timer/lib/moment-timer.js",
         "../node_modules/marked/marked.min.js"
       ],
       "environmentSource": "environments/environment.ts",

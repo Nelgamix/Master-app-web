@@ -3,13 +3,34 @@ import { Jour } from './jour';
 
 import * as moment from 'moment';
 
+/**
+ * Représente une semaine entière de l'emploi du temps.
+ */
 export class EmploiTemps {
+  /**
+   * Tous les cours qui composent la semaine d'emploi du temps.
+   */
   cours: Cours[];
+
+  /**
+   * Tous les jours qui composent la semaine d'emploi du temps.
+   */
   jours: Jour[];
 
+  /**
+   * Le premier jour de la semaine.
+   */
   premierJour: Jour;
+
+  /**
+   * Le dernier jour de la semaine.
+   */
   dernierJour: Jour;
 
+  /**
+   * Contient les stats de la semaine.
+   * Ex: {"nombreCours" => "5", "ex 2" => "truc"}
+   */
   stats: {};
 
   constructor() {
@@ -35,8 +56,6 @@ export class EmploiTemps {
 
       this.jours[j].ajouterCours(c);
     }
-
-    this.analyse();
   }
 
   analyse(): void {

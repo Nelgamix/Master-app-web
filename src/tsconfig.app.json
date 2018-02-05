@@ -5,7 +5,11 @@
     "baseUrl": "./",
     "module": "es2015",
     "types": [
-      "prismjs"
+      "prismjs",
+      "node"
+    ],
+    "typeRoots": [
+      "../node_modules/@types"
     ]
   },
   "exclude": [

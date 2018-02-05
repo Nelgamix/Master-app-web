@@ -57,7 +57,7 @@ try {
 $et = new ET($in['year'], $in['week']);
 $res = $et->init();
 
-if ($res && $et->ok) {
+if ($res) {
     Commons::output(json_encode($et));
 } else {
     Commons::output("{}");

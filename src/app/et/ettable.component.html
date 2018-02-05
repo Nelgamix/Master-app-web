@@ -21,7 +21,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col no-cours mb-2" *ngIf="(j.cours|coursfilter:sSearchFor).length == 0">
+        <div class="col no-cours mb-2" *ngIf="j.coursActifs.length === 0 || (j.coursActifs|coursfilter:sSearchFor).length == 0">
           Aucun cours trouvé.
         </div>
         <div class="col-12">

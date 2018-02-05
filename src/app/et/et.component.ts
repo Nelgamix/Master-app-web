@@ -20,6 +20,7 @@ export class EtComponent implements OnInit {
   loading: any;
   exclusions = [];
   selectedDate: any;
+  infoSemaine: any;
   weekProgress: number;
 
   constructor(public etService: EmploiTempsService,
@@ -69,24 +70,43 @@ export class EtComponent implements OnInit {
   }
 
   private updateWeekProgress(): void {
-    let wp;
-    if (!this.datesService.semaineSelectionnee) {
-      wp = -1;
-    } else {
-      const first = this.datesService.semaineSelectionnee.debut.clone().add(8, 'h');
-      const last = this.datesService.semaineSelectionnee.fin.clone().add(18, 'h');
-      const n = moment();
+    const now = moment();
+    const first = this.datesService.semaineSelectionnee.debut.clone().add(8, 'h');
+    const last = this.datesService.semaineSelectionnee.fin.clone().add(18, 'h');
 
-      if (n.diff(first) < 0) {
-        wp = 0;
-      } else if (last.diff(n) < 0) {
-        wp = 100;
+    this.weekProgress = -1;
+    this.infoSemaine = {
+      /*
+      -1 = on est avant cette semaine (la semaine arrive) => avant this.emploiTemps.premierJour.premierCours.debut
+      0 = on est dans la semaine
+      1 = on est après cette semaine => après emploiTemps.jours[5].dernierCours
+       */
+      placement: 0,
+      date: null // la date
+    };
+
+    if (this.datesService.semaineSelectionnee) {
+      // update info semaine
+      if (now.isBefore(first)) { // on est avant
+        this.infoSemaine.placement = -1;
+        this.infoSemaine.date = moment.duration(now.diff(first));
+      } else if (now.isAfter(last)) { // on est après
+        this.infoSemaine.placement = 1;
+        this.infoSemaine.date = moment.duration(now.diff(last));
+      } else { // on est dans la semaine
+        this.infoSemaine.placement = 0;
+        this.infoSemaine.date = moment.duration(now.diff(first));
+      }
+
+      // update week progress
+      if (now.diff(first) < 0) {
+        this.weekProgress = 0;
+      } else if (last.diff(now) < 0) {
+        this.weekProgress = 100;
       } else {
-        wp = (n.diff(first, 'minutes') / (last.diff(first, 'minutes'))) * 100;
+        this.weekProgress = (now.diff(first, 'minutes') / (last.diff(first, 'minutes'))) * 100;
       }
     }
-
-    this.weekProgress = wp;
   }
 
   previousWeek() {
