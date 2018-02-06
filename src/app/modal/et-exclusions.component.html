@@ -5,53 +5,10 @@
   </button>
 </div>
 <div class="modal-body">
-  <form>
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Type</th>
-          <th>Texte</th>
-          <th>Hide</th>
-          <th>X</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let e of exclusions; let i = index">
-          <td>
-            <select id="s{{i}}" name="s{{i}}" [(ngModel)]="e.type" class="form-control">
-              <option *ngFor="let o of typesPossible" value="{{o}}">{{o}}</option>
-            </select>
-          </td>
-          <td>
-            <input id="i{{i}}" name="i{{i}}" class="form-control" placeholder="Contient" [(ngModel)]="e.contient">
-          </td>
-          <td>
-            <div class="btn-group btn-group-toggle">
-              <label class="btn-primary" ngbButtonLabel>
-                <input name="c{{i}}" type="checkbox" ngbButton [(ngModel)]="e.supprime"> H
-              </label>
-            </div>
-          </td>
-          <td>
-            <button type="button" class="btn btn-danger" (click)="suppressionExclusion(e)">&times;</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <!--<div class="form-row mb-2" *ngFor="let e of exclusions; let i = index">
-      <div class="col-4">
-        <select id="s{{i}}" name="s{{i}}" [(ngModel)]="e.type" class="form-control">
-          <option *ngFor="let o of typesPossible" value="{{o}}">{{o}}</option>
-        </select>
-      </div>
-      <div class="col-7">
-        <input id="i{{i}}" name="i{{i}}" class="form-control" placeholder="Contient" [(ngModel)]="e.contient">
-      </div>
-      <div class="col-1">
-        <button type="button" class="btn btn-danger take-width" (click)="suppressionExclusion(e)">&times;</button>
-      </div>
-    </div>-->
-  </form>
+  <div *ngFor="let e of exclusions; let i = index"
+       style="border: 2px solid #0077ff; border-radius: 6px;" class="mb-2 py-2">
+    <app-exclusion [exclusion]="e" (onSuppression)="suppressionExclusion($event)"></app-exclusion>
+  </div>
   <button type="button" class="btn btn-primary take-width" (click)="ajoutExclusion()">Ajouter une exclusion</button>
 </div>
 <div class="modal-footer">

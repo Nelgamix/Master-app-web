@@ -1,29 +1,22 @@
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {Component, Input} from '@angular/core';
+import {Exclusion} from '../model/et/exclusion';
 
 @Component({
   selector: 'app-modal-et-exclusions',
   templateUrl: './et-exclusions.component.html'
 })
 export class ModalEtExclusionsComponent {
-  @Input() exclusions: any[];
-
-  typesPossible = [
-    'type',
-    'nom',
-    'salle',
-    'professeur'
-  ];
+  @Input() exclusions: Exclusion[];
 
   constructor(public activeModal: NgbActiveModal) {
   }
 
   valider(): void {
-    const it = this.exclusions[Symbol.iterator];
     let i = 0;
     while (i < this.exclusions.length) {
       const e = this.exclusions[i];
-      if (this.typesPossible.indexOf(e['type']) < 0 || e['contient'].length === 0) {
+      if (e.estVide()) {
         this.exclusions.splice(i, 1);
       } else {
         i++;
@@ -33,7 +26,7 @@ export class ModalEtExclusionsComponent {
   }
 
   ajoutExclusion(): void {
-    this.exclusions.push({type: 'nom', contient: '', supprime: false});
+    this.exclusions.push(new Exclusion('', '', '', '', false, true));
   }
 
   suppressionExclusion(e): void {

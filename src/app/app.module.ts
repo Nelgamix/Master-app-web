@@ -41,6 +41,7 @@ import {EvenementComponent} from './evenements/evenement.component';
 import {EtVisuelComponent} from './et/etvisuel.component';
 import {EtTableComponent} from './et/ettable.component';
 import {AppRoutingModule} from './app-routing.module';
+import {ExclusionComponent} from './et/exclusion.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +63,7 @@ import {AppRoutingModule} from './app-routing.module';
     Objet,
     Capitalize,
     EvenementComponent,
+    ExclusionComponent,
     EtVisuelComponent,
     EtTableComponent
   ],

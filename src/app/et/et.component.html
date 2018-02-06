@@ -110,7 +110,11 @@
               <h5>Exclusions</h5>
               <div class="row" *ngFor="let e of (exclusions ? exclusions.slice(0, 5) : [])">
                 <div class="col-12">
-                  <b class="capitalize">{{e.type}}</b>: {{e.contient}} <span style="font-style: italic" *ngIf="e.supprime">[Hidden]</span>
+                  <span *ngIf="e.supprimer"><i>[caché]</i></span>
+                  <span *ngIf="e.type.length > 0"><b>Type</b>: {{e.type}}</span>
+                  <span *ngIf="e.nom.length > 0"><b>Nom</b>: {{e.nom}}</span>
+                  <span *ngIf="e.professeur.length > 0"><b>Prof.</b>: {{e.professeur}}</span>
+                  <span *ngIf="e.salle.length > 0"><b>Salle</b>: {{e.salle}}</span>
                 </div>
               </div>
               <div class="row" *ngIf="exclusions.length > 5">

@@ -2,6 +2,7 @@ import { Cours } from './cours';
 import { Jour } from './jour';
 
 import * as moment from 'moment';
+import {Exclusion} from './exclusion';
 
 /**
  * Représente une semaine entière de l'emploi du temps.
@@ -116,22 +117,18 @@ export class EmploiTemps {
     this.dernierJour = this.jours[this.jours.length - 1];
   }
 
-  filterExclusions(exclusions) {
+  filterExclusions(exclusions: Exclusion[]) {
+    // Obligé: si il n'y a pas d'exclusion, alors les cours ne sont jamais reset
     for (const c of this.cours) {
       c.cache = false;
       c.supprime = false;
     }
 
+    // Filtrage
     for (const e of exclusions) {
-      for (const c of this.cours) {
-        if (c[e.type].includes(e.contient)) {
-          if (e.supprime) {
-            c.supprime = true;
-          } else {
-            c.cache = true;
-          }
-        }
-      }
+      e.count = 0;
+      e.testePlusieursCours(this.cours);
+      // e.print();
     }
   }
 

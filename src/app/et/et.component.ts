@@ -9,6 +9,7 @@ import {DatesService} from '../services/dates.service';
 
 import * as moment from 'moment';
 import {Component, OnInit} from '@angular/core';
+import {Exclusion} from '../model/et/exclusion';
 
 @Component({
   selector: 'app-et-root',
@@ -18,7 +19,7 @@ import {Component, OnInit} from '@angular/core';
 export class EtComponent implements OnInit {
   vueType = 1;
   loading: any;
-  exclusions = [];
+  exclusions: Exclusion[] = [];
   selectedDate: any;
   infoSemaine: any;
   weekProgress: number;
@@ -60,12 +61,18 @@ export class EtComponent implements OnInit {
   }
 
   openExclusions() {
-    const modalRef = this.modalService.open(ModalEtExclusionsComponent);
-    modalRef.componentInstance.exclusions = Object.assign([], this.exclusions);
+    // Cloner toutes les exclusions
+    const ne: Exclusion[] = [];
+    for (const e of this.exclusions) {
+      ne.push(e.clone());
+    }
+
+    // Ouvrir modal
+    const modalRef = this.modalService.open(ModalEtExclusionsComponent, {size: 'lg'});
+    modalRef.componentInstance.exclusions = ne;
     modalRef.result.then(r => {
       this.etService.filterExclusions(r);
     }, r => {
-      // this.etService.filterExclusions(this.exclusions);
     });
   }
 

@@ -1,0 +1,50 @@
+<form class="form">
+  <div class="col">
+    <div class="row">
+      <div class="col-7">
+        <div class="form-group row mb-2">
+          <label for="nom" class="col-form-label col-3">Nom</label>
+          <div class="col-9">
+            <input type="text" class="form-control mx-2" name="nom" id="nom" [(ngModel)]="exclusion.nom">
+          </div>
+        </div>
+      </div>
+      <div class="col-5">
+        <div class="float-right">
+          <h4 class="d-inline-block mr-2 mb-0 align-middle">{{exclusion.count}} cours</h4>
+
+          <!-- Include / Full -->
+          <div class="btn-group btn-group-toggle">
+            <label class="btn-primary" ngbButtonLabel>
+              <input name="i" type="checkbox" ngbButton [(ngModel)]="exclusion.includes"> Inclure
+            </label>
+          </div>
+
+          <!-- Cacher / Supprimer le cours -->
+          <div class="btn-group btn-group-toggle">
+            <label class="btn-warning" ngbButtonLabel>
+              <input name="s" type="checkbox" ngbButton [(ngModel)]="exclusion.supprimer"> Caché
+            </label>
+          </div>
+
+          <!-- Delete -->
+          <button type="button" class="btn btn-danger" (click)="suppressionExclusion()">&times;</button>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="col-4">
+        <label for="type" class="mb-1">Type</label>
+        <input type="text" class="form-control" name="type" id="type" [(ngModel)]="exclusion.type">
+      </div>
+      <div class="col-4">
+        <label for="professeur" class="mb-1">Professeur</label>
+        <input type="text" class="form-control" name="professeur" id="professeur" [(ngModel)]="exclusion.professeur">
+      </div>
+      <div class="col-4">
+        <label for="salle" class="mb-1">Salle</label>
+        <input type="text" class="form-control" name="salle" id="salle" [(ngModel)]="exclusion.salle">
+      </div>
+    </div>
+  </div>
+</form>

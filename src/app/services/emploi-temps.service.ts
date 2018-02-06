@@ -6,6 +6,7 @@ import * as moment from 'moment';
 import {GlobalVariable} from '../globals';
 import {Cours} from '../model/et/cours';
 import {CookieService} from 'ngx-cookie-service';
+import {Exclusion} from '../model/et/exclusion';
 
 @Injectable()
 export class EmploiTempsService {
@@ -13,7 +14,7 @@ export class EmploiTempsService {
 
   metadata = {};
   emploiTemps: EmploiTemps;
-  exclusions: any[];
+  exclusions: Exclusion[];
 
   coursActuel: Cours;
   prochainCours: Cours;
@@ -27,10 +28,15 @@ export class EmploiTempsService {
     this.emploiTemps = new EmploiTemps();
   }
 
-  initFromCookies(): any {
+  initFromCookies(): Exclusion[] {
     this.exclusions = [];
     if (this.cookiesService.check(this.exclusionsCookie)) {
-      this.exclusions = JSON.parse(this.cookiesService.get(this.exclusionsCookie));
+      const eJson = JSON.parse(this.cookiesService.get(this.exclusionsCookie));
+      if (eJson && eJson instanceof Array) {
+        for (const o of eJson) {
+          this.exclusions.push(new Exclusion(o['type'], o['nom'], o['professeur'], o['salle'], o['supprimer'], o['includes']));
+        }
+      }
     }
 
     return this.exclusions;
@@ -80,11 +86,11 @@ export class EmploiTempsService {
   }
 
   exclure(cours: Cours): void {
-    this.exclusions.push({'type': 'nom', 'contient': cours.nom, 'supprime': true});
+    this.exclusions.push(new Exclusion('', cours.nom, '', '', true, false));
     this.filterExclusions(this.exclusions);
   }
 
-  filterExclusions(exclusions: any[]) {
+  filterExclusions(exclusions: Exclusion[]) {
     if (exclusions !== this.exclusions) {
       this.exclusions.splice(0, this.exclusions.length); // remove all (clear)
       for (const e of exclusions) {
