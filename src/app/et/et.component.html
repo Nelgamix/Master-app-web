@@ -142,7 +142,7 @@
           <div>
             <dl class="mb-0">
               <dt *ngIf="etService.coursActuel">Cours actuel</dt>
-              <dd class="mb-0" *ngIf="etService.coursActuel">{{etService.coursActuel.nom}} en <span *ngFor="let s of etService.coursActuel.salles">{{s.batiment}} {{s.salle}}</span></dd>
+              <dd class="mb-0" *ngIf="etService.coursActuel"><b>{{etService.coursActuel.nom}}</b> en <span *ngFor="let s of etService.coursActuel.salles">{{s.batiment}} {{s.salle}}</span></dd>
 
               <dt *ngIf="etService.prochainCours">Cours suivant <span style="font-size: 75%; color: gray">dans {{etService.prochainCoursTimer | amDuration:'milliseconds'}}</span></dt>
               <dd class="mb-0" *ngIf="etService.prochainCours"><b>{{etService.prochainCours.nom}}</b> en <span *ngFor="let s of etService.prochainCours.salles">{{s.batiment}} {{s.salle}}</span></dd>

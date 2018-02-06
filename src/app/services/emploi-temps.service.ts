@@ -101,7 +101,6 @@ export class EmploiTempsService {
     this.emploiTemps.analyse();
 
     const now = moment();
-    let lastCours: Cours = null;
     this.coursActuel = null;
     this.prochainCours = null;
 
@@ -110,27 +109,28 @@ export class EmploiTempsService {
       if (j) {
         if (now.isBefore(j.premierCours.debut)) { // on est avant ce jour.
           this.prochainCours = j.premierCours;
-          this.prochainCoursTimer = moment.duration(now.diff(this.prochainCours.debut));
           break;
         } else if (now.isAfter(j.dernierCours.fin)) { // on est après ce jour.
           continue;
         } else { // on est dans ce jour: on doit trouver le bon cours.
           for (const c of j.coursActifs) { // on parcours les cours
-            if (now.isBetween(c.debut, c.fin)) { // on a trouvé le cours actuel
+            if (this.coursActuel === null && now.isBetween(c.debut, c.fin)) { // on a trouvé le cours actuel
               this.coursActuel = c;
             }
 
-            if (now.isAfter(c.debut)) { // si le cours qu'on analyse est après now, alors c'est le cours d'avant qui est le plus proche.
-              this.prochainCours = lastCours;
+            if (now.isBefore(c.debut)) { // si le cours qu'on analyse est après now, alors c'est le cours d'avant qui est le plus proche.
+              this.prochainCours = c;
               break;
             }
-
-            lastCours = c;
           }
 
           break;
         }
       }
+    }
+
+    if (this.prochainCours !== null) {
+      this.prochainCoursTimer = moment.duration(now.diff(this.prochainCours.debut));
     }
   }
 }
