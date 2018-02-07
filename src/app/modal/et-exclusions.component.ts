@@ -1,6 +1,7 @@
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {Component, Input} from '@angular/core';
 import {Exclusion} from '../model/et/exclusion';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'app-modal-et-exclusions',
@@ -8,6 +9,7 @@ import {Exclusion} from '../model/et/exclusion';
 })
 export class ModalEtExclusionsComponent {
   @Input() exclusions: Exclusion[];
+  @Input() possibilites: any;
 
   constructor(public activeModal: NgbActiveModal) {
   }

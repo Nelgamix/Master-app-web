@@ -6,7 +6,7 @@
 </div>
 <div class="modal-body">
   <ng-container *ngFor="let e of exclusions; let i = index">
-    <app-exclusion [exclusion]="e" [id]="i" (onSuppression)="suppressionExclusion($event)"></app-exclusion>
+    <app-exclusion [exclusion]="e" [id]="i" [possibilites]="possibilites" (onSuppression)="suppressionExclusion($event)"></app-exclusion>
   </ng-container>
 
   <div class="row">

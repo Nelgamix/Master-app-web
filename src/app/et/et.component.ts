@@ -67,9 +67,39 @@ export class EtComponent implements OnInit {
       ne.push(e.clone());
     }
 
+    // Créer l'objet possibilités, regroupant les possibilités disponibles.
+    const possibilites = {
+      nom: [],
+      type: ['CM', 'TD', 'TP', 'TD/TP'],
+      professeur: [],
+      salles: []
+    };
+    for (const c of this.etService.emploiTemps.cours) {
+      // Nom
+      if (possibilites.nom.indexOf(c.nom) < 0) {
+        possibilites.nom.push(c.nom);
+      }
+
+      // Professeur
+      if (possibilites.professeur.indexOf(c.professeur) < 0) {
+        possibilites.professeur.push(c.professeur);
+      }
+
+      // Salles
+      for (const s of c.salles) {
+        if (possibilites.salles.indexOf(s.salle) < 0) {
+          possibilites.salles.push(s.salle);
+        }
+      }
+    }
+    // Sort
+    possibilites.professeur.sort();
+    possibilites.salles.sort();
+
     // Ouvrir modal
     const modalRef = this.modalService.open(ModalEtExclusionsComponent, {size: 'lg'});
     modalRef.componentInstance.exclusions = ne;
+    modalRef.componentInstance.possibilites = possibilites;
     modalRef.result.then(r => {
       this.etService.filterExclusions(r);
     }, r => {
