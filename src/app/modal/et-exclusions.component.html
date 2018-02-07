@@ -5,11 +5,21 @@
   </button>
 </div>
 <div class="modal-body">
-  <div *ngFor="let e of exclusions; let i = index"
-       style="border: 2px solid #0077ff; border-radius: 6px;" class="mb-2 py-2">
-    <app-exclusion [exclusion]="e" (onSuppression)="suppressionExclusion($event)"></app-exclusion>
+  <ng-container *ngFor="let e of exclusions; let i = index">
+    <app-exclusion [exclusion]="e" [id]="i" (onSuppression)="suppressionExclusion($event)"></app-exclusion>
+  </ng-container>
+
+  <div class="row">
+    <div class="col-md-6 col-sm-12">
+      <h4>Nombre d'exclusions: {{exclusions.length}}</h4>
+    </div>
+    <div class="col-md-6 col-sm-12">
+      <div class="float-right">
+        <button type="button" class="btn btn-danger" (click)="supprimerTout()" [ngbTooltip]="'ATTENTION: Supprimer toutes les exclusions'"><img src="assets/icons/delete.png" alt="Supprimer tout"></button>
+        <button type="button" class="btn btn-success px-5" (click)="ajoutExclusion()" [ngbTooltip]="'Ajouter une nouvelle exclusion'"><img src="assets/icons/add.png" alt="Ajouter exclusion"></button>
+      </div>
+    </div>
   </div>
-  <button type="button" class="btn btn-primary take-width" (click)="ajoutExclusion()">Ajouter une exclusion</button>
 </div>
 <div class="modal-footer">
   <button type="button" class="btn btn-danger" (click)="activeModal.dismiss('Cancel')">Annuler</button>

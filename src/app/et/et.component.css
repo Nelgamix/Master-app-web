@@ -32,10 +32,11 @@ select:hover, .btn:hover {
 }
 
 .stat-titre {
-  font-size: 120%;
+  /*font-size: 120%;*/
+  font-weight: bold;
 }
 .stat-donnee {
-  font-size: 110%;
+  /*font-size: 110%;*/
   color: blueviolet;
 }
 
@@ -54,5 +55,16 @@ select:hover, .btn:hover {
 
 .last-updated {
   font-size: 105%;
-  /*font-weight: bold;*/
+}
+
+dl {
+  margin-bottom: 0;
+}
+
+dd {
+  padding-left: 10px;
+}
+
+hr {
+  margin: 8px auto;
 }

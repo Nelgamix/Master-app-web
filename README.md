@@ -56,6 +56,8 @@ NG Bootstrap: https://ng-bootstrap.github.io/#/components/accordion/examples
 
 Bootstrap: https://getbootstrap.com/docs/4.0/components/alerts/
 
+Icons: https://www.flaticon.com/packs/multimedia-element-set
+
 ### TODO
 
 * Page "News"?

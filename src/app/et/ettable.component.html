@@ -1,6 +1,11 @@
 <div class="row mb-3">
   <div class="col">
-    <input type="text" class="form-control" placeholder="Recherche..." [(ngModel)]="sSearchFor">
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-search"><img src="assets/icons/search.png" alt="Recherche"></span>
+      </div>
+      <input type="text" class="form-control" placeholder="Rechercher" aria-label="Rechercher" aria-describedby="basic-search" [(ngModel)]="sSearchFor">
+    </div>
   </div>
   <div class="col">
     <button type="button" class="btn btn-outline-secondary float-right" [ngbPopover]="helpContent" popoverTitle="Code couleur" placement="left">Code couleur</button>

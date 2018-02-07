@@ -29,6 +29,12 @@ export class ModalEtExclusionsComponent {
     this.exclusions.push(new Exclusion('', '', '', '', false, true));
   }
 
+  supprimerTout(): void {
+    if (confirm('Voulez-vous vraiment supprimer toutes les exclusions?')) {
+      this.exclusions.splice(0, this.exclusions.length);
+    }
+  }
+
   suppressionExclusion(e): void {
     this.exclusions.splice(this.exclusions.indexOf(e), 1);
   }
