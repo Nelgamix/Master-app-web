@@ -43,37 +43,49 @@ export class EtVisuelComponent implements OnInit {
 
   analyse(): void {
     // Analyse et création des listes
-    const lists = [];
-    lists.push([]); // Liste initiale
-    for (const c of this.et.emploiTemps.cours) {
-      let placed = false;
+    const js = [];
+    for (let i = 0; i < this.legendeJours.length; i++) {
+      const j = this.et.emploiTemps.jours[i];
+      const lists = [];
+      lists.push([]); // Liste initiale
+      if (!j) {
+        js[i] = lists;
+        continue;
+      }
 
-      // On tente de placer le cours dans les listes qui existent.
-      for (const list of lists) {
-        // On essaye de savoir si la fin du dernier cours ajouté dans la liste est avant le début du cours courant
-        if (list.length === 0 || list[list.length - 1].fin.isBefore(c.debut)) {
-          // On ajoute le cours à cette liste
-          list.push(c);
-          // On set placed
-          placed = true;
-          // On arrête le parcours des listes
-          break;
+      for (const c of j.cours) {
+        let placed = false;
+
+        // On tente de placer le cours dans les listes qui existent.
+        for (const list of lists) {
+          // On essaye de savoir si la fin du dernier cours ajouté dans la liste est avant le début du cours courant
+          if (list.length === 0 || list[list.length - 1].fin.isBefore(c.debut)) {
+            // On ajoute le cours à cette liste
+            list.push(c);
+            // On set placed
+            placed = true;
+            // On arrête le parcours des listes
+            break;
+          }
+        }
+
+        // On ne l'a pas placé.
+        if (!placed) {
+          // On ajoute une nouvelle liste avec le cours.
+          lists.push([c]);
         }
       }
 
-      // On ne l'a pas placé.
-      if (!placed) {
-        // On ajoute une nouvelle liste avec le cours.
-        lists.push([c]);
-      }
+      js[i] = lists;
     }
+    console.log(js);
 
     // Analyse pour le placement HTML
     this.jours = {};
     for (let i = 0; i < this.legendeJours.length; i++) {
       this.jours[i] = [];
       if (this.et.emploiTemps.jours[i]) {
-        for (const c of this.et.emploiTemps.jours[i].cours) {
+        for (const c of js[i][0]) {
           const debutConverti = (c.debut.hour() * 60 + c.debut.minute()) - this.legendeHeures.debut * 60;
           const dureeConvertie = c.duree.hour() * 60 + c.duree.minute();
           const dureeMax = this.legendeHeures.fin * 60 - this.legendeHeures.debut * 60;

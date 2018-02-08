@@ -52,7 +52,7 @@ export class Jour {
   /**
    * La durée (sous forme de moment.duration) de la journée
    */
-  duree: any; // moment duration
+  duree: any;
 
   /**
    * Un objet contenant le compte des différents types de cours.
@@ -125,6 +125,11 @@ export class Jour {
     }
   }
 
+  /**
+   * Cherche les conflits dans les cours.
+   * Réalise aussi le calcul de la durée réelle de la journée.
+   * TODO: fix duration
+   */
   private chercherConflits(): void {
     const a: Cours[] = []; // liste des cours déjà analysés
     const d = moment.duration(0); // duration totale
@@ -165,6 +170,7 @@ export class Jour {
     // console.log('Conflits du ' + this.nom);
     // console.log(this.conflits);
     // console.log('Durée ' + d.hours() + 'h' + d.minutes());
+    this.duree = d;
   }
 
   /**
