@@ -61,6 +61,12 @@ export class Jour {
   typesCount: any;
 
   /**
+   * Liste de conflits entre les différents cours.
+   * Ex: [[c1, c2], [c3, c4], [c8, c9, c10]] indique que le cours c1 est en conflit avec c2, ...
+   */
+  conflits: any;
+
+  /**
    * Construit le jour, à partir d'un cours.
    * Ce cours sert à déterminer la date, ainsi que le nom du jour.
    * @param cours le cours pour la création du jour.
@@ -94,6 +100,7 @@ export class Jour {
     this.compteDuree();
     this.compteTypes();
     this.debutFin();
+    this.chercherConflits();
   }
 
   /**
@@ -116,6 +123,86 @@ export class Jour {
         this.coursActifs.push(c);
       }
     }
+  }
+
+  private chercherConflits(): void {
+    const a: Cours[] = []; // liste des cours déjà analysés
+    const d = moment.duration(0); // duration totale
+    let lcf; // last cours fin (fin du cours qui fini en dernier)
+
+    this.conflits = [];
+    // Les cours sont triés.
+    for (const c of this.cours) { // pour chaque cours
+      const cp = []; // conflits partiels
+      lcf = null;
+      for (const e of a) { // pour chaque cours déjà analysé, on check si il y a conflit
+        if (c.debut.isBefore(e.fin)) { // donc si le debut du cours est avant la fin d'un cours déjà analysé,
+          cp.push(e);
+        }
+
+        if (lcf === null || lcf.isBefore(e.fin)) {
+          lcf = e.fin;
+        }
+      }
+
+      if (cp.length > 0) {
+        const io = this.indexOfArray(this.conflits, cp);
+        if (io < 0) {
+          cp.push(c);
+          this.conflits.push(cp);
+        } else {
+          this.conflits[io].push(c);
+        }
+        d.add(moment.duration(c.fin.diff(lcf)));
+      } else {
+        d.add(moment.duration(c.fin.diff(c.debut)));
+      }
+
+      a.push(c);
+    }
+
+    // Print
+    // console.log('Conflits du ' + this.nom);
+    // console.log(this.conflits);
+    // console.log('Durée ' + d.hours() + 'h' + d.minutes());
+  }
+
+  /**
+   * Teste la présence d'un array dans un array d'array: [[]].indexOf([])
+   * Retourne l'index auquel on a trouvé la présence de l'array cible
+   * @param {any[]} array
+   * @param {any[]} element
+   * @returns {number}
+   */
+  private indexOfArray(array: any[], element: any[]): number {
+    let index = -1;
+    let k = 0;
+    for (const e of array) {
+      if (e.length !== element.length) {
+        // Si les arrays n'ont pas la même longueur, pas la peine de tester, ils ne seront pas égaux
+        continue;
+      }
+
+      // Boucle principale de test
+      let i;
+      for (i = 0; i < e.length; i++) {
+        if (e[i] !== element[i]) {
+          // Si les deux éléments sont différents, alors on stoppe
+          break;
+        }
+      }
+
+      // On doit tester si on est arrivé à la fin.
+      if (i === e.length) {
+        // Si oui, les deux éléments sont égaux.
+        index = k;
+        break;
+      }
+
+      k++;
+    }
+
+    return index;
   }
 
   private compteDuree(): void {

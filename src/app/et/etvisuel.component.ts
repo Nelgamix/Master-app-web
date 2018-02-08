@@ -42,6 +42,33 @@ export class EtVisuelComponent implements OnInit {
   }
 
   analyse(): void {
+    // Analyse et création des listes
+    const lists = [];
+    lists.push([]); // Liste initiale
+    for (const c of this.et.emploiTemps.cours) {
+      let placed = false;
+
+      // On tente de placer le cours dans les listes qui existent.
+      for (const list of lists) {
+        // On essaye de savoir si la fin du dernier cours ajouté dans la liste est avant le début du cours courant
+        if (list.length === 0 || list[list.length - 1].fin.isBefore(c.debut)) {
+          // On ajoute le cours à cette liste
+          list.push(c);
+          // On set placed
+          placed = true;
+          // On arrête le parcours des listes
+          break;
+        }
+      }
+
+      // On ne l'a pas placé.
+      if (!placed) {
+        // On ajoute une nouvelle liste avec le cours.
+        lists.push([c]);
+      }
+    }
+
+    // Analyse pour le placement HTML
     this.jours = {};
     for (let i = 0; i < this.legendeJours.length; i++) {
       this.jours[i] = [];
