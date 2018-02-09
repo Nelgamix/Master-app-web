@@ -1,5 +1,4 @@
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {CookieService} from 'ngx-cookie-service';
 
 import {EmploiTempsService} from '../services/emploi-temps.service';
 import {ModalEtExclusionsComponent} from '../modal/et-exclusions.component';
@@ -19,7 +18,6 @@ import {Exclusion} from '../model/et/exclusion';
 export class EtComponent implements OnInit {
   vueType = 1;
   loading: any;
-  exclusions: Exclusion[] = [];
   selectedDate: any;
   infoSemaine: any;
   weekProgress: number;
@@ -28,13 +26,12 @@ export class EtComponent implements OnInit {
   constructor(public etService: EmploiTempsService,
               public datesService: DatesService,
               private modalService: NgbModal) {
-    etService.registerObserver(this);
     this.search = '';
   }
 
   ngOnInit(): void {
     this.getDates();
-    this.exclusions = this.etService.initFromCookies();
+    this.etService.initFromCookies();
   }
 
   /**
@@ -57,7 +54,6 @@ export class EtComponent implements OnInit {
     this.datesService.semaineSelectionnee = date;
     this.etService.updateData(date, () => {
       this.loading = false;
-      this.etService.filterExclusions(this.exclusions);
     });
     this.updateWeekProgress();
   }
@@ -65,7 +61,7 @@ export class EtComponent implements OnInit {
   openExclusions() {
     // Cloner toutes les exclusions
     const ne: Exclusion[] = [];
-    for (const e of this.exclusions) {
+    for (const e of this.etService.exclusions) {
       ne.push(e.clone());
     }
 
@@ -169,9 +165,5 @@ export class EtComponent implements OnInit {
   openStats() {
     const modalRef = this.modalService.open(ModalEtStatsComponent);
     modalRef.componentInstance.stats = this.etService.emploiTemps.stats;
-  }
-
-  changed(): void {
-    this.exclusions = this.etService.exclusions;
   }
 }

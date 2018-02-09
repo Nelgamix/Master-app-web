@@ -4,8 +4,8 @@
   Merci d'éditer correctement les exclusions pour que seulement les bons cours s'affichent.
 </div>
 
-<div id="et-visuel">
-	<table id="et-visuel-table">
+<div id="et">
+	<table id="table">
 		<thead>
 			<tr>
 				<th width="5%"></th>
@@ -16,15 +16,23 @@
 			<tr *ngFor="let l of legendeHeures.legendes; let i = index">
 				<td width="5%" style="padding-right: 8px;"><span style="float: right;">{{l}} h</span></td>
 				<ng-container *ngIf="i == 0">
-					<td class="et-visuel-colonne" style="text-align: center;" attr.width="{{95/legendeJours.length}}%" *ngFor="let j of legendeJours; let i = index" attr.rowspan="{{legendeHeures.legendes.length}}">
-						<div class="et-visuel-cours" *ngFor="let c of jours[i]" [class.cache]="c.cours.cache" [style.top]="c.position.top + '%'" [style.height]="c.position.height + '%'" [style.border-color]="c.cours.couleur">
-							<p>
-								<b>{{c.cours.nom}}</b><br>
-								<ng-container *ngFor="let s of c.cours.salles; let i = index"><ng-container *ngIf="i > 0">&nbsp;</ng-container>{{s.salle}}</ng-container><br>
-								{{c.cours.professeur}}<br>
-								{{c.cours.debut | amDateFormat:'HH:mm'}} - {{c.cours.fin | amDateFormat:'HH:mm'}}
-							</p>
-						</div>
+					<td class="colonne" attr.width="{{95/legendeJours.length}}%" *ngFor="let j of legendeJours; let i = index" attr.rowspan="{{legendeHeures.legendes.length}}">
+            <ng-container *ngFor="let c of jours[i]">
+              <div class="cours"
+                   [class.cache]="c.cours.cache"
+                   [style.top]="c.position.top + '%'"
+                   [style.height]="c.position.height + '%'"
+                   [class.cm]="c.cours.type[0] === 'CM'"
+                   [class.td]="c.cours.type[0] === 'TD'"
+                   [class.tp]="c.cours.type[0] === 'TP'">
+                <p>
+                  <b>{{c.cours.nom}}</b><br>
+                  <ng-container *ngFor="let s of c.cours.salles; let i = index"><ng-container *ngIf="i > 0">&nbsp;</ng-container>{{s.salle}}</ng-container><br>
+                  {{c.cours.professeur}}<br>
+                  {{c.cours.debut | amDateFormat:'HH:mm'}} - {{c.cours.fin | amDateFormat:'HH:mm'}}
+                </p>
+              </div>
+            </ng-container>
 					</td>
 				</ng-container>
 			</tr>

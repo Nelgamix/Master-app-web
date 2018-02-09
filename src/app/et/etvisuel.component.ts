@@ -54,6 +54,10 @@ export class EtVisuelComponent implements OnInit {
       }
 
       for (const c of j.cours) {
+        if (c.supprime) {
+          continue;
+        }
+
         let placed = false;
 
         // On tente de placer le cours dans les listes qui existent.
@@ -78,7 +82,6 @@ export class EtVisuelComponent implements OnInit {
 
       js[i] = lists;
     }
-    console.log(js);
 
     // Analyse pour le placement HTML
     this.jours = {};
@@ -87,7 +90,7 @@ export class EtVisuelComponent implements OnInit {
       if (this.et.emploiTemps.jours[i]) {
         for (const c of js[i][0]) {
           const debutConverti = (c.debut.hour() * 60 + c.debut.minute()) - this.legendeHeures.debut * 60;
-          const dureeConvertie = c.duree.hour() * 60 + c.duree.minute();
+          const dureeConvertie = c.duree.asMinutes();
           const dureeMax = this.legendeHeures.fin * 60 - this.legendeHeures.debut * 60;
           this.jours[i].push({
             cours: c,

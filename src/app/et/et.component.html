@@ -96,7 +96,7 @@
 
             <div class="col-md-8 col-sm-12 mb-2">
               <h5>Exclusions</h5>
-              <div class="row" *ngFor="let e of (exclusions ? exclusions.slice(0, 5) : [])">
+              <div class="row" *ngFor="let e of (etService.exclusions ? etService.exclusions.slice(0, 5) : [])">
                 <div class="col-12">
                   <span *ngIf="e.supprimer"><i>[caché]</i></span>
                   <span *ngIf="e.type.length > 0"><b>Type</b>: {{e.type}}</span>
@@ -105,9 +105,9 @@
                   <span *ngIf="e.salle.length > 0"><b>Salle</b>: {{e.salle}}</span>
                 </div>
               </div>
-              <div class="row" *ngIf="exclusions.length > 5">
+              <div class="row" *ngIf="etService.exclusions.length > 5">
                 <div class="col-12">
-                  + <b>{{exclusions.length - 5}}</b> éléments
+                  + <b>{{etService.exclusions.length - 5}}</b> éléments
                 </div>
               </div>
               <div class="row mt-2">

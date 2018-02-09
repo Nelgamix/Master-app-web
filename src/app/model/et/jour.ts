@@ -221,13 +221,8 @@ export class Jour {
   }
 
   private compteDuree(): void {
-    const total = moment.duration(0);
-
-    for (const c of this.coursActifs) {
-      total.add(moment.duration(c.fin.diff(c.debut)));
-    }
-
-    this.duree = total;
+    this.duree = moment.duration(0);
+    this.coursActifs.forEach(e => this.duree.add(e.duree));
   }
 
   private compteTypes(): void {

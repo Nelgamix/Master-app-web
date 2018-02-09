@@ -67,7 +67,13 @@ export class EmploiTempsService {
       const cours = res['cours'];
 
       this.emploiTemps.init(cours);
+      /*this.emploiTemps.addCours(new Cours({
+        nom: 'TER',
+        debut: moment('09/02/2018 09:00', 'DD-MM-YYYY HH:mm'),
+        fin: moment('09/02/2018 11:30', 'DD-MM-YYYY HH:mm')
+      }));*/
       this.analyse();
+      this.filterExclusions(this.exclusions);
 
       this.notifyObserver();
     }

@@ -8,8 +8,10 @@
       </div>
       <div class="row stats mb-2" *ngIf="j.coursActifs.length > 0">
         <div class="col-12">
-          <span class="jour-stats-duree">{{j.premierCours.debut | date: 'HH:mm'}}&rarr;{{j.dernierCours.fin | date: 'HH:mm'}} ({{j.duree | duree}})</span>,
-          <span *ngFor="let t of j.typesCount | objet; let i = index"><span *ngIf="i > 0">, </span><span class="jour-stats-type">{{t.value}}&nbsp;{{t.key}}</span></span>
+          <span class="jour-stats-duree">{{j.premierCours.debut | date: 'HH:mm'}}&rarr;{{j.dernierCours.fin | date: 'HH:mm'}} ({{j.duree | duree}})</span>
+          <ng-container *ngIf="(j.typesCount | objet).length > 0">
+            , <span *ngFor="let t of j.typesCount | objet; let i = index"><span *ngIf="i > 0">, </span><span class="jour-stats-type">{{t.value}}&nbsp;{{t.key}}</span></span>
+          </ng-container>
         </div>
       </div>
       <div class="row">

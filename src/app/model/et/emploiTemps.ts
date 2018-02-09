@@ -44,19 +44,20 @@ export class EmploiTemps {
 
     // Ajouter les cours depuis les données json récupérées
     for (const c of cours) {
-      this.cours.push(new Cours(c));
+      this.addCours(Cours.initFromIcal(c));
+    }
+  }
+
+  addCours(c: Cours): void {
+    this.cours.push(c);
+
+    const j = c.debut.weekday();
+
+    if (this.verifierJour(j)) {
+      this.jours[j] = new Jour(c);
     }
 
-    // Pour chaque cours, on le met au bon endroit dans les jours (pour l'affichage)
-    for (const c of this.cours) {
-      const j = c.debut.weekday();
-
-      if (this.verifierJour(j)) {
-        this.jours[j] = new Jour(c);
-      }
-
-      this.jours[j].ajouterCours(c);
-    }
+    this.jours[j].ajouterCours(c);
   }
 
   analyse(): void {
