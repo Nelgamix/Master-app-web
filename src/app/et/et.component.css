@@ -10,7 +10,15 @@ select:hover, .btn:hover {
 }
 
 .btn.img-text > img {
-  margin-right: 5px;
+  margin-right: 10px;
+}
+.btn.img-text {
+  max-width: 48px;
+  overflow: hidden;
+  transition: 500ms max-width ease-in-out;
+}
+.btn.img-text:hover {
+  max-width: 160px;
 }
 
 .loader {
@@ -44,7 +52,7 @@ select:hover, .btn:hover {
 
 .heading {
   box-shadow: 0 0 6px grey;
-  margin: 20px;
+  /*margin: 20px;*/
   padding: 12px;
   background-color: rgba(0, 127, 255, .02);
 }

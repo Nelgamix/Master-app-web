@@ -42,7 +42,7 @@ import {EtVisuelComponent} from './et/etvisuel.component';
 import {EtTableComponent} from './et/ettable.component';
 import {AppRoutingModule} from './app-routing.module';
 import {ExclusionComponent} from './et/exclusion.component';
-import {ModalEtAjoutCoursComponent} from './modal/et-ajout-cours.component';
+import {ModalEtGestionCoursComponent} from './modal/et-gestion-cours.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +56,7 @@ import {ModalEtAjoutCoursComponent} from './modal/et-ajout-cours.component';
     ModalEvenementsLoginComponent,
     ModalEvenementsEditComponent,
     ModalEtExclusionsComponent,
-    ModalEtAjoutCoursComponent,
+    ModalEtGestionCoursComponent,
     ModalEtStatsComponent,
     DateFilter,
     CoursFilter,
@@ -91,7 +91,7 @@ import {ModalEtAjoutCoursComponent} from './modal/et-ajout-cours.component';
     ModalEvenementsLoginComponent,
     ModalEvenementsEditComponent,
     ModalEtExclusionsComponent,
-    ModalEtAjoutCoursComponent,
+    ModalEtGestionCoursComponent,
     ModalEtStatsComponent
   ]
 })
