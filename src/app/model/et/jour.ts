@@ -90,11 +90,22 @@ export class Jour {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
+  get coursPrive(): Cours[] {
+    const a = [];
+    for (const c of this.cours) {
+      if (c.prive) {
+        a.push(c);
+      }
+    }
+    return a;
+  }
+
   ajouterCours(cours: Cours): void {
     this.cours.push(cours);
   }
 
   analyse(): void {
+    this.sortCours('debut');
     this.trierCours();
 
     this.compteDuree();
@@ -136,7 +147,7 @@ export class Jour {
 
     this.conflits = [];
     // Les cours sont triés.
-    for (const c of this.cours) { // pour chaque cours
+    for (const c of this.coursActifs) { // pour chaque cours
       const cp = []; // conflits partiels
       lcf = null;
       for (const e of a) { // pour chaque cours déjà analysé, on check si il y a conflit
@@ -168,10 +179,6 @@ export class Jour {
       a.push(c);
     }
 
-    // Print
-    // console.log('Conflits du ' + this.nom);
-    // console.log(this.conflits);
-    // console.log('Durée ' + d.hours() + 'h' + d.minutes());
     this.duree = d;
   }
 
@@ -265,8 +272,8 @@ export class Jour {
   }
 
   private sortCours(field): any {
-    return function(left, right) {
-        return left[field].diff(right[field]) > 0;
-    };
+    this.cours.sort((l, r) => {
+      return l[field].isBefore(r[field]) ? -1 : 1;
+    });
   }
 }

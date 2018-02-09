@@ -19,6 +19,11 @@ export class Cours {
   hash_id: number;
 
   /**
+   * Indique si le cours est ajouté par l'utilisateur, ou bien récupéré depuis l'emploi du temps.
+   */
+  prive: boolean;
+
+  /**
    * Les types qui composent ce cours.
    * Par exemple: 'TD', 'TP'.
    * C'est forcément des strings qui incluent: 'CM', 'TD', ou 'TP'
