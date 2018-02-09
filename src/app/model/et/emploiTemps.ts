@@ -85,7 +85,7 @@ export class EmploiTemps {
 
     // Traitement
     for (const j of this.jours) {
-      if (j) {
+      if (j && j.coursActifs.length > 0) {
         nombreJours++;
         nombreCours += j.coursActifs.length;
         duree.add(j.duree);

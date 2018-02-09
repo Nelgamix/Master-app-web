@@ -128,7 +128,6 @@ export class Jour {
   /**
    * Cherche les conflits dans les cours.
    * Réalise aussi le calcul de la durée réelle de la journée.
-   * TODO: fix duration
    */
   private chercherConflits(): void {
     const a: Cours[] = []; // liste des cours déjà analysés
@@ -158,7 +157,10 @@ export class Jour {
         } else {
           this.conflits[io].push(c);
         }
-        d.add(moment.duration(c.fin.diff(lcf)));
+
+        if (c.fin.isAfter(lcf)) {
+          d.add(moment.duration(c.fin.diff(lcf)));
+        }
       } else {
         d.add(moment.duration(c.fin.diff(c.debut)));
       }

@@ -92,18 +92,6 @@
                   <button type="button" class="btn btn-success take-width mt-2" (click)="openStats()"><img src="assets/icons/list.png" alt="Plus de statistiques"></button>
                 </div>
               </div>
-              <div class="row mt-2">
-                <div class="col">
-                  <div class="btn-group btn-group-toggle take-width" ngbRadioGroup name="radioBasic" [(ngModel)]="vueType">
-                    <label ngbButtonLabel class="btn-primary take-width">
-                      <input ngbButton type="radio" [value]="1"><img src="assets/icons/options.png" alt="Tables">
-                    </label>
-                    <label ngbButtonLabel class="btn-primary take-width">
-                      <input ngbButton type="radio" [value]="2"><img src="assets/icons/expand.png" alt="Visuel">
-                    </label>
-                  </div>
-                </div>
-              </div>
             </div>
 
             <div class="col-md-8 col-sm-12 mb-2">
@@ -147,7 +135,7 @@
               </div>
             </div>
           </div>
-          <hr>
+          <hr *ngIf="etService.coursActuel || etService.prochainCours">
           <div class="row">
             <div class="col">
               <dl>
@@ -162,8 +150,38 @@
         </div>
       </div>
 
+      <div class="row mb-3">
+        <div class="col-md-6 col-sm-12">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-search"><img src="assets/icons/search.png" alt="Recherche"></span>
+            </div>
+            <input type="text" class="form-control" placeholder="Rechercher" aria-label="Rechercher" aria-describedby="basic-search" [(ngModel)]="search">
+            <div class="input-group-append" *ngIf="search.length > 0">
+              <button type="button" class="btn btn-danger" (click)="search = ''"><img src="assets/icons/delete.png" alt="Clear"></button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-12 mt-2 mt-md-0">
+          <div class="float-right">
+            <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" [(ngModel)]="vueType">
+              <label ngbButtonLabel class="btn-primary px-4">
+                <input ngbButton type="radio" [value]="1"><img src="assets/icons/options.png" alt="Tables">
+              </label>
+              <label ngbButtonLabel class="btn-primary px-4">
+                <input ngbButton type="radio" [value]="2"><img src="assets/icons/expand.png" alt="Visuel">
+              </label>
+            </div>
+            <button type="button" class="btn btn-secondary img-text"><img src="assets/icons/file.png" alt="Notes">Notes</button>
+            <button type="button" class="btn btn-outline-secondary img-text" [ngbPopover]="helpContent" popoverTitle="Code couleur" placement="left">
+              <img src="assets/icons/info.png" alt="Info">Couleurs
+            </button>
+          </div>
+        </div>
+      </div>
+
       <ng-container [ngSwitch]="vueType">
-        <app-et-table *ngSwitchCase="1"></app-et-table>
+        <app-et-table *ngSwitchCase="1" [search]="search"></app-et-table>
         <app-et-visuel *ngSwitchCase="2"></app-et-visuel>
       </ng-container>
     </ng-template>
@@ -173,3 +191,10 @@
 <div class="loader" *ngIf="loading">
   <h1>Chargement...</h1>
 </div>
+
+<ng-template #helpContent>
+  <span class="demo-cm">CM</span>
+  <span class="demo-td">TD</span>
+  <span class="demo-tp">TP</span>
+  <span class="demo-autre">Autre</span>
+</ng-template>

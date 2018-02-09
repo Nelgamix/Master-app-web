@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 
 import {EmploiTempsService} from '../services/emploi-temps.service';
 
@@ -8,9 +8,8 @@ import {EmploiTempsService} from '../services/emploi-temps.service';
   styleUrls: ['./ettable.component.css']
 })
 export class EtTableComponent {
-  sSearchFor: string;
+  @Input() search: string;
 
   constructor(public et: EmploiTempsService) {
-    this.sSearchFor = '';
   }
 }

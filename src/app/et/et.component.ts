@@ -23,11 +23,13 @@ export class EtComponent implements OnInit {
   selectedDate: any;
   infoSemaine: any;
   weekProgress: number;
+  search: string;
 
   constructor(public etService: EmploiTempsService,
               public datesService: DatesService,
               private modalService: NgbModal) {
     etService.registerObserver(this);
+    this.search = '';
   }
 
   ngOnInit(): void {

@@ -9,6 +9,10 @@ select:hover, .btn:hover {
   background-color: rgba(0, 0, 0, .1);
 }
 
+.btn.img-text > img {
+  margin-right: 5px;
+}
+
 .loader {
 	position: absolute;
 	top: 0;
@@ -32,11 +36,9 @@ select:hover, .btn:hover {
 }
 
 .stat-titre {
-  /*font-size: 120%;*/
   font-weight: bold;
 }
 .stat-donnee {
-  /*font-size: 110%;*/
   color: blueviolet;
 }
 
@@ -55,6 +57,31 @@ select:hover, .btn:hover {
 
 .last-updated {
   font-size: 105%;
+}
+
+.demo-td {
+  background-color: rgba(30, 144, 255, 0.4);
+  border: 2px solid rgba(30, 144, 255, 0.2);
+}
+
+.demo-tp {
+  background-color: rgba(0, 160, 136, 0.4);
+  border: 2px solid rgba(0, 160, 136, 0.2);
+}
+
+.demo-cm {
+  background-color: rgba(220, 20, 60, 0.4);
+  border: 2px solid rgba(220, 20, 60, 0.2);
+}
+
+.demo-autre {
+  background-color: rgba(140, 140, 140, 0.4);
+  border: 2px solid rgba(140, 140, 140, 0.2);
+}
+
+.demo-cm, .demo-td, .demo-tp, .demo-autre {
+  padding: 2px 6px;
+  border-radius: 4px;
 }
 
 dl {

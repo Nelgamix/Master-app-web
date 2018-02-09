@@ -13,36 +13,26 @@
   cursor: pointer;
   box-shadow: 0 0 6px 2px rgba(140, 140, 140, 0.4);
 }
-.cours.td, .demo-td {
+.cours.td {
   background-color: rgba(30, 144, 255, 0.4);
   border: 2px solid rgba(30, 144, 255, 0.2);
 }
 .cours.td:hover {
   box-shadow: 0 0 6px 2px rgba(30, 144, 255, 0.4);
 }
-.cours.tp, .demo-tp {
+.cours.tp {
   background-color: rgba(0, 160, 136, 0.4);
   border: 2px solid rgba(0, 160, 136, 0.2);
 }
 .cours.tp:hover {
   box-shadow: 0 0 6px 2px rgba(0, 160, 136, 0.4);
 }
-.cours.cm, .demo-cm {
+.cours.cm {
   background-color: rgba(220, 20, 60, 0.4);
   border: 2px solid rgba(220, 20, 60, 0.2);
 }
 .cours.cm:hover {
   box-shadow: 0 0 6px 2px rgba(220, 20, 60, 0.4);
-}
-
-.demo-autre {
-  background-color: rgba(140, 140, 140, 0.4);
-  border: 2px solid rgba(140, 140, 140, 0.2);
-}
-
-.demo-cm, .demo-td, .demo-tp, .demo-autre {
-  padding: 2px 6px;
-  border-radius: 4px;
 }
 
 .titre {
@@ -53,13 +43,13 @@
 .no-cours {
   text-align: center;
   font-style: italic;
-  font-size: 120%;
+  font-size: 140%;
   color: grey;
 }
 
 .jour {
-  border-top: 4px solid #888;
-  border-bottom: 2px solid #888;
+  border-top: 4px solid #666;
+  border-bottom: 3px solid #666;
   box-shadow: 0 3px 6px grey;
   background-color: rgba(0, 0, 0, .05);
 }
