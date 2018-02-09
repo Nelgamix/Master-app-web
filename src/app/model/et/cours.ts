@@ -135,29 +135,23 @@ export class Cours {
     });
   }
 
-  static analyseGroupe(groupe: string): any[] | null {
+  static analyseGroupe(groupe: string): any[] {
     if (groupe.length === 0) {
-      return null;
+      return [];
     }
 
-    const a = [];
-    for (const g of groupe.split(', ')) {
-      a.push(g);
-    }
-
-    return a;
+    return groupe.split(', ');
   }
 
-  static analyseType(type: string): any[] | null {
+  static analyseType(type: string): any[] {
     if (type.length === 0) {
-      // Si type n'a pas de type, alors le type est invalide.
-      return null;
+      return [];
     }
 
     return type.split('/');
   }
 
-  static analyseSalle(salle: string): [string[], string[]] | null {
+  static analyseSalle(salle: string): [string[], string[]] {
     const salles = [];
 
     // On définit les regex.

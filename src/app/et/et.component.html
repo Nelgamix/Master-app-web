@@ -124,7 +124,7 @@
           <div class="row">
             <div class="col">
               <div class="row" *ngFor="let j of etService.emploiTemps.jours">
-                <ng-container *ngIf="j && j.duree.asMinutes() > 0">
+                <ng-container *ngIf="j && j.duree.asMinutes() > 0 && j.premierCours && j.dernierCours">
                   <div class="col-6 text-center">
                     <span class="stat-titre">{{j.nom}}</span>
                   </div>
