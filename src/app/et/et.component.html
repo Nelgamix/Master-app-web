@@ -172,8 +172,8 @@
                 <input ngbButton type="radio" [value]="2"><img src="assets/icons/expand.png" alt="Visuel">
               </label>
             </div>
-            <button type="button" class="btn btn-success img-text"><img src="assets/icons/push-pin.png" alt="Cours"><span>Personnel</span></button>
-            <button type="button" class="btn btn-warning img-text"><img src="assets/icons/file.png" alt="Notes">Notes</button>
+            <button type="button" class="btn btn-success img-text" (click)="openPersonnel()"><img src="assets/icons/push-pin.png" alt="Cours">Personnel</button>
+            <button type="button" class="btn btn-warning img-text" (click)="openNotes()"><img src="assets/icons/file.png" alt="Notes">Notes</button>
             <button type="button" class="btn btn-info img-text" [ngbPopover]="helpContent" popoverTitle="Code couleur" placement="left">
               <img src="assets/icons/info.png" alt="Info">Couleurs
             </button>

@@ -43,6 +43,9 @@ import {EtTableComponent} from './et/ettable.component';
 import {AppRoutingModule} from './app-routing.module';
 import {ExclusionComponent} from './et/exclusion.component';
 import {ModalEtGestionCoursComponent} from './modal/et-gestion-cours.component';
+import {GestionCoursComponent} from './et/gestion-cours.component';
+import {ModalEtNotesComponent} from './modal/et-notes.component';
+import {NotesService} from './services/notes.service';
 
 @NgModule({
   declarations: [
@@ -57,6 +60,7 @@ import {ModalEtGestionCoursComponent} from './modal/et-gestion-cours.component';
     ModalEvenementsEditComponent,
     ModalEtExclusionsComponent,
     ModalEtGestionCoursComponent,
+    ModalEtNotesComponent,
     ModalEtStatsComponent,
     DateFilter,
     CoursFilter,
@@ -66,6 +70,7 @@ import {ModalEtGestionCoursComponent} from './modal/et-gestion-cours.component';
     Capitalize,
     EvenementComponent,
     ExclusionComponent,
+    GestionCoursComponent,
     EtVisuelComponent,
     EtTableComponent
   ],
@@ -83,6 +88,7 @@ import {ModalEtGestionCoursComponent} from './modal/et-gestion-cours.component';
   providers: [
     EmploiTempsService,
     DatesService,
+    NotesService,
     CookieService
   ],
   bootstrap: [AppComponent],
@@ -92,6 +98,7 @@ import {ModalEtGestionCoursComponent} from './modal/et-gestion-cours.component';
     ModalEvenementsEditComponent,
     ModalEtExclusionsComponent,
     ModalEtGestionCoursComponent,
+    ModalEtNotesComponent,
     ModalEtStatsComponent
   ]
 })

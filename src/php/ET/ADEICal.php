@@ -149,7 +149,7 @@ class ADEICal
         {
             if (preg_match_all("/(CIME)|(FABLAB)|(?:salle )?([a-z0-9]+ [a-z]?[0-9]+)/i", $objcours['nom'], $matches, PREG_SET_ORDER) > 0) {
                 foreach ($matches as $match) {
-                    $objcours['salle'] .= $match[1];
+                    $objcours['salle'] .= $match[0];
                     $objcours['nom'] = str_replace($match[0], "", $objcours['nom']);
                 }
             }

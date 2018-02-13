@@ -9,6 +9,8 @@ import {DatesService} from '../services/dates.service';
 import * as moment from 'moment';
 import {Component, OnInit} from '@angular/core';
 import {Exclusion} from '../model/et/exclusion';
+import {ModalEtGestionCoursComponent} from '../modal/et-gestion-cours.component';
+import {ModalEtNotesComponent} from '../modal/et-notes.component';
 
 @Component({
   selector: 'app-et-root',
@@ -100,6 +102,22 @@ export class EtComponent implements OnInit {
     modalRef.componentInstance.possibilites = possibilites;
     modalRef.result.then(r => {
       this.etService.filterExclusions(r);
+    }, r => {
+    });
+  }
+
+  openPersonnel() {
+    const modalRef = this.modalService.open(ModalEtGestionCoursComponent, {size: 'lg'});
+    modalRef.componentInstance.cours = this.etService.emploiTemps.coursPrives;
+    /*modalRef.componentInstance.possibilites = possibilites;*/
+    modalRef.result.then(r => {
+    }, r => {
+    });
+  }
+
+  openNotes() {
+    const modalRef = this.modalService.open(ModalEtNotesComponent, {size: 'lg'});
+    modalRef.result.then(r => {
     }, r => {
     });
   }

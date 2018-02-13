@@ -1,0 +1,111 @@
+<div class="modal-header">
+  <h4 class="modal-title">Notes</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <!--Panneau d'édition-->
+  <div class="row">
+    <div class="col">
+      <ng-container [ngSwitch]="true">
+        <!--Mode = 0 LISTE-->
+        <ng-container *ngSwitchCase="mode === Etat.LISTE">
+          <!--Boutons de contrôle-->
+          <div class="row mb-2">
+            <div class="col">
+              <div class="btn-group">
+                <button type="button" class="btn btn-success" (click)="nouvelleNote()">Nouveau</button>
+                <button type="button" class="btn btn-primary" [disabled]="!noteActive" [class.disabled]="!noteActive" (click)="mode = Etat.VISUALISATION">Visualiser</button>
+                <button type="button" class="btn btn-warning" [disabled]="!noteActive" [class.disabled]="!noteActive" (click)="modifierNote(noteActive)">Modifier</button>
+                <button type="button" class="btn btn-danger" [disabled]="!noteActive" [class.disabled]="!noteActive" (click)="supprimerNote(noteActive)">Supprimer</button>
+              </div>
+            </div>
+          </div>
+
+          <!--Affichage des notes-->
+          <table class="table">
+            <thead>
+            <tr>
+              <th>Date création</th>
+              <th>Date modification</th>
+              <th>Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let n of getNotes()" (click)="noteActive = n" [class.selected]="n === noteActive">
+              <td>{{n.dateCreation | amDateFormat:'D MMMM YYYY HH:mm'}}</td>
+              <td>{{n.dateModification | amDateFormat:'D MMMM YYYY HH:mm'}}</td>
+              <td>{{n.description}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </ng-container>
+
+        <!--Mode = 1 VISUALISATION-->
+        <ng-container *ngSwitchCase="mode === Etat.VISUALISATION">
+          <div class="row">
+            <div class="col">
+              <div class="row">
+                <div class="col">
+                  <b>Date création</b>: {{noteActive.dateCreation | amDateFormat:'D MMMM YYYY HH:mm'}}<br>
+                  <b>Date modification</b>: {{noteActive.dateModification | amDateFormat:'D MMMM YYYY HH:mm'}}<br>
+                  <b>Description</b>: {{noteActive.description}}<br>
+                  <b>Texte</b>:<br>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <markdown-to-html data="{{noteActive.texte}}"></markdown-to-html>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <button class="btn btn-dark" (click)="mode = Etat.LISTE">Retour</button>
+            </div>
+          </div>
+        </ng-container>
+
+        <!--Mode = 2 et 3 EDITION-->
+        <ng-container *ngSwitchCase="mode === Etat.EDITION_NOUVEAU || mode === Etat.EDITION_EXISTANT">
+          <!--Edition de la note-->
+          <div class="row">
+            <div class="col">
+              <div class="form-group">
+                <label for="tad">Description</label>
+                <input type="text" class="form-control" name="tad" id="tad" [(ngModel)]="noteTmp.description" maxlength="60">
+                <small class="form-text text-muted">
+                  Maximum 60 caractères. Doit être succinct et descriptif de la note.
+                </small>
+              </div>
+              <div class="form-group">
+                <label for="tat">Note</label>
+                <textarea class="form-control" id="tat" rows="8" [(ngModel)]="noteTmp.texte"></textarea>
+                <small class="form-text text-muted">
+                  La note supporte le Markdown, n'hésitez pas à formatter grâce à cela.
+                </small>
+              </div>
+            </div>
+          </div>
+
+          <!--Boutons de contrôle (valider ou annuler la note)-->
+          <div class="row">
+            <div class="col">
+              <div class="btn-group">
+                <button type="button" class="btn btn-success" (click)="enregistrerNote(noteTmp)">Enregistrer</button>
+                <button type="button" class="btn btn-warning" (click)="mode = Etat.LISTE">Annuler</button>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </ng-container>
+    </div>
+  </div>
+
+
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-dark" (click)="activeModal.close('Close click')">Fermer</button>
+</div>

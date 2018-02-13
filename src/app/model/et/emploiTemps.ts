@@ -48,6 +48,12 @@ export class EmploiTemps {
     }
   }
 
+  get coursPrives(): Cours[] {
+    const a = [];
+    this.jours.forEach(j => a.push(j.coursPrive));
+    return a;
+  }
+
   addCours(c: Cours): void {
     this.cours.push(c);
 
@@ -91,7 +97,7 @@ export class EmploiTemps {
         nombreCours += j.coursActifs.length;
         duree.add(j.duree);
         for (const t in j.typesCount) {
-          if (types.hasOwnProperty(t)) {
+          if (j.typesCount.hasOwnProperty(t) && types.hasOwnProperty(t)) {
             types[t] += j.typesCount[t];
           } else {
             types[t] = j.typesCount[t];
@@ -111,7 +117,9 @@ export class EmploiTemps {
     this.stats['nombreCours'] = {title: 'Nombre de cours', value: nombreCours};
     this.stats['nombreJours'] = {title: 'Nombre de jours', value: nombreJours};
     for (const t in types) {
-      this.stats['nb' + t.replace('/', '_')] = {title: 'Nombre de ' + t, value: types[t]};
+      if (types.hasOwnProperty(t)) {
+        this.stats['nb' + t.replace('/', '_')] = {title: 'Nombre de ' + t, value: types[t]};
+      }
     }
 
     this.premierJour = this.jours[0];
