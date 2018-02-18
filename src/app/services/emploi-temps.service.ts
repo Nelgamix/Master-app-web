@@ -118,7 +118,7 @@ export class EmploiTempsService {
 
     // Calcule cours actuel, prochain cours
     for (const j of this.emploiTemps.jours) {
-      if (j) {
+      if (j && j.coursActifs.length > 0) {
         if (now.isBefore(j.premierCours.debut)) { // on est avant ce jour.
           this.prochainCours = j.premierCours;
           break;

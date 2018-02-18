@@ -37,3 +37,6 @@ assert(isset($out), "out should exist");
 exec_script($out, "--week 10 --year 2018");
 assert($out['ok'] == true, "ok should be true");
 assert($out['data'] != null, "data should be present");
+
+// Info test
+exec_script($out, "--info");

@@ -44,15 +44,15 @@
 					"url": "http://www.univ-grenoble-alpes.fr"
 				},
 				{
-					"nom": "Page du master",
+					"nom": "Page master",
 					"url": "http://formations.univ-grenoble-alpes.fr/fr/catalogue/master-XB/sciences-technologies-sante-STS/master-informatique-program-master-informatique.html"
 				},
 				{
-					"nom": "Page de la 1ère année",
+					"nom": "Page 1ère année",
 					"url": "http://formations.univ-grenoble-alpes.fr/fr/catalogue/master-XB/sciences-technologies-sante-STS/master-informatique-program-master-informatique/parcours-informatique-classique-1re-annee-subprogram-parcours-genie-informatique-informatique-m1-classique.html"
 				},
 				{
-					"nom": "Page de la 2ème année",
+					"nom": "Page 2ème année",
 					"url": "http://formations.univ-grenoble-alpes.fr/fr/catalogue/master-XB/sciences-technologies-sante-STS/master-informatique-program-master-informatique/parcours-genie-informatique-classique-2e-annee-subprogram-genie-informatique-m2-classique.html"
 				},
         {
@@ -317,7 +317,7 @@
           ]
         }
       ],
-			"infos": "Mot de passe Moodle DevOps: DEVOPS_2018\nLogin CS: M1Info_M2GI_2018, Quantum_or_not_quantum?",
+			"infos": "**Mot de passe Moodle DevOps**: `DEVOPS_2018`\r\n\r\n**Login CS**: `M1Info_M2GI_2018`, `Quantum_or_not_quantum?`",
 			"liens": []
 		},
 		{

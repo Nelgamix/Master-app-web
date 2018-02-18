@@ -1,6 +1,6 @@
 <div class="container contenu">
   <div class="row section">
-    <div class="col-md-10 col-sm-12">
+    <div class="col-12">
       <div class="row titre">
         <div class="col">
           <h4>
@@ -21,26 +21,18 @@
           </a>
         </div>
       </div>
-    </div>
-    <div class="col-md-2 col-sm-12">
-      <div class="row titre">
-        <div class="col">
-          <h5><img src="assets/icons/star.svg" height="20" width="20" alt="Etoile" class="d-inline-block align-top"> Autres</h5>
-        </div>
-      </div>
+      <!--Liens secondaires-->
       <div class="row">
-        <div class="col">
-          <div class="btn-group-vertical btn-group-sm" style="width: 100%;">
-            <ng-container *ngFor="let g of groupesSecondaires; let i = index">
-              <div class="btn-group" ngbDropdown>
-                <button class="btn btn-sm btn-warning" id="dropdown{{i}}" ngbDropdownToggle>{{g.getNom()}}</button>
-                <div ngbDropdownMenu attr.aria-labelledby="dropdown{{i}}">
-                  <a class="dropdown-item" *ngFor="let o of g.getLiens()" href="{{o.getUrl()}}">{{o.nom}}</a>
-                </div>
-              </div>
-            </ng-container>
-            <a class="btn btn-primary" href="{{l.getUrl()}}" *ngFor="let l of liensSecondaires">{{l.getNom()}}</a>
+        <div class="col-lg-2 col-md-4 col-sm-12 mb-2" *ngFor="let g of groupesSecondaires">
+          <div class="dropdown" dropdown>
+            <div class="dropdown-toggle quick-link" style="border-top-color: green" dropdownToggle><b>{{g.getNom()}}</b></div>
+            <ul class="dropdown-menu" dropdownMenu>
+              <li *ngFor="let o of g.getLiens()"><a href="{{o.getUrl()}}">{{o.getNom()}}</a></li>
+            </ul>
           </div>
+        </div>
+        <div class="col-lg-2 col-md-4 col-sm-12 mb-2" *ngFor="let l of liensSecondaires">
+          <a class="quick-link" style="border-top-color: #0077ff" href="{{l.getUrl()}}"><b>{{l.getNom()}}</b></a>
         </div>
       </div>
     </div>

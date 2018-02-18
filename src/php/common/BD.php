@@ -57,6 +57,17 @@ class BD
         $o->execute();
     }
 
+    function query(String $req)
+    {
+        if (!$this->is_connected())
+        {
+            Commons::debug_line("Connexion indisponible: impossible d'exec");
+            return null;
+        }
+
+        return $this->connection->query($req, PDO::FETCH_NAMED);
+    }
+
     function fetch_class(String $req, String $class)
     {
         if (!$this->is_connected()) {

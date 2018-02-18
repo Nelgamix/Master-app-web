@@ -11,6 +11,7 @@ import {Component, OnInit} from '@angular/core';
 import {Exclusion} from '../model/et/exclusion';
 import {ModalEtGestionCoursComponent} from '../modal/et-gestion-cours.component';
 import {ModalEtNotesComponent} from '../modal/et-notes.component';
+import {EmploiTempsInfoService} from '../services/emploi-temps-info.service';
 
 @Component({
   selector: 'app-et-root',
@@ -24,11 +25,19 @@ export class EtComponent implements OnInit {
   infoSemaine: any;
   weekProgress: number;
   search: string;
+  info: boolean;
+
+  chartData: any = [];
+  colorScheme: any = {
+    domain: ['#0077FF']
+  };
 
   constructor(public etService: EmploiTempsService,
+              public etInfoService: EmploiTempsInfoService,
               public datesService: DatesService,
               private modalService: NgbModal) {
     this.search = '';
+    this.info = false;
   }
 
   ngOnInit(): void {
@@ -183,5 +192,17 @@ export class EtComponent implements OnInit {
   openStats() {
     const modalRef = this.modalService.open(ModalEtStatsComponent);
     modalRef.componentInstance.stats = this.etService.emploiTemps.stats;
+  }
+
+  showInfo() {
+    this.etInfoService.updateData(() => {
+      const e = {name: 'Cours', series: []};
+      this.chartData = [e];
+      for (const w of this.etInfoService.data) {
+        e.series.push({name: w.year + ' ' + w.week, value: w.cours.length});
+      }
+    });
+
+    this.info = true;
   }
 }
