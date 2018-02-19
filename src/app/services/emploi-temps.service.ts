@@ -5,6 +5,7 @@ import {HttpClient} from '@angular/common/http';
 import {Cours} from '../model/et/Cours';
 import {CookieService} from 'ngx-cookie-service';
 import {Exclusion} from '../model/et/Exclusion';
+import {CoursPerso} from '../model/et/CoursPerso';
 import * as moment from 'moment';
 
 @Injectable()
@@ -14,6 +15,12 @@ export class EmploiTempsService {
    * @type {string}
    */
   readonly exclusionsCookie = 'et-exclusions';
+
+  /**
+   * Nom pour le stockage du cookie contenant les cours perso.
+   * @type {string}
+   */
+  readonly coursPersoCookie = 'et-cours-perso';
 
   /**
    * Objet contenant les métadonnées pour l'emploi du temps (ADE)
@@ -32,6 +39,11 @@ export class EmploiTempsService {
   exclusions: Exclusion[];
 
   /**
+   * Cours persos ajoutés par l'utilisateur.
+   */
+  coursPersos: CoursPerso[];
+
+  /**
    * Cours actuellement en cours.
    */
   coursActuel: Cours;
@@ -47,6 +59,11 @@ export class EmploiTempsService {
   prochainCoursTimer: any;
 
   /**
+   * Si vrai, alors aucune analyse ne sera effectuée.
+   */
+  analyseDisabled: boolean;
+
+  /**
    * Liste d'observers à notifier quand il y a un changement.
    */
   observers: any[];
@@ -54,8 +71,10 @@ export class EmploiTempsService {
   constructor(private http: HttpClient,
               private cookiesService: CookieService) {
     this.observers = [];
+    this.analyseDisabled = false;
     this.emploiTemps = new EmploiTemps();
     this.initExclusionsFromCookies();
+    this.initCoursPersoFromCookies();
   }
 
   /**
@@ -81,6 +100,7 @@ export class EmploiTempsService {
       this.http.get('php/ical.php?from_year=' + year + '&from_week=' + week).subscribe(data => this.loadData(data, cb));
     } else {
       this.emploiTemps.selectSemaine(week, year);
+      this.analyse();
       if (cb) {
         cb();
       }
@@ -114,13 +134,28 @@ export class EmploiTempsService {
 
     this.emploiTemps.applyExclusions(this.exclusions);
     this.analyse();
-    this.sauvegardeExclusionsToCookies(this.exclusions);
+    this.sauvegardeExclusionsToCookies();
+  }
+
+  ajoutCoursPerso(coursPerso: CoursPerso[]): void {
+    if (coursPerso !== this.coursPersos) {
+      this.coursPersos.splice(0, this.coursPersos.length); // remove all (clear)
+      for (const e of coursPerso) {
+        this.coursPersos.push(e);
+      }
+    }
+
+    coursPerso.forEach(c => c.testePlusieursSemaine(this.emploiTemps.semainesSelectionnees));
+    this.analyse();
+    this.sauvegardeCoursPersoToCookies();
   }
 
   /**
    * Analyse l'ensemble des semaines sélectionnées.
    */
   analyse(): void {
+    if (this.analyseDisabled) return;
+
     this.emploiTemps.analyse();
 
     const now = moment();
@@ -130,7 +165,7 @@ export class EmploiTempsService {
     // Calcule cours actuel, prochain cours
     for (const s of this.emploiTemps.semainesSelectionnees) {
       for (const j of s.jours) {
-        if (j && j.coursActifs.length > 0) {
+        if (j.coursActifs.length > 0) {
           if (now.isBefore(j.premierCours.debut)) { // on est avant ce jour.
             this.prochainCours = j.premierCours;
             break;
@@ -160,6 +195,31 @@ export class EmploiTempsService {
   }
 
   /**
+   * Initialise les cours perso depuis les cookies.
+   * @returns {CoursPerso[]} les cours perso récupérées des cookies.
+   */
+  private initCoursPersoFromCookies(): CoursPerso[] {
+    this.coursPersos = [];
+    if (this.cookiesService.check(this.coursPersoCookie)) {
+      const eJson = JSON.parse(this.cookiesService.get(this.coursPersoCookie));
+      if (eJson && eJson instanceof Array) {
+        for (const o of eJson) {
+          this.coursPersos.push(new CoursPerso(o['recurrence'], moment(o['date']), o['debut'], o['fin'], o['description'], o['nom'], o['type'], o['professeur'], o['lieu']));
+        }
+      }
+    }
+
+    return this.coursPersos;
+  }
+
+  /**
+   * Sauvegarde les cours perso dans les cookies.
+   */
+  private sauvegardeCoursPersoToCookies(): void {
+    this.cookiesService.set(this.coursPersoCookie, JSON.stringify(this.coursPersos));
+  }
+
+  /**
    * Initialise les exclusions depuis les cookies.
    * @returns {Exclusion[]} les exclusions récupérées des cookies.
    */
@@ -179,10 +239,9 @@ export class EmploiTempsService {
 
   /**
    * Sauvegarde les exclusions dans les cookies.
-   * @param exclusions les exclusions à sauvegarder.
    */
-  private sauvegardeExclusionsToCookies(exclusions: any): void {
-    this.cookiesService.set(this.exclusionsCookie, JSON.stringify(exclusions));
+  private sauvegardeExclusionsToCookies(): void {
+    this.cookiesService.set(this.exclusionsCookie, JSON.stringify(this.exclusions));
   }
 
   /**
@@ -208,9 +267,26 @@ export class EmploiTempsService {
     }
 
     if (this.metadata['ok'] && data['semaines']) {
+      // Récup et sort les semaines.
       const semaines = data['semaines'];
-      const sts = [];
+      semaines.sort((e1, e2) => {
+        const y1 = parseInt(e1['year'], 10);
+        const y2 = parseInt(e2['year'], 10);
+        const w1 = parseInt(e1['week'], 10);
+        const w2 = parseInt(e2['week'], 10);
 
+        if (y1 < y2) return -1;
+        if (y1 > y2) return 1;
+
+        if (w1 < w2) return -1;
+        if (w1 > w2) return 1;
+
+        return 0;
+      });
+
+      const sts = []; // semaines to select (semaine qui vont être sélectionnées à la fin)
+
+      // pour chaque semaine
       semaines.forEach(s => {
         const w = parseInt(s['week'], 10);
         const y = parseInt(s['year'], 10);
@@ -233,14 +309,12 @@ export class EmploiTempsService {
 
       this.emploiTemps.selectMultipleSemaines(sts);
 
-      /*this.emploiTemps.addCours(new Cours({
-        nom: 'TER',
-        debut: moment('09/02/2018 09:00', 'DD-MM-YYYY HH:mm'),
-        fin: moment('09/02/2018 11:30', 'DD-MM-YYYY HH:mm')
-      }));*/
-      this.analyse();
+      this.analyseDisabled = true;
       this.filterExclusions(this.exclusions);
+      this.ajoutCoursPerso(this.coursPersos);
+      this.analyseDisabled = false;
 
+      this.analyse();
       this.notifyObserver();
     }
 

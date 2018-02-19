@@ -47,7 +47,6 @@ import {GestionCoursComponent} from './et/gestion-cours.component';
 import {ModalEtNotesComponent} from './modal/et-notes.component';
 import {NotesService} from './services/notes.service';
 import {DropdownModule} from 'angular-custom-dropdown';
-import {EmploiTempsInfoService} from './services/emploi-temps-info.service';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
 
 @NgModule({
@@ -92,7 +91,6 @@ import {NgxChartsModule} from '@swimlane/ngx-charts';
   ],
   providers: [
     EmploiTempsService,
-    EmploiTempsInfoService,
     DatesService,
     NotesService,
     CookieService

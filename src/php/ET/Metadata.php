@@ -9,7 +9,7 @@ class Metadata implements JsonSerializable
     {
         return [
             'ok' => $this->ok,
-            'adeOnline' => $this->ade_online
+            'ade-online' => $this->ade_online
         ];
     }
 

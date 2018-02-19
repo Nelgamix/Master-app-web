@@ -11,8 +11,8 @@ import {Component, OnInit} from '@angular/core';
 import {Exclusion} from '../model/et/Exclusion';
 import {ModalEtGestionCoursComponent} from '../modal/et-gestion-cours.component';
 import {ModalEtNotesComponent} from '../modal/et-notes.component';
-import {EmploiTempsInfoService} from '../services/emploi-temps-info.service';
 import {Semaine} from '../model/et/Semaine';
+import {CoursPerso, CoursPersoRecurrence} from '../model/et/CoursPerso';
 
 @Component({
   selector: 'app-et-root',
@@ -205,5 +205,10 @@ export class EtComponent implements OnInit {
     });
 
     this.info = true;
+  }
+
+  test() {
+    const cp = new CoursPerso(CoursPersoRecurrence.SEMAINE, moment(), 9 * 60, 11 * 60 + 30, 'TER', 'TER', 'TP', 'DEMEURE Alexandre', 'IMAG');
+    this.etService.ajoutCoursPerso([cp]);
   }
 }

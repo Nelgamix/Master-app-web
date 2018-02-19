@@ -25,7 +25,7 @@ define("ADMINMDP", [
 ]);
 
 // Partie ET
-define("ADEURL", "https://ade6-ujf.grenet.fr/direct/index.jsp?resources=9756&projectId=2&data=1d04874d83cdeb532b5be82d6dc7b4928036957750ce9817205161f6e22f6829f9355e402da57010f6819307ed738001824027a8904c9a5cef6f1a28ea35c418c025f5e16438a90e7406158408bd7b08");
+define("ADEURL", "http://ade6-ujf.grenet.fr/ade/index.jsp");
 define("URLTIMEOUT", 5); // request timeout before considering that ADE is down
 define("REFRESHINTERVAL", 2 * 60); // Refresh ical each REFRESHINTERVAL minutes
 define("FLUSHICAL", false);
