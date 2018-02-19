@@ -47,14 +47,25 @@ export class Exclusion {
     this.count = count;
   }
 
+  /**
+   * Permet de savoir si l'exclusion est vide ou pas.
+   * @returns {boolean} vrai si l'exclusion est considérée comme 'vide', faux sinon.
+   */
   estVide(): boolean {
     return this.type.length === 0 && this.nom.length === 0 && this.professeur.length === 0 && this.salle.length === 0;
   }
 
+  /**
+   * Duplique l'exclusion.
+   * @returns {Exclusion} l'exclusion dupliquée.
+   */
   clone(): Exclusion {
     return new Exclusion(this.type, this.nom, this.professeur, this.salle, this.supprimer, this.includes, this.count);
   }
 
+  /**
+   * Affiche le contenu de l'exclusion dans la console.
+   */
   print(): void {
     console.log((this.type.length > 0 ? 'type: ' + this.type + ' ' : 'pas de type ')
         + (this.nom.length > 0 ? 'nom: ' + this.nom + ' ' : 'pas de nom ')

@@ -191,10 +191,6 @@ export class Cours {
     return [salles, salles_types];
   }
 
-  print(): void {
-    console.log(this);
-  }
-
   private calculeHash(): boolean {
     if (this.debut === null || this.fin === null || this.nom === null || this.nom.length === 0) {
       return;

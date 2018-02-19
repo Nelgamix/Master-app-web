@@ -66,6 +66,35 @@ export class Jour {
     return index;
   }
 
+  addCours(cours: Cours): boolean {
+    this.cours.push(cours);
+    return true;
+  }
+
+  analyse(): void {
+    this.sortCours('debut');
+
+    // Analyse du jour
+    this.analyseDebutJour();
+    this.analyseFinJour();
+
+    // Analyse des cours
+    this.analysePremierCours();
+    this.analyseDernierCours();
+
+    // Analyse des types des cours
+    this.analyseCoursActifs();
+    this.analyseCoursCaches();
+    this.analyseCoursSupprimes();
+    this.analyseCoursPrives();
+
+    // Analyse des types
+    this.analyseTypes();
+
+    // Analyse conflits + calcul duree
+    this.chercherConflits();
+  }
+
   private analyseDebutJour(): any {
     return (this.debutJour = this.date.clone());
   }
@@ -132,36 +161,11 @@ export class Jour {
     return (this.types = o);
   }
 
-  analyse(): void {
-    this.sortCours('debut');
-
-    // Analyse du jour
-    this.analyseDebutJour();
-    this.analyseFinJour();
-
-    // Analyse des cours
-    this.analysePremierCours();
-    this.analyseDernierCours();
-
-    // Analyse des types des cours
-    this.analyseCoursActifs();
-    this.analyseCoursCaches();
-    this.analyseCoursSupprimes();
-    this.analyseCoursPrives();
-
-    // Analyse des types
-    this.analyseTypes();
-
-    // Analyse conflits + calcul duree
-    this.chercherConflits();
-  }
-
-  addCours(cours: Cours): boolean {
-    this.cours.push(cours);
-    return true;
-  }
-
-  private sortCours(field): any {
+  /**
+   * Trie les cours en fonction du champ field.
+   * @param field le champ sur lequel trier les cours.
+   */
+  private sortCours(field): void {
     this.cours.sort((l, r) => {
       return l[field].isBefore(r[field]) ? -1 : 1;
     });
