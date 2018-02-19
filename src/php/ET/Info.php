@@ -18,24 +18,24 @@ class Info
         return $this->bd->connect();
     }
 
-    function get_from_db()
+    function get_from_db(): array
     {
         if (!$this->connect_to_db()) {
-            return null;
+            return [];
         }
 
-        $query = 'SELECT * FROM masteret';
+        $query = 'SELECT '.WEEKCOLUMN.', '.YEARCOLUMN.' FROM '.TABLENAME;
         if (($r = $this->bd->query($query)) != null) {
             $ra = [];
 
             foreach ($r as $row) {
-                $ra[] = json_decode($row[DATACOLUMN]);
+                $ra[] = [$row[WEEKCOLUMN], $row[YEARCOLUMN]];
             }
 
             return $ra;
         } else {
             Commons::debug_line('Erreur lors de la query.');
-            return null;
+            return [];
         }
     }
 }

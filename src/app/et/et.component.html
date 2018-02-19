@@ -215,22 +215,22 @@
         </ngx-charts-line-chart>
       </div>
     </div>
-    <div class="row mb-3" *ngFor="let i of etInfoService.data">
+    <div class="row mb-3" *ngFor="let s of etService.emploiTemps.semainesSelectionnees">
       <div class="col">
         <div class="row">
           <div class="col">
-            <h4>Semaine {{i.week}} de {{i.year}}</h4>
+            <h4>Semaine {{s.week}} de {{s.year}}</h4>
           </div>
         </div>
         <div class="row">
           <div class="col">
-            <b>Mis à jour le</b> {{i.updated}}
+            <b>Mis à jour le</b> {{s.updated}}
           </div>
           <div class="col">
-            <b>Stats auto-calculés</b>: {{i.stats === null ? 'Aucune' : 'Oui, ' + (i.stats | objet).length}}
+            <b>Stats auto-calculés</b>: <!--{{s.stats === null ? 'Aucune' : 'Oui, ' + (s.stats | objet).length}}-->
           </div>
           <div class="col">
-            <b>Nombre de cours</b>: {{i.cours.length}}
+            <b>Nombre de cours</b>: {{s.cours.length}}
           </div>
         </div>
       </div>

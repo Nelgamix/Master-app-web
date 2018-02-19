@@ -30,40 +30,59 @@ export class EmploiTemps {
     return this.semainesSelectionnees[0];
   }
 
+  trouverSemaine(week: number, year: number): Semaine | null {
+    for (const s of this.semaines) {
+      if (s.week === week && s.year === year) {
+        return s;
+      }
+    }
+
+    return null;
+  }
+
   /**
    * Ajoute une nouvelle semaine à l'emploi du temps.
    * @param {number} week le numéro de la nouvelle semaine.
    * @param {number} year l'année de la nouvelle semaine.
-   * @returns {boolean} vrai si réussite (la semaine n'existait pas déjà), faux sinon.
+   * @returns {boolean} vrai si la semaine a été ajoutée, faux sinon (elle existait déjà)
    */
   addSemaine(week: number, year: number): boolean {
-    for (const st of this.semaines) {
-      if (st.week === week && st.year === year) {
-        return false;
-      }
+    if (this.trouverSemaine(week, year) !== null) {
+      return false;
     }
 
-    const s = new Semaine(week, year);
-    this.semaines.push(s);
+    this.semaines.push(new Semaine(week, year));
 
     return true;
   }
 
   /**
-   * Sélectionne la semaine week year.
+   * Sélectionne la semaine week year, et la renvoie.
    * @param {number} week le numéro de la semaine à sélectionner.
    * @param {number} year l'année de la semaine à sélectionner.
-   * @returns {boolean} vrai si la semaine a été sélectionnée, faux sinon.
+   * @returns {Semaine} renvoie la semaine sélectionnée.
    */
-  selectSemaine(week: number, year: number): boolean {
-    for (const s of this.semaines) {
-      if (s.week === week && s.year === year) {
-        this.semainesSelectionnees = [s];
-        return true;
-      }
+  selectSemaine(week: number, year: number): Semaine | null {
+    const s = this.trouverSemaine(week, year);
+    if (s !== null) {
+      this.semainesSelectionnees = [s];
     }
 
-    return false;
+    return s;
+  }
+
+  selectMultipleSemaines(semaines: Semaine[]): boolean {
+    this.semainesSelectionnees = [];
+    let success = true;
+    semaines.forEach(s => {
+      if (this.semaines.indexOf(s) >= 0) {
+        this.semainesSelectionnees.push(s);
+      } else {
+        success = false;
+      }
+    });
+
+    return success;
   }
 
   /**
@@ -87,9 +106,10 @@ export class EmploiTemps {
    * @param {Exclusion[]} exclusions les exclusions à appliquer.
    * @returns {boolean} vrai si les exclusions ont été appliquées, faux sinon.
    */
-  applyExclusions(exclusions: Exclusion[]): boolean {
-    this.semainesSelectionnees.forEach(s => s.applyExclusions(exclusions));
-    return true;
+  applyExclusions(exclusions: Exclusion[]): number {
+    let total = 0;
+    this.semainesSelectionnees.forEach(s => total += s.applyExclusions(exclusions));
+    return total;
   }
 
   /**

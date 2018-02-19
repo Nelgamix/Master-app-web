@@ -26,17 +26,17 @@ exec_script($out);
 assert(isset($out), "out should exist");
 
 // basic testing (wrong arg)
-exec_script($out, "--week no --year 2018");
+exec_script($out, "--from_week no --from_year 2018");
 assert(isset($out), "out should exist");
 
 // basic testing (wrong range)
-exec_script($out, "--week 56 --year 2018");
+exec_script($out, "--from_week 56 --from_year 2018");
 assert(isset($out), "out should exist");
 
 // normal test
-exec_script($out, "--week 10 --year 2018");
-assert($out['ok'] == true, "ok should be true");
-assert($out['data'] != null, "data should be present");
+exec_script($out, "--from_week 10 --from_year 2018");
+assert($out['metadata'] == true, "ok should be true");
+assert($out['semaines'] != null, "data should be present");
 
 // Info test
 exec_script($out, "--info");

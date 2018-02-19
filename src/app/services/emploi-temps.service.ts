@@ -71,18 +71,24 @@ export class EmploiTempsService {
   /**
    * Update les données de l'emploi du temps en ajoutant celles de la semaine week,
    * année year. Le callback cb est appelé si fourni, à la fin de l'update.
-    * @param {number} week numéro de semaine
+   * @param {number} week numéro de semaine
    * @param {number} year année
    * @param {Function} cb fonction qui s'exécute après l'update.
    */
-  updateData(week: number, year: number, cb?: Function): void {
-    if (this.emploiTemps.addSemaine(week, year)) {
-      this.emploiTemps.selectSemaine(week, year);
-      this.http.get('php/ical.php?year=' + year + '&week=' + week).subscribe(data => this.loadData(data, cb));
+  updateSingleWeek(week: number, year: number, cb?: Function): void {
+    const t = this.emploiTemps.trouverSemaine(week, year);
+    if (t === null) {
+      this.http.get('php/ical.php?from_year=' + year + '&from_week=' + week).subscribe(data => this.loadData(data, cb));
     } else {
       this.emploiTemps.selectSemaine(week, year);
-      if (cb) cb();
+      if (cb) {
+        cb();
+      }
     }
+  }
+
+  updateAllWeeks(cb?: Function): void {
+    this.http.get('php/ical.php?info').subscribe(data => this.loadData(data, cb));
   }
 
   /**
@@ -196,20 +202,37 @@ export class EmploiTempsService {
    * @param {Function} cb le callback qui est appelé à la fin de l'update.
    */
   private loadData(data: any, cb?: Function): void {
-    this.metadata['adeOnline'] = data['ade-online'];
-    this.metadata['ok'] = data['ok'];
+    if (data['metadata']) {
+      this.metadata['adeOnline'] = data.metadata['ade-online'];
+      this.metadata['ok'] = data.metadata['ok'];
+    }
 
-    if (this.metadata['ok']) {
-      const res = data['data'];
-      this.metadata['stats'] = res['stats'];
-      this.metadata['lastUpdated'] = moment(res['updated'], 'DD-MM-YYYY HH:mm');
-      const cours = res['cours'];
+    if (this.metadata['ok'] && data['semaines']) {
+      const semaines = data['semaines'];
+      const sts = [];
 
-      // Init cours
-      const coursInits = [];
-      cours.forEach(c => coursInits.push(Cours.initFromIcal(c)));
+      semaines.forEach(s => {
+        const w = parseInt(s['week'], 10);
+        const y = parseInt(s['year'], 10);
+        const u = s['updated'];
+        const cs = s['cours'];
 
-      this.emploiTemps.addCours(coursInits);
+        let so;
+        if (this.emploiTemps.addSemaine(w, y)) {
+          so = this.emploiTemps.trouverSemaine(w, y);
+          so.updated = moment(u, 'DD-MM-YYYY HH:mm');
+          const coursInits = [];
+          cs.forEach(c => coursInits.push(Cours.initFromIcal(c)));
+          so.addAllCours(coursInits);
+        } else {
+          so = this.emploiTemps.trouverSemaine(w, y);
+        }
+
+        sts.push(so);
+      });
+
+      this.emploiTemps.selectMultipleSemaines(sts);
+
       /*this.emploiTemps.addCours(new Cours({
         nom: 'TER',
         debut: moment('09/02/2018 09:00', 'DD-MM-YYYY HH:mm'),
@@ -221,6 +244,8 @@ export class EmploiTempsService {
       this.notifyObserver();
     }
 
-    if (cb) cb();
+    if (cb) {
+      cb();
+    }
   }
 }

@@ -18,43 +18,75 @@ if (DEBUG) {
 class Commons {
     private static $section_number = 1;
 
-    public static function format_web(String $msg) {
+    public static function format_web(String $msg): String
+    {
         return str_replace("\n", "<br />", $msg);
     }
 
-    public static function output(String $output) {
+    public static function output(String $output): void
+    {
         if (TRUEOUTPUT) printf("%s", $output);
     }
 
-    public static function debug(String $msg) {
+    public static function debug(String $msg): void
+    {
         $s = DEBUGWEB ? Commons::format_web($msg) : $msg;
         if (DEBUG) printf("%s", $s);
     }
 
-    public static function debug_line(String $msg) {
+    public static function debug_line(String $msg): void
+    {
         Commons::debug($msg . "\n");
     }
 
-    public static function debug_section(String $sec) {
+    public static function debug_section(String $sec): void
+    {
         Commons::debug_line("--- " . Commons::$section_number . " - " . strtoupper($sec) . " ---");
         Commons::$section_number++;
     }
 
-    public static function light_clean($string)
+    public static function light_clean($string): String
     {
         return trim(preg_replace('/\s+/S', " ", $string));
     }
 
-    public static function clean($string) {
+    public static function clean($string): String
+    {
         return Commons::light_clean(preg_replace("/-/", "", $string));
     }
 
-    public static function deploy_array($array) {
+    public static function deploy_array($array): String
+    {
         return implode(', ', $array);
     }
 
-    public static function check_in_range($val, $min, $max) {
-        return ($val >= $min && $val <= $max);
+    public static function parse_int(String $val): int
+    {
+        if (ctype_digit($val))
+        {
+            return intval($val);
+        }
+        else
+        {
+            throw new RuntimeException('not int');
+        }
+    }
+
+    public static function check_in_range($val, $min, $max): bool
+    {
+        if ($val >= $min && $val <= $max)
+        {
+            return true;
+        }
+        else
+        {
+            throw new RuntimeException('not in range');
+        }
+    }
+
+    public static function parse_check_int(String $val, int $min, int $max): int
+    {
+        return ($i = Commons::parse_int($val)) && Commons::check_in_range($i, $min, $max) ? $i : null;
     }
 
     public static function parse_args($opts, $get)

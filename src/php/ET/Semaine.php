@@ -3,7 +3,7 @@
 require_once 'ADEICal.php';
 require_once 'Cours.php';
 
-class Data implements JsonSerializable
+class Semaine implements JsonSerializable
 {
     const FORMAT_JOUR = "d-m-Y H:i";
 
@@ -17,84 +17,97 @@ class Data implements JsonSerializable
     private $updated;
     private $cours;
 
+    private $options;
+
     /**
-     * construct data from year (int) and week number (int)
+     * Semaine constructor.
+     * @param int $week
+     * @param int $year
+     * @param array $options
      */
-    public function __construct($year, $week)
+    public function __construct(int $week, int $year, array $options)
     {
-        // Ouverture de connexion à la BD
-        $this->db = new BD();
-        if (!$this->connect_to_db()) {
-            Commons::debug_line("Connexion échouée.");
-        }
-
-        $this->year = $year;
+        $this->options = $options;
         $this->week = $week;
+        $this->year = $year;
 
-        $diw = $this->days_in_week($this->year, $this->week);
+        $diw = $this->days_in_week($this->week, $this->year);
         $debut = $diw[0];
         $fin = $diw[4];
-        $this->adeical = new ADEICal($debut, $fin);
-        Commons::debug_section("Creation de Data");
+
+        // Ouverture de connexion à la BD
+        if (!$this->options['discard_db'])
+        {
+            $this->db = new BD();
+            if (!$this->connect_to_db())
+            {
+                Commons::debug_line("Connexion BD échouée.");
+            }
+        }
+
+        if (!$this->options['discard_ade'])
+        {
+            $this->adeical = new ADEICal($debut, $fin);
+        }
+
+        Commons::debug_section("Creation de la semaine " . $week . " " . $year);
         Commons::debug_line("Jours de la semaine: " . json_encode($diw));
     }
 
-    public function get_url()
+    public function init($ade_online): bool
     {
-        return $this->adeical->getUrl();
-    }
+        Commons::debug_section("Initialisation de la semaine");
 
-    public function init($ade_online)
-    {
-        Commons::debug_section("Initialisation de Data");
-        $need_ade = false;
-
-        if (DISCARDADE) {
-            $ade_online = false;
-        }
-
-        if (!DISCARDDB && $this->db->is_connected()) // On se connecte à la BD
+        if (!$this->options['discard_db'])
         {
-            if ($this->init_from_db() && $this->data_in_db) // les données ont été récup depuis la BD
+            if ($this->db->is_connected())
             {
-                Commons::debug_line("Les données sont dans la BD");
-                $d = clone $this->updated;
-                $d->modify("+" . REFRESHINTERVAL . " minutes");
-                $now = new DateTime("now");
-
-                if ($now > $d && $ade_online) // On doit update depuis ADE
+                if ($this->init_from_db() && $this->data_in_db) // les données ont été récup depuis la BD
                 {
-                    Commons::debug_line("Les données de la BD ne sont pas à jour.");
-                    $need_ade = true;
+                    Commons::debug_line("Les données sont dans la BD");
+                    $d = clone $this->updated;
+                    $d->modify("+" . REFRESHINTERVAL . " minutes");
+                    $now = new DateTime("now");
+
+                    if ($now > $d && !$this->options['discard_ade'] && $ade_online) // On doit update depuis ADE
+                    {
+                        Commons::debug_line("Les données de la BD ne sont pas à jour.");
+                    }
+                    else
+                    {
+                        return true;
+                    }
                 }
-            } else {
-                Commons::debug_line("Les données ne sont pas dans la BD");
-                $need_ade = true;
+                else
+                {
+                    Commons::debug_line("Les données ne sont pas dans la BD");
+                }
             }
-        } else {
-            Commons::debug_line("Impossible de se connecter à la BD, ou need_ade = true");
-            $need_ade = true;
         }
 
-        if ($need_ade) {
-            if ($ade_online) {
-                Commons::debug_line("ADE online, on récupère les données");
-                $this->init_from_ical();
-                $this->write_on_db();
+        if (!$this->options['discard_ade'] && $ade_online)
+        {
+            Commons::debug_line("ADE online, on récupère les données");
+            if ($this->init_from_ical())
+            {
+                if ($this->options['update_db'])
+                {
+                    $this->write_on_db();
+                }
 
                 return true;
-            } else {
-                Commons::debug_line("ADE est offline, donc impossible de continuer.");
-
+            }
+            else
+            {
                 return false;
             }
-        } else {
-            return true;
         }
+
+        return false;
     }
 
     /**
-     *   Returns every day as Php Datetime in a week
+     *   Returns every day as string formatted 'Y-m-d' in a week
      *   E.g:
      *    0 => string '10/06/2013' (length=10)
      *    1 => string '11/06/2013' (length=10)
@@ -103,17 +116,34 @@ class Data implements JsonSerializable
      *    4 => string '14/06/2013' (length=10)
      *    5 => string '15/06/2013' (length=10)
      *    6 => string '16/06/2013' (length=10)
+     * @param $week int
+     * @param $year int
+     * @return array
      */
-    private function days_in_week($year, $week)
+    private function days_in_week(int $week, int $year)
     {
         $result = [];
-        $datetime = new DateTime();
-        $datetime->setISODate($year, $week, 1);
-        $interval = new DateInterval('P1D');
-        $week = new DatePeriod($datetime, $interval, 6);
 
-        foreach ($week as $day) {
-            $result[] = $day->format('Y-m-d');
+        $debut = new DateTime();
+        $debut->setISODate($year, $week);
+
+        $fin = new DateTime();
+        $fin->setISODate($year, $week);
+        $fin->modify('+7 days');
+
+        try
+        {
+            $interval = new DateInterval('P1D');
+            $week = new DatePeriod($debut, $interval, $fin);
+
+            foreach ($week as $day)
+            {
+                $result[] = $day->format('Y-m-d');
+            }
+        }
+        catch (Exception $e)
+        {
+            Commons::debug_line('Erreur dans la fonction days_in_week: ' . $e->getMessage());
         }
 
         return $result;

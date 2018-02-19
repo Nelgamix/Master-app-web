@@ -35,7 +35,6 @@ export class EtComponent implements OnInit {
   };
 
   constructor(public etService: EmploiTempsService,
-              public etInfoService: EmploiTempsInfoService,
               public datesService: DatesService,
               private modalService: NgbModal) {
     this.search = '';
@@ -65,7 +64,7 @@ export class EtComponent implements OnInit {
   onChangeDate(date): void {
     this.loading = true;
     this.datesService.semaineSelectionnee = date;
-    this.etService.updateData(date.week, date.year, () => {
+    this.etService.updateSingleWeek(date.week, date.year, () => {
       this.loading = false;
       this.semaine = this.etService.emploiTemps.getSemaineUnique();
     });
@@ -197,10 +196,10 @@ export class EtComponent implements OnInit {
   }
 
   showInfo() {
-    this.etInfoService.updateData(() => {
+    this.etService.updateAllWeeks(() => {
       const e = {name: 'Cours', series: []};
       this.chartData = [e];
-      for (const w of this.etInfoService.data) {
+      for (const w of this.etService.emploiTemps.semainesSelectionnees) {
         e.series.push({name: w.year + ' ' + w.week, value: w.cours.length});
       }
     });

@@ -1,66 +1,53 @@
 <?php
 
-require_once 'Data.php';
+require_once 'Semaine.php';
+require_once 'ETIntervalSelection.php';
+require_once 'Metadata.php';
 
 class ET implements JsonSerializable
 {
-    private $data;
-    public $ade_online;
-    public $ok;
+    /**
+     * @var ETIntervalSelection The interval selection
+     */
+    private $is;
 
-    public function __construct($year, $week)
+    /**
+     * @var array containing all semaine objects
+     */
+    private $semaines;
+
+    /**
+     * @var Metadata of the request
+     */
+    private $metadata;
+
+    public function __construct(ETIntervalSelection $is)
     {
-        ini_set('default_socket_timeout', URLTIMEOUT);
-        $this->data = new Data($year, $week);
+        $this->is = $is;
+        $this->metadata = new Metadata();
+        $this->semaines = [];
+
+        foreach ($is->getWeeksSelected() as $item)
+        {
+            $this->semaines[] = new Semaine($item[0], $item[1], $is->getOptions());
+        }
     }
 
     public function jsonSerialize()
     {
-        if ($this->ok) {
-            return [
-                "ade-online" => $this->ade_online,
-                "ok" => $this->ok,
-                "data" => $this->data
-            ];
-        } else {
-            return [
-                "ade-online" => $this->ade_online,
-                "ok" => $this->ok,
-                "data" => []
-            ];
-        }
+        return [
+            "metadata" => $this->metadata,
+            "semaines" => $this->semaines
+        ];
     }
 
     public function init()
     {
-        $this->ade_online = $this->test_url($this->data->get_url());
-        if (DISCARDADE) {
-            // Pour tester en cas d'offline
-            $this->ade_online = false;
+        $ok = true;
+        foreach ($this->semaines as $semaine)
+        {
+            $ok = $ok && $semaine->init($this->metadata->isAdeOnline());
         }
-
-        $this->ok = $this->data->init($this->ade_online);
-
-        return true;
-    }
-
-    /**
-     * Test url, returns true if online & working, false otherwise
-     * @param String $url the url to test
-     * @return bool       true if ADE online & working
-     */
-    private function test_url(String $url)
-    {
-        Commons::debug_section("test ade");
-        $headers = get_headers($url, 1)[0];
-        if (!$headers) {
-            Commons::debug_line("ADE offline ou connexion reset.");
-            $code = 500;
-        } else {
-            $code = explode(" ", $headers)[1];
-            Commons::debug_line("ADE online, code " . $code);
-        }
-
-        return (200 <= $code) && ($code < 400);
+        $this->metadata->setOk($ok);
     }
 }

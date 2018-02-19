@@ -17,6 +17,11 @@ export class Semaine {
    */
   year: number;
 
+  /**
+   * Date de dernière modification sur le serveur.
+   */
+  updated: any;
+
   /** Les jours de l'emploi du temps. */
   jours: Jour[];
 

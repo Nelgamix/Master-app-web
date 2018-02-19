@@ -17,7 +17,7 @@ class ADEICal
     {
         Commons::debug_section("Creation d'ical");
         $this->ical = new ICal();
-        $this->url = sprintf(URLADE, $debut, $fin);
+        $this->url = sprintf(ADEICALURL, $debut, $fin);
         Commons::debug_line("URL ADE formattée: " . $this->url);
     }
 
@@ -89,10 +89,13 @@ class ADEICal
 
     private function ajout_cours($event)
     {
-        try {
+        try
+        {
             $dtstart = $this->ical->iCalDateToDateTime($event->dtstart_array[3], true);
             $dtend = $this->ical->iCalDateToDateTime($event->dtend_array[3], true);
-        } catch (\ICal\Exception $e) {
+        }
+        catch (\ICal\Exception $e)
+        {
             Commons::debug_line("Exception ICal, dans ajout_cours. " . $e->getMessage());
         }
 
@@ -193,13 +196,15 @@ class ADEICal
         $this->stats = null;
         $total = new HoursDuration();
 
-        foreach ($this->cours as $cours) {
+        foreach ($this->cours as $cours)
+        {
             $total->add($cours->get_duree());
         }
 
         $moyenne_cours = clone $total;
         $n = count($this->cours);
-        if ($n > 0) {
+        if ($n > 0)
+        {
             $moyenne_cours->divide($n);
         }
 
