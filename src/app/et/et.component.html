@@ -38,7 +38,7 @@
       </div>
     </div>
 
-    <ng-container *ngIf="etService.metadata['ok']">
+    <ng-container *ngIf="etService.metadata['ok'] && semaine">
       <div class="row mb-2 pt-2 pb-2" id="head-title">
         <div class="col">
           <div class="row">
@@ -65,7 +65,7 @@
         </div>
       </div>
 
-      <div class="row mt-4" *ngIf="etService.emploiTemps.cours.length == 0; else elseBlock">
+      <div class="row mt-4" *ngIf="semaine.cours.length === 0; else elseBlock">
         <div class="col text-center">
           <h3>Aucun cours cette semaine.</h3>
         </div>
@@ -79,17 +79,17 @@
                 <h5>Statistiques</h5>
                 <div class="row">
                   <div class="col-12">
-                    <span class="stat-donnee">{{etService.emploiTemps.stats['duree'].value | duree}}</span> heures
+                    <span class="stat-donnee">{{semaine.stats['duree'].value | duree}}</span> heures
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-12">
-                    <span class="stat-donnee">{{etService.emploiTemps.stats['moyenneCours'].value | duree}}</span> heure(s) / cours
+                    <span class="stat-donnee">{{semaine.stats['moyenneCours'].value | duree}}</span> heure(s) / cours
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-12">
-                    <span class="stat-donnee">{{etService.emploiTemps.stats['moyenneJours'].value | duree}}</span> heures / jour
+                    <span class="stat-donnee">{{semaine.stats['moyenneJours'].value | duree}}</span> heures / jour
                   </div>
                 </div>
                 <div class="row">
@@ -128,10 +128,10 @@
             <h5>Début &amp; fin des cours</h5>
             <div class="row">
               <div class="col">
-                <div class="row" *ngFor="let j of etService.emploiTemps.jours">
+                <div class="row" *ngFor="let j of semaine.jours">
                   <ng-container *ngIf="j && j.duree.asMinutes() > 0 && j.premierCours && j.dernierCours">
                     <div class="col-6 text-center">
-                      <span class="stat-titre">{{j.nom}}</span>
+                      <span class="stat-titre text-capitalize">{{j.date | amDateFormat:'dddd'}}</span>
                     </div>
                     <div class="col-6 text-center">
                       <span class="stat-donnee">{{j.premierCours.debut | date: 'HH:mm'}} &rarr; {{j.dernierCours.fin | date: 'HH:mm'}}</span>

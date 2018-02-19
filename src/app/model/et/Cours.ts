@@ -98,7 +98,7 @@ export class Cours {
     this.sallesTypes = [];
 
     for (const p in o) {
-      if (o.hasOwnProperty(p)) {
+      if (o.hasOwnProperty(p) && o[p] !== null) {
         this[p] = o[p];
       }
     }

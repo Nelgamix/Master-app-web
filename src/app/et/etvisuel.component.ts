@@ -45,7 +45,7 @@ export class EtVisuelComponent implements OnInit {
     // Analyse et création des listes
     const js = [];
     for (let i = 0; i < this.legendeJours.length; i++) {
-      const j = this.et.emploiTemps.jours[i];
+      const j = this.et.emploiTemps.getSemaineUnique().jours[i];
       const lists = [];
       lists.push([]); // Liste initiale
       if (!j) {
@@ -87,7 +87,7 @@ export class EtVisuelComponent implements OnInit {
     this.jours = {};
     for (let i = 0; i < this.legendeJours.length; i++) {
       this.jours[i] = [];
-      if (this.et.emploiTemps.jours[i]) {
+      if (this.et.emploiTemps.getSemaineUnique().jours[i]) {
         for (const c of js[i][0]) {
           const debutConverti = (c.debut.hour() * 60 + c.debut.minute()) - this.legendeHeures.debut * 60;
           const dureeConvertie = c.duree.asMinutes();

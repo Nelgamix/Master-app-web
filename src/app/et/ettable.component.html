@@ -1,16 +1,16 @@
-<div class="row mb-3 jour" *ngFor="let j of et.emploiTemps.jours">
-  <ng-container *ngIf="j && j.cours.length > 0">
+<div class="row mb-3 jour" *ngFor="let j of semaine.jours">
+  <ng-container *ngIf="j.cours.length > 0">
     <div class="col-12">
       <div class="row titre">
         <div class="col-12">
-          <span class="jour-title-nom">{{j.nom}}</span> <span class="jour-title-date">{{j.date | amDateFormat:'D MMMM YYYY'}}</span>
+          <span class="jour-title-nom text-capitalize">{{j.date | amDateFormat:'dddd'}}</span> <span class="jour-title-date">{{j.date | amDateFormat:'D MMMM YYYY'}}</span>
         </div>
       </div>
       <div class="row stats mb-2" *ngIf="j.coursActifs.length > 0">
         <div class="col-12">
           <span class="jour-stats-duree">{{j.premierCours.debut | date: 'HH:mm'}}&rarr;{{j.dernierCours.fin | date: 'HH:mm'}} ({{j.duree | duree}})</span>
-          <ng-container *ngIf="(j.typesCount | objet).length > 0">
-            , <span *ngFor="let t of j.typesCount | objet; let i = index"><span *ngIf="i > 0">, </span><span class="jour-stats-type">{{t.value}}&nbsp;{{t.key}}</span></span>
+          <ng-container *ngIf="(j.types | objet).length > 0">
+            , <span *ngFor="let t of j.types | objet; let i = index"><span *ngIf="i > 0">, </span><span class="jour-stats-type">{{t.value}}&nbsp;{{t.key}}</span></span>
           </ng-container>
         </div>
       </div>

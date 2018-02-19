@@ -1,4 +1,4 @@
-import {Cours} from './cours';
+import {Cours} from './Cours';
 
 export class Exclusion {
   /**

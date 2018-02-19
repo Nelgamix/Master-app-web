@@ -1,18 +1,19 @@
 import {Injectable} from '@angular/core';
 
-import {EmploiTemps} from '../model/et/emploiTemps';
+import {EmploiTemps} from '../model/et/EmploiTemps';
 import {HttpClient} from '@angular/common/http';
 import * as moment from 'moment';
 import {GlobalVariable} from '../globals';
-import {Cours} from '../model/et/cours';
+import {Cours} from '../model/et/Cours';
 import {CookieService} from 'ngx-cookie-service';
-import {Exclusion} from '../model/et/exclusion';
+import {Exclusion} from '../model/et/Exclusion';
 
 @Injectable()
 export class EmploiTempsService {
   readonly exclusionsCookie = 'et-exclusions';
 
   metadata = {};
+
   emploiTemps: EmploiTemps;
   exclusions: Exclusion[];
 
@@ -26,9 +27,10 @@ export class EmploiTempsService {
               private cookiesService: CookieService) {
     this.observers = [];
     this.emploiTemps = new EmploiTemps();
+    this.initExclusionsFromCookies();
   }
 
-  initFromCookies(): Exclusion[] {
+  private initExclusionsFromCookies(): Exclusion[] {
     this.exclusions = [];
     if (this.cookiesService.check(this.exclusionsCookie)) {
       const eJson = JSON.parse(this.cookiesService.get(this.exclusionsCookie));
@@ -42,7 +44,7 @@ export class EmploiTempsService {
     return this.exclusions;
   }
 
-  sauvegardeCookies(exclusions: any): void {
+  private sauvegardeExclusionsToCookies(exclusions: any): void {
     this.cookiesService.set(this.exclusionsCookie, JSON.stringify(exclusions));
   }
 
@@ -56,7 +58,7 @@ export class EmploiTempsService {
     }
   }
 
-  loadData(data, cb): void {
+  private loadData(data: any, cb?: Function): void {
     this.metadata['adeOnline'] = data['ade-online'];
     this.metadata['ok'] = data['ok'];
 
@@ -66,7 +68,11 @@ export class EmploiTempsService {
       this.metadata['lastUpdated'] = moment(res['updated'], 'DD-MM-YYYY HH:mm');
       const cours = res['cours'];
 
-      this.emploiTemps.init(cours);
+      // Init cours
+      const coursInits = [];
+      cours.forEach(c => coursInits.push(Cours.initFromIcal(c)));
+
+      this.emploiTemps.addCours(coursInits);
       /*this.emploiTemps.addCours(new Cours({
         nom: 'TER',
         debut: moment('09/02/2018 09:00', 'DD-MM-YYYY HH:mm'),
@@ -78,16 +84,16 @@ export class EmploiTempsService {
       this.notifyObserver();
     }
 
-    if (cb && cb instanceof Function) {
-      cb();
-    }
+    if (cb) cb();
   }
 
-  updateData(date, cb) {
-    if (GlobalVariable.LOCAL_DEV) {
-      this.http.get('assets/offline/etServiceTest.json').subscribe(data => this.loadData(data, cb));
+  updateData(week: number, year: number, cb?: Function): void {
+    if (this.emploiTemps.addSemaine(week, year)) {
+      this.emploiTemps.selectSemaine(week, year);
+      this.http.get('php/ical.php?year=' + year + '&week=' + week).subscribe(data => this.loadData(data, cb));
     } else {
-      this.http.get('php/ical.php?year=' + date.year + '&week=' + date.week).subscribe(data => this.loadData(data, cb));
+      this.emploiTemps.selectSemaine(week, year);
+      if (cb) cb();
     }
   }
 
@@ -104,9 +110,9 @@ export class EmploiTempsService {
       }
     }
 
-    this.emploiTemps.filterExclusions(this.exclusions);
+    this.emploiTemps.applyExclusions(this.exclusions);
     this.analyse();
-    this.sauvegardeCookies(this.exclusions);
+    this.sauvegardeExclusionsToCookies(this.exclusions);
   }
 
   analyse(): void {
@@ -117,26 +123,28 @@ export class EmploiTempsService {
     this.prochainCours = null;
 
     // Calcule cours actuel, prochain cours
-    for (const j of this.emploiTemps.jours) {
-      if (j && j.coursActifs.length > 0) {
-        if (now.isBefore(j.premierCours.debut)) { // on est avant ce jour.
-          this.prochainCours = j.premierCours;
-          break;
-        } else if (now.isAfter(j.dernierCours.fin)) { // on est après ce jour.
-          continue;
-        } else { // on est dans ce jour: on doit trouver le bon cours.
-          for (const c of j.coursActifs) { // on parcours les cours
-            if (this.coursActuel === null && now.isBetween(c.debut, c.fin)) { // on a trouvé le cours actuel
-              this.coursActuel = c;
+    for (const s of this.emploiTemps.semainesSelectionnees) {
+      for (const j of s.jours) {
+        if (j && j.coursActifs.length > 0) {
+          if (now.isBefore(j.premierCours.debut)) { // on est avant ce jour.
+            this.prochainCours = j.premierCours;
+            break;
+          } else if (now.isAfter(j.dernierCours.fin)) { // on est après ce jour.
+            continue;
+          } else { // on est dans ce jour: on doit trouver le bon cours.
+            for (const c of j.coursActifs) { // on parcours les cours
+              if (this.coursActuel === null && now.isBetween(c.debut, c.fin)) { // on a trouvé le cours actuel
+                this.coursActuel = c;
+              }
+
+              if (now.isBefore(c.debut)) { // si le cours qu'on analyse est après now, alors c'est le cours d'avant qui est le plus proche.
+                this.prochainCours = c;
+                break;
+              }
             }
 
-            if (now.isBefore(c.debut)) { // si le cours qu'on analyse est après now, alors c'est le cours d'avant qui est le plus proche.
-              this.prochainCours = c;
-              break;
-            }
+            break;
           }
-
-          break;
         }
       }
     }

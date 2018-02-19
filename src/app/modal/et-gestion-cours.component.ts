@@ -1,6 +1,6 @@
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {Cours} from '../model/et/cours';
+import {Cours} from '../model/et/Cours';
 
 @Component({
   selector: 'app-modal-et-gestion-cours',

@@ -22,10 +22,10 @@ export class EmploiTempsInfoService {
 
   private sortData(data: any): void {
     data.sort((e1, e2) => {
-      const y1 = parseInt(e1['year']);
-      const y2 = parseInt(e2['year']);
-      const w1 = parseInt(e1['week']);
-      const w2 = parseInt(e2['week']);
+      const y1 = parseInt(e1['year'], 10);
+      const y2 = parseInt(e2['year'], 10);
+      const w1 = parseInt(e1['week'], 10);
+      const w2 = parseInt(e2['week'], 10);
 
       if (y1 < y2) return -1;
       if (y1 > y2) return 1;

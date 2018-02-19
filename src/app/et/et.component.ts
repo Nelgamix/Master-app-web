@@ -8,10 +8,11 @@ import {DatesService} from '../services/dates.service';
 
 import * as moment from 'moment';
 import {Component, OnInit} from '@angular/core';
-import {Exclusion} from '../model/et/exclusion';
+import {Exclusion} from '../model/et/Exclusion';
 import {ModalEtGestionCoursComponent} from '../modal/et-gestion-cours.component';
 import {ModalEtNotesComponent} from '../modal/et-notes.component';
 import {EmploiTempsInfoService} from '../services/emploi-temps-info.service';
+import {Semaine} from '../model/et/Semaine';
 
 @Component({
   selector: 'app-et-root',
@@ -26,6 +27,7 @@ export class EtComponent implements OnInit {
   weekProgress: number;
   search: string;
   info: boolean;
+  semaine: Semaine;
 
   chartData: any = [];
   colorScheme: any = {
@@ -38,11 +40,11 @@ export class EtComponent implements OnInit {
               private modalService: NgbModal) {
     this.search = '';
     this.info = false;
+    this.semaine = null;
   }
 
   ngOnInit(): void {
     this.getDates();
-    this.etService.initFromCookies();
   }
 
   /**
@@ -63,8 +65,9 @@ export class EtComponent implements OnInit {
   onChangeDate(date): void {
     this.loading = true;
     this.datesService.semaineSelectionnee = date;
-    this.etService.updateData(date, () => {
+    this.etService.updateData(date.week, date.year, () => {
       this.loading = false;
+      this.semaine = this.etService.emploiTemps.getSemaineUnique();
     });
     this.updateWeekProgress();
   }
@@ -83,7 +86,7 @@ export class EtComponent implements OnInit {
       professeur: [],
       salles: []
     };
-    for (const c of this.etService.emploiTemps.cours) {
+    for (const c of this.semaine.cours) {
       // Nom
       if (possibilites.nom.indexOf(c.nom) < 0) {
         possibilites.nom.push(c.nom);
@@ -117,8 +120,7 @@ export class EtComponent implements OnInit {
 
   openPersonnel() {
     const modalRef = this.modalService.open(ModalEtGestionCoursComponent, {size: 'lg'});
-    modalRef.componentInstance.cours = this.etService.emploiTemps.coursPrives;
-    /*modalRef.componentInstance.possibilites = possibilites;*/
+    /*modalRef.componentInstance.cours = this.etService.emploiTemps.coursPrives;*/
     modalRef.result.then(r => {
     }, r => {
     });
@@ -191,7 +193,7 @@ export class EtComponent implements OnInit {
 
   openStats() {
     const modalRef = this.modalService.open(ModalEtStatsComponent);
-    modalRef.componentInstance.stats = this.etService.emploiTemps.stats;
+    modalRef.componentInstance.stats = this.semaine.stats;
   }
 
   showInfo() {
