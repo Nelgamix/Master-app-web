@@ -1,19 +1,20 @@
 <div class="row mb-3 jour" *ngFor="let j of semaine.jours">
   <ng-container>
     <div class="col-12">
-      <div class="row titre">
-        <div class="col-12">
+      <div class="row">
+        <div class="col-12 col-md-auto">
           <span class="jour-title-nom text-capitalize">{{j.date | amDateFormat:'dddd'}}</span> <span class="jour-title-date">{{j.date | amDateFormat:'D MMMM YYYY'}}</span>
         </div>
-      </div>
-      <div class="row stats mb-2" *ngIf="j.coursActifs.length > 0">
-        <div class="col-12">
-          <span class="jour-stats-duree">{{j.premierCours.debut | date: 'HH:mm'}}&rarr;{{j.dernierCours.fin | date: 'HH:mm'}} ({{j.duree | duree}})</span>
-          <ng-container *ngIf="(j.types | objet).length > 0">
-            , <span *ngFor="let t of j.types | objet; let i = index"><span *ngIf="i > 0">, </span><span class="jour-stats-type">{{t.value}}&nbsp;{{t.key}}</span></span>
-          </ng-container>
+        <div class="col-12 col-md" *ngIf="j.coursActifs.length > 0">
+          <h5 class="d-inline-block float-right pt-2 mb-0">
+            <span class="jour-stats-duree">{{j.premierCours.debut | date: 'HH:mm'}}&rarr;{{j.dernierCours.fin | date: 'HH:mm'}} ({{j.duree | duree}})</span>
+            <ng-container *ngIf="(j.types | objet).length > 0">
+              <span *ngFor="let t of j.types | objet" class="jour-stats-type badge badge-warning">{{t.value}}&nbsp;{{t.key}}</span>
+            </ng-container>
+          </h5>
         </div>
       </div>
+
       <div class="row">
         <div class="col no-cours mt-1 mb-3" *ngIf="(j.coursActifs|coursfilter:search).length + (j.coursCaches|coursfilter:search).length === 0">
           Aucun cours.
@@ -21,7 +22,7 @@
         <div class="col-12">
           <div class="row" *ngFor="let cours of j.cours | coursfilter:search">
             <div class="col-12" [class.cache]="cours.cache" [class.supprime]="cours.supprime">
-              <div class="row cours" [class.td]="cours.type[0] == 'TD'" [class.tp]="cours.type[0] == 'TP'" [class.cm]="cours.type[0] == 'CM'">
+              <div class="row cours" [class.td]="cours.type[0] == 'TD'" [class.tp]="cours.type[0] == 'TP'" [class.cm]="cours.type[0] == 'CM'" ngbTooltip="{{cours.description}}">
                 <div *ngIf="!cours.cache" style="position: absolute; left: 10px; z-index: 10;">
                   <span (click)="et.exclure(cours)" style="color: white; padding: 0 6px; font-weight: bold">X</span>
                 </div>

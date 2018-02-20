@@ -2,19 +2,21 @@
   <ng-container *ngIf="!info">
     <div class="row mb-2">
       <div class="col-md-7 col-sm-12">
-        <span class="align-middle ade-status" *ngIf="etService.metadata['ok']" style="color: green;">OK</span>
-        <span class="align-middle ade-status" *ngIf="!etService.metadata['ok']" style="color: red;">NON OK</span>
+        <h4 class="h-100">
+          <span class="align-middle badge badge-success" *ngIf="etService.metadata['ok']">OK</span>
+          <span class="align-middle badge badge-danger" *ngIf="!etService.metadata['ok']">KO</span>
 
-        <span class="align-middle ade-status" *ngIf="etService.metadata['adeOnline']" style="color: green;">ADE est en ligne!</span>
-        <span class="align-middle ade-status" *ngIf="!etService.metadata['adeOnline']" style="color: red;">ADE est hors-ligne!</span>
+          <span class="align-middle badge badge-success" *ngIf="etService.metadata['adeOnline']">ADE OK</span>
+          <span class="align-middle badge badge-danger" *ngIf="!etService.metadata['adeOnline']">ADE HS</span>
 
-        <span class="align-middle last-updated" *ngIf="semaine">Dernière mise à jour <b>{{semaine.updated | amTimeAgo}}</b></span>
+          <span class="align-middle" style="font-size: 75%;" *ngIf="semaine">Dernière mise à jour <b>{{semaine.updated | amTimeAgo}}</b></span>
+        </h4>
       </div>
       <div class="col-md-5 col-sm-12">
         <div class="form-row" id="form-selection-date">
           <div class="col-auto">
-            <button class="btn btn-danger mr-2" (click)="nowWeek()">&#8630;</button>
-            <button class="btn btn-secondary" (click)="previousWeek()">&lArr;</button>
+            <button class="btn btn-danger mr-2" (click)="nowWeek()" placement="bottom" ngbTooltip="Revenir à la semaine actuelle">&#8630;</button>
+            <button class="btn btn-secondary" (click)="previousWeek()" placement="bottom" ngbTooltip="Semaine précédente">&lArr;</button>
           </div>
           <div class="col-auto">
             <select [(ngModel)]="selectedDate" (ngModelChange)="onChangeDate($event)" class="custom-select form-control" name="selDate" id="selDate">
@@ -22,10 +24,10 @@
             </select>
           </div>
           <div class="col-auto">
-            <button class="btn btn-secondary" (click)="nextWeek()">&rArr;</button>
+            <button class="btn btn-secondary" (click)="nextWeek()" placement="bottom" ngbTooltip="Semaine suivante">&rArr;</button>
           </div>
           <div class="col-auto">
-            <button class="btn btn-info" (click)="showInfo()">&#8693;</button>
+            <button class="btn btn-info" (click)="showInfo()" placement="bottom" ngbTooltip="Informations générales">&#8693;</button>
           </div>
           <!--<div class="col-auto">
             <button class="btn btn-danger" (click)="test()">D</button>
@@ -46,8 +48,8 @@
         <div class="col">
           <div class="row">
             <div class="col h3 week-header mb-1">
-              Semaine <span class="text-info">{{datesService.semaineSelectionnee.week}}</span>,
-              du <span class="text-primary">{{datesService.semaineSelectionnee.debut | amDateFormat:'D MMMM YYYY'}}</span>
+              Semaine <span class="text-danger">{{datesService.semaineSelectionnee.week}}</span>,
+              du <span class="text-warning">{{datesService.semaineSelectionnee.debut | amDateFormat:'D MMMM YYYY'}}</span>
               au <span class="text-primary">{{datesService.semaineSelectionnee.fin | amDateFormat:'D MMMM YYYY'}}</span>
             </div>
           </div>
@@ -62,7 +64,7 @@
 
           <div class="row">
             <div class="col">
-              <ngb-progressbar type="info" [value]="weekProgress" [striped]="true"><b>{{weekProgress | number:'1.0-1'}}%</b></ngb-progressbar>
+              <ngb-progressbar id="progress-main" type="{{weekProgress < 100 ? 'primary' : 'success'}}" [value]="weekProgress" [striped]="true"><b>{{weekProgress | number:'1.0-1'}}%</b></ngb-progressbar>
             </div>
           </div>
         </div>
@@ -70,7 +72,7 @@
 
       <div class="row mt-4" *ngIf="semaine.cours.length === 0; else elseBlock">
         <div class="col text-center">
-          <h3>Aucun cours cette semaine.</h3>
+          <h3 style="margin: 20px 0 30px 0">Aucun cours cette semaine.</h3>
         </div>
       </div>
 

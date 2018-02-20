@@ -5,8 +5,11 @@ select:hover, .btn:hover {
 #head-title {
   border-top: 1px solid grey;
   border-bottom: 1px solid grey;
-  box-shadow: 0 0 4px grey;
-  background-color: rgba(0, 0, 0, .1);
+  box-shadow: 0 0 8px grey;
+  /*background-color: rgba(0, 0, 0, .1);*/
+  background-image: url(assets/line_angle_light_shadow.jpg);
+  background-size: cover;
+  color: white;
 }
 
 .btn.img-text > img {
@@ -52,19 +55,8 @@ select:hover, .btn:hover {
 
 .heading {
   box-shadow: 0 0 6px grey;
-  /*margin: 20px;*/
   padding: 12px;
-  background-color: rgba(0, 127, 255, .02);
-}
-
-.ade-status {
-  font-size: 110%;
-  margin-right: 10px;
-  margin-left: 6px;
-}
-
-.last-updated {
-  font-size: 105%;
+  background-color: rgba(0, 0, 0, .04);
 }
 
 .demo-td {
