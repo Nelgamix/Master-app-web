@@ -53,7 +53,7 @@ export class EtVisuelComponent implements OnInit {
         continue;
       }
 
-      for (const c of j.cours) {
+      for (const c of j.setCours.getCours()) {
         if (c.supprime) {
           continue;
         }

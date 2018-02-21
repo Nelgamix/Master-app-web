@@ -1,0 +1,112 @@
+<button class="btn btn-dark float-left" (click)="close()">&larr;</button>
+<h2 class="text-center">Informations sur l'emploi du temps</h2>
+<div class="alert alert-light">
+  Cette page contient des informations sur l'emploi du temps, ainsi qu'un récapitulatif de ce qui est sauvegardé
+  en base de donnée et des stats. <br>
+  Ce contenu va s'enrichir au fil du temps.
+</div>
+<div class="row">
+  <div class="col p-0" style="height: 300px">
+    <ngx-charts-line-chart
+      [scheme]="colorScheme"
+      [results]="chartData"
+      [xAxis]="true"
+      [yAxis]="true"
+      [showXAxisLabel]="true"
+      [showYAxisLabel]="true"
+      [xAxisLabel]="'Semaines'"
+      [yAxisLabel]="'Nombre de cours'">
+    </ngx-charts-line-chart>
+  </div>
+</div>
+<ng-container *ngFor="let s of etService.emploiTemps.semainesSelectionnees">
+  <hr>
+  <div class="row mb-3">
+    <div class="col">
+      <div class="row">
+        <div class="col">
+          <h4>
+            <img src="assets/icons_perso/drawing2past.svg" alt="Passé" class="indicateur-gauche-relative" width="24" height="24" *ngIf="s.positionTemps === PositionTemps.PASSE">
+            <img src="assets/icons_perso/drawing1present.svg" alt="Présent" class="indicateur-gauche-relative" width="24" height="24" *ngIf="s.positionTemps === PositionTemps.PRESENT">
+            <img src="assets/icons_perso/drawing3futur.svg" alt="Futur" class="indicateur-gauche-relative" width="24" height="24" *ngIf="s.positionTemps === PositionTemps.FUTUR">
+            Semaine {{s.week}} de {{s.year}} <small class="text-muted">du {{s.premierJour.date | amDateFormat:'D MMMM YYYY'}} au {{s.dernierJour.date | amDateFormat:'D MMMM YYYY'}}</small>
+          </h4>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12 col-md">
+          <b>Mis à jour le</b> {{s.updated | amDateFormat:'D MMMM YYYY HH:mm'}}
+        </div>
+        <div class="col-12 col-md">
+          <b>Nombre d'heures sans conflits</b>: {{s.setCours.duree | duree}}
+        </div>
+        <div class="col-12 col-md">
+          <b>Nombre d'heures au total</b>: {{s.setCours.dureeTotale | duree}}
+        </div>
+      </div>
+
+      <ng-container *ngIf="!s.setCours.estVide()">
+        <div class="row">
+          <div class="col-12 col-md">
+            <b>Nombre de cours</b>: {{s.setCours.getTaille()}}
+          </div>
+          <div class="col-12 col-md">
+            <b>Moyenne par jour</b>: {{s.setCours.moyenneParJour | duree}}
+          </div>
+          <div class="col-12 col-md">
+            <b>Moyenne par cours</b>: {{s.setCours.moyenneParCours | duree}}
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12 col-md">
+            <b>Nombre de cours actifs</b>: {{s.setCours.coursActifs.length}}
+          </div>
+          <div class="col-12 col-md">
+            <b>Nombre de cours cachés</b>: {{s.setCours.coursCaches.length}}
+          </div>
+          <div class="col-12 col-md">
+            <b>Nombre de cours supprimés</b>: {{s.setCours.coursSupprimes.length}}
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12 col-md">
+            <b>Nombre de cours privés</b>: {{s.setCours.coursPrives.length}}
+          </div>
+          <div class="col-12 col-md">
+            <b>Nombre de cours passés</b>: {{s.setCours.coursPasses.length}}
+          </div>
+          <div class="col-12 col-md">
+            <b>Nombre de cours futurs</b>: {{s.setCours.coursFuturs.length}}
+          </div>
+        </div>
+
+        <div class="row" *ngFor="let t of ['noms', 'professeurs', 'salles', 'types']; let i = index">
+          <div class="col">
+            <h5><span class="text-capitalize">{{t}}</span> présent(e)s</h5>
+            <div class="row">
+              <div class="col-12 col-md-6 col-lg-3 text-truncate" *ngFor="let e of getData(s, t)">
+            <span
+              class="font-weight-bold"
+              [class.text-primary]="i === 0"
+              [class.text-info]="i === 1"
+              [class.text-warning]="i === 2"
+              [class.text-danger]="i === 3">
+              {{e.value}}
+            </span>
+                {{e.key}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+      <div class="row" *ngIf="s.setCours.estVide()">
+        <div class="col text-center">
+          <img src="assets/icons_perso/drawing4empty.svg" alt="Vide" width="80" height="80" class="my-3">
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

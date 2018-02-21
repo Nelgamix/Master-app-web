@@ -1,35 +1,44 @@
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import * as moment from 'moment';
 import {Duree} from '../pipes/duree.pipe';
+import {colorSets} from '@swimlane/ngx-charts/release/utils';
 
 @Component({
   selector: 'app-modal-et-stats',
   templateUrl: './et-stats.component.html'
 })
-export class ModalEtStatsComponent {
-  @Input() stats: any[];
+export class ModalEtStatsComponent implements OnInit {
+  @Input() stats: any;
+
+  data: any[] = [];
+  colorScheme: any = colorSets.find(s => s.name === 'vivid');
 
   constructor(public activeModal: NgbActiveModal) {
+  }
+
+  ngOnInit() {
+    for (const j of this.stats.jours.data) {
+      this.data.push({
+        name: j.date.format('dddd'),
+        value: j.cours.length
+      });
+    }
   }
 
   toString(val): string {
     if (!val) {
       return 'Invalid';
-    }
-
-    if (typeof val === 'string') {
+    } else if (typeof val === 'string') {
       return val;
-    }
-
-    if (typeof val === 'number') {
+    } else if (typeof val === 'number') {
       return val.toString();
-    }
-
-    if (moment.isDuration(val)) {
+    } else if (Array.isArray(val)) {
+      return 'Array (' + val.length + ')'/*JSON.stringify(val)*/;
+    } else if (moment.isDuration(val)) {
       return new Duree().transform(val);
+    } else {
+      return 'Unrecognized: ' + typeof val;
     }
-
-    return 'Unrecognized (' + typeof val + ')';
   }
 }

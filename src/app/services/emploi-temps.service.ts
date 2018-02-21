@@ -44,16 +44,6 @@ export class EmploiTempsService {
   coursPersos: CoursPerso[];
 
   /**
-   * Cours actuellement en cours.
-   */
-  coursActuel: Cours;
-
-  /**
-   * Prochain cours qui arrive.
-   */
-  prochainCours: Cours;
-
-  /**
    * Countdown avant le prochain cours.
    */
   prochainCoursTimer: any;
@@ -73,6 +63,7 @@ export class EmploiTempsService {
     this.observers = [];
     this.analyseDisabled = false;
     this.emploiTemps = new EmploiTemps();
+
     this.initExclusionsFromCookies();
     this.initCoursPersoFromCookies();
   }
@@ -111,12 +102,8 @@ export class EmploiTempsService {
     this.http.get('php/ical.php?info').subscribe(data => this.loadData(data, cb));
   }
 
-  /**
-   * Exclure strictement le cours cours, puis filtrer les cours.
-   * @param {Cours} cours le cours à exclure de l'emploi du temps.
-   */
-  exclure(cours: Cours): void {
-    this.exclusions.push(new Exclusion('', cours.nom, '', '', true, false));
+  exclure(exclusion: Exclusion): void {
+    this.exclusions.push(exclusion);
     this.filterExclusions(this.exclusions);
   }
 
@@ -132,7 +119,7 @@ export class EmploiTempsService {
       }
     }
 
-    this.emploiTemps.applyExclusions(this.exclusions);
+    const total = this.emploiTemps.applyExclusions(this.exclusions);
     this.analyse();
     this.sauvegardeExclusionsToCookies();
   }
@@ -154,43 +141,17 @@ export class EmploiTempsService {
    * Analyse l'ensemble des semaines sélectionnées.
    */
   analyse(): void {
-    if (this.analyseDisabled) return;
+    if (this.analyseDisabled) {
+      return;
+    }
 
     this.emploiTemps.analyse();
 
     const now = moment();
-    this.coursActuel = null;
-    this.prochainCours = null;
 
-    // Calcule cours actuel, prochain cours
-    for (const s of this.emploiTemps.semainesSelectionnees) {
-      for (const j of s.jours) {
-        if (j.coursActifs.length > 0) {
-          if (now.isBefore(j.premierCours.debut)) { // on est avant ce jour.
-            this.prochainCours = j.premierCours;
-            break;
-          } else if (now.isAfter(j.dernierCours.fin)) { // on est après ce jour.
-            continue;
-          } else { // on est dans ce jour: on doit trouver le bon cours.
-            for (const c of j.coursActifs) { // on parcours les cours
-              if (this.coursActuel === null && now.isBetween(c.debut, c.fin)) { // on a trouvé le cours actuel
-                this.coursActuel = c;
-              }
-
-              if (now.isBefore(c.debut)) { // si le cours qu'on analyse est après now, alors c'est le cours d'avant qui est le plus proche.
-                this.prochainCours = c;
-                break;
-              }
-            }
-
-            break;
-          }
-        }
-      }
-    }
-
-    if (this.prochainCours !== null) {
-      this.prochainCoursTimer = moment.duration(now.diff(this.prochainCours.debut));
+    // TODO
+    if (this.emploiTemps.getSemaineUnique().setCours.coursSuivant) {
+      this.prochainCoursTimer = moment.duration(now.diff(this.emploiTemps.getSemaineUnique().setCours.coursSuivant.debut));
     }
   }
 
@@ -287,25 +248,23 @@ export class EmploiTempsService {
       const sts = []; // semaines to select (semaine qui vont être sélectionnées à la fin)
 
       // pour chaque semaine
-      semaines.forEach(s => {
+      for (const s of semaines) {
         const w = parseInt(s['week'], 10);
         const y = parseInt(s['year'], 10);
         const u = s['updated'];
         const cs = s['cours'];
 
-        let so;
-        if (this.emploiTemps.addSemaine(w, y)) {
-          so = this.emploiTemps.trouverSemaine(w, y);
+        const added = this.emploiTemps.addSemaine(w, y);
+        const so = this.emploiTemps.trouverSemaine(w, y);
+        if (added) {
           so.updated = moment(u, 'DD-MM-YYYY HH:mm');
           const coursInits = [];
           cs.forEach(c => coursInits.push(Cours.initFromIcal(c)));
           so.addAllCours(coursInits);
-        } else {
-          so = this.emploiTemps.trouverSemaine(w, y);
         }
 
         sts.push(so);
-      });
+      }
 
       this.emploiTemps.selectMultipleSemaines(sts);
 

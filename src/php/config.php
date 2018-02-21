@@ -2,7 +2,7 @@
 
 // Partie commune
 define("DEBUG", false); // print debug messages
-define("DEBUGWEB", false); // if debug = true, then all debug messages will be formatted as html
+define("DEBUGWEB", false); // if debugweb = true, then all debug messages will be formatted as html
 define("TRUEOUTPUT", true); // show final result?
 define("LOCAL", true); // local installation?
 

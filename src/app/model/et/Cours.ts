@@ -1,3 +1,4 @@
+import {PositionTemps} from './PositionTemps';
 import * as moment from 'moment';
 
 /**
@@ -67,7 +68,7 @@ export class Cours {
   fin: any;
 
   /**
-   * Durée du cours: fin - début.
+   * Durée du cours: fin - début. Sous forme de moment.duration().
    */
   duree: any;
 
@@ -80,6 +81,11 @@ export class Cours {
    * Représente le fait que le cours soit supprimé par l'utilisateur.
    */
   supprime: boolean;
+
+  /**
+   * Donne la position dans le temps par rapport au moment de l'analyse.
+   */
+  positionTemps: PositionTemps;
 
   constructor(o: any) {
     // On check les pré-requis
@@ -105,6 +111,7 @@ export class Cours {
 
     this.cache = false;
     this.supprime = false;
+    this.positionTemps = PositionTemps.INDEFINI;
     this.prive = this.prive || true;
     this.duree = moment.duration(this.fin.diff(this.debut));
 
@@ -189,6 +196,16 @@ export class Cours {
     }
 
     return [salles, salles_types];
+  }
+
+  analysePositionTemps(now: any): void {
+    this.positionTemps = (this.fin.isBefore(now) ?
+      PositionTemps.PASSE :
+      (this.debut.isAfter(now) ?
+        PositionTemps.FUTUR :
+        PositionTemps.PRESENT
+      )
+    );
   }
 
   private calculeHash(): boolean {

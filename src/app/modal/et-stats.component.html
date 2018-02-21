@@ -5,12 +5,26 @@
   </button>
 </div>
 <div class="modal-body">
+  <div class="row">
+    <div class="col p-0">
+      <ngx-charts-bar-vertical
+        [scheme]="colorScheme"
+        [results]="data"
+        [xAxis]="true"
+        [yAxis]="true"
+        [showXAxisLabel]="true"
+        [showYAxisLabel]="true"
+        [xAxisLabel]="'Jours'"
+        [yAxisLabel]="'Nombre de cours'">
+      </ngx-charts-bar-vertical>
+    </div>
+  </div>
   <div class="row" *ngFor="let s of stats | objet">
     <div class="col-8">
-      <b>{{s.value.title}}</b>
+      <b>{{s.value.description}}</b>
     </div>
     <div class="col-4">
-      {{toString(s.value.value)}}
+      {{toString(s.value.data)}}
     </div>
   </div>
 </div>

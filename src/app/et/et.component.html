@@ -44,7 +44,7 @@
     </div>
 
     <ng-container *ngIf="etService.metadata['ok'] && semaine">
-      <div class="row mb-2 pt-2 pb-2" id="head-title">
+      <div class="row pt-2 pb-2" id="head-title">
         <div class="col">
           <div class="row">
             <div class="col h3 week-header mb-1">
@@ -64,37 +64,39 @@
 
           <div class="row">
             <div class="col">
-              <ngb-progressbar id="progress-main" type="{{weekProgress < 100 ? 'primary' : 'success'}}" [value]="weekProgress" [striped]="true"><b>{{weekProgress | number:'1.0-1'}}%</b></ngb-progressbar>
+              <ngb-progressbar id="progress-main" type="{{weekProgress < 100 ? 'primary' : 'success'}}" [value]="weekProgress" [striped]="true" [animated]="true">
+                <b>{{weekProgress | number:'1.0-1'}}%</b>
+              </ngb-progressbar>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="row mt-4" *ngIf="semaine.cours.length === 0; else elseBlock">
+      <div class="row mt-4" *ngIf="semaine.setCours.estVide(); else elseBlock">
         <div class="col text-center">
-          <h3 style="margin: 20px 0 30px 0">Aucun cours cette semaine.</h3>
+          <img src="assets/icons_perso/drawing4empty.svg" alt="Empty" class="m-5" width="120" height="120">
         </div>
       </div>
 
       <ng-template #elseBlock>
         <div class="row">
-          <div class="col-md-7 col-sm-12 heading m-3">
+          <div class="col-12 col-md-auto heading m-md-3">
             <div class="row">
-              <div class="col-md-4 col-sm-12 mb-3 mb-md-0">
+              <div class="col mb-3 mb-md-0">
                 <h5>Statistiques</h5>
                 <div class="row">
                   <div class="col-12">
-                    <span class="stat-donnee">{{semaine.stats['duree'].value | duree}}</span> heures
+                    <span class="stat-donnee">{{semaine.stats['duree'].data | duree}}</span> heures
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-12">
-                    <span class="stat-donnee">{{semaine.stats['moyenneCours'].value | duree}}</span> heure(s) / cours
+                    <span class="stat-donnee">{{semaine.stats['moyenneParCours'].data | duree}}</span> heure(s) / cours
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-12">
-                    <span class="stat-donnee">{{semaine.stats['moyenneJours'].value | duree}}</span> heures / jour
+                    <span class="stat-donnee">{{semaine.stats['moyenneParJour'].data | duree}}</span> heures / jour
                   </div>
                 </div>
                 <div class="row">
@@ -103,57 +105,57 @@
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
 
-              <div class="col-md-8 col-sm-12 mb-2">
-                <h5>Exclusions</h5>
-                <div class="row" *ngFor="let e of (etService.exclusions ? etService.exclusions.slice(0, 5) : [])">
-                  <div class="col-12">
-                    <span *ngIf="e.supprimer"><i>[caché]</i></span>
-                    <span *ngIf="e.type.length > 0"><b>Type</b>: {{e.type}}</span>
-                    <span *ngIf="e.nom.length > 0"><b>Nom</b>: {{e.nom}}</span>
-                    <span *ngIf="e.professeur.length > 0"><b>Prof.</b>: {{e.professeur}}</span>
-                    <span *ngIf="e.salle.length > 0"><b>Salle</b>: {{e.salle}}</span>
-                  </div>
-                </div>
-                <div class="row" *ngIf="etService.exclusions.length > 5">
-                  <div class="col-12">
-                    + <b>{{etService.exclusions.length - 5}}</b> éléments
-                  </div>
-                </div>
-                <div class="row mt-2">
-                  <div class="col">
-                    <button class="btn btn-warning take-width" (click)="openExclusions()"><img src="assets/icons/pencil.png" alt="Configurer"></button>
-                  </div>
-                </div>
+          <div class="col-12 col-md heading m-md-3">
+            <h5>Exclusions</h5>
+            <div class="row" *ngFor="let e of (etService.exclusions ? etService.exclusions.slice(0, 5) : [])">
+              <div class="col-12">
+                <span *ngIf="e.supprimer"><i>[caché]</i></span>
+                <span *ngIf="e.type.length > 0"><b>Type</b>: {{e.type}}</span>
+                <span *ngIf="e.nom.length > 0"><b>Nom</b>: {{e.nom}}</span>
+                <span *ngIf="e.professeur.length > 0"><b>Prof.</b>: {{e.professeur}}</span>
+                <span *ngIf="e.salle.length > 0"><b>Salle</b>: {{e.salle}}</span>
+              </div>
+            </div>
+            <div class="row" *ngIf="etService.exclusions.length > 5">
+              <div class="col-12">
+                + <b>{{etService.exclusions.length - 5}}</b> éléments
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col">
+                <button class="btn btn-warning take-width" (click)="openExclusions()"><img src="assets/icons/pencil.png" alt="Configurer"></button>
               </div>
             </div>
           </div>
 
-          <div class="col heading m-3">
+          <div class="col-12 col-md-4 heading m-md-3">
             <h5>Début &amp; fin des cours</h5>
             <div class="row">
               <div class="col">
                 <div class="row" *ngFor="let j of semaine.jours">
-                  <ng-container *ngIf="j && j.duree.asMinutes() > 0 && j.premierCours && j.dernierCours">
+                  <ng-container *ngIf="!j.setCoursActifs.estVide()">
                     <div class="col-6 text-center">
                       <span class="stat-titre text-capitalize">{{j.date | amDateFormat:'dddd'}}</span>
                     </div>
                     <div class="col-6 text-center">
-                      <span class="stat-donnee">{{j.premierCours.debut | date: 'HH:mm'}} &rarr; {{j.dernierCours.fin | date: 'HH:mm'}}</span>
+                      <span class="stat-donnee">{{j.setCoursActifs.premierCours.debut | date: 'HH:mm'}} &rarr; {{j.setCoursActifs.dernierCours.fin | date: 'HH:mm'}}</span>
                     </div>
                   </ng-container>
                 </div>
               </div>
             </div>
-            <hr *ngIf="etService.coursActuel || etService.prochainCours">
+            <hr *ngIf="semaine.setCours.coursActuel || semaine.setCours.coursSuivant">
             <div class="row">
               <div class="col">
                 <dl>
-                  <dt *ngIf="etService.coursActuel">Cours actuel</dt>
-                  <dd *ngIf="etService.coursActuel"><b>{{etService.coursActuel.nom}}</b> en <span class="font-italic" *ngFor="let s of etService.coursActuel.salles">{{s.batiment}} {{s.salle}}</span></dd>
+                  <dt *ngIf="semaine.setCours.coursActuel">Cours actuel</dt>
+                  <dd *ngIf="semaine.setCours.coursActuel"><b>{{semaine.setCours.coursActuel.nom}}</b> en <span class="font-italic" *ngFor="let s of semaine.setCours.coursActuel.salles">{{s.batiment}} {{s.salle}}</span></dd>
 
-                  <dt *ngIf="etService.prochainCours">Cours suivant <span style="font-size: 75%; color: gray">dans {{etService.prochainCoursTimer | amDuration:'milliseconds'}}</span></dt>
-                  <dd *ngIf="etService.prochainCours"><b>{{etService.prochainCours.nom}}</b> en <span class="font-italic" *ngFor="let s of etService.prochainCours.salles">{{s.batiment}} {{s.salle}}</span></dd>
+                  <dt *ngIf="semaine.setCours.coursSuivant">Cours suivant <span style="font-size: 75%; color: gray">dans {{etService.prochainCoursTimer | amDuration:'milliseconds'}}</span></dt>
+                  <dd *ngIf="semaine.setCours.coursSuivant"><b>{{semaine.setCours.coursSuivant.nom}}</b> en <span class="font-italic" *ngFor="let s of semaine.setCours.coursSuivant.salles">{{s.batiment}} {{s.salle}}</span></dd>
                 </dl>
               </div>
             </div>
@@ -198,48 +200,9 @@
       </ng-template>
     </ng-container>
   </ng-container>
-  <ng-container *ngIf="info">
-    <button class="btn btn-dark float-left" (click)="info = false">&larr;</button>
-    <h2 class="text-center">Informations sur l'emploi du temps</h2>
-    <div class="alert alert-light">
-      Cette page contient des informations sur l'emploi du temps, ainsi qu'un récapitulatif de ce qui est sauvegardé
-      en base de donnée et des stats. <br>
-      Ce contenu va s'enrichir au fil du temps.
-    </div>
-    <div class="row">
-      <div class="col p-0" style="height: 300px">
-        <ngx-charts-line-chart
-          [scheme]="colorScheme"
-          [results]="chartData"
-          [xAxis]="true"
-          [yAxis]="true"
-          [showXAxisLabel]="true"
-          [showYAxisLabel]="true"
-          [xAxisLabel]="'Semaines'"
-          [yAxisLabel]="'Nombre de cours'">
-        </ngx-charts-line-chart>
-      </div>
-    </div>
-    <div class="row mb-3" *ngFor="let s of etService.emploiTemps.semainesSelectionnees">
-      <div class="col">
-        <div class="row">
-          <div class="col">
-            <h4>Semaine {{s.week}} de {{s.year}}</h4>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <b>Mis à jour le</b> {{s.updated | amDateFormat:'D MMMM YYYY HH:mm'}}
-          </div>
-          <div class="col">
-            <b>Stats auto-calculés</b>: <!--{{s.stats === null ? 'Aucune' : 'Oui, ' + (s.stats | objet).length}}-->
-          </div>
-          <div class="col">
-            <b>Nombre de cours</b>: {{s.cours.length}}
-          </div>
-        </div>
-      </div>
-    </div>
+
+  <ng-container>
+    <app-etinfo *ngIf="info" (onClose)="closeInfo()"></app-etinfo>
   </ng-container>
 </div>
 

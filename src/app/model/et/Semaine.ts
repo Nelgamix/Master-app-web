@@ -1,7 +1,9 @@
 import {Jour} from './Jour';
 import {Exclusion} from './Exclusion';
 import {Cours} from './Cours';
+import {SetCours} from './SetCours';
 import * as moment from 'moment';
+import {PositionTemps} from './PositionTemps';
 
 /**
  * Représente une semaine dans l'emploi du temps.
@@ -22,14 +24,16 @@ export class Semaine {
    */
   updated: any;
 
-  /** Les jours de l'emploi du temps. */
+  /**
+   * Les jours de l'emploi du temps.
+   */
   jours: Jour[];
 
   /**
    * L'ensemble des cours dans la semaine.
    * Il contient donc tous les cours de chaque jour de la semaine.
    */
-  cours: Cours[];
+  setCours: SetCours;
 
   /**
    * Le premier jour de la semaine (Lundi) sous forme de moment()
@@ -46,12 +50,15 @@ export class Semaine {
    */
   stats: any;
 
+  positionTemps: PositionTemps;
+
   constructor(week: number, year: number) {
     const wd = Semaine.getWeekDays(week, year); // Week days
 
     // On créé les jours
     this.week = week;
     this.year = year;
+    this.positionTemps = PositionTemps.INDEFINI;
     this.jours = [];
     for (const d of wd) {
       this.jours.push(new Jour(d));
@@ -87,15 +94,16 @@ export class Semaine {
    * Analyse la semaine.
    */
   analyse(): void {
-    for (const j of this.jours) {
-      j.analyse();
-    }
+    this.jours.forEach(j => j.analyse());
 
     this.analysePremierJour();
     this.analyseDernierJour();
 
+    this.analysePositionTemps();
+
     this.analyseCours();
-    this.analyseStats();
+    this.setCours.analyse();
+    this.stats = this.setCours.getStats();
   }
 
   /**
@@ -116,7 +124,8 @@ export class Semaine {
     for (const j of this.jours) {
       if (d.isSame(j.debutJour)) {
         // Le bon jour
-        if (success = j.addCours(cours)) {
+        if (success = (j.setCours.getTaille() === j.addCours(cours) - 1)) {
+          this.setCours.addCours(cours);
           break;
         }
       }
@@ -150,7 +159,7 @@ export class Semaine {
     let total = 0;
 
     // Obligé: si il n'y a pas d'exclusion, alors les cours ne sont jamais reset
-    for (const c of this.cours) {
+    for (const c of this.setCours.cours) {
       c.cache = false;
       c.supprime = false;
     }
@@ -158,10 +167,24 @@ export class Semaine {
     // Filtrage
     for (const e of exclusions) {
       e.count = 0;
-      total += e.testePlusieursCours(this.cours);
+      total += e.testePlusieursCours(this.setCours.cours);
     }
 
     return total;
+  }
+
+  private analysePositionTemps(): void {
+    const now = moment();
+
+    this.positionTemps = (this.dernierJour.finJour.isBefore(now) ?
+        PositionTemps.PASSE :
+        (this.premierJour.debutJour.isAfter(now) ?
+            PositionTemps.FUTUR :
+            PositionTemps.PRESENT
+        )
+    );
+
+    this.jours.forEach(j => j.analysePositionTemps(now));
   }
 
   /**
@@ -184,65 +207,9 @@ export class Semaine {
    * Met à jour la variable cours de la semaine en y ajoutant tous les cours de chaque jour.
    * @returns {Cours[]} la liste des cours de la semaine.
    */
-  private analyseCours(): Cours[] {
+  private analyseCours(): SetCours {
     let ac = [];
-    this.jours.forEach(j => ac = ac.concat(j.cours));
-    return (this.cours = ac);
-  }
-
-  /**
-   * Analyse quelques stats pour la semaine.
-   * @returns {any} des stats.
-   */
-  private analyseStats(): any {
-    const stats = {};
-
-    // Declarations
-    const duree = moment.duration(0); // Nombre d'heures total
-    const types = [];
-    let moyenneCours; // Moyenne de la durée d'un cours
-    let moyenneJours; // Moyenne d'heure de cours par jour
-    let nombreCours = 0;
-    let nombreJours = 0;
-
-    // Pré-traitement
-    // rien
-
-    // Traitement
-    for (const j of this.jours) {
-      if (j && j.coursActifs.length > 0) {
-        nombreJours++;
-        nombreCours += j.coursActifs.length;
-        duree.add(j.duree);
-        for (const t in j.types) {
-          if (j.types.hasOwnProperty(t) && types.hasOwnProperty(t)) {
-            types[t] += j.types[t];
-          } else {
-            types[t] = j.types[t];
-          }
-        }
-      }
-    }
-
-    // Post-traitement
-    moyenneCours = moment.duration(nombreCours > 0 ? duree.asMinutes() / nombreCours : 0, 'minutes');
-    moyenneJours = moment.duration(nombreJours > 0 ? duree.asMinutes() / nombreJours : 0, 'minutes');
-
-    // Write
-    stats['duree'] = {title: 'Durée totale', value: duree};
-    stats['moyenneCours'] = {title: 'Moyenne par cours', value: moyenneCours};
-    stats['moyenneJours'] = {title: 'Moyenne par jour', value: moyenneJours};
-    stats['nombreCours'] = {title: 'Nombre de cours', value: nombreCours};
-    stats['nombreJours'] = {title: 'Nombre de jours', value: nombreJours};
-    for (const t in types) {
-      if (types.hasOwnProperty(t)) {
-        stats['nb' + t.replace('/', '_')] = {title: 'Nombre de ' + t, value: types[t]};
-      }
-    }
-
-    this.premierJour = this.jours[0];
-    this.dernierJour = this.jours[this.jours.length - 1];
-
-    return (this.stats = stats);
+    this.jours.forEach(j => ac = ac.concat(j.setCours.cours));
+    return (this.setCours = new SetCours(ac));
   }
 }

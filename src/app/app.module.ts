@@ -48,12 +48,15 @@ import {ModalEtNotesComponent} from './modal/et-notes.component';
 import {NotesService} from './services/notes.service';
 import {DropdownModule} from 'angular-custom-dropdown';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
+import {ContextMenuModule} from 'ngx-contextmenu';
+import {EtInfoComponent} from './et/etinfo.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AccueilComponent,
     EtComponent,
+    EtInfoComponent,
     EvenementsComponent,
     ContactComponent,
     PageNotFoundComponent,
@@ -84,6 +87,9 @@ import {NgxChartsModule} from '@swimlane/ngx-charts';
     FormsModule,
     NgbModule.forRoot(),
     MarkdownToHtmlModule.forRoot(),
+    ContextMenuModule.forRoot({
+      useBootstrap4: true
+    }),
     HttpClientModule,
     MomentModule,
     DropdownModule,

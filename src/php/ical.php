@@ -1,7 +1,7 @@
 <?php
 
 require_once 'vendor/autoload.php';
-require_once 'common/commons.php';
+require_once 'common/Commons.php';
 
 require_once 'config.php';
 require_once 'ET/ET.php';

@@ -6,13 +6,14 @@ import {ModalEtExclusionsComponent} from '../modal/et-exclusions.component';
 import {ModalEtStatsComponent} from '../modal/et-stats.component';
 import {DatesService} from '../services/dates.service';
 
-import * as moment from 'moment';
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Exclusion} from '../model/et/Exclusion';
 import {ModalEtGestionCoursComponent} from '../modal/et-gestion-cours.component';
 import {ModalEtNotesComponent} from '../modal/et-notes.component';
 import {Semaine} from '../model/et/Semaine';
 import {CoursPerso, CoursPersoRecurrence} from '../model/et/CoursPerso';
+import * as moment from 'moment';
+import {colorSets} from '@swimlane/ngx-charts/release/utils';
 
 @Component({
   selector: 'app-et-root',
@@ -29,11 +30,6 @@ export class EtComponent implements OnInit {
   info: boolean;
   semaine: Semaine;
 
-  chartData: any = [];
-  colorScheme: any = {
-    domain: ['#0077FF']
-  };
-
   constructor(public etService: EmploiTempsService,
               public datesService: DatesService,
               private modalService: NgbModal) {
@@ -44,17 +40,6 @@ export class EtComponent implements OnInit {
 
   ngOnInit(): void {
     this.getDates();
-  }
-
-  /**
-   * Effectue une requête GET au serveur pour obtenir les semaines disponibles.
-   * Ces semaines sont affectées à this.dates, et la semaine la plus proche est sélectionnée (this.selectedDate)
-   */
-  private getDates(): void {
-    this.datesService.updateDates(() => {
-      this.selectedDate = this.datesService.semaineProche;
-      this.onChangeDate(this.datesService.semaineProche);
-    });
   }
 
   /**
@@ -85,7 +70,8 @@ export class EtComponent implements OnInit {
       professeur: [],
       salles: []
     };
-    for (const c of this.semaine.cours) {
+
+    for (const c of this.semaine.setCours.cours) {
       // Nom
       if (possibilites.nom.indexOf(c.nom) < 0) {
         possibilites.nom.push(c.nom);
@@ -103,6 +89,7 @@ export class EtComponent implements OnInit {
         }
       }
     }
+
     // Sort
     possibilites.professeur.sort();
     possibilites.salles.sort();
@@ -130,6 +117,42 @@ export class EtComponent implements OnInit {
     modalRef.result.then(r => {
     }, r => {
     });
+  }
+
+  previousWeek() {
+    this.datesService.previousWeek();
+    this.updateSemaine();
+  }
+
+  nextWeek() {
+    this.datesService.nextWeek();
+    this.updateSemaine();
+  }
+
+  nowWeek() {
+    this.datesService.nowWeek();
+    this.updateSemaine();
+  }
+
+  openStats() {
+    const modalRef = this.modalService.open(ModalEtStatsComponent, {size: 'lg'});
+    modalRef.componentInstance.stats = this.semaine.stats;
+  }
+
+  showInfo() {
+    this.info = true;
+  }
+
+  closeInfo() {
+    this.info = false;
+  }
+
+  test() {
+    const cp = new CoursPerso(
+      CoursPersoRecurrence.SEMAINE, moment(), 9 * 60, 11 * 60 + 30, 'TER', 'TER', 'TP', 'DEMEURE Alexandre', 'IMAG'
+    );
+
+    this.etService.ajoutCoursPerso([cp]);
   }
 
   private updateWeekProgress(): void {
@@ -172,43 +195,19 @@ export class EtComponent implements OnInit {
     }
   }
 
-  previousWeek() {
-    this.datesService.previousWeek();
-    this.updateSemaine();
-  }
-  nextWeek() {
-    this.datesService.nextWeek();
-    this.updateSemaine();
-  }
-  nowWeek() {
-    this.datesService.nowWeek();
-    this.updateSemaine();
+  /**
+   * Effectue une requête GET au serveur pour obtenir les semaines disponibles.
+   * Ces semaines sont affectées à this.dates, et la semaine la plus proche est sélectionnée (this.selectedDate)
+   */
+  private getDates(): void {
+    this.datesService.updateDates(() => {
+      this.selectedDate = this.datesService.semaineProche;
+      this.onChangeDate(this.datesService.semaineProche);
+    });
   }
 
   private updateSemaine() {
     this.selectedDate = this.datesService.semaineSelectionnee;
     this.onChangeDate(this.selectedDate);
-  }
-
-  openStats() {
-    const modalRef = this.modalService.open(ModalEtStatsComponent);
-    modalRef.componentInstance.stats = this.semaine.stats;
-  }
-
-  showInfo() {
-    this.etService.updateAllWeeks(() => {
-      const e = {name: 'Cours', series: []};
-      this.chartData = [e];
-      for (const w of this.etService.emploiTemps.semainesSelectionnees) {
-        e.series.push({name: w.year + ' ' + w.week, value: w.cours.length});
-      }
-    });
-
-    this.info = true;
-  }
-
-  test() {
-    const cp = new CoursPerso(CoursPersoRecurrence.SEMAINE, moment(), 9 * 60, 11 * 60 + 30, 'TER', 'TER', 'TP', 'DEMEURE Alexandre', 'IMAG');
-    this.etService.ajoutCoursPerso([cp]);
   }
 }

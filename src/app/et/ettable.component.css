@@ -89,3 +89,22 @@
 .supprime {
   display: none;
 }
+
+.indicateur-gauche-absolu {
+  position: absolute;
+  left: 10px;
+  z-index: 10;
+}
+
+.indicateur-gauche-relative {
+  position: relative;
+  top: -2px;
+}
+
+.jour .header {
+  margin-bottom: 12px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid grey;
+  box-shadow: 0 1px 8px #999;
+  background-color: rgba(200, 200, 200, .1);
+}

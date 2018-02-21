@@ -30,6 +30,10 @@ export class EmploiTemps {
     return this.semainesSelectionnees[0];
   }
 
+  getSemainesSelectionnees(): Semaine[] {
+    return this.semainesSelectionnees;
+  }
+
   trouverSemaine(week: number, year: number): Semaine | null {
     for (const s of this.semaines) {
       if (s.week === week && s.year === year) {

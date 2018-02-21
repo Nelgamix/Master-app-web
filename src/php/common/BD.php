@@ -1,6 +1,6 @@
 <?php
 
-require_once 'commons.php';
+require_once 'Commons.php';
 
 class BD
 {

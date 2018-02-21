@@ -17,14 +17,8 @@ import {
 } from '@angular/animations';
 
 import * as moment from 'moment';
-import {GlobalVariable} from "../globals";
 
-/*
-TODO:
-  * EDIT: vérif les champs
-  * EDIT: montrer le loading
-  * LOGIN: montrer le loading
- */
+// TODO: EDIT: vérif les champs
 
 @Component({
   selector: 'app-evenements',
@@ -87,64 +81,19 @@ export class EvenementsComponent implements OnInit {
 
   get(): void {
     this.evenements = [];
-    if (!GlobalVariable.LOCAL_DEV) {
-      this.sendRequest({req: 'get'}, data => {
-        if (data && data.success) {
-          if (data.success) {
-            for (const e of data.data) {
-              this.evenements.push(new Evenement(e));
-            }
-
-            this.sortDates(false);
+    this.sendRequest({req: 'get'}, data => {
+      if (data && data.success) {
+        if (data.success) {
+          for (const e of data.data) {
+            this.evenements.push(new Evenement(e));
           }
 
-          this.admin = data['admin'];
+          this.sortDates(false);
         }
-      });
-    } else {
-      this.admin = true;
-      this.evenements.push(new Evenement({
-        id: 0,
-        debut: '2017-08-05 18:00',
-        fin: '2017-08-10 18:00',
-        info: 'Info ici',
-        type: 'Vie de la filière',
-        url: 'http://www.google.fr/search?q=le%20lien%20marche'
-      }));
-      this.evenements.push(new Evenement({
-        id: 0,
-        debut: '2017-08-05 11:00',
-        fin: '2017-08-07 13:00',
-        info: 'Info ici',
-        type: 'Examens',
-        url: ''
-      }));
-      this.evenements.push(new Evenement({
-        id: 0,
-        debut: '2017-08-15 11:00',
-        fin: '2017-08-15 13:00',
-        info: 'Info ici',
-        type: 'Devoirs à rendre',
-        url: 'http://www.google.fr/search?q=autre%20lien%20ici'
-      }));
-      this.evenements.push(new Evenement({
-        id: 0,
-        debut: '2017-08-25 11:00',
-        fin: '',
-        info: 'Info ici',
-        type: 'Vie étudiante',
-        url: ''
-      }));
-      this.evenements.push(new Evenement({
-        id: 0,
-        debut: '2017-09-09 11:00',
-        fin: '2017-09-09 13:00',
-        info: 'Info ici',
-        type: 'Autres',
-        url: ''
-      }));
-      this.sortDates(false);
-    }
+
+        this.admin = data['admin'];
+      }
+    });
   }
 
   sortDates(invert): void {

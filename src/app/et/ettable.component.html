@@ -1,31 +1,44 @@
 <div class="row mb-3 jour" *ngFor="let j of semaine.jours">
   <ng-container>
     <div class="col-12">
-      <div class="row">
+      <div class="row header">
         <div class="col-12 col-md-auto">
-          <span class="jour-title-nom text-capitalize">{{j.date | amDateFormat:'dddd'}}</span> <span class="jour-title-date">{{j.date | amDateFormat:'D MMMM YYYY'}}</span>
+          <span class="jour-title-nom text-capitalize">
+            <img src="assets/icons_perso/drawing2past.svg" alt="Passé" class="indicateur-gauche-relative" width="24" height="24" *ngIf="j.positionTemps === PositionTemps.PASSE">
+            <img src="assets/icons_perso/drawing1present.svg" alt="Présent" class="indicateur-gauche-relative" width="24" height="24" *ngIf="j.positionTemps === PositionTemps.PRESENT">
+            <img src="assets/icons_perso/drawing3futur.svg" alt="Futur" class="indicateur-gauche-relative" width="24" height="24" *ngIf="j.positionTemps === PositionTemps.FUTUR">
+            {{j.date | amDateFormat:'dddd'}}
+          </span>
+          <span class="jour-title-date">{{j.date | amDateFormat:'D MMMM YYYY'}}</span>
         </div>
-        <div class="col-12 col-md" *ngIf="j.coursActifs.length > 0">
+        <div class="col-12 col-md" *ngIf="!j.setCoursActifs.estVide()">
           <h5 class="d-inline-block float-right pt-2 mb-0">
-            <span class="jour-stats-duree">{{j.premierCours.debut | date: 'HH:mm'}}&rarr;{{j.dernierCours.fin | date: 'HH:mm'}} ({{j.duree | duree}})</span>
-            <ng-container *ngIf="(j.types | objet).length > 0">
-              <span *ngFor="let t of j.types | objet" class="jour-stats-type badge badge-warning">{{t.value}}&nbsp;{{t.key}}</span>
+            <span class="jour-stats-duree">{{j.setCoursActifs.premierCours.debut | date: 'HH:mm'}}&rarr;{{j.setCoursActifs.dernierCours.fin | date: 'HH:mm'}} ({{j.setCoursActifs.duree | duree}})</span>
+            <ng-container *ngIf="(j.setCoursActifs.types | objet).length > 0">
+              <span *ngFor="let t of j.setCoursActifs.types | objet" class="jour-stats-type badge badge-warning">{{t.value}}&nbsp;{{t.key}}</span>
             </ng-container>
           </h5>
         </div>
       </div>
 
       <div class="row">
-        <div class="col no-cours mt-1 mb-3" *ngIf="(j.coursActifs|coursfilter:search).length + (j.coursCaches|coursfilter:search).length === 0">
-          Aucun cours.
+        <div class="col no-cours mt-1 mb-3" *ngIf="(j.setCoursActifs.getCours()|coursfilter:search).length + (j.setCoursCaches.getCours()|coursfilter:search).length === 0">
+          <img src="assets/icons_perso/drawing4empty.svg" alt="Empty">
         </div>
         <div class="col-12">
-          <div class="row" *ngFor="let cours of j.cours | coursfilter:search">
+          <div class="row" *ngFor="let cours of j.setCours.getCours() | coursfilter:search">
             <div class="col-12" [class.cache]="cours.cache" [class.supprime]="cours.supprime">
-              <div class="row cours" [class.td]="cours.type[0] == 'TD'" [class.tp]="cours.type[0] == 'TP'" [class.cm]="cours.type[0] == 'CM'" ngbTooltip="{{cours.description}}">
-                <div *ngIf="!cours.cache" style="position: absolute; left: 10px; z-index: 10;">
-                  <span (click)="et.exclure(cours)" style="color: white; padding: 0 6px; font-weight: bold">X</span>
+              <div class="row cours" [contextMenu]="menu" [contextMenuSubject]="cours" [class.td]="cours.type[0] == 'TD'" [class.tp]="cours.type[0] == 'TP'" [class.cm]="cours.type[0] == 'CM'" ngbTooltip="{{cours.description}}">
+                <div class="indicateur-gauche-absolu" *ngIf="cours.positionTemps === PositionTemps.PASSE">
+                  <img src="assets/icons_perso/drawing2past.svg" alt="Passé" width="24" height="24">
                 </div>
+                <div class="indicateur-gauche-absolu" *ngIf="cours.positionTemps === PositionTemps.PRESENT">
+                  <img src="assets/icons_perso/drawing1present.svg" alt="Présent" width="24" height="24">
+                </div>
+                <div class="indicateur-gauche-absolu" *ngIf="cours.positionTemps === PositionTemps.FUTUR">
+                  <img src="assets/icons_perso/drawing3futur.svg" alt="Futur" width="24" height="24">
+                </div>
+
                 <div class="col-lg-2 col-md-12 temps">
                   {{cours.debut | amDateFormat:'HH:mm'}}&rarr;{{cours.fin | amDateFormat:'HH:mm'}}
                 </div>
@@ -46,3 +59,19 @@
     </div>
   </ng-container>
 </div>
+
+<context-menu>
+  <ng-template contextMenuItem let-item (execute)="cacher($event.item, 0)">
+    Cacher {{item?.nom}}
+  </ng-template>
+  <ng-template contextMenuItem let-item (execute)="cacher($event.item, 1)">
+    Cacher {{item?.nom}} &amp;&amp; {{item?.professeur}}
+  </ng-template>
+  <ng-template contextMenuItem divider="true"></ng-template>
+  <ng-template contextMenuItem let-item (execute)="exclure($event.item, 0)">
+    Exclure {{item?.nom}}
+  </ng-template>
+  <ng-template contextMenuItem let-item (execute)="exclure($event.item, 1)">
+    Exclure {{item?.nom}} &amp;&amp; {{item?.professeur}}
+  </ng-template>
+</context-menu>
