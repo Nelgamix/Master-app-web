@@ -6,7 +6,7 @@ select:hover, .btn:hover {
   border-top: 1px solid grey;
   border-bottom: 1px solid grey;
   box-shadow: 0 0 8px grey;
-  background-image: url(assets/line_angle_light_shadow.jpg);
+  background-image: url(assets/backgrounds/line_angle_light_shadow.jpg);
   background-size: cover;
   color: white;
 }
@@ -42,7 +42,6 @@ select:hover, .btn:hover {
 }
 
 #form-selection-date {
-  float: right;
 }
 
 .stat-titre {

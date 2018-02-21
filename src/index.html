@@ -11,16 +11,22 @@
 	<link rel="icon" type="image/x-icon" href="favicon.ico">
 
 	<style>
+    #loader-wrapper {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: #262626;
+      animation: fadein 1s;
+    }
+
 		#loader {
-			background: #fff url(assets/loader.gif) no-repeat 50% 50%;
-
-			animation: fadein 2s;
-
-			position: fixed;
-			height: 100%;
-			width: 100%;
-			top: 0;
-			left: 0;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+			animation: fadein 1s;
 		}
 
 		@keyframes fadein {
@@ -31,7 +37,9 @@
 </head>
 <body>
 	<app-root>
-		<div id="loader"></div>
+    <div id="loader-wrapper">
+      <img src="assets/spinners/loading.gif" alt="Loader" id="loader">
+    </div>
 	</app-root>
 </body>
 </html>

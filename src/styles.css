@@ -2,7 +2,7 @@
 @import "~bootstrap/dist/css/bootstrap.css";
 
 body {
-  background: url(assets/polygonal-background.jpg) no-repeat center;
+  background: url(assets/backgrounds/polygonal-background.jpg) no-repeat center;
   background-size: 100% auto;
 }
 

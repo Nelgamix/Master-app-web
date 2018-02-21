@@ -1,7 +1,7 @@
 <div class="container contenu">
   <ng-container *ngIf="!info">
     <div class="row mb-2">
-      <div class="col-md-7 col-sm-12">
+      <div class="col-12 col-md-auto mr-md-auto">
         <h4 class="h-100">
           <span class="align-middle badge badge-success" *ngIf="etService.metadata['ok']">OK</span>
           <span class="align-middle badge badge-danger" *ngIf="!etService.metadata['ok']">KO</span>
@@ -12,10 +12,12 @@
           <span class="align-middle" style="font-size: 75%;" *ngIf="semaine">Dernière mise à jour <b>{{semaine.updated | amTimeAgo}}</b></span>
         </h4>
       </div>
-      <div class="col-md-5 col-sm-12">
+      <div class="col-12 col-md-auto">
         <div class="form-row" id="form-selection-date">
           <div class="col-auto">
             <button class="btn btn-danger mr-2" (click)="nowWeek()" placement="bottom" ngbTooltip="Revenir à la semaine actuelle">&#8630;</button>
+          </div>
+          <div class="col-auto">
             <button class="btn btn-secondary" (click)="previousWeek()" placement="bottom" ngbTooltip="Semaine précédente">&lArr;</button>
           </div>
           <div class="col-auto">
@@ -30,7 +32,7 @@
             <button class="btn btn-info" (click)="showInfo()" placement="bottom" ngbTooltip="Informations générales">&#8693;</button>
           </div>
           <!--<div class="col-auto">
-            <button class="btn btn-danger" (click)="test()">D</button>
+            <button class="btn btn-danger" (click)="boutonMagique(1)">BM</button>
           </div>-->
         </div>
       </div>

@@ -17,6 +17,7 @@ export class EtInfoComponent implements OnInit {
   colorScheme: any = colorSets.find(s => s.name === 'vivid');
 
   lastSemaines: Semaine[];
+  loaded: boolean;
 
   PositionTemps = PositionTemps;
 
@@ -24,6 +25,7 @@ export class EtInfoComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loaded = false;
     this.refresh();
   }
 
@@ -35,6 +37,8 @@ export class EtInfoComponent implements OnInit {
       for (const w of this.etService.emploiTemps.semainesSelectionnees) {
         e.series.push({name: w.year + ' S' + w.week, value: w.setCours.getTaille()});
       }
+
+      this.loaded = true;
     });
   }
 

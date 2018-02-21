@@ -6,14 +6,14 @@ import {ModalEtExclusionsComponent} from '../modal/et-exclusions.component';
 import {ModalEtStatsComponent} from '../modal/et-stats.component';
 import {DatesService} from '../services/dates.service';
 
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Exclusion} from '../model/et/Exclusion';
 import {ModalEtGestionCoursComponent} from '../modal/et-gestion-cours.component';
 import {ModalEtNotesComponent} from '../modal/et-notes.component';
 import {Semaine} from '../model/et/Semaine';
 import {CoursPerso, CoursPersoRecurrence} from '../model/et/CoursPerso';
+import {ActivatedRoute} from '@angular/router';
 import * as moment from 'moment';
-import {colorSets} from '@swimlane/ngx-charts/release/utils';
 
 @Component({
   selector: 'app-et-root',
@@ -32,14 +32,24 @@ export class EtComponent implements OnInit {
 
   constructor(public etService: EmploiTempsService,
               public datesService: DatesService,
-              private modalService: NgbModal) {
+              private modalService: NgbModal,
+              private route: ActivatedRoute) {
     this.search = '';
     this.info = false;
     this.semaine = null;
   }
 
   ngOnInit(): void {
-    this.getDates();
+    let date = null;
+
+    if (this.route.snapshot.paramMap.has('year') && this.route.snapshot.paramMap.has('week')) {
+      date = {
+        year: parseInt(this.route.snapshot.paramMap.get('year'), 10),
+        week: parseInt(this.route.snapshot.paramMap.get('week'), 10)
+      };
+    }
+
+    this.getDates(date);
   }
 
   /**
@@ -147,12 +157,20 @@ export class EtComponent implements OnInit {
     this.info = false;
   }
 
-  test() {
-    const cp = new CoursPerso(
-      CoursPersoRecurrence.SEMAINE, moment(), 9 * 60, 11 * 60 + 30, 'TER', 'TER', 'TP', 'DEMEURE Alexandre', 'IMAG'
-    );
+  boutonMagique(id: number) {
+    // Indiquer que fait chaque id.
+    switch (id) {
+      case 0: // test cours perso
+        const cp = new CoursPerso(
+          CoursPersoRecurrence.SEMAINE, moment(), 9 * 60, 11 * 60 + 30, 'TER', 'TER', 'TP', 'DEMEURE Alexandre', 'IMAG'
+        );
 
-    this.etService.ajoutCoursPerso([cp]);
+        this.etService.ajoutCoursPerso([cp]);
+        break;
+      case 1: // Test navigation
+        this.datesService.navigateTo(2018, 10);
+        break;
+    }
   }
 
   private updateWeekProgress(): void {
@@ -199,10 +217,10 @@ export class EtComponent implements OnInit {
    * Effectue une requête GET au serveur pour obtenir les semaines disponibles.
    * Ces semaines sont affectées à this.dates, et la semaine la plus proche est sélectionnée (this.selectedDate)
    */
-  private getDates(): void {
-    this.datesService.updateDates(() => {
-      this.selectedDate = this.datesService.semaineProche;
-      this.onChangeDate(this.datesService.semaineProche);
+  private getDates(week?: any): void {
+    this.datesService.updateDates(week, () => {
+      this.selectedDate = this.datesService.semaineSelectionnee;
+      this.onChangeDate(this.selectedDate);
     });
   }
 

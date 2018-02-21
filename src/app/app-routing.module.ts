@@ -9,6 +9,7 @@ import {NgModule} from '@angular/core';
 const appRoutes: Routes = [
   {path: 'accueil', component: AccueilComponent},
   {path: 'et', component: EtComponent},
+  {path: 'et/:year/:week', component: EtComponent},
   {path: 'evenements', component: EvenementsComponent},
   {path: 'contact', component: ContactComponent},
   {path: '', redirectTo: '/accueil', pathMatch: 'full'},
@@ -18,7 +19,9 @@ const appRoutes: Routes = [
 @NgModule({
   imports: [
     RouterModule.forRoot(
-      appRoutes
+      appRoutes/*, {
+        initialNavigation: false
+      }*/
     )
   ],
   exports: [
