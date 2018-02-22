@@ -15,6 +15,7 @@ import {CoursPerso, CoursPersoRecurrence} from '../model/et/CoursPerso';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/observable/of';
 import * as moment from 'moment';
 
 @Component({
@@ -51,15 +52,26 @@ export class EtComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.datesService.updateDates(() => {
       if (this.route.snapshot.paramMap.has('year') && this.route.snapshot.paramMap.has('week')) {
         this.semaine$ = this.route.paramMap.switchMap((params: ParamMap) => {
-          this.loading = true;
-          return this.etService.updateSingleWeek({year: +params.get('year'), week: +params.get('week')});
+          const y = +params.get('year');
+          const w = +params.get('week');
+
+          if (y && w && y === 2018 && w >= 0 && w < 53) {
+            this.loading = true;
+            return this.etService.updateSingleWeek({year: y, week: w});
+          } else {
+            return Observable.of(null);
+          }
         });
 
         this.semaine$.subscribe((s: Semaine) => {
+          if (!s) {
+            this.navigateToWeek(this.datesService.semaineProche);
+            return;
+          }
+
           this.semaine = s;
           this.updateWeekProgress();
           this.loading = false;
@@ -77,7 +89,7 @@ export class EtComponent implements OnInit {
   }
 
   /**
-   * Active le loading screen et effectue une requête au serveur pour récupérer les données
+   * Navigate to week
    * @param {} date l'objet {year: xxxx, week: xx}
    */
   navigateToWeek(date): void {
@@ -88,40 +100,13 @@ export class EtComponent implements OnInit {
   openExclusions() {
     // Cloner toutes les exclusions
     const ne: Exclusion[] = [];
-    for (const e of this.etService.exclusions) {
-      ne.push(e.clone());
-    }
+    this.etService.exclusions.forEach(e => ne.push(e.clone()));
 
     // Créer l'objet possibilités, regroupant les possibilités disponibles.
-    const possibilites = {
-      nom: [],
-      type: ['CM', 'TD', 'TP', 'TD/TP'],
-      professeur: [],
-      salles: []
-    };
+    const stats = ['noms', 'types', 'professeurs', 'salles'];
+    const possibilites = {};
 
-    for (const c of this.semaine.setCours.cours) {
-      // Nom
-      if (possibilites.nom.indexOf(c.nom) < 0) {
-        possibilites.nom.push(c.nom);
-      }
-
-      // Professeur
-      if (possibilites.professeur.indexOf(c.professeur) < 0) {
-        possibilites.professeur.push(c.professeur);
-      }
-
-      // Salles
-      for (const s of c.salles) {
-        if (possibilites.salles.indexOf(s.salle) < 0) {
-          possibilites.salles.push(s.salle);
-        }
-      }
-    }
-
-    // Sort
-    possibilites.professeur.sort();
-    possibilites.salles.sort();
+    stats.forEach(s => possibilites[s] = Object.keys(this.semaine.setCours.getStats()[s].data).sort());
 
     // Ouvrir modal
     const modalRef = this.modalService.open(ModalEtExclusionsComponent, {size: 'lg'});
@@ -235,7 +220,6 @@ export class EtComponent implements OnInit {
       this.weekProgress = (now.diff(first, 'minutes') / (last.diff(first, 'minutes'))) * 100;
     }
 
-    // TODO
     if (this.semaine.setCours.coursSuivant) {
       this.prochainCoursTimer = moment.duration(now.diff(this.semaine.setCours.coursSuivant.debut));
     }

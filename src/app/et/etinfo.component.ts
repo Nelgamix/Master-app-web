@@ -21,10 +21,12 @@ export class EtInfoComponent implements OnInit {
   semaines: Semaine[];
 
   loaded: boolean;
+  cacher: boolean[];
 
   PositionTemps = PositionTemps;
 
   constructor(public etService: EmploiTempsService) {
+    this.cacher = [];
   }
 
   ngOnInit() {
@@ -33,17 +35,25 @@ export class EtInfoComponent implements OnInit {
   }
 
   refresh() {
-    this.semaines$ = this.etService.updateAllWeeks(() => {
-      this.loaded = true;
-    });
-
+    this.semaines$ = this.etService.updateAllWeeks();
     this.semaines$.subscribe(s => {
       this.semaines = s;
-      const e = {name: 'Cours', series: []};
-      this.chartData = [e];
-      for (const w of s) {
-        e.series.push({name: w.year + ' S' + w.week, value: w.setCours.getTaille()});
-      }
+
+      const st = {name: 'Total', series: []};
+      const sa = {name: 'Cours actifs', series: []};
+      const sc = {name: 'Cours cachés', series: []};
+      const ss = {name: 'Cours supprimés', series: []};
+      this.chartData = [st, sa, sc, ss];
+
+      s.forEach(w => {
+        this.cacher.push(true);
+        st.series.push({name: w.year + ' S' + w.week, value: w.setCours.getTaille()});
+        sa.series.push({name: w.year + ' S' + w.week, value: w.setCours.coursActifs.length});
+        sc.series.push({name: w.year + ' S' + w.week, value: w.setCours.coursCaches.length});
+        ss.series.push({name: w.year + ' S' + w.week, value: w.setCours.coursSupprimes.length});
+      });
+
+      this.loaded = true;
     });
   }
 

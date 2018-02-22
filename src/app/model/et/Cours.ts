@@ -102,6 +102,7 @@ export class Cours {
     this.groupe = [];
     this.salles = [];
     this.sallesTypes = [];
+    this.prive = false;
 
     for (const p in o) {
       if (o.hasOwnProperty(p) && o[p] !== null) {
@@ -112,7 +113,6 @@ export class Cours {
     this.cache = false;
     this.supprime = false;
     this.positionTemps = PositionTemps.INDEFINI;
-    this.prive = this.prive || true;
     this.duree = moment.duration(this.fin.diff(this.debut));
 
     this.calculeHash();

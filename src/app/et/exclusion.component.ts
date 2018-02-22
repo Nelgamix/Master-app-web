@@ -18,26 +18,26 @@ export class ExclusionComponent implements OnInit {
 
   details: boolean;
 
-  searchNom = (text$: Observable<string>) =>
+  searchNoms = (text$: Observable<string>) =>
     text$
       .debounceTime(200)
       .distinctUntilChanged()
       .map(term => term.length < 2 ? []
-        : this.possibilites.nom.filter(v => v.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 6));
+        : this.possibilites.noms.filter(v => v.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 6));
 
-  searchType = (text$: Observable<string>) =>
+  searchTypes = (text$: Observable<string>) =>
     text$
       .debounceTime(200)
       .distinctUntilChanged()
       .map(term => term.length < 1 ? []
-        : this.possibilites.type.filter(v => v.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 4));
+        : this.possibilites.types.filter(v => v.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 4));
 
-  searchProfesseur = (text$: Observable<string>) =>
+  searchProfesseurs = (text$: Observable<string>) =>
     text$
       .debounceTime(200)
       .distinctUntilChanged()
       .map(term => term.length < 2 ? []
-        : this.possibilites.professeur.filter(v => v.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 6));
+        : this.possibilites.professeurs.filter(v => v.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 6));
 
   searchSalles = (text$: Observable<string>) =>
     text$

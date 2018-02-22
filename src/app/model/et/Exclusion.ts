@@ -99,6 +99,10 @@ export class Exclusion {
    * @returns {boolean}
    */
   testeCours(c: Cours): boolean {
+    if (c.supprime || c.cache || c.prive) {
+      return false;
+    }
+
     // Teste les types.
     if (this.type.length > 0) {
       if (!this.testeCoursChamp(c, c.type.join('/'), this.type)) {

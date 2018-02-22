@@ -6,7 +6,7 @@
           <div class="form-group row mb-0">
             <label for="nom{{id}}" class="col-form-label col-2">Nom</label>
             <div class="col-10">
-              <input type="text" class="form-control mx-2" name="nom{{id}}" id="nom{{id}}" [(ngModel)]="exclusion.nom" [ngbTypeahead]="searchNom" placeholder="Nom">
+              <input type="text" class="form-control mx-2" name="nom{{id}}" id="nom{{id}}" [(ngModel)]="exclusion.nom" [ngbTypeahead]="searchNoms" placeholder="Nom">
             </div>
           </div>
         </div>
@@ -43,11 +43,11 @@
       <div class="form-row mt-1" *ngIf="details">
         <div class="col-4">
           <label for="type{{id}}" class="mb-1">Type</label>
-          <input type="text" class="form-control" name="type{{id}}" id="type{{id}}" [(ngModel)]="exclusion.type" [ngbTypeahead]="searchType" placeholder="Type">
+          <input type="text" class="form-control" name="type{{id}}" id="type{{id}}" [(ngModel)]="exclusion.type" [ngbTypeahead]="searchTypes" placeholder="Type">
         </div>
         <div class="col-4">
           <label for="professeur{{id}}" class="mb-1">Professeur</label>
-          <input type="text" class="form-control" name="professeur{{id}}" id="professeur{{id}}" [(ngModel)]="exclusion.professeur" [ngbTypeahead]="searchProfesseur" placeholder="Professeur">
+          <input type="text" class="form-control" name="professeur{{id}}" id="professeur{{id}}" [(ngModel)]="exclusion.professeur" [ngbTypeahead]="searchProfesseurs" placeholder="Professeur">
         </div>
         <div class="col-4">
           <label for="salle{{id}}" class="mb-1">Salle</label>
