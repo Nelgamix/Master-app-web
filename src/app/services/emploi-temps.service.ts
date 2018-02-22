@@ -6,6 +6,8 @@ import {Cours} from '../model/et/Cours';
 import {CookieService} from 'ngx-cookie-service';
 import {Exclusion} from '../model/et/Exclusion';
 import {CoursPerso} from '../model/et/CoursPerso';
+import {Observable} from 'rxjs/Observable';
+import {Semaine} from '../model/et/Semaine';
 import * as moment from 'moment';
 
 @Injectable()
@@ -44,23 +46,12 @@ export class EmploiTempsService {
   coursPersos: CoursPerso[];
 
   /**
-   * Countdown avant le prochain cours.
-   */
-  prochainCoursTimer: any;
-
-  /**
    * Si vrai, alors aucune analyse ne sera effectuée.
    */
   analyseDisabled: boolean;
 
-  /**
-   * Liste d'observers à notifier quand il y a un changement.
-   */
-  observers: any[];
-
   constructor(private http: HttpClient,
               private cookiesService: CookieService) {
-    this.observers = [];
     this.analyseDisabled = false;
     this.emploiTemps = new EmploiTemps();
 
@@ -69,37 +60,31 @@ export class EmploiTempsService {
   }
 
   /**
-   * Ajoute un nouvel observeur de l'emploi du temps.
-   * Il sera notifié quand un changement intervient dans l'emploi du temps,
-   * par l'appel à sa fonction changed().
-   * @param obs l'observeur
-   */
-  registerObserver(obs) {
-    this.observers.push(obs);
-  }
-
-  /**
    * Update les données de l'emploi du temps en ajoutant celles de la semaine week,
    * année year. Le callback cb est appelé si fourni, à la fin de l'update.
-   * @param {number} week numéro de semaine
-   * @param {number} year année
+   * @param {any} date la date, qui contient year et week
    * @param {Function} cb fonction qui s'exécute après l'update.
    */
-  updateSingleWeek(week: number, year: number, cb?: Function): void {
-    const t = this.emploiTemps.trouverSemaine(week, year);
-    if (t === null) {
-      this.http.get('php/ical.php?from_year=' + year + '&from_week=' + week).subscribe(data => this.loadData(data, cb));
-    } else {
-      this.emploiTemps.selectSemaine(week, year);
-      this.analyse();
-      if (cb) {
-        cb();
+  updateSingleWeek(date: any, cb?: Function): Observable<Semaine> {
+    return Observable.create(obs => {
+      const t: Semaine = this.emploiTemps.trouverSemaine(date.week, date.year);
+      if (!t) {
+        this.http.get('php/ical.php?from_year=' + date.year + '&from_week=' + date.week)
+          .subscribe(data => this.loadData(data, obs, false, cb));
+      } else {
+        this.analyse();
+        obs.next(t);
+        if (cb) {
+          cb();
+        }
       }
-    }
+    });
   }
 
-  updateAllWeeks(cb?: Function): void {
-    this.http.get('php/ical.php?info').subscribe(data => this.loadData(data, cb));
+  updateAllWeeks(cb?: Function): Observable<Semaine[]> {
+    return Observable.create(obs => {
+      this.http.get('php/ical.php?info').subscribe(data => this.loadData(data, obs, true, cb));
+    });
   }
 
   exclure(exclusion: Exclusion): void {
@@ -111,7 +96,7 @@ export class EmploiTempsService {
    * Filtrer les cours avec les exclusions fournies en paramètre.
    * @param {Exclusion[]} exclusions les exclusions qui vont exclure les cours.
    */
-  filterExclusions(exclusions: Exclusion[]) {
+  filterExclusions(exclusions: Exclusion[]): number {
     if (exclusions !== this.exclusions) {
       this.exclusions.splice(0, this.exclusions.length); // remove all (clear)
       for (const e of exclusions) {
@@ -122,6 +107,8 @@ export class EmploiTempsService {
     const total = this.emploiTemps.applyExclusions(this.exclusions);
     this.analyse();
     this.sauvegardeExclusionsToCookies();
+
+    return total;
   }
 
   ajoutCoursPerso(coursPerso: CoursPerso[]): void {
@@ -132,7 +119,7 @@ export class EmploiTempsService {
       }
     }
 
-    coursPerso.forEach(c => c.testePlusieursSemaine(this.emploiTemps.semainesSelectionnees));
+    coursPerso.forEach(c => c.testePlusieursSemaine(this.emploiTemps.semaines));
     this.analyse();
     this.sauvegardeCoursPersoToCookies();
   }
@@ -146,13 +133,6 @@ export class EmploiTempsService {
     }
 
     this.emploiTemps.analyse();
-
-    const now = moment();
-
-    // TODO
-    if (this.emploiTemps.getSemaineUnique().setCours.coursSuivant) {
-      this.prochainCoursTimer = moment.duration(now.diff(this.emploiTemps.getSemaineUnique().setCours.coursSuivant.debut));
-    }
   }
 
   /**
@@ -165,7 +145,19 @@ export class EmploiTempsService {
       const eJson = JSON.parse(this.cookiesService.get(this.coursPersoCookie));
       if (eJson && eJson instanceof Array) {
         for (const o of eJson) {
-          this.coursPersos.push(new CoursPerso(o['recurrence'], moment(o['date']), o['debut'], o['fin'], o['description'], o['nom'], o['type'], o['professeur'], o['lieu']));
+          this.coursPersos.push(
+            new CoursPerso(
+              o['recurrence'],
+              moment(o['date']),
+              o['debut'],
+              o['fin'],
+              o['description'],
+              o['nom'],
+              o['type'],
+              o['professeur'],
+              o['lieu']
+            )
+          );
         }
       }
     }
@@ -206,22 +198,15 @@ export class EmploiTempsService {
   }
 
   /**
-   * Notifie les observeurs d'un changement dans l'emploi du temps.
-   */
-  private notifyObserver() {
-    for (const o of this.observers) {
-      o.changed();
-    }
-  }
-
-  /**
    * Fonction qui est appelée après qu'on ait récupéré les données depuis le serveur de l'emploi du temps.
    * Met à jour les métadonnées, et si les données ont pu être récupérées, met à jour la semaine.
    * Enfin, appelle la fonction de callback si présente.
    * @param data les données renvoyées par le serveur.
+   * @param {any} obs l'observable
+   * @param {boolean} selectAll si vrai, l'obsersable renverra alors tous les cours process
    * @param {Function} cb le callback qui est appelé à la fin de l'update.
    */
-  private loadData(data: any, cb?: Function): void {
+  private loadData(data: any, obs: any, selectAll: boolean, cb?: Function): void {
     if (data['metadata']) {
       this.metadata['adeOnline'] = data.metadata['ade-online'];
       this.metadata['ok'] = data.metadata['ok'];
@@ -266,15 +251,20 @@ export class EmploiTempsService {
         sts.push(so);
       }
 
-      this.emploiTemps.selectMultipleSemaines(sts);
-
       this.analyseDisabled = true;
       this.filterExclusions(this.exclusions);
       this.ajoutCoursPerso(this.coursPersos);
       this.analyseDisabled = false;
 
       this.analyse();
-      this.notifyObserver();
+
+      if (selectAll) {
+        obs.next(sts);
+      } else {
+        obs.next(sts[0]);
+      }
+    } else {
+      obs.error('error');
     }
 
     if (cb) {

@@ -31,7 +31,7 @@ assert($out['success'] == false, "since we didn't specify any req type, success 
 // get
 exec_script($out, "--req get");
 assert($out['success'] == true, "success should be true");
-assert($out['Semaine'] != null, "data should be present");
+assert($out['data'] != null, "data should be present");
 
 // try to log in
 exec_script($out, "--req login --psw mdptest");

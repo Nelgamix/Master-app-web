@@ -14,15 +14,12 @@ import {Exclusion} from '../model/et/Exclusion';
 })
 export class EtTableComponent {
   @Input() search: string;
+  @Input() semaine: Semaine;
   @ViewChild(ContextMenuComponent) public menu: ContextMenuComponent;
 
   PositionTemps = PositionTemps;
 
-  semaine: Semaine;
-
-  constructor(public et: EmploiTempsService) {
-    this.et.registerObserver(this);
-    this.changed();
+  constructor(private etService: EmploiTempsService) {
   }
 
   cacher(cours: Cours, type: number): void {
@@ -45,11 +42,7 @@ export class EtTableComponent {
     }
 
     if (e !== null) {
-      this.et.exclure(e);
+      this.etService.exclure(e);
     }
-  }
-
-  changed(): void {
-    this.semaine = this.et.emploiTemps.getSemaineUnique();
   }
 }

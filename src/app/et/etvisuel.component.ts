@@ -1,13 +1,15 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnChanges} from '@angular/core';
 
-import {EmploiTempsService} from '../services/emploi-temps.service';
+import {Semaine} from '../model/et/Semaine';
 
 @Component({
   selector: 'app-et-visuel',
   templateUrl: './etvisuel.component.html',
   styleUrls: ['./etvisuel.component.css']
 })
-export class EtVisuelComponent implements OnInit {
+export class EtVisuelComponent implements OnChanges {
+  @Input() semaine: Semaine;
+
   jours: {};
 
   legendeHeures = {
@@ -25,19 +27,14 @@ export class EtVisuelComponent implements OnInit {
     'Vendredi'
   ];
 
-  constructor(public et: EmploiTempsService) {
-    this.et.registerObserver(this);
+  constructor() {
     const le = this.legendeHeures;
     for (let i = le.debut; i <= le.fin; i = i + le.interval) {
       le.legendes.push(i);
     }
   }
 
-  ngOnInit() {
-    this.analyse();
-  }
-
-  changed() {
+  ngOnChanges() {
     this.analyse();
   }
 
@@ -45,7 +42,7 @@ export class EtVisuelComponent implements OnInit {
     // Analyse et création des listes
     const js = [];
     for (let i = 0; i < this.legendeJours.length; i++) {
-      const j = this.et.emploiTemps.getSemaineUnique().jours[i];
+      const j = this.semaine.jours[i];
       const lists = [];
       lists.push([]); // Liste initiale
       if (!j) {
@@ -87,7 +84,7 @@ export class EtVisuelComponent implements OnInit {
     this.jours = {};
     for (let i = 0; i < this.legendeJours.length; i++) {
       this.jours[i] = [];
-      if (this.et.emploiTemps.getSemaineUnique().jours[i]) {
+      if (this.semaine.jours[i]) {
         for (const c of js[i][0]) {
           const debutConverti = (c.debut.hour() * 60 + c.debut.minute()) - this.legendeHeures.debut * 60;
           const dureeConvertie = c.duree.asMinutes();

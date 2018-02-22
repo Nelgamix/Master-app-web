@@ -107,7 +107,7 @@ if (!isset($in['req'])) {
             $get = $evs->select();
 
             if (isset($get)) {
-                $res['Semaine'] = $get;
+                $res['data'] = $get;
                 $res['success'] = true;
             } else {
                 $res['success'] = false;

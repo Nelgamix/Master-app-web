@@ -12,7 +12,9 @@ import {ModalEtGestionCoursComponent} from '../modal/et-gestion-cours.component'
 import {ModalEtNotesComponent} from '../modal/et-notes.component';
 import {Semaine} from '../model/et/Semaine';
 import {CoursPerso, CoursPersoRecurrence} from '../model/et/CoursPerso';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, ParamMap, Router} from '@angular/router';
+import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/operator/switchMap';
 import * as moment from 'moment';
 
 @Component({
@@ -21,49 +23,66 @@ import * as moment from 'moment';
   styleUrls: ['./et.component.css']
 })
 export class EtComponent implements OnInit {
+  semaine$: Observable<Semaine>;
+  semaine: Semaine;
+  date$: Observable<any>;
+  date: any;
+
   vueType = 1;
-  loading: any;
-  selectedDate: any;
+  loading: boolean;
   infoSemaine: any;
   weekProgress: number;
   search: string;
   info: boolean;
-  semaine: Semaine;
+
+  /**
+   * Countdown avant le prochain cours.
+   */
+  prochainCoursTimer: any;
 
   constructor(public etService: EmploiTempsService,
               public datesService: DatesService,
               private modalService: NgbModal,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private router: Router) {
     this.search = '';
     this.info = false;
     this.semaine = null;
   }
 
   ngOnInit(): void {
-    let date = null;
 
-    if (this.route.snapshot.paramMap.has('year') && this.route.snapshot.paramMap.has('week')) {
-      date = {
-        year: parseInt(this.route.snapshot.paramMap.get('year'), 10),
-        week: parseInt(this.route.snapshot.paramMap.get('week'), 10)
-      };
-    }
+    this.datesService.updateDates(() => {
+      if (this.route.snapshot.paramMap.has('year') && this.route.snapshot.paramMap.has('week')) {
+        this.semaine$ = this.route.paramMap.switchMap((params: ParamMap) => {
+          this.loading = true;
+          return this.etService.updateSingleWeek({year: +params.get('year'), week: +params.get('week')});
+        });
 
-    this.getDates(date);
+        this.semaine$.subscribe((s: Semaine) => {
+          this.semaine = s;
+          this.updateWeekProgress();
+          this.loading = false;
+        });
+
+        this.date$ = this.route.paramMap.switchMap((params: ParamMap) => {
+          return this.datesService.getObsDateFromWeekYear({year: +params.get('year'), week: +params.get('week')});
+        });
+
+        this.date$.subscribe(d => this.date = d);
+      } else {
+        this.navigateToWeek(this.datesService.semaineProche);
+      }
+    });
   }
 
   /**
    * Active le loading screen et effectue une requête au serveur pour récupérer les données
    * @param {} date l'objet {year: xxxx, week: xx}
    */
-  onChangeDate(date): void {
-    this.loading = true;
-    this.datesService.semaineSelectionnee = date;
-    this.etService.updateSingleWeek(date.week, date.year, () => {
-      this.loading = false;
-      this.semaine = this.etService.emploiTemps.getSemaineUnique();
-    });
-    this.updateWeekProgress();
+  navigateToWeek(date): void {
+    /*this.router.navigate(['et', {year: date.year, week: date.week}]);*/
+    this.router.navigate(['et', date.year, date.week]);
   }
 
   openExclusions() {
@@ -130,18 +149,24 @@ export class EtComponent implements OnInit {
   }
 
   previousWeek() {
-    this.datesService.previousWeek();
-    this.updateSemaine();
+    const pw = this.datesService.previousWeek(this.date);
+    if (pw) {
+      this.navigateToWeek(pw);
+    }
   }
 
   nextWeek() {
-    this.datesService.nextWeek();
-    this.updateSemaine();
+    const pw = this.datesService.nextWeek(this.date);
+    if (pw) {
+      this.navigateToWeek(pw);
+    }
   }
 
   nowWeek() {
-    this.datesService.nowWeek();
-    this.updateSemaine();
+    const pw = this.datesService.nowWeek(this.date);
+    if (pw) {
+      this.navigateToWeek(pw);
+    }
   }
 
   openStats() {
@@ -168,15 +193,15 @@ export class EtComponent implements OnInit {
         this.etService.ajoutCoursPerso([cp]);
         break;
       case 1: // Test navigation
-        this.datesService.navigateTo(2018, 10);
+        this.navigateToWeek({year: 2018, week: 10});
         break;
     }
   }
 
   private updateWeekProgress(): void {
     const now = moment();
-    const first = this.datesService.semaineSelectionnee.debut.clone().add(8, 'h');
-    const last = this.datesService.semaineSelectionnee.fin.clone().add(18, 'h');
+    const first = this.date.debut.clone().add(8, 'h');
+    const last = this.date.fin.clone().add(18, 'h');
 
     this.weekProgress = -1;
     this.infoSemaine = {
@@ -189,43 +214,30 @@ export class EtComponent implements OnInit {
       date: null // la date
     };
 
-    if (this.datesService.semaineSelectionnee) {
-      // update info semaine
-      if (now.isBefore(first)) { // on est avant
-        this.infoSemaine.placement = -1;
-        this.infoSemaine.date = moment.duration(now.diff(first));
-      } else if (now.isAfter(last)) { // on est après
-        this.infoSemaine.placement = 1;
-        this.infoSemaine.date = moment.duration(now.diff(last));
-      } else { // on est dans la semaine
-        this.infoSemaine.placement = 0;
-        this.infoSemaine.date = moment.duration(now.diff(first));
-      }
-
-      // update week progress
-      if (now.diff(first) < 0) {
-        this.weekProgress = 0;
-      } else if (last.diff(now) < 0) {
-        this.weekProgress = 100;
-      } else {
-        this.weekProgress = (now.diff(first, 'minutes') / (last.diff(first, 'minutes'))) * 100;
-      }
+    // update info semaine
+    if (now.isBefore(first)) { // on est avant
+      this.infoSemaine.placement = -1;
+      this.infoSemaine.date = moment.duration(now.diff(first));
+    } else if (now.isAfter(last)) { // on est après
+      this.infoSemaine.placement = 1;
+      this.infoSemaine.date = moment.duration(now.diff(last));
+    } else { // on est dans la semaine
+      this.infoSemaine.placement = 0;
+      this.infoSemaine.date = moment.duration(now.diff(first));
     }
-  }
 
-  /**
-   * Effectue une requête GET au serveur pour obtenir les semaines disponibles.
-   * Ces semaines sont affectées à this.dates, et la semaine la plus proche est sélectionnée (this.selectedDate)
-   */
-  private getDates(week?: any): void {
-    this.datesService.updateDates(week, () => {
-      this.selectedDate = this.datesService.semaineSelectionnee;
-      this.onChangeDate(this.selectedDate);
-    });
-  }
+    // update week progress
+    if (now.diff(first) < 0) {
+      this.weekProgress = 0;
+    } else if (last.diff(now) < 0) {
+      this.weekProgress = 100;
+    } else {
+      this.weekProgress = (now.diff(first, 'minutes') / (last.diff(first, 'minutes'))) * 100;
+    }
 
-  private updateSemaine() {
-    this.selectedDate = this.datesService.semaineSelectionnee;
-    this.onChangeDate(this.selectedDate);
+    // TODO
+    if (this.semaine.setCours.coursSuivant) {
+      this.prochainCoursTimer = moment.duration(now.diff(this.semaine.setCours.coursSuivant.debut));
+    }
   }
 }

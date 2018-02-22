@@ -4,6 +4,7 @@ import {Semaine} from '../model/et/Semaine';
 import {PositionTemps} from '../model/et/PositionTemps';
 import {Objet} from '../pipes/objet.pipe';
 import {colorSets} from '@swimlane/ngx-charts/release/utils';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'app-etinfo',
@@ -16,7 +17,9 @@ export class EtInfoComponent implements OnInit {
   chartData: any = [];
   colorScheme: any = colorSets.find(s => s.name === 'vivid');
 
-  lastSemaines: Semaine[];
+  semaines$: Observable<Semaine[]>;
+  semaines: Semaine[];
+
   loaded: boolean;
 
   PositionTemps = PositionTemps;
@@ -30,15 +33,17 @@ export class EtInfoComponent implements OnInit {
   }
 
   refresh() {
-    this.lastSemaines = this.etService.emploiTemps.getSemainesSelectionnees();
-    this.etService.updateAllWeeks(() => {
+    this.semaines$ = this.etService.updateAllWeeks(() => {
+      this.loaded = true;
+    });
+
+    this.semaines$.subscribe(s => {
+      this.semaines = s;
       const e = {name: 'Cours', series: []};
       this.chartData = [e];
-      for (const w of this.etService.emploiTemps.semainesSelectionnees) {
+      for (const w of s) {
         e.series.push({name: w.year + ' S' + w.week, value: w.setCours.getTaille()});
       }
-
-      this.loaded = true;
     });
   }
 
@@ -52,7 +57,6 @@ export class EtInfoComponent implements OnInit {
   }
 
   close() {
-    this.etService.emploiTemps.selectMultipleSemaines(this.lastSemaines);
     this.onClose.emit();
   }
 }

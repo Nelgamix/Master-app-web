@@ -1,4 +1,4 @@
-<ng-container *ngIf="!info">
+<ng-container *ngIf="!info && semaine">
   <!-- Première colonne: contrôles de la semaine et info ET -->
   <div class="row mb-2">
     <!-- Informations sur l'emploi du temps (OK|NOK, ADE OK|ADE NOK, Last updated) -->
@@ -24,7 +24,7 @@
           <button class="btn btn-secondary" (click)="previousWeek()" placement="bottom" ngbTooltip="Semaine précédente">&lArr;</button>
         </div>
         <div class="col-auto">
-          <select [(ngModel)]="selectedDate" (ngModelChange)="onChangeDate($event)" class="custom-select form-control" name="selDate" id="selDate">
+          <select [ngModel]="date" (ngModelChange)="navigateToWeek($event)" class="custom-select form-control" name="selDate" id="selDate">
             <option [ngValue]="i" *ngFor="let i of datesService.semaines">{{i.debut | amDateFormat:'YYYY-MM-DD'}} &rarr; {{i.fin | amDateFormat:'YYYY-MM-DD'}}</option>
           </select>
         </div>
@@ -49,14 +49,14 @@
     </div>
   </div>
 
-  <ng-container *ngIf="etService.metadata['ok'] && semaine">
+  <ng-container *ngIf="etService.metadata['ok']">
     <div class="row pt-2 pb-2" id="head-title">
       <div class="col">
         <div class="row">
-          <div class="col h3 week-header mb-1">
-            Semaine <span class="text-danger">{{datesService.semaineSelectionnee.week}}</span>,
-            du <span class="text-warning">{{datesService.semaineSelectionnee.debut | amDateFormat:'D MMMM YYYY'}}</span>
-            au <span class="text-primary">{{datesService.semaineSelectionnee.fin | amDateFormat:'D MMMM YYYY'}}</span>
+          <div class="col h3 week-header mb-1" *ngIf="date">
+            Semaine <span class="text-danger">{{date.week}}</span>,
+            du <span class="text-warning">{{date.debut | amDateFormat:'D MMMM YYYY'}}</span>
+            au <span class="text-primary">{{date.fin | amDateFormat:'D MMMM YYYY'}}</span>
           </div>
         </div>
 
@@ -68,7 +68,7 @@
           </div>
         </div>
 
-        <div class="row">
+        <div class="row" *ngIf="weekProgress">
           <div class="col">
             <ngb-progressbar id="progress-main" type="{{weekProgress < 100 ? 'primary' : 'success'}}" [value]="weekProgress" [striped]="true" [animated]="true">
               <b>{{weekProgress | number:'1.0-1'}}%</b>
@@ -160,7 +160,7 @@
                 <dt *ngIf="semaine.setCours.coursActuel">Cours actuel</dt>
                 <dd *ngIf="semaine.setCours.coursActuel"><b>{{semaine.setCours.coursActuel.nom}}</b> en <span class="font-italic" *ngFor="let s of semaine.setCours.coursActuel.salles">{{s.batiment}} {{s.salle}}</span></dd>
 
-                <dt *ngIf="semaine.setCours.coursSuivant">Cours suivant <span style="font-size: 75%; color: gray">dans {{etService.prochainCoursTimer | amDuration:'milliseconds'}}</span></dt>
+                <dt *ngIf="semaine.setCours.coursSuivant">Cours suivant <span style="font-size: 75%; color: gray">dans {{prochainCoursTimer | amDuration:'milliseconds'}}</span></dt>
                 <dd *ngIf="semaine.setCours.coursSuivant"><b>{{semaine.setCours.coursSuivant.nom}}</b> en <span class="font-italic" *ngFor="let s of semaine.setCours.coursSuivant.salles">{{s.batiment}} {{s.salle}}</span></dd>
               </dl>
             </div>
@@ -200,8 +200,8 @@
       </div>
 
       <ng-container [ngSwitch]="vueType">
-        <app-et-table *ngSwitchCase="1" [search]="search"></app-et-table>
-        <app-et-visuel *ngSwitchCase="2"></app-et-visuel>
+        <app-et-table *ngSwitchCase="1" [semaine]="semaine" [search]="search"></app-et-table>
+        <app-et-visuel *ngSwitchCase="2" [semaine]="semaine"></app-et-visuel>
       </ng-container>
     </ng-template>
   </ng-container>

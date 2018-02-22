@@ -1,52 +1,60 @@
 import {Injectable} from '@angular/core';
 
 import {HttpClient} from '@angular/common/http';
-import {Router} from '@angular/router';
+import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/observable/of';
 import * as moment from 'moment';
 
 @Injectable()
 export class DatesService {
-  semaines: any = [];
+  semaines: any[] = [];
   semaineProche: any;
-  semaineSelectionnee: any;
 
   premiereSemaine: any;
   derniereSemaine: any;
 
-  constructor(private http: HttpClient,
-              private router: Router) {
+  constructor(private http: HttpClient) {
   }
 
-  nextWeek(): void {
-    if (this.semaineSelectionnee === this.derniereSemaine) {
-      return;
+  getSemaines(): Observable<any> {
+    return Observable.of(this.semaines);
+  }
+
+  getObsDateFromWeekYear(date): any {
+    return this.getSemaines().map(semaines => semaines.find(s => s.year === date.year && s.week === date.week));
+  }
+
+  nextWeek(semaine: any): any | null {
+    if (this.semaineEquals(semaine, this.derniereSemaine)) {
+      return null;
     }
 
-    this.semaineSelectionnee = this.semaines[this.semaines.indexOf(this.semaineSelectionnee) + 1];
+    return this.semaines[this.semaines.indexOf(semaine) + 1];
   }
 
-  previousWeek(): void {
-    if (this.semaineSelectionnee === this.premiereSemaine) {
-      return;
+  previousWeek(semaine: any): any | null {
+    if (this.semaineEquals(semaine, this.premiereSemaine)) {
+      return null;
     }
 
-    this.semaineSelectionnee = this.semaines[this.semaines.indexOf(this.semaineSelectionnee) - 1];
+    return this.semaines[this.semaines.indexOf(semaine) - 1];
   }
 
-  nowWeek(): void {
-    if (this.semaineProche === null) {
-      return;
+  nowWeek(semaine: any): any | null {
+    if (!this.semaineProche || this.semaineEquals(semaine, this.semaineProche)) {
+      return null;
     }
 
-    this.semaineSelectionnee = this.semaineProche;
+    return this.semaineProche;
   }
 
-  updateDates(dateDefault?: any, cb?: Function) {
-    this.http.get('php/dates.php').subscribe(data => this.loadDates(data, dateDefault, cb));
+  updateDates(cb?: Function) {
+    this.http.get('php/dates.php').subscribe(data => this.loadDates(data, cb));
   }
 
-  navigateTo(year: number, week: number) {
-    this.router.navigate(['et', year, week]);
+  private semaineEquals(semaine1: any, semaine2: any): boolean {
+    return semaine1.year === semaine2.year && semaine1.week === semaine2.week;
   }
 
   private findClosestDate() {
@@ -82,11 +90,7 @@ export class DatesService {
     }
   }
 
-  private findDateFromYearWeek(year: number, week: number): any {
-    return this.semaines.find(s => s.year === year && s.week === week);
-  }
-
-  private loadDates(data, dateDefault?, cb?: Function) {
+  private loadDates(data, cb?: Function) {
     for (const d of data) {
       this.semaines.push({
         debut: moment(d.debut),
@@ -101,12 +105,6 @@ export class DatesService {
     }
 
     this.findClosestDate();
-
-    this.semaineSelectionnee = dateDefault ? this.findDateFromYearWeek(dateDefault.year, dateDefault.week) : this.semaineProche;
-
-    if (!this.semaineSelectionnee) {
-      throw new Error('semaineSelectionnee impossible à résoudre');
-    }
 
     if (cb) {
       cb();
