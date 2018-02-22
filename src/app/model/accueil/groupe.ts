@@ -2,7 +2,7 @@ import {Lien} from './lien';
 
 export class Groupe {
   private nom: string;
-  private liens: Array<Lien>;
+  private liens: Lien[];
 
   constructor(nom: string) {
     this.nom = nom;
@@ -13,7 +13,7 @@ export class Groupe {
     return this.nom;
   }
 
-  public getLiens(): Array<Lien> {
+  public getLiens(): Lien[] {
     return this.liens;
   }
 

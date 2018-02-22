@@ -1,31 +1,29 @@
-<div class="container contenu">
-	<h2 style="margin-top: 10px;">Contact</h2>
-	<div *ngIf="erreur" class="alert alert-danger" role="alert">
-		<strong>Envoi échoué</strong> Une erreur est survenue. Réessayez.
-	</div>
-	<form *ngIf="!envoye">
-		<div class="form-group">
-			<label for="email">E-mail</label>
-			<input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="E-mail" name="email" [(ngModel)]="email">
-			<small id="emailHelp" class="form-text text-muted">Si vous souhaitez obtenir une réponse. Non obligatoire.</small>
-		</div>
-		<div class="form-group">
-			<label for="sujet">Sujet</label>
-			<select class="form-control" id="sujet" name="sujet" [(ngModel)]="sujet">
-				<option *ngFor="let s of sujets" value="{{s}}">{{s}}</option>
-			</select>
-		</div>
-		<div class="form-group">
-			<label for="message">Message</label>
-			<textarea class="form-control" id="message" rows="3" name="message" [(ngModel)]="message"></textarea>
-		</div>
-		<button type="submit" class="btn btn-primary" (click)="envoi()">Envoyer</button>
-	</form>
-	<div *ngIf="envoye">
-		<h3>Message envoyé!</h3>
-	</div>
-
-	<p style="margin-top: 20px; text-align: center;">
-		master.skysurf.fr n'héberge aucun fichier. Il ne fait que répertorier des liens vers les sites déjà disponibles sur des hébergeurs. Nous ne sommes donc pas responsables du contenu diffusé sur ces sites.
-	</p>
+<h2 style="margin-top: 10px;">Contact</h2>
+<div *ngIf="erreur" class="alert alert-danger" role="alert">
+  <strong>Envoi échoué</strong> Une erreur est survenue. Réessayez.
 </div>
+<form *ngIf="!envoye">
+  <div class="form-group">
+    <label for="email">E-mail</label>
+    <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="E-mail" name="email" [(ngModel)]="email">
+    <small id="emailHelp" class="form-text text-muted">Si vous souhaitez obtenir une réponse. Non obligatoire.</small>
+  </div>
+  <div class="form-group">
+    <label for="sujet">Sujet</label>
+    <select class="form-control" id="sujet" name="sujet" [(ngModel)]="sujet">
+      <option *ngFor="let s of sujets" value="{{s}}">{{s}}</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="message">Message</label>
+    <textarea class="form-control" id="message" rows="3" name="message" [(ngModel)]="message"></textarea>
+  </div>
+  <button type="submit" class="btn btn-primary" (click)="envoi()">Envoyer</button>
+</form>
+<div *ngIf="envoye">
+  <h3>Message envoyé!</h3>
+</div>
+
+<p style="margin-top: 20px; text-align: center;">
+  master.skysurf.fr n'héberge aucun fichier. Il ne fait que répertorier des liens vers les sites déjà disponibles sur des hébergeurs. Nous ne sommes donc pas responsables du contenu diffusé sur ces sites.
+</p>

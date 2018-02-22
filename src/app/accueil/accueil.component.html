@@ -1,94 +1,92 @@
-<div class="container contenu">
-  <div class="row section">
-    <div class="col-12">
-      <div class="row titre">
-        <div class="col">
-          <h4>
-            <img src="assets/icons/exclamation.svg" height="26" width="26" alt="Exclamation" class="d-inline-block align-top">
-            Liens importants
-          </h4>
-        </div>
+<div class="row section">
+  <div class="col-12">
+    <div class="row titre">
+      <div class="col">
+        <h4>
+          <img src="assets/icons/exclamation.svg" height="26" width="26" alt="Exclamation" class="d-inline-block align-top">
+          Liens importants
+        </h4>
       </div>
-      <div class="row">
-        <div class="col-lg-4 col-md-6 col-sm-12 mb-2" *ngFor="let l of liensPrimaires">
-          <a class="quick-link" href="{{l.getUrl()}}">
-            <div>
-              <h5><b>{{l.getNom()}}</b></h5>
-            </div>
-            <div>
-              {{l.getDescription()}}
-            </div>
-          </a>
-        </div>
-      </div>
-      <!--Liens secondaires-->
-      <div class="row">
-        <div class="col-lg-2 col-md-4 col-sm-12 mb-2" *ngFor="let g of groupesSecondaires">
-          <div class="dropdown" dropdown>
-            <div class="dropdown-toggle quick-link" style="border-top-color: green" dropdownToggle><b>{{g.getNom()}}</b></div>
-            <ul class="dropdown-menu" dropdownMenu>
-              <li *ngFor="let o of g.getLiens()"><a href="{{o.getUrl()}}">{{o.getNom()}}</a></li>
-            </ul>
+    </div>
+    <div class="row">
+      <div class="col-lg-4 col-md-6 col-sm-12 mb-2" *ngFor="let l of liensPrimaires">
+        <a class="quick-link" href="{{l.getUrl()}}">
+          <div>
+            <h5><b>{{l.getNom()}}</b></h5>
           </div>
+          <div>
+            {{l.getDescription()}}
+          </div>
+        </a>
+      </div>
+    </div>
+    <!--Liens secondaires-->
+    <div class="row">
+      <div class="col-lg-2 col-md-4 col-sm-12 mb-2" *ngFor="let g of groupesSecondaires">
+        <div class="dropdown" dropdown>
+          <div class="dropdown-toggle quick-link" style="border-top-color: green" dropdownToggle><b>{{g.getNom()}}</b></div>
+          <ul class="dropdown-menu" dropdownMenu>
+            <li *ngFor="let o of g.getLiens()"><a href="{{o.getUrl()}}">{{o.getNom()}}</a></li>
+          </ul>
         </div>
-        <div class="col-lg-2 col-md-4 col-sm-12 mb-2" *ngFor="let l of liensSecondaires">
-          <a class="quick-link" style="border-top-color: #0077ff" href="{{l.getUrl()}}"><b>{{l.getNom()}}</b></a>
-        </div>
+      </div>
+      <div class="col-lg-2 col-md-4 col-sm-12 mb-2" *ngFor="let l of liensSecondaires">
+        <a class="quick-link" style="border-top-color: #0077ff" href="{{l.getUrl()}}"><b>{{l.getNom()}}</b></a>
       </div>
     </div>
   </div>
+</div>
 
-  <div class="row section">
-    <div class="col">
-      <div class="row titre">
-        <div class="col">
-          <h4>
-            <img src="assets/icons/pencil.svg" height="26" width="26" alt="Crayon" class="d-inline-block align-top">
-            Semestres
-          </h4>
-        </div>
+<div class="row section">
+  <div class="col">
+    <div class="row titre">
+      <div class="col">
+        <h4>
+          <img src="assets/icons/pencil.svg" height="26" width="26" alt="Crayon" class="d-inline-block align-top">
+          Semestres
+        </h4>
       </div>
-      <div class="row">
-        <div class="col">
-          <ngb-tabset #tab="ngbTabset">
-            <ngb-tab id="tab{{s.getNumero()}}" title="Semestre {{s.getNumero()}}" *ngFor="let s of semestres">
-              <ng-template ngbTabContent>
-                <div class="row mt-2">
-                  <div class="col-lg-6 col-md-6 mb-2" *ngFor="let ue of s.getUe()">
-                    <div class="ue">
-                      <div class="row">
-                        <div class="col text-center unoverflow initiales-nom">
-                          <span *ngIf="ue.getInitiales().length > 0" class="initiales">[{{ue.getInitiales()}}] </span><span class="nom">{{ue.getNom()}}</span>
-                        </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <ngb-tabset #tab="ngbTabset">
+          <ngb-tab id="tab{{s.getNumero()}}" title="Semestre {{s.getNumero()}}" *ngFor="let s of semestres">
+            <ng-template ngbTabContent>
+              <div class="row mt-2">
+                <div class="col-lg-6 col-md-6 mb-2" *ngFor="let ue of s.getUe()">
+                  <div class="ue">
+                    <div class="row">
+                      <div class="col text-center unoverflow initiales-nom">
+                        <span *ngIf="ue.getInitiales().length > 0" class="initiales">[{{ue.getInitiales()}}] </span><span class="nom">{{ue.getNom()}}</span>
                       </div>
-                      <div class="row">
-                        <div class="col text-center">
-                          <span class="type">{{ue.getTypeS()}}</span>
-                        </div>
+                    </div>
+                    <div class="row">
+                      <div class="col text-center">
+                        <span class="type">{{ue.getTypeS()}}</span>
                       </div>
-                      <div class="row">
-                        <div class="col text-center">
-                          <a class="btn btn-sm btn-warning m-1" href="http://www.google.fr/search?q={{ue.getNom()}}">
-                            <img src="assets/icons/search.svg" height="18" width="18" alt="Recherche sur google" class="d-inline-block">
-                          </a>
-                          <div class="btn-group">
-                            <a href="{{l.getUrl()}}" class="btn btn-sm btn-info" *ngFor="let l of ue.getLiens()">{{l.getNom()}}</a>
-                          </div>
+                    </div>
+                    <div class="row">
+                      <div class="col text-center">
+                        <a class="btn btn-sm btn-warning m-1" href="http://www.google.fr/search?q={{ue.getNom()}}">
+                          <img src="assets/icons/search.svg" height="18" width="18" alt="Recherche sur google" class="d-inline-block">
+                        </a>
+                        <div class="btn-group">
+                          <a href="{{l.getUrl()}}" class="btn btn-sm btn-info" *ngFor="let l of ue.getLiens()">{{l.getNom()}}</a>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div class="liensAdd mt-2">
-                  <h5>Liens additionnels &amp; infos</h5>
-                  <button class="btn btn-dark btn-sm take-width" type="button" (click)="onClickOpenModal(s)">
-                    Voir les infos &amp; liens du semestre {{s.getNumero()}}
-                  </button>
-                </div>
-              </ng-template>
-            </ngb-tab>
-          </ngb-tabset>
-        </div>
+              </div>
+              <div class="liensAdd mt-2">
+                <h5>Liens additionnels &amp; infos</h5>
+                <button class="btn btn-dark btn-sm take-width" type="button" (click)="onClickOpenModal(s)">
+                  Voir les infos &amp; liens du semestre {{s.getNumero()}}
+                </button>
+              </div>
+            </ng-template>
+          </ngb-tab>
+        </ngb-tabset>
       </div>
     </div>
   </div>

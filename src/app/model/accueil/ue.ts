@@ -5,7 +5,7 @@ export class UE {
   private initiales: string;
   private nom: string;
   private type: UeType;
-  private liens: Array<Lien>;
+  private liens: Lien[];
 
   constructor(nom: string, initiales: string = '', type: UeType = UeType.GENERAL) {
     this.liens = [];
@@ -30,7 +30,7 @@ export class UE {
     return this.type.toString();
   }
 
-  public getLiens(): Array<Lien> {
+  public getLiens(): Lien[] {
     return this.liens;
   }
 

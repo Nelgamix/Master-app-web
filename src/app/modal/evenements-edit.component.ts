@@ -1,5 +1,4 @@
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {HttpClient} from '@angular/common/http';
 import {Component, Input, OnInit} from '@angular/core';
 
 import * as moment from 'moment';
@@ -29,7 +28,7 @@ export class ModalEvenementsEditComponent implements OnInit {
     'Autres'
   ];
 
-  constructor(public activeModal: NgbActiveModal, private http: HttpClient) {
+  constructor(public activeModal: NgbActiveModal) {
   }
 
   ngOnInit(): void {

@@ -19,10 +19,10 @@ import {UE} from '../model/accueil/ue';
   providers: [NgbTabsetConfig]
 })
 export class AccueilComponent implements OnInit, OnDestroy {
-  semestres: Array<Semestre> = [];
-  liensPrimaires: Array<Lien> = [];
-  liensSecondaires: Array<Lien> = [];
-  groupesSecondaires: Array<Groupe> = [];
+  semestres: Semestre[] = [];
+  liensPrimaires: Lien[] = [];
+  liensSecondaires: Lien[] = [];
+  groupesSecondaires: Groupe[] = [];
 
   @ViewChild('tab') tab;
 
@@ -59,10 +59,10 @@ export class AccueilComponent implements OnInit, OnDestroy {
   }
 
   private parseData(data: any): void {
-    const semestres: Array<Semestre> = [];
-    const liensPrimaires: Array<Lien> = [];
-    const liensSecondaires: Array<Lien> = [];
-    const groupesSecondaires: Array<Groupe> = [];
+    const semestres: Semestre[] = [];
+    const liensPrimaires: Lien[] = [];
+    const liensSecondaires: Lien[] = [];
+    const groupesSecondaires: Groupe[] = [];
 
     for (const g of data['primaire']) { // pour chaque groupe
       for (const l of g) { // pour chaque lien

@@ -1,7 +1,6 @@
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {Component, Input} from '@angular/core';
 import {Exclusion} from '../model/et/Exclusion';
-import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'app-modal-et-exclusions',

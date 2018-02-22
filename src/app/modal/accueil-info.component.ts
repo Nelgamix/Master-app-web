@@ -1,6 +1,6 @@
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {Component, Input} from '@angular/core';
-import {Semestre} from "../model/accueil/semestre";
+import {Semestre} from '../model/accueil/semestre';
 
 @Component({
   selector: 'app-modal-accueil-info',

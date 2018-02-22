@@ -4,8 +4,8 @@ import {Lien} from './lien';
 export class Semestre {
   private numero: number;
   private infos: string;
-  private ue: Array<UE>;
-  private liens: Array<Lien>;
+  private ue: UE[];
+  private liens: Lien[];
 
   constructor(numero: number, infos: string = '') {
     this.ue = [];
@@ -22,11 +22,11 @@ export class Semestre {
     return this.infos;
   }
 
-  public getUe(): Array<UE> {
+  public getUe(): UE[] {
     return this.ue;
   }
 
-  public getLiens(): Array<Lien> {
+  public getLiens(): Lien[] {
     return this.liens;
   }
 

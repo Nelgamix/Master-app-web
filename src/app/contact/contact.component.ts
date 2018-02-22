@@ -47,7 +47,7 @@ export class ContactComponent implements OnInit {
       hp = hp.set('email', this.email);
     }
 
-    if (this.sujets.includes(this.sujet)) { // contournable
+    if (this.sujets.indexOf(this.sujet) >= 0) { // contournable
       hp = hp.set('sujet', this.sujet);
     } else {
       return;
