@@ -51,14 +51,19 @@ import {NgxChartsModule} from '@swimlane/ngx-charts';
 import {ContextMenuModule} from 'ngx-contextmenu';
 import {EtInfoComponent} from './et/et-info.component';
 import {EtDetailsComponent} from './et/et-details.component';
+import {EtSettingsComponent} from './et/et-settings.component';
+import {MessageService} from './services/message.service';
+import {MessageComponent} from './message/message.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    MessageComponent,
     AccueilComponent,
     EtComponent,
     EtDetailsComponent,
     EtInfoComponent,
+    EtSettingsComponent,
     EvenementsComponent,
     ContactComponent,
     PageNotFoundComponent,
@@ -101,6 +106,7 @@ import {EtDetailsComponent} from './et/et-details.component';
     EmploiTempsService,
     DatesService,
     NotesService,
+    MessageService,
     CookieService
   ],
   bootstrap: [AppComponent],

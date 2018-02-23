@@ -54,6 +54,10 @@ export class Semaine {
    * Il contient donc tous les cours de chaque jour de la semaine.
    */
   setCours: SetCours;
+  setCoursActifs: SetCours;
+  setCoursCaches: SetCours;
+  setCoursSupprimes: SetCours;
+  setCoursPrives: SetCours;
 
   /**
    * Le premier jour de la semaine (Lundi) sous forme de moment()
@@ -226,9 +230,24 @@ export class Semaine {
    * Met à jour la variable cours de la semaine en y ajoutant tous les cours de chaque jour.
    * @returns {Cours[]} la liste des cours de la semaine.
    */
-  private analyseCours(): SetCours {
+  private analyseCours(): void {
     let ac = [];
-    this.jours.forEach(j => ac = ac.concat(j.setCours.cours));
-    return (this.setCours = new SetCours(ac));
+    let aca = [];
+    let acc = [];
+    let acs = [];
+    let acp = [];
+    this.jours.forEach(j => {
+      ac = ac.concat(j.setCours.cours);
+      aca = aca.concat(j.setCoursActifs.cours);
+      acc = acc.concat(j.setCoursCaches.cours);
+      acs = acs.concat(j.setCoursSupprimes.cours);
+      acp = acp.concat(j.setCoursPrives.cours);
+    });
+
+    this.setCours = new SetCours(ac, true);
+    this.setCoursActifs = new SetCours(aca, true);
+    this.setCoursCaches = new SetCours(acc, true);
+    this.setCoursSupprimes = new SetCours(acs, true);
+    this.setCoursPrives = new SetCours(acp, true);
   }
 }

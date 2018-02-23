@@ -41,8 +41,12 @@ export class SetCours {
 
   stats: any;
 
-  constructor(cours: Cours[] = []) {
+  constructor(cours: Cours[] = [], analyse: boolean = false) {
     this.cours = cours;
+
+    if (analyse) {
+      this.analyse();
+    }
   }
 
   private static analyseX(x: any[]): any {

@@ -1,7 +1,7 @@
 <div class="row pt-2 pb-2" id="head-title">
   <div class="col">
     <div class="row">
-      <div class="col h3 week-header mb-1">
+      <div class="col h3 text-center mb-1">
         Semaine <span class="text-danger">{{semaine.date.semaine}}</span>,
         du <span class="text-warning">{{semaine.date.dateDebut | amDateFormat:'D MMMM YYYY'}}</span>
         au <span class="text-primary">{{semaine.date.dateFin | amDateFormat:'D MMMM YYYY'}}</span>
@@ -9,7 +9,7 @@
     </div>
 
     <div class="row" *ngIf="infoSemaine">
-      <div class="col h6 week-header mb-1" [ngSwitch]="infoSemaine.placement">
+      <div class="col h6 text-center mb-1" [ngSwitch]="infoSemaine.placement">
         <span *ngSwitchCase="-1">Dans {{infoSemaine.date | amDuration:'milliseconds'}}</span>
         <span *ngSwitchCase="0">Commencée depuis {{infoSemaine.date | amDuration:'milliseconds'}}</span>
         <span *ngSwitchCase="1">Finie depuis {{infoSemaine.date | amDuration:'milliseconds'}}</span>
@@ -33,36 +33,93 @@
 </div>
 
 <ng-template #elseBlock>
-  <div class="row">
-    <div class="col-12 col-md-auto heading m-md-3">
+  <div class="row mb-3 pt-2" id="head-details">
+    <div class="col">
+      <div class="row" id="head-summary">
+        <!-- Summary row -->
+        <ng-container *ngFor="let j of semaine.jours">
+          <div class="col-12 col-md text-center" *ngIf="!j.setCoursActifs.estVide()">
+            <span class="text-capitalize font-weight-bold">{{j.date | amDateFormat:'dddd'}}</span>:
+            <span class="stat-donnee">{{j.setCoursActifs.premierCours.debut | date: 'HH:mm'}} &rarr; {{j.setCoursActifs.dernierCours.fin | date: 'HH:mm'}}</span>
+          </div>
+        </ng-container>
+      </div>
+
+      <hr>
+
       <div class="row">
-        <div class="col mb-3 mb-md-0">
-          <h5>Statistiques</h5>
+        <!-- Stats pannel -->
+        <div class="col-12 col-md-6 mb-2">
           <div class="row">
-            <div class="col-12">
-              <span class="stat-donnee">{{semaine.stats['duree'].data | duree}}</span> heures
+            <div class="col">
+              <h5>Statistiques
+                <span class="badge badge-success" style="cursor: pointer" (click)="openStats()">plus&hellip;</span>
+              </h5>
+              <div class="row">
+                <div class="col">
+                  <div class="row">
+                    <div class="col-12">
+                      <span class="stat-donnee">{{semaine.stats['duree'].data | duree}}</span>
+                      <span class="font-weight-bold">heures</span>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-12">
+                      <span class="stat-donnee">{{semaine.stats['moyenneParCours'].data | duree}}</span>
+                      <span class="font-weight-bold">heure(s) / cours</span>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-12">
+                      <span class="stat-donnee">{{semaine.stats['moyenneParJour'].data | duree}}</span>
+                      <span class="font-weight-bold">heures / jour</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="row">
+                    <div class="col-12">
+                      <span class="stat-donnee">{{semaine.setCoursActifs.cours.length}}</span>
+                      <span class="font-weight-bold">cours actifs</span>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-12">
+                      <span class="stat-donnee">{{semaine.setCoursCaches.cours.length}}</span>
+                      <span class="font-weight-bold">cours cachés</span>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-12">
+                      <span class="stat-donnee">{{semaine.setCoursSupprimes.cours.length}}</span>
+                      <span class="font-weight-bold">cours supprimés</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
+        </div>
+
+        <!-- Deb & fin pannel -->
+        <div class="col-12 col-md-6 mb-2">
+          <h5>Début &amp; fin des cours</h5>
           <div class="row">
-            <div class="col-12">
-              <span class="stat-donnee">{{semaine.stats['moyenneParCours'].data | duree}}</span> heure(s) / cours
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-12">
-              <span class="stat-donnee">{{semaine.stats['moyenneParJour'].data | duree}}</span> heures / jour
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-12">
-              <button type="button" class="btn btn-success take-width mt-2" (click)="openStats()"><img src="assets/icons/list.png" alt="Plus de statistiques"></button>
+            <div class="col">
+              <dl>
+                <dt *ngIf="semaine.setCoursActifs.coursActuel">Cours actuel</dt>
+                <dd *ngIf="semaine.setCoursActifs.coursActuel"><b>{{semaine.setCoursActifs.coursActuel.nom}}</b> en <span class="font-italic" *ngFor="let s of semaine.setCoursActifs.coursActuel.salles">{{s.batiment}} {{s.salle}}</span></dd>
+
+                <dt *ngIf="semaine.setCoursActifs.coursSuivant">Cours suivant <span style="font-size: 75%; color: gray">dans {{prochainCoursTimer | amDuration:'milliseconds'}}</span></dt>
+                <dd *ngIf="semaine.setCoursActifs.coursSuivant"><b>{{semaine.setCoursActifs.coursSuivant.nom}}</b> en <span class="font-italic" *ngFor="let s of semaine.setCoursActifs.coursSuivant.salles">{{s.batiment}} {{s.salle}}</span></dd>
+              </dl>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="col-12 col-md heading m-md-3">
+    <!--<div class="col-12 col-md heading m-md-3">
       <h5>Exclusions</h5>
       <div class="row" *ngFor="let e of (etService.exclusions ? etService.exclusions.slice(0, 5) : [])">
         <div class="col-12">
@@ -83,37 +140,7 @@
           <button class="btn btn-warning take-width" (click)="openExclusions()"><img src="assets/icons/pencil.png" alt="Configurer"></button>
         </div>
       </div>
-    </div>
-
-    <div class="col-12 col-md-4 heading m-md-3">
-      <h5>Début &amp; fin des cours</h5>
-      <div class="row">
-        <div class="col">
-          <div class="row" *ngFor="let j of semaine.jours">
-            <ng-container *ngIf="!j.setCoursActifs.estVide()">
-              <div class="col-6 text-center">
-                <span class="stat-titre text-capitalize">{{j.date | amDateFormat:'dddd'}}</span>
-              </div>
-              <div class="col-6 text-center">
-                <span class="stat-donnee">{{j.setCoursActifs.premierCours.debut | date: 'HH:mm'}} &rarr; {{j.setCoursActifs.dernierCours.fin | date: 'HH:mm'}}</span>
-              </div>
-            </ng-container>
-          </div>
-        </div>
-      </div>
-      <hr *ngIf="semaine.setCours.coursActuel || semaine.setCours.coursSuivant">
-      <div class="row">
-        <div class="col">
-          <dl>
-            <dt *ngIf="semaine.setCours.coursActuel">Cours actuel</dt>
-            <dd *ngIf="semaine.setCours.coursActuel"><b>{{semaine.setCours.coursActuel.nom}}</b> en <span class="font-italic" *ngFor="let s of semaine.setCours.coursActuel.salles">{{s.batiment}} {{s.salle}}</span></dd>
-
-            <dt *ngIf="semaine.setCours.coursSuivant">Cours suivant <span style="font-size: 75%; color: gray">dans {{prochainCoursTimer | amDuration:'milliseconds'}}</span></dt>
-            <dd *ngIf="semaine.setCours.coursSuivant"><b>{{semaine.setCours.coursSuivant.nom}}</b> en <span class="font-italic" *ngFor="let s of semaine.setCours.coursSuivant.salles">{{s.batiment}} {{s.salle}}</span></dd>
-          </dl>
-        </div>
-      </div>
-    </div>
+    </div>-->
   </div>
 
   <div class="row mb-2">
@@ -138,8 +165,15 @@
             <input ngbButton type="radio" [value]="VueType.VISUEL"><img src="assets/icons/expand.png" alt="Visuel">
           </label>
         </div>
-        <button type="button" class="btn btn-success img-text" (click)="openPersonnel()"><img src="assets/icons/push-pin.png" alt="Cours">Personnel</button>
-        <button type="button" class="btn btn-warning img-text" (click)="openNotes()"><img src="assets/icons/file.png" alt="Notes">Notes</button>
+        <button type="button" class="btn btn-success img-text" (click)="openExclusions()">
+          <img src="assets/icons/push-pin.png" alt="Cours">Exclusions
+        </button>
+        <button type="button" class="btn btn-success img-text" (click)="openPersonnel()">
+          <img src="assets/icons/push-pin.png" alt="Cours">Personnel
+        </button>
+        <button type="button" class="btn btn-warning img-text" (click)="openNotes()">
+          <img src="assets/icons/file.png" alt="Notes">Notes
+        </button>
         <button type="button" class="btn btn-info img-text" [ngbPopover]="helpContent" popoverTitle="Code couleur" placement="left">
           <img src="assets/icons/info.png" alt="Info">Couleurs
         </button>

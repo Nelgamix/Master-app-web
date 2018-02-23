@@ -19,6 +19,7 @@ import {
 import * as moment from 'moment';
 
 // TODO: EDIT: vérif les champs
+// TODO: enlever messageBox, remplacer par celle du service
 
 @Component({
   selector: 'app-evenements',

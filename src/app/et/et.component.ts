@@ -9,12 +9,21 @@ import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/observable/of';
 import * as moment from 'moment';
+import {MessageService} from '../services/message.service';
 
 // TODO: Settings screen (comme info) avec exclusions, remove cours passés, changer couleurs
 // TODO: exclusions -> settings
 // TODO: info: stats générales, sur les exclusion, les notes, graph sur les heures moyennes
 // TODO: filtrage sur et visuel
 // TODO: cours perso ui
+// TODO: plus d'info sur chaque jour (nb cours...)
+// TODO: fix vue mobile
+
+enum VueType {
+  ET,
+  INFO,
+  SETTINGS
+}
 
 @Component({
   selector: 'app-et-root',
@@ -27,15 +36,16 @@ export class EtComponent implements OnInit {
   date$: Observable<any>;
   date: SemaineDate;
 
-  loading: boolean;
-  info: boolean;
+  VueType = VueType;
+  vueType: VueType;
 
   constructor(public etService: EmploiTempsService,
               public datesService: DatesService,
               private route: ActivatedRoute,
-              private router: Router) {
-    this.info = false;
+              private router: Router,
+              private messageService: MessageService) {
     this.semaine = null;
+    this.vueType = VueType.ET;
   }
 
   ngOnInit(): void {
@@ -52,7 +62,7 @@ export class EtComponent implements OnInit {
           const s = +params.get('week');
 
           if (a && s && a === 2018 && s > 0 && s < 53) {
-            this.loading = true;
+            this.messageService.showLoading();
             return this.etService.updateSingleWeek(s, a);
           } else {
             console.error('invalid navigation: ' + a + ' ' + s);
@@ -67,7 +77,7 @@ export class EtComponent implements OnInit {
           }
 
           this.semaine = s;
-          this.loading = false;
+          this.messageService.closeLoading();
         });
       } else {
         this.navigateToWeek(this.datesService.semaineProche);
@@ -94,11 +104,19 @@ export class EtComponent implements OnInit {
   }
 
   showInfo() {
-    this.info = true;
+    this.vueType = VueType.INFO;
   }
 
   closeInfo() {
-    this.info = false;
+    this.vueType = VueType.ET;
+  }
+
+  showSettings() {
+    this.vueType = VueType.SETTINGS;
+  }
+
+  closeSettings() {
+    this.vueType = VueType.ET;
   }
 
   boutonMagique(id: number) {
@@ -110,6 +128,9 @@ export class EtComponent implements OnInit {
         );
 
         this.etService.ajoutCoursPerso([cp]);
+        break;
+      case 1:
+        this.messageService.showMessage('Test!');
         break;
     }
   }

@@ -31,7 +31,7 @@
               <img src="assets/icons_perso/drawing2past.svg" alt="Passé" class="indicateur-gauche-relative" width="24" height="24" *ngIf="s.positionTemps === PositionTemps.PASSE">
               <img src="assets/icons_perso/drawing1present.svg" alt="Présent" class="indicateur-gauche-relative" width="24" height="24" *ngIf="s.positionTemps === PositionTemps.PRESENT">
               <img src="assets/icons_perso/drawing3futur.svg" alt="Futur" class="indicateur-gauche-relative" width="24" height="24" *ngIf="s.positionTemps === PositionTemps.FUTUR">
-              Semaine {{s.week}} de {{s.year}} <small class="text-muted">du {{s.premierJour.date | amDateFormat:'D MMMM YYYY'}} au {{s.dernierJour.date | amDateFormat:'D MMMM YYYY'}}</small>
+              Semaine {{s.date.semaine}} de {{s.date.annee}} <small class="text-muted">du {{s.premierJour.date | amDateFormat:'D MMMM YYYY'}} au {{s.dernierJour.date | amDateFormat:'D MMMM YYYY'}}</small>
             </h4>
           </div>
         </div>

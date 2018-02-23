@@ -1,4 +1,4 @@
-<ng-container *ngIf="!info && semaine">
+<ng-container *ngIf="vueType === VueType.ET && semaine">
   <!-- Première colonne: contrôles de la semaine et info ET -->
   <div class="row mb-2">
     <!-- Informations sur l'emploi du temps (OK|NOK, ADE OK|ADE NOK, Last updated) -->
@@ -36,9 +36,12 @@
         <div class="col-auto">
           <button class="btn btn-info" (click)="showInfo()" placement="bottom" ngbTooltip="Informations générales">&#8693;</button>
         </div>
-        <!--<div class="col-auto">
-          <button class="btn btn-danger" (click)="boutonMagique(0)">BM</button>
-        </div>-->
+        <div class="col-auto">
+          <button class="btn btn-warning" (click)="showSettings()">S</button>
+        </div>
+        <div class="col-auto">
+          <button class="btn btn-danger" (click)="boutonMagique(1)">BM</button>
+        </div>
       </div>
     </div>
   </div>
@@ -54,10 +57,5 @@
   <app-et-details *ngIf="etService.metadata['ok']" [semaine]="semaine"></app-et-details>
 </ng-container>
 
-<ng-container>
-  <app-etinfo *ngIf="info" (onClose)="closeInfo()"></app-etinfo>
-</ng-container>
-
-<div class="lwrapper" [class.not-loading]="!loading">
-  <div class="loader">Loading...</div>
-</div>
+<app-et-info *ngIf="vueType === VueType.INFO" (onClose)="closeInfo()"></app-et-info>
+<app-et-settings *ngIf="vueType === VueType.SETTINGS" (onClose)="closeSettings()"></app-et-settings>

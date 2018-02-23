@@ -7,7 +7,7 @@ import {colorSets} from '@swimlane/ngx-charts/release/utils';
 import {Observable} from 'rxjs/Observable';
 
 @Component({
-  selector: 'app-etinfo',
+  selector: 'app-et-info',
   templateUrl: './et-info.component.html',
   styleUrls: ['./et-info.component.css']
 })

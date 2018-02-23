@@ -119,8 +119,8 @@ export class EtDetailsComponent implements OnChanges {
       this.semaineProgress = (now.diff(first, 'minutes') / (last.diff(first, 'minutes'))) * 100;
     }
 
-    if (this.semaine.setCours.coursSuivant) {
-      this.prochainCoursTimer = moment.duration(now.diff(this.semaine.setCours.coursSuivant.debut));
+    if (this.semaine.setCoursActifs.coursSuivant) {
+      this.prochainCoursTimer = moment.duration(now.diff(this.semaine.setCoursActifs.coursSuivant.debut));
     }
   }
 }

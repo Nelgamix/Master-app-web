@@ -51,12 +51,6 @@
   background-color: rgba(0, 0, 0, .05);
 }
 
-.unoverflow {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
 .jour-title-nom {
   font-size: 30px;
 }

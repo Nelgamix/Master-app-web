@@ -2,31 +2,8 @@
 @import "~bootstrap/dist/css/bootstrap.css";
 
 body {
-  background: url(assets/backgrounds/polygonal-background.jpg) no-repeat center;
+  background: url(assets/backgrounds/polygonal-background.jpg);
   background-size: 100% auto;
-}
-
-.container.contenu {
-  background-color: rgba(255, 255, 255, .8);
-  padding-top: 8px;
-  padding-bottom: 10px;
-  position: relative;
-
-  box-shadow: 0 8px 8px grey;
-}
-
-.take-width {
-  width: 100%;
-}
-
-.capitalize {
-  text-transform: capitalize;
-}
-
-.unoverflow {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 #progress-main .progress {

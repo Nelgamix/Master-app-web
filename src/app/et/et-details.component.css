@@ -1,10 +1,20 @@
 #head-title {
   border-top: 1px solid grey;
   border-bottom: 1px solid grey;
-  box-shadow: 0 0 8px grey;
+  /*box-shadow: 0 0 8px grey;*/
   background-image: url(assets/backgrounds/line_angle_light_shadow.jpg);
   background-size: cover;
   color: white;
+}
+
+#head-details {
+  box-shadow: 0 4px 6px #aaaaaa70;
+  border-bottom: 1px solid grey;
+  background: linear-gradient(to bottom, #8882, #ddd1);
+}
+
+#head-summary {
+  font-size: 112%;
 }
 
 .btn.img-text > img {
@@ -19,21 +29,8 @@
   max-width: 160px;
 }
 
-.week-header {
-  text-align: center;
-}
-
-.stat-titre {
-  font-weight: bold;
-}
 .stat-donnee {
   color: blueviolet;
-}
-
-.heading {
-  box-shadow: 0 0 6px grey;
-  padding: 12px 16px;
-  background-color: rgba(0, 0, 0, .04);
 }
 
 .demo-td {
