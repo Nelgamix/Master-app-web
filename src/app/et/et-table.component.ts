@@ -9,11 +9,11 @@ import {Exclusion} from '../model/et/Exclusion';
 
 @Component({
   selector: 'app-et-table',
-  templateUrl: './ettable.component.html',
-  styleUrls: ['./ettable.component.css']
+  templateUrl: './et-table.component.html',
+  styleUrls: ['./et-table.component.css']
 })
 export class EtTableComponent {
-  @Input() search: string;
+  @Input() filtre: string;
   @Input() semaine: Semaine;
   @ViewChild(ContextMenuComponent) public menu: ContextMenuComponent;
 

@@ -8,8 +8,8 @@ import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'app-etinfo',
-  templateUrl: './etinfo.component.html',
-  styleUrls: ['./etinfo.component.css']
+  templateUrl: './et-info.component.html',
+  styleUrls: ['./et-info.component.css']
 })
 export class EtInfoComponent implements OnInit {
   @Output() onClose = new EventEmitter();
@@ -47,10 +47,10 @@ export class EtInfoComponent implements OnInit {
 
       s.forEach(w => {
         this.cacher.push(true);
-        st.series.push({name: w.year + ' S' + w.week, value: w.setCours.getTaille()});
-        sa.series.push({name: w.year + ' S' + w.week, value: w.setCours.coursActifs.length});
-        sc.series.push({name: w.year + ' S' + w.week, value: w.setCours.coursCaches.length});
-        ss.series.push({name: w.year + ' S' + w.week, value: w.setCours.coursSupprimes.length});
+        st.series.push({name: w.date.annee + ' S' + w.date.semaine, value: w.setCours.getTaille()});
+        sa.series.push({name: w.date.annee + ' S' + w.date.semaine, value: w.setCours.coursActifs.length});
+        sc.series.push({name: w.date.annee + ' S' + w.date.semaine, value: w.setCours.coursCaches.length});
+        ss.series.push({name: w.date.annee + ' S' + w.date.semaine, value: w.setCours.coursSupprimes.length});
       });
 
       this.loaded = true;

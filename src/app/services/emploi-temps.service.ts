@@ -65,12 +65,20 @@ export class EmploiTempsService {
    * @param {any} date la date, qui contient year et week
    * @param {Function} cb fonction qui s'exécute après l'update.
    */
-  updateSingleWeek(date: any, cb?: Function): Observable<Semaine> {
+  updateSingleWeek(semaine: number, annee: number, cb?: Function): Observable<Semaine> {
     return Observable.create(obs => {
-      const t: Semaine = this.emploiTemps.trouverSemaine(date.week, date.year);
+      const t: Semaine = this.emploiTemps.trouverSemaine(semaine, annee);
       if (!t) {
-        this.http.get('php/ical.php?from_year=' + date.year + '&from_week=' + date.week)
-          .subscribe(data => this.loadData(data, obs, false, cb));
+        this.http.get('php/ical.php?from_year=' + annee + '&from_week=' + semaine)
+          .subscribe(
+            data => this.loadData(data, obs, false, cb),
+            error => {
+              console.error(error);
+              obs.next(null);
+              if (cb) {
+                cb();
+              }
+            });
       } else {
         this.analyse();
         obs.next(t);

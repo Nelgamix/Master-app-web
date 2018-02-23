@@ -4,8 +4,8 @@ import {Semaine} from '../model/et/Semaine';
 
 @Component({
   selector: 'app-et-visuel',
-  templateUrl: './etvisuel.component.html',
-  styleUrls: ['./etvisuel.component.css']
+  templateUrl: './et-visuel.component.html',
+  styleUrls: ['./et-visuel.component.css']
 })
 export class EtVisuelComponent implements OnChanges {
   @Input() semaine: Semaine;

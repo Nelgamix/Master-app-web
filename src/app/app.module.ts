@@ -38,8 +38,8 @@ import {DatesService} from './services/dates.service';
 
 // Autres
 import {EvenementComponent} from './evenements/evenement.component';
-import {EtVisuelComponent} from './et/etvisuel.component';
-import {EtTableComponent} from './et/ettable.component';
+import {EtVisuelComponent} from './et/et-visuel.component';
+import {EtTableComponent} from './et/et-table.component';
 import {AppRoutingModule} from './app-routing.module';
 import {ExclusionComponent} from './et/exclusion.component';
 import {ModalEtGestionCoursComponent} from './modal/et-gestion-cours.component';
@@ -49,13 +49,15 @@ import {NotesService} from './services/notes.service';
 import {DropdownModule} from 'angular-custom-dropdown';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
 import {ContextMenuModule} from 'ngx-contextmenu';
-import {EtInfoComponent} from './et/etinfo.component';
+import {EtInfoComponent} from './et/et-info.component';
+import {EtDetailsComponent} from './et/et-details.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AccueilComponent,
     EtComponent,
+    EtDetailsComponent,
     EtInfoComponent,
     EvenementsComponent,
     ContactComponent,

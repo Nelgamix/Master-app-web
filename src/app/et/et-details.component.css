@@ -1,0 +1,74 @@
+#head-title {
+  border-top: 1px solid grey;
+  border-bottom: 1px solid grey;
+  box-shadow: 0 0 8px grey;
+  background-image: url(assets/backgrounds/line_angle_light_shadow.jpg);
+  background-size: cover;
+  color: white;
+}
+
+.btn.img-text > img {
+  margin-right: 10px;
+}
+.btn.img-text {
+  max-width: 48px;
+  overflow: hidden;
+  transition: 500ms max-width ease-in-out;
+}
+.btn.img-text:hover {
+  max-width: 160px;
+}
+
+.week-header {
+  text-align: center;
+}
+
+.stat-titre {
+  font-weight: bold;
+}
+.stat-donnee {
+  color: blueviolet;
+}
+
+.heading {
+  box-shadow: 0 0 6px grey;
+  padding: 12px 16px;
+  background-color: rgba(0, 0, 0, .04);
+}
+
+.demo-td {
+  background-color: rgba(30, 144, 255, 0.4);
+  border: 2px solid rgba(30, 144, 255, 0.2);
+}
+
+.demo-tp {
+  background-color: rgba(0, 160, 136, 0.4);
+  border: 2px solid rgba(0, 160, 136, 0.2);
+}
+
+.demo-cm {
+  background-color: rgba(220, 20, 60, 0.4);
+  border: 2px solid rgba(220, 20, 60, 0.2);
+}
+
+.demo-autre {
+  background-color: rgba(140, 140, 140, 0.4);
+  border: 2px solid rgba(140, 140, 140, 0.2);
+}
+
+.demo-cm, .demo-td, .demo-tp, .demo-autre {
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+dl {
+  margin-bottom: 0;
+}
+
+dd {
+  padding-left: 10px;
+}
+
+hr {
+  margin: 8px auto;
+}

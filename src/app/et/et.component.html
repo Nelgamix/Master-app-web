@@ -25,7 +25,9 @@
         </div>
         <div class="col-auto">
           <select [ngModel]="date" (ngModelChange)="navigateToWeek($event)" class="custom-select form-control" name="selDate" id="selDate">
-            <option [ngValue]="i" *ngFor="let i of datesService.semaines">{{i.debut | amDateFormat:'YYYY-MM-DD'}} &rarr; {{i.fin | amDateFormat:'YYYY-MM-DD'}}</option>
+            <option [ngValue]="i" *ngFor="let i of datesService.semaines">
+              ({{i.semaine}}) {{i.dateDebut | amDateFormat:'YYYY-MM-DD'}} &rarr; {{i.dateFin | amDateFormat:'YYYY-MM-DD'}}
+            </option>
           </select>
         </div>
         <div class="col-auto">
@@ -35,7 +37,7 @@
           <button class="btn btn-info" (click)="showInfo()" placement="bottom" ngbTooltip="Informations générales">&#8693;</button>
         </div>
         <!--<div class="col-auto">
-          <button class="btn btn-danger" (click)="boutonMagique(1)">BM</button>
+          <button class="btn btn-danger" (click)="boutonMagique(0)">BM</button>
         </div>-->
       </div>
     </div>
@@ -49,162 +51,7 @@
     </div>
   </div>
 
-  <ng-container *ngIf="etService.metadata['ok']">
-    <div class="row pt-2 pb-2" id="head-title">
-      <div class="col">
-        <div class="row">
-          <div class="col h3 week-header mb-1" *ngIf="date">
-            Semaine <span class="text-danger">{{date.week}}</span>,
-            du <span class="text-warning">{{date.debut | amDateFormat:'D MMMM YYYY'}}</span>
-            au <span class="text-primary">{{date.fin | amDateFormat:'D MMMM YYYY'}}</span>
-          </div>
-        </div>
-
-        <div class="row" *ngIf="infoSemaine">
-          <div class="col h6 week-header mb-1" [ngSwitch]="infoSemaine.placement">
-            <span *ngSwitchCase="-1">Dans {{infoSemaine.date | amDuration:'milliseconds'}}</span>
-            <span *ngSwitchCase="0">Commencée depuis {{infoSemaine.date | amDuration:'milliseconds'}}</span>
-            <span *ngSwitchCase="1">Finie depuis {{infoSemaine.date | amDuration:'milliseconds'}}</span>
-          </div>
-        </div>
-
-        <div class="row" *ngIf="weekProgress">
-          <div class="col">
-            <ngb-progressbar id="progress-main" type="{{weekProgress < 100 ? 'primary' : 'success'}}" [value]="weekProgress" [striped]="true" [animated]="true">
-              <b>{{weekProgress | number:'1.0-1'}}%</b>
-            </ngb-progressbar>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="row mt-4" *ngIf="semaine.setCours.estVide(); else elseBlock">
-      <div class="col text-center">
-        <img src="assets/icons_perso/drawing4empty.svg" alt="Empty" class="m-5" width="120" height="120">
-      </div>
-    </div>
-
-    <ng-template #elseBlock>
-      <div class="row">
-        <div class="col-12 col-md-auto heading m-md-3">
-          <div class="row">
-            <div class="col mb-3 mb-md-0">
-              <h5>Statistiques</h5>
-              <div class="row">
-                <div class="col-12">
-                  <span class="stat-donnee">{{semaine.stats['duree'].data | duree}}</span> heures
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-12">
-                  <span class="stat-donnee">{{semaine.stats['moyenneParCours'].data | duree}}</span> heure(s) / cours
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-12">
-                  <span class="stat-donnee">{{semaine.stats['moyenneParJour'].data | duree}}</span> heures / jour
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-12">
-                  <button type="button" class="btn btn-success take-width mt-2" (click)="openStats()"><img src="assets/icons/list.png" alt="Plus de statistiques"></button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-12 col-md heading m-md-3">
-          <h5>Exclusions</h5>
-          <div class="row" *ngFor="let e of (etService.exclusions ? etService.exclusions.slice(0, 5) : [])">
-            <div class="col-12">
-              <span *ngIf="e.supprimer"><i>[caché]</i></span>
-              <span *ngIf="e.type.length > 0"><b>Type</b>: {{e.type}}</span>
-              <span *ngIf="e.nom.length > 0"><b>Nom</b>: {{e.nom}}</span>
-              <span *ngIf="e.professeur.length > 0"><b>Prof.</b>: {{e.professeur}}</span>
-              <span *ngIf="e.salle.length > 0"><b>Salle</b>: {{e.salle}}</span>
-            </div>
-          </div>
-          <div class="row" *ngIf="etService.exclusions.length > 5">
-            <div class="col-12">
-              + <b>{{etService.exclusions.length - 5}}</b> éléments
-            </div>
-          </div>
-          <div class="row mt-2">
-            <div class="col">
-              <button class="btn btn-warning take-width" (click)="openExclusions()"><img src="assets/icons/pencil.png" alt="Configurer"></button>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-12 col-md-4 heading m-md-3">
-          <h5>Début &amp; fin des cours</h5>
-          <div class="row">
-            <div class="col">
-              <div class="row" *ngFor="let j of semaine.jours">
-                <ng-container *ngIf="!j.setCoursActifs.estVide()">
-                  <div class="col-6 text-center">
-                    <span class="stat-titre text-capitalize">{{j.date | amDateFormat:'dddd'}}</span>
-                  </div>
-                  <div class="col-6 text-center">
-                    <span class="stat-donnee">{{j.setCoursActifs.premierCours.debut | date: 'HH:mm'}} &rarr; {{j.setCoursActifs.dernierCours.fin | date: 'HH:mm'}}</span>
-                  </div>
-                </ng-container>
-              </div>
-            </div>
-          </div>
-          <hr *ngIf="semaine.setCours.coursActuel || semaine.setCours.coursSuivant">
-          <div class="row">
-            <div class="col">
-              <dl>
-                <dt *ngIf="semaine.setCours.coursActuel">Cours actuel</dt>
-                <dd *ngIf="semaine.setCours.coursActuel"><b>{{semaine.setCours.coursActuel.nom}}</b> en <span class="font-italic" *ngFor="let s of semaine.setCours.coursActuel.salles">{{s.batiment}} {{s.salle}}</span></dd>
-
-                <dt *ngIf="semaine.setCours.coursSuivant">Cours suivant <span style="font-size: 75%; color: gray">dans {{prochainCoursTimer | amDuration:'milliseconds'}}</span></dt>
-                <dd *ngIf="semaine.setCours.coursSuivant"><b>{{semaine.setCours.coursSuivant.nom}}</b> en <span class="font-italic" *ngFor="let s of semaine.setCours.coursSuivant.salles">{{s.batiment}} {{s.salle}}</span></dd>
-              </dl>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="row mb-2">
-        <div class="col-md-6 col-sm-12">
-          <div class="input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text" id="basic-search"><img src="assets/icons/search.png" alt="Recherche"></span>
-            </div>
-            <input type="text" class="form-control" placeholder="Rechercher" aria-label="Rechercher" aria-describedby="basic-search" [(ngModel)]="search">
-            <div class="input-group-append" *ngIf="search.length > 0">
-              <button type="button" class="btn btn-danger" (click)="search = ''"><img src="assets/icons/delete.png" alt="Clear"></button>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 col-sm-12 mt-2 mt-md-0">
-          <div class="float-right">
-            <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" [(ngModel)]="vueType">
-              <label ngbButtonLabel class="btn-primary px-4">
-                <input ngbButton type="radio" [value]="1"><img src="assets/icons/options.png" alt="Tables">
-              </label>
-              <label ngbButtonLabel class="btn-primary px-4">
-                <input ngbButton type="radio" [value]="2"><img src="assets/icons/expand.png" alt="Visuel">
-              </label>
-            </div>
-            <button type="button" class="btn btn-success img-text" (click)="openPersonnel()"><img src="assets/icons/push-pin.png" alt="Cours">Personnel</button>
-            <button type="button" class="btn btn-warning img-text" (click)="openNotes()"><img src="assets/icons/file.png" alt="Notes">Notes</button>
-            <button type="button" class="btn btn-info img-text" [ngbPopover]="helpContent" popoverTitle="Code couleur" placement="left">
-              <img src="assets/icons/info.png" alt="Info">Couleurs
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <ng-container [ngSwitch]="vueType">
-        <app-et-table *ngSwitchCase="1" [semaine]="semaine" [search]="search"></app-et-table>
-        <app-et-visuel *ngSwitchCase="2" [semaine]="semaine"></app-et-visuel>
-      </ng-container>
-    </ng-template>
-  </ng-container>
+  <app-et-details *ngIf="etService.metadata['ok']" [semaine]="semaine"></app-et-details>
 </ng-container>
 
 <ng-container>
@@ -214,10 +61,3 @@
 <div class="lwrapper" [class.not-loading]="!loading">
   <div class="loader">Loading...</div>
 </div>
-
-<ng-template #helpContent>
-  <span class="demo-cm">CM</span>
-  <span class="demo-td">TD</span>
-  <span class="demo-tp">TP</span>
-  <span class="demo-autre">Autre</span>
-</ng-template>

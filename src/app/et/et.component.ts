@@ -1,22 +1,20 @@
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-
 import {EmploiTempsService} from '../services/emploi-temps.service';
-import {ModalEtExclusionsComponent} from '../modal/et-exclusions.component';
-
-import {ModalEtStatsComponent} from '../modal/et-stats.component';
 import {DatesService} from '../services/dates.service';
 
 import {Component, OnInit} from '@angular/core';
-import {Exclusion} from '../model/et/Exclusion';
-import {ModalEtGestionCoursComponent} from '../modal/et-gestion-cours.component';
-import {ModalEtNotesComponent} from '../modal/et-notes.component';
-import {Semaine} from '../model/et/Semaine';
+import {Semaine, SemaineDate} from '../model/et/Semaine';
 import {CoursPerso, CoursPersoRecurrence} from '../model/et/CoursPerso';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/observable/of';
 import * as moment from 'moment';
+
+// TODO: Settings screen (comme info) avec exclusions, remove cours passés, changer couleurs
+// TODO: exclusions -> settings
+// TODO: info: stats générales, sur les exclusion, les notes, graph sur les heures moyennes
+// TODO: filtrage sur et visuel
+// TODO: cours perso ui
 
 @Component({
   selector: 'app-et-root',
@@ -27,26 +25,15 @@ export class EtComponent implements OnInit {
   semaine$: Observable<Semaine>;
   semaine: Semaine;
   date$: Observable<any>;
-  date: any;
+  date: SemaineDate;
 
-  vueType = 1;
   loading: boolean;
-  infoSemaine: any;
-  weekProgress: number;
-  search: string;
   info: boolean;
-
-  /**
-   * Countdown avant le prochain cours.
-   */
-  prochainCoursTimer: any;
 
   constructor(public etService: EmploiTempsService,
               public datesService: DatesService,
-              private modalService: NgbModal,
               private route: ActivatedRoute,
               private router: Router) {
-    this.search = '';
     this.info = false;
     this.semaine = null;
   }
@@ -54,14 +41,21 @@ export class EtComponent implements OnInit {
   ngOnInit(): void {
     this.datesService.updateDates(() => {
       if (this.route.snapshot.paramMap.has('year') && this.route.snapshot.paramMap.has('week')) {
-        this.semaine$ = this.route.paramMap.switchMap((params: ParamMap) => {
-          const y = +params.get('year');
-          const w = +params.get('week');
+        this.date$ = this.route.paramMap.switchMap((params: ParamMap) => {
+          return this.datesService.getObsDateFromWeekYear(+params.get('week'), +params.get('year'));
+        });
 
-          if (y && w && y === 2018 && w >= 0 && w < 53) {
+        this.date$.subscribe(d => this.date = d);
+
+        this.semaine$ = this.route.paramMap.switchMap((params: ParamMap) => {
+          const a = +params.get('year');
+          const s = +params.get('week');
+
+          if (a && s && a === 2018 && s > 0 && s < 53) {
             this.loading = true;
-            return this.etService.updateSingleWeek({year: y, week: w});
+            return this.etService.updateSingleWeek(s, a);
           } else {
+            console.error('invalid navigation: ' + a + ' ' + s);
             return Observable.of(null);
           }
         });
@@ -73,90 +67,30 @@ export class EtComponent implements OnInit {
           }
 
           this.semaine = s;
-          this.updateWeekProgress();
           this.loading = false;
         });
-
-        this.date$ = this.route.paramMap.switchMap((params: ParamMap) => {
-          return this.datesService.getObsDateFromWeekYear({year: +params.get('year'), week: +params.get('week')});
-        });
-
-        this.date$.subscribe(d => this.date = d);
       } else {
         this.navigateToWeek(this.datesService.semaineProche);
       }
     });
   }
 
-  /**
-   * Navigate to week
-   * @param {} date l'objet {year: xxxx, week: xx}
-   */
-  navigateToWeek(date): void {
-    /*this.router.navigate(['et', {year: date.year, week: date.week}]);*/
-    this.router.navigate(['et', date.year, date.week]);
-  }
-
-  openExclusions() {
-    // Cloner toutes les exclusions
-    const ne: Exclusion[] = [];
-    this.etService.exclusions.forEach(e => ne.push(e.clone()));
-
-    // Créer l'objet possibilités, regroupant les possibilités disponibles.
-    const stats = ['noms', 'types', 'professeurs', 'salles'];
-    const possibilites = {};
-
-    stats.forEach(s => possibilites[s] = Object.keys(this.semaine.setCours.getStats()[s].data).sort());
-
-    // Ouvrir modal
-    const modalRef = this.modalService.open(ModalEtExclusionsComponent, {size: 'lg'});
-    modalRef.componentInstance.exclusions = ne;
-    modalRef.componentInstance.possibilites = possibilites;
-    modalRef.result.then(r => {
-      this.etService.filterExclusions(r);
-    }, r => {
-    });
-  }
-
-  openPersonnel() {
-    const modalRef = this.modalService.open(ModalEtGestionCoursComponent, {size: 'lg'});
-    /*modalRef.componentInstance.cours = this.etService.emploiTemps.coursPrives;*/
-    modalRef.result.then(r => {
-    }, r => {
-    });
-  }
-
-  openNotes() {
-    const modalRef = this.modalService.open(ModalEtNotesComponent, {size: 'lg'});
-    modalRef.result.then(r => {
-    }, r => {
-    });
+  navigateToWeek(date: SemaineDate): void {
+    if (date) {
+      this.router.navigate(['et', date.annee, date.semaine]);
+    }
   }
 
   previousWeek() {
-    const pw = this.datesService.previousWeek(this.date);
-    if (pw) {
-      this.navigateToWeek(pw);
-    }
+    this.navigateToWeek(this.datesService.previousWeek(this.date));
   }
 
   nextWeek() {
-    const pw = this.datesService.nextWeek(this.date);
-    if (pw) {
-      this.navigateToWeek(pw);
-    }
+    this.navigateToWeek(this.datesService.nextWeek(this.date));
   }
 
   nowWeek() {
-    const pw = this.datesService.nowWeek(this.date);
-    if (pw) {
-      this.navigateToWeek(pw);
-    }
-  }
-
-  openStats() {
-    const modalRef = this.modalService.open(ModalEtStatsComponent, {size: 'lg'});
-    modalRef.componentInstance.stats = this.semaine.stats;
+    this.navigateToWeek(this.datesService.nowWeek(this.date));
   }
 
   showInfo() {
@@ -177,51 +111,6 @@ export class EtComponent implements OnInit {
 
         this.etService.ajoutCoursPerso([cp]);
         break;
-      case 1: // Test navigation
-        this.navigateToWeek({year: 2018, week: 10});
-        break;
-    }
-  }
-
-  private updateWeekProgress(): void {
-    const now = moment();
-    const first = this.date.debut.clone().add(8, 'h');
-    const last = this.date.fin.clone().add(18, 'h');
-
-    this.weekProgress = -1;
-    this.infoSemaine = {
-      /*
-      -1 = on est avant cette semaine (la semaine arrive) => avant this.emploiTemps.premierJour.premierCours.debut
-      0 = on est dans la semaine
-      1 = on est après cette semaine => après emploiTemps.jours[5].dernierCours
-       */
-      placement: 0,
-      date: null // la date
-    };
-
-    // update info semaine
-    if (now.isBefore(first)) { // on est avant
-      this.infoSemaine.placement = -1;
-      this.infoSemaine.date = moment.duration(now.diff(first));
-    } else if (now.isAfter(last)) { // on est après
-      this.infoSemaine.placement = 1;
-      this.infoSemaine.date = moment.duration(now.diff(last));
-    } else { // on est dans la semaine
-      this.infoSemaine.placement = 0;
-      this.infoSemaine.date = moment.duration(now.diff(first));
-    }
-
-    // update week progress
-    if (now.diff(first) < 0) {
-      this.weekProgress = 0;
-    } else if (last.diff(now) < 0) {
-      this.weekProgress = 100;
-    } else {
-      this.weekProgress = (now.diff(first, 'minutes') / (last.diff(first, 'minutes'))) * 100;
-    }
-
-    if (this.semaine.setCours.coursSuivant) {
-      this.prochainCoursTimer = moment.duration(now.diff(this.semaine.setCours.coursSuivant.debut));
     }
   }
 }

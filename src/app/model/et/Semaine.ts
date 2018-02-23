@@ -2,22 +2,42 @@ import {Jour} from './Jour';
 import {Exclusion} from './Exclusion';
 import {Cours} from './Cours';
 import {SetCours} from './SetCours';
-import * as moment from 'moment';
 import {PositionTemps} from './PositionTemps';
+import * as moment from 'moment';
+
+export class SemaineDate {
+  semaine: number;
+  annee: number;
+  dateDebut: any;
+  dateFin: any;
+
+  constructor(semaine: number, annee: number, dateDebut: string, dateFin: string) {
+    this.semaine = +semaine;
+    this.annee = +annee;
+    this.dateDebut = moment(dateDebut);
+    this.dateFin = moment(dateFin);
+
+    if (!this.dateDebut.isValid() || !this.dateFin.isValid()) {
+      throw new Error('date invalid');
+    }
+  }
+
+  static fromSemaineAnnee(semaine: number, annee: number): SemaineDate {
+    const dd = moment().weekday(0).year(annee).week(semaine);
+    const df = dd.clone().weekday(4);
+    return new SemaineDate(semaine, annee, dd.format(), df.format());
+  }
+
+  equals(o: SemaineDate): boolean {
+    return o.dateDebut === this.dateDebut && o.dateFin === this.dateFin;
+  }
+}
 
 /**
  * Représente une semaine dans l'emploi du temps.
  */
 export class Semaine {
-  /**
-   * Le numéro de la semaine de cet objet.
-   */
-  week: number;
-
-  /**
-   * L'année de cet objet semaine.
-   */
-  year: number;
+  date: SemaineDate;
 
   /**
    * Date de dernière modification sur le serveur.
@@ -56,8 +76,7 @@ export class Semaine {
     const wd = Semaine.getWeekDays(week, year); // Week days
 
     // On créé les jours
-    this.week = week;
-    this.year = year;
+    this.date = SemaineDate.fromSemaineAnnee(week, year);
     this.positionTemps = PositionTemps.INDEFINI;
     this.jours = [];
     for (const d of wd) {

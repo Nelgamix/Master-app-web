@@ -93,7 +93,6 @@
 .indicateur-gauche-absolu {
   position: absolute;
   left: 10px;
-  z-index: 10;
 }
 
 .indicateur-gauche-relative {

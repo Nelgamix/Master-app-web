@@ -13,7 +13,7 @@
         </div>
         <div class="col-12 col-md" *ngIf="!j.setCoursActifs.estVide()">
           <h5 class="d-inline-block float-right pt-2 mb-0">
-            <span class="jour-stats-duree">{{j.setCoursActifs.premierCours.debut | date: 'HH:mm'}}&rarr;{{j.setCoursActifs.dernierCours.fin | date: 'HH:mm'}} ({{j.setCoursActifs.duree | duree}})</span>
+            <span class="jour-stats-duree">{{j.setCoursActifs.premierCours.debut | date: 'HH:mm'}} &rarr; {{j.setCoursActifs.dernierCours.fin | date: 'HH:mm'}} ({{j.setCoursActifs.duree | duree}})</span>
             <ng-container *ngIf="(j.setCoursActifs.types | objet).length > 0">
               <span *ngFor="let t of j.setCoursActifs.types | objet" class="jour-stats-type badge badge-warning">{{t.value}}&nbsp;{{t.key}}</span>
             </ng-container>
@@ -22,11 +22,11 @@
       </div>
 
       <div class="row">
-        <div class="col no-cours mt-1 mb-3" *ngIf="(j.setCoursActifs.getCours()|coursfilter:search).length + (j.setCoursCaches.getCours()|coursfilter:search).length === 0">
+        <div class="col no-cours mt-1 mb-3" *ngIf="(j.setCoursActifs.getCours()|coursfilter:filtre).length + (j.setCoursCaches.getCours()|coursfilter:filtre).length === 0">
           <img src="assets/icons_perso/drawing4empty.svg" alt="Empty">
         </div>
         <div class="col-12">
-          <div class="row" *ngFor="let cours of j.setCours.getCours() | coursfilter:search">
+          <div class="row" *ngFor="let cours of j.setCours.getCours() | coursfilter:filtre">
             <div class="col-12" [class.cache]="cours.cache" [class.supprime]="cours.supprime">
               <div class="row cours" [contextMenu]="menu" [contextMenuSubject]="cours" [class.td]="cours.type[0] == 'TD'" [class.tp]="cours.type[0] == 'TP'" [class.cm]="cours.type[0] == 'CM'" ngbTooltip="{{cours.description}}">
                 <div class="indicateur-gauche-absolu" *ngIf="cours.positionTemps === PositionTemps.PASSE">

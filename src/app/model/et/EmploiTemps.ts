@@ -8,12 +8,11 @@ export class EmploiTemps {
 
   constructor() {
     moment.locale('fr');
-
     this.semaines = [];
   }
 
-  trouverSemaine(week: number, year: number): Semaine | null {
-    return this.semaines.find(s => s.year === year && s.week === week);
+  trouverSemaine(semaine: number, annee: number): Semaine | null {
+    return this.semaines.find((s: Semaine) => s.date.annee === annee && s.date.semaine === semaine);
   }
 
   /**
