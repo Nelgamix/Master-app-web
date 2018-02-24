@@ -95,7 +95,9 @@ export class CoursPerso {
           debut = d.add(this.debut, 'minutes');
           fin = debut.clone().add(this.fin - this.debut, 'minutes');
 
-          this.addCoursToSemaine(semaine, debut, fin);
+          if (!this.addCoursToSemaine(semaine, debut, fin)) {
+            console.error('could not add cours perso to semaine');
+          }
 
           total++;
         });
@@ -107,7 +109,9 @@ export class CoursPerso {
         debut = d.add(this.debut, 'minutes');
         fin = debut.clone().add(this.fin - this.debut, 'minutes');
 
-        this.addCoursToSemaine(semaine, debut, fin);
+        if (!this.addCoursToSemaine(semaine, debut, fin)) {
+          console.error('could not add cours perso to semaine');
+        }
 
         total++;
         break;
@@ -116,8 +120,8 @@ export class CoursPerso {
     return total;
   }
 
-  private addCoursToSemaine(semaine: Semaine, debut: any, fin: any): void {
-    semaine.addCours(new Cours({
+  private addCoursToSemaine(semaine: Semaine, debut: any, fin: any): boolean {
+    return semaine.addCours(new Cours({
       nom: this.nom,
       description: this.description,
       type: [this.type],

@@ -1,5 +1,6 @@
 <button class="btn btn-dark float-left" (click)="close()">&larr;</button>
 <h2 class="text-center">Paramètres</h2>
+<h3>Réglages</h3>
 <form>
   <div class="form-group">
     <div class="custom-control custom-checkbox">
@@ -44,3 +45,58 @@
     </div>
   </div>
 </form>
+<h3>Aide</h3>
+<div class="row">
+  <div class="col"><img src="assets/icons_perso/drawing2past.svg" alt="Passé" width="24" height="24"> Cours passé</div>
+  <div class="col"><img src="assets/icons_perso/drawing1present.svg" alt="Présent" width="24" height="24"> Cours présent/actuel</div>
+  <div class="col"><img src="assets/icons_perso/drawing3futur.svg" alt="Futur" width="24" height="24"> Cours futur</div>
+</div>
+<div class="row">
+  <div class="col">
+    <h4>Cours</h4>
+    <p>
+      Les cours peuvent être de 4 types:
+    </p>
+    <ul>
+      <li>
+        <mark>Actif</mark>: le cours vient d'ADE, il est actif sur l'emploi du temps.
+      </li>
+      <li>
+        <mark>Caché</mark>: le cours vient d'ADE, il est caché (=> ne compte pas dans les statistiques); cependant les cours cachés restent visibles
+        en opacité réduite sur l'emploi du temps (utile pour les cours qu'on veut surveiller sans les compter dans l'emploi du temps).
+        Si l'option "cacher les cours passés" est activée, alors les cours passés (des semaines/jours précédents) seront automatiquement
+        dans cet état.
+      </li>
+      <li>
+        <mark>Supprimé</mark>: le cours vient d'ADE, mais est complètement caché de l'emploi du temps. Il n'apparaîtra pas dans les statistiques,
+        ni dans l'emploi du temps. Utile pour les cours qui ne vous concernent pas (pour les options par exemple).
+      </li>
+      <li>
+        <mark>Perso</mark>: le cours vient de l'utilisateur. Ces cours ne peuvent pas être cachés, ni supprimés, car ils sont définis par l'utilisateur.
+      </li>
+    </ul>
+
+    <h4>Exclusions</h4>
+    <p>
+      Pour exclure un type de cours rapidement via les exclusions, un click droit sur le cours ouvre un menu.
+    </p>
+    <img src="assets/aide/menu-contextuel.jpg" alt="Menu" class="img-fluid">
+    <p>
+      Il suffit alors de sélectionner une option et le cours sera automatiquement retiré de l'emploi du temps.
+    </p>
+
+    <h4>Sauvegarde</h4>
+    <p>
+      Les données suivantes sont sauvegardées dans les cookies:
+    </p>
+    <ul>
+      <li>Options</li>
+      <li>Exclusions</li>
+      <li>Cours persos</li>
+    </ul>
+    <p>
+      Si les cookies sont inaccessibles, ou que la fonctionnalité n'est pas dans cette liste, alors la sauvegarde n'aura pas lieu.
+    </p>
+  </div>
+</div>
+

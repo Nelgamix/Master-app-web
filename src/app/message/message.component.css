@@ -9,6 +9,22 @@
   background-color: white;
 }
 
+.info-box .info-sep {
+  margin-top: 4px;
+  margin-bottom: 10px;
+}
+
+.info-box .info-text {
+  padding: 8px 12px;
+  text-align: center;
+}
+
+.info-box .info-timer {
+  position: absolute;
+  bottom: 0;
+  height: 5px;
+}
+
 .lwrapper {
   position: absolute;
   top: 0;

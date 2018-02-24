@@ -125,10 +125,11 @@ export class EtComponent implements OnInit {
     switch (id) {
       case 0: // test cours perso
         const cp = new CoursPerso(
-          CoursPersoRecurrence.SEMAINE, moment(), 9 * 60, 11 * 60 + 30, 'TER', 'TER', 'TP', 'DEMEURE Alexandre', 'IMAG'
+          CoursPersoRecurrence.SEMAINE, moment().weekday(1), 9 * 60, 11 * 60 + 30, 'TER', 'TER', 'TP', 'DEMEURE Alexandre', 'IMAG'
         );
 
         this.etService.ajoutCoursPerso([cp], [this.semaine]);
+        this.etService.analyse([this.semaine]);
         break;
       case 1:
         this.messageService.showMessage('Test!');

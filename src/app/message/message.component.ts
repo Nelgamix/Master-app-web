@@ -4,6 +4,8 @@ import {MessageService} from '../services/message.service';
 import {
   trigger,
   state,
+  query,
+  animateChild,
   style,
   animate,
   transition
@@ -15,20 +17,16 @@ import {
   styleUrls: ['message.component.css'],
   animations: [
     trigger('infoBoxState', [
-      state('inactive', style({
-        backgroundColor: '#0f7',
-        width: '100%'
-      })),
-      state('active', style({
-        backgroundColor: '#f00',
-        width: '0%'
-      })),
-      transition('inactive => active', animate(5000))
+      transition(':enter', [
+        style({backgroundColor: '#0f0', width: '100%'}),
+        animate(5000, style({backgroundColor: '#f00', width: '0%'}))
+      ])
     ]),
-    trigger('loading', [
+    trigger('fade', [
       transition(':enter', [
         style({opacity: 0}),
-        animate(250, style({opacity: 1}))
+        animate(250, style({opacity: 1})),
+        query('@*', [animateChild()], {optional: true})
       ]),
       transition(':leave', [
         style({opacity: 1}),
@@ -38,7 +36,7 @@ import {
   ]
 })
 export class MessageComponent implements OnInit {
-  infoBox: {state: string, message: string};
+  infoBox: {show: boolean, message: string};
   loading: boolean;
 
   // Events
@@ -50,7 +48,7 @@ export class MessageComponent implements OnInit {
 
   ngOnInit() {
     this.infoBox = {
-      state: 'inactive',
+      show: false,
       message: 'Info-box'
     };
     this.loading = false;
@@ -64,17 +62,17 @@ export class MessageComponent implements OnInit {
 
   showInfoBox(message): void {
     this.infoBox = {
-      state: 'active',
+      show: true,
       message: message
     };
 
     setTimeout(() => {
       this.closeInfoBox();
-    }, 5000);
+    }, 5250);
   }
 
   closeInfoBox(): void {
-    this.infoBox.state = 'inactive';
+    this.infoBox.show = false;
   }
 
   showLoading(b: boolean): void {

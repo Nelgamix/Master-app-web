@@ -118,29 +118,6 @@
         </div>
       </div>
     </div>
-
-    <!--<div class="col-12 col-md heading m-md-3">
-      <h5>Exclusions</h5>
-      <div class="row" *ngFor="let e of (etService.exclusions ? etService.exclusions.slice(0, 5) : [])">
-        <div class="col-12">
-          <span *ngIf="e.supprimer"><i>[caché]</i></span>
-          <span *ngIf="e.type.length > 0"><b>Type</b>: {{e.type}}</span>
-          <span *ngIf="e.nom.length > 0"><b>Nom</b>: {{e.nom}}</span>
-          <span *ngIf="e.professeur.length > 0"><b>Prof.</b>: {{e.professeur}}</span>
-          <span *ngIf="e.salle.length > 0"><b>Salle</b>: {{e.salle}}</span>
-        </div>
-      </div>
-      <div class="row" *ngIf="etService.exclusions.length > 5">
-        <div class="col-12">
-          + <b>{{etService.exclusions.length - 5}}</b> éléments
-        </div>
-      </div>
-      <div class="row mt-2">
-        <div class="col">
-          <button class="btn btn-warning take-width" (click)="openExclusions()"><img src="assets/icons/pencil.png" alt="Configurer"></button>
-        </div>
-      </div>
-    </div>-->
   </div>
 
   <div class="row mb-2">
@@ -174,9 +151,6 @@
         <button type="button" class="btn btn-warning img-text" (click)="openNotes()">
           <img src="assets/icons/file.png" alt="Notes">Notes
         </button>
-        <button type="button" class="btn btn-info img-text" [ngbPopover]="helpContent" popoverTitle="Code couleur" placement="left">
-          <img src="assets/icons/info.png" alt="Info">Couleurs
-        </button>
       </div>
     </div>
   </div>
@@ -185,11 +159,4 @@
     <app-et-table *ngSwitchCase="VueType.TABLE" [semaine]="semaine" [filtre]="filtre"></app-et-table>
     <app-et-visuel *ngSwitchCase="VueType.VISUEL" [semaine]="semaine"></app-et-visuel>
   </ng-container>
-</ng-template>
-
-<ng-template #helpContent>
-  <span class="demo-cm">CM</span>
-  <span class="demo-td">TD</span>
-  <span class="demo-tp">TP</span>
-  <span class="demo-autre">Autre</span>
 </ng-template>

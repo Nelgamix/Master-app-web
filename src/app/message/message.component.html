@@ -1,14 +1,14 @@
-<div [hidden]="infoBox.state == 'inactive'" class="info-box">
+<div *ngIf="infoBox.show" class="info-box" [@fade]>
   <div class="text-center">
     <b>Message</b>
-    <hr style="margin-top: 4px; margin-bottom: 10px;">
+    <hr class="info-sep">
   </div>
-  <div style="padding: 8px 12px; text-align: center;">
+  <div class="info-text">
     {{infoBox.message}}
   </div>
-  <div [@infoBoxState]="infoBox.state" style="position: absolute; bottom: 0; height: 5px;"></div>
+  <div [@infoBoxState] class="info-timer"></div>
 </div>
 
-<div class="lwrapper" *ngIf="loading" [@loading]>
+<div class="lwrapper" *ngIf="loading" [@fade]>
   <div class="loader">Loading...</div>
 </div>
