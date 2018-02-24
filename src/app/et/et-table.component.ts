@@ -19,7 +19,7 @@ export class EtTableComponent {
 
   PositionTemps = PositionTemps;
 
-  constructor(private etService: EmploiTempsService) {
+  constructor(public etService: EmploiTempsService) {
   }
 
   cacher(cours: Cours, type: number): void {
@@ -28,6 +28,10 @@ export class EtTableComponent {
 
   exclure(cours: Cours, type: number): void {
     this.ajouterExclusion(cours, type, true);
+  }
+
+  isNotCache(item: any): boolean {
+    return !item.cache;
   }
 
   private ajouterExclusion(cours: Cours, type: number, supprimer: boolean): void {

@@ -54,6 +54,7 @@ import {EtDetailsComponent} from './et/et-details.component';
 import {EtSettingsComponent} from './et/et-settings.component';
 import {MessageService} from './services/message.service';
 import {MessageComponent} from './message/message.component';
+import {ColorPickerModule} from 'ngx-color-picker';
 
 @NgModule({
   declarations: [
@@ -89,6 +90,7 @@ import {MessageComponent} from './message/message.component';
   imports: [
     CommonModule,
     AppRoutingModule,
+    ColorPickerModule,
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,

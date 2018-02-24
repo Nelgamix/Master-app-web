@@ -87,7 +87,7 @@ export class Semaine {
       this.jours.push(new Jour(d));
     }
 
-    this.analyse();
+    this.analyse(moment());
   }
 
   /**
@@ -115,17 +115,18 @@ export class Semaine {
 
   /**
    * Analyse la semaine.
+   * @param opt les options
    */
-  analyse(): void {
-    this.jours.forEach(j => j.analyse());
+  analyse(now: any, opt?: any): void {
+    this.jours.forEach(j => j.analyse(now, opt));
 
     this.analysePremierJour();
     this.analyseDernierJour();
 
-    this.analysePositionTemps();
+    this.analysePositionTemps(now);
 
     this.analyseCours();
-    this.setCours.analyse();
+    this.setCours.analyse(now);
     this.stats = this.setCours.getStats();
   }
 
@@ -196,9 +197,7 @@ export class Semaine {
     return total;
   }
 
-  private analysePositionTemps(): void {
-    const now = moment();
-
+  private analysePositionTemps(now: any): void {
     this.positionTemps = (this.dernierJour.finJour.isBefore(now) ?
         PositionTemps.PASSE :
         (this.premierJour.debutJour.isAfter(now) ?
@@ -206,8 +205,6 @@ export class Semaine {
             PositionTemps.PRESENT
         )
     );
-
-    this.jours.forEach(j => j.analysePositionTemps(now));
   }
 
   /**

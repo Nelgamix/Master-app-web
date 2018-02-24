@@ -1,2 +1,46 @@
 <button class="btn btn-dark float-left" (click)="close()">&larr;</button>
 <h2 class="text-center">Paramètres</h2>
+<form>
+  <div class="form-group">
+    <div class="custom-control custom-checkbox">
+      <input type="checkbox" class="custom-control-input" id="cCacherCoursPasses" name="cCacherCoursPasses" [(ngModel)]="options.cacherCoursPasses">
+      <label class="custom-control-label" for="cCacherCoursPasses">Cacher les cours passés</label>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="couleurCM">Couleur CM</label>
+    <div class="input-group">
+      <input class="form-control" name="couleurCM" id="couleurCM" [(colorPicker)]="couleur.CM.couleur" [style.background]="couleur.CM.couleur">
+      <div class="input-group-append">
+        <button type="button" class="btn btn-warning" (click)="couleur.CM.couleur = couleur.CM.defaut">Défaut</button>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="couleurTD">Couleur TD</label>
+    <div class="input-group">
+      <input class="form-control" name="couleurTD" id="couleurTD" [(colorPicker)]="couleur.TD.couleur" [style.background]="couleur.TD.couleur">
+      <div class="input-group-append">
+        <button type="button" class="btn btn-warning" (click)="couleur.TD.couleur = couleur.TD.defaut">Défaut</button>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="couleurTP">Couleur TP</label>
+    <div class="input-group">
+      <input class="form-control" name="couleurTP" id="couleurTP" [(colorPicker)]="couleur.TP.couleur" [style.background]="couleur.TP.couleur">
+      <div class="input-group-append">
+        <button type="button" class="btn btn-warning" (click)="couleur.TP.couleur = couleur.TP.defaut">Défaut</button>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="couleurAutre">Couleur Autre</label>
+    <div class="input-group">
+      <input class="form-control" name="couleurAutre" id="couleurAutre" [(colorPicker)]="couleur.Autre.couleur" [style.background]="couleur.Autre.couleur">
+      <div class="input-group-append">
+        <button type="button" class="btn btn-warning" (click)="couleur.Autre.couleur = couleur.Autre.defaut">Défaut</button>
+      </div>
+    </div>
+  </div>
+</form>

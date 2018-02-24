@@ -32,16 +32,11 @@
 .loader {
   color: #ffffff;
   text-indent: -9999em;
-  /*margin: 88px auto;
-  position: relative;*/
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 11px;
-  /*-webkit-transform: translateZ(0);
-  -ms-transform: translateZ(0);
-  transform: translateZ(0);*/
   -webkit-animation-delay: -0.16s;
   animation-delay: -0.16s;
 }

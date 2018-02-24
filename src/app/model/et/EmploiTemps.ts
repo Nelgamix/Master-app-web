@@ -44,8 +44,9 @@ export class EmploiTemps {
 
   /**
    * Analyse toutes les semaines.
+   * @param opt les options
    */
-  analyse(): void {
-    this.semaines.forEach(s => s.analyse());
+  analyse(opt?: any): void {
+    this.semaines.forEach(s => s.analyse(moment(), opt));
   }
 }

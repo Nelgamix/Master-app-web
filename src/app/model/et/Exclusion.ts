@@ -99,7 +99,7 @@ export class Exclusion {
    * @returns {boolean}
    */
   testeCours(c: Cours): boolean {
-    if (c.supprime || c.cache || c.prive) {
+    if (c.supprime || !this.supprimer && c.cache || c.prive) {
       return false;
     }
 
@@ -136,6 +136,7 @@ export class Exclusion {
 
     if (this.supprimer) {
       c.supprime = true;
+      c.cache = false;
     } else {
       c.cache = true;
     }

@@ -1,7 +1,6 @@
 import {Cours} from './Cours';
 import {PositionTemps} from './PositionTemps';
 import {SetCours} from './SetCours';
-import * as moment from 'moment';
 
 /**
  * Représente un jour dans l'emploi du temps.
@@ -30,26 +29,27 @@ export class Jour {
     return this.setCours.addCours(cours);
   }
 
-  analyse(): void {
+  analyse(now: any, opt?: any): void {
     // Analyse du jour
     this.analyseDebutJour();
     this.analyseFinJour();
+    this.analysePositionTemps(now);
 
     // Analyse/filtrage des sets
-    this.setCours.analyse();
+    this.setCours.analyse(now, opt);
     this.analyseCoursActifs();
     this.analyseCoursCaches();
     this.analyseCoursSupprimes();
     this.analyseCoursPrives();
 
     // Analyse des sets
-    this.setCoursActifs.analyse();
-    this.setCoursCaches.analyse();
-    this.setCoursSupprimes.analyse();
-    this.setCoursPrives.analyse();
+    this.setCoursActifs.analyse(now, opt);
+    this.setCoursCaches.analyse(now, opt);
+    this.setCoursSupprimes.analyse(now, opt);
+    this.setCoursPrives.analyse(now, opt);
   }
 
-  analysePositionTemps(now: any): void {
+  private analysePositionTemps(now: any): void {
     this.positionTemps = (this.finJour.isBefore(now) ?
       PositionTemps.PASSE :
       (this.debutJour.isAfter(now) ?
@@ -57,8 +57,6 @@ export class Jour {
         PositionTemps.PRESENT
       )
     );
-
-    this.setCours.getCours().forEach(c => c.analysePositionTemps(now));
   }
 
   private analyseDebutJour(): any {

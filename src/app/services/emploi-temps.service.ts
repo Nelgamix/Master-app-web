@@ -24,6 +24,8 @@ export class EmploiTempsService {
    */
   readonly coursPersoCookie = 'et-cours-perso';
 
+  readonly optionsCookie = 'et-options';
+
   /**
    * Objet contenant les métadonnées pour l'emploi du temps (ADE)
    * @type {{}}
@@ -50,13 +52,24 @@ export class EmploiTempsService {
    */
   analyseDisabled: boolean;
 
+  options: any;
+
   constructor(private http: HttpClient,
               private cookiesService: CookieService) {
     this.analyseDisabled = false;
     this.emploiTemps = new EmploiTemps();
 
+    this.initOptionsFromCookies();
     this.initExclusionsFromCookies();
     this.initCoursPersoFromCookies();
+  }
+
+  getCouleurOf(cours: Cours): string {
+    if (this.options.couleur[cours.type[0]]) {
+      return this.options.couleur[cours.type[0]].couleur;
+    } else {
+      return this.options.couleur.Autre.couleur;
+    }
   }
 
   /**
@@ -140,7 +153,32 @@ export class EmploiTempsService {
       return;
     }
 
-    this.emploiTemps.analyse();
+    this.emploiTemps.analyse(this.options);
+  }
+
+  initOptionsFromCookies(): any {
+    this.options = {
+      cacherCoursPasses: false,
+      couleur: {
+        CM: {defaut: 'rgba(220, 20, 60, 0.4)', couleur: 'rgba(220, 20, 60, 0.4)'},
+        TD: {defaut: 'rgba(30, 144, 255, 0.4)', couleur: 'rgba(30, 144, 255, 0.4)'},
+        TP: {defaut: 'rgba(0, 160, 136, 0.4)', couleur: 'rgba(0, 160, 136, 0.4)'},
+        Autre: {defaut: 'rgba(140, 140, 140, 0.4)', couleur: 'rgba(140, 140, 140, 0.4)'}
+      }
+    };
+
+    if (this.cookiesService.check(this.optionsCookie)) {
+      const eJson = JSON.parse(this.cookiesService.get(this.optionsCookie));
+      if (eJson) {
+        this.options = eJson;
+      }
+    }
+
+    return this.options;
+  }
+
+  sauvegardeOptionsToCookies(): void {
+    this.cookiesService.set(this.optionsCookie, JSON.stringify(this.options));
   }
 
   /**

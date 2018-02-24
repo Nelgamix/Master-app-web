@@ -45,7 +45,7 @@ export class SetCours {
     this.cours = cours;
 
     if (analyse) {
-      this.analyse();
+      this.analyse(moment());
     }
   }
 
@@ -100,8 +100,18 @@ export class SetCours {
     return index;
   }
 
-  analyse(): void {
+  analyse(now: any, opt?: any): void {
+    this.cours.forEach(c => c.analyse(now));
+
     this.sort();
+
+    if (opt && opt.cacherCoursPasses) {
+      this.cours.forEach(c => {
+        if (!c.cache && !c.supprime && c.positionTemps === PositionTemps.PASSE) {
+          c.cache = true;
+        }
+      });
+    }
 
     this.analysePremierCours();
     this.analyseDernierCours();

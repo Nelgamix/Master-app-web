@@ -116,6 +116,7 @@ export class EtComponent implements OnInit {
   }
 
   closeSettings() {
+    this.etService.analyse();
     this.vueType = VueType.ET;
   }
 

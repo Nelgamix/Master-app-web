@@ -28,7 +28,11 @@
         <div class="col-12">
           <div class="row" *ngFor="let cours of j.setCours.getCours() | coursfilter:filtre">
             <div class="col-12" [class.cache]="cours.cache" [class.supprime]="cours.supprime">
-              <div class="row cours" [contextMenu]="menu" [contextMenuSubject]="cours" [class.td]="cours.type[0] == 'TD'" [class.tp]="cours.type[0] == 'TP'" [class.cm]="cours.type[0] == 'CM'" ngbTooltip="{{cours.description}}">
+              <div class="row cours"
+                   [contextMenu]="menu"
+                   [contextMenuSubject]="cours"
+                   [style.background-color]="etService.getCouleurOf(cours)"
+                   ngbTooltip="{{cours.description}}">
                 <div class="indicateur-gauche-absolu" *ngIf="cours.positionTemps === PositionTemps.PASSE">
                   <img src="assets/icons_perso/drawing2past.svg" alt="Passé" width="24" height="24">
                 </div>
@@ -61,13 +65,13 @@
 </div>
 
 <context-menu>
-  <ng-template contextMenuItem let-item (execute)="cacher($event.item, 0)">
+  <ng-template contextMenuItem let-item [visible]="isNotCache" (execute)="cacher($event.item, 0)">
     Cacher {{item?.nom}}
   </ng-template>
-  <ng-template contextMenuItem let-item (execute)="cacher($event.item, 1)">
+  <ng-template contextMenuItem let-item [visible]="isNotCache" (execute)="cacher($event.item, 1)">
     Cacher {{item?.nom}} &amp;&amp; {{item?.professeur}}
   </ng-template>
-  <ng-template contextMenuItem divider="true"></ng-template>
+  <ng-template contextMenuItem let-item divider="true" [visible]="isNotCache"></ng-template>
   <ng-template contextMenuItem let-item (execute)="exclure($event.item, 0)">
     Exclure {{item?.nom}}
   </ng-template>

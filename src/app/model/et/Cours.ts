@@ -114,8 +114,6 @@ export class Cours {
     this.supprime = false;
     this.positionTemps = PositionTemps.INDEFINI;
     this.duree = moment.duration(this.fin.diff(this.debut));
-
-    this.calculeHash();
   }
 
   static initFromIcal(c: any): Cours {
@@ -198,7 +196,12 @@ export class Cours {
     return [salles, salles_types];
   }
 
-  analysePositionTemps(now: any): void {
+  analyse(now: any): void {
+    this.analysePositionTemps(now);
+    this.calculeHash();
+  }
+
+  private analysePositionTemps(now: any): void {
     this.positionTemps = (this.fin.isBefore(now) ?
       PositionTemps.PASSE :
       (this.debut.isAfter(now) ?
