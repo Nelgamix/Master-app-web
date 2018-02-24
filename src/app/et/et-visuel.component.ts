@@ -50,7 +50,7 @@ export class EtVisuelComponent implements OnChanges {
         continue;
       }
 
-      for (const c of j.setCours.getCours()) {
+      for (const c of j.ensembleCours.setCours.getCours()) {
         if (c.supprime) {
           continue;
         }

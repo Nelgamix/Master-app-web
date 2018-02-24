@@ -41,12 +41,8 @@ export class SetCours {
 
   stats: any;
 
-  constructor(cours: Cours[] = [], analyse: boolean = false) {
+  constructor(cours: Cours[] = []) {
     this.cours = cours;
-
-    if (analyse) {
-      this.analyse(moment());
-    }
   }
 
   private static analyseX(x: any[]): any {
@@ -100,9 +96,7 @@ export class SetCours {
     return index;
   }
 
-  analyse(now: any, opt?: any): void {
-    this.cours.forEach(c => c.analyse(now));
-
+  analyse(opt?: any): void {
     this.sort();
 
     if (opt && opt.cacherCoursPasses) {
@@ -131,6 +125,12 @@ export class SetCours {
 
   addCours(cours: Cours): number {
     return this.cours.push(cours);
+  }
+
+  addAllCours(cours: Cours[]): number {
+    let s = -1;
+    cours.forEach(c => s = this.addCours(c));
+    return s;
   }
 
   getCours(): Cours[] {

@@ -45,12 +45,12 @@ export class EtInfoComponent implements OnInit {
       const ss = {name: 'Cours supprimés', series: []};
       this.chartData = [st, sa, sc, ss];
 
-      s.forEach(w => {
+      s.forEach((w: Semaine) => {
         this.cacher.push(true);
-        st.series.push({name: w.date.annee + ' S' + w.date.semaine, value: w.setCours.getTaille()});
-        sa.series.push({name: w.date.annee + ' S' + w.date.semaine, value: w.setCours.coursActifs.length});
-        sc.series.push({name: w.date.annee + ' S' + w.date.semaine, value: w.setCours.coursCaches.length});
-        ss.series.push({name: w.date.annee + ' S' + w.date.semaine, value: w.setCours.coursSupprimes.length});
+        st.series.push({name: w.date.annee + ' S' + w.date.semaine, value: w.ensembleCours.setCours.getTaille()});
+        sa.series.push({name: w.date.annee + ' S' + w.date.semaine, value: w.ensembleCours.setCours.coursActifs.length});
+        sc.series.push({name: w.date.annee + ' S' + w.date.semaine, value: w.ensembleCours.setCours.coursCaches.length});
+        ss.series.push({name: w.date.annee + ' S' + w.date.semaine, value: w.ensembleCours.setCours.coursSupprimes.length});
       });
 
       this.loaded = true;
@@ -58,7 +58,7 @@ export class EtInfoComponent implements OnInit {
   }
 
   getData(s: Semaine, champ: string): any[] {
-    const o = s.stats[champ].data;
+    const o = s.ensembleCours.setCours.stats[champ].data;
     const ot = new Objet().transform(o);
     ot.sort((l, r) => {
       return r.value - l.value || l.key.localeCompare(r.key);

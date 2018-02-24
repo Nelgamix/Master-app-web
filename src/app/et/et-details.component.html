@@ -26,7 +26,7 @@
   </div>
 </div>
 
-<div class="row mt-4" *ngIf="semaine.setCours.estVide(); else elseBlock">
+<div class="row mt-4" *ngIf="semaine.ensembleCours.setCours.estVide(); else elseBlock">
   <div class="col text-center">
     <img src="assets/icons_perso/drawing4empty.svg" alt="Empty" class="m-5" width="120" height="120">
   </div>
@@ -38,9 +38,9 @@
       <div class="row" id="head-summary">
         <!-- Summary row -->
         <ng-container *ngFor="let j of semaine.jours">
-          <div class="col-12 col-md text-center" *ngIf="!j.setCoursActifs.estVide()">
+          <div class="col-12 col-md text-center" *ngIf="!j.ensembleCours.setCoursActifs.estVide()">
             <span class="text-capitalize font-weight-bold">{{j.date | amDateFormat:'dddd'}}</span>:
-            <span class="stat-donnee">{{j.setCoursActifs.premierCours.debut | date: 'HH:mm'}} &rarr; {{j.setCoursActifs.dernierCours.fin | date: 'HH:mm'}}</span>
+            <span class="stat-donnee">{{j.ensembleCours.setCoursActifs.premierCours.debut | date: 'HH:mm'}} &rarr; {{j.ensembleCours.setCoursActifs.dernierCours.fin | date: 'HH:mm'}}</span>
           </div>
         </ng-container>
       </div>
@@ -59,19 +59,19 @@
                 <div class="col">
                   <div class="row">
                     <div class="col-12">
-                      <span class="stat-donnee">{{semaine.stats['duree'].data | duree}}</span>
+                      <span class="stat-donnee">{{semaine.ensembleCours.setCoursActifs.stats['duree'].data | duree}}</span>
                       <span class="font-weight-bold">heures</span>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-12">
-                      <span class="stat-donnee">{{semaine.stats['moyenneParCours'].data | duree}}</span>
+                      <span class="stat-donnee">{{semaine.ensembleCours.setCoursActifs.stats['moyenneParCours'].data | duree}}</span>
                       <span class="font-weight-bold">heure(s) / cours</span>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-12">
-                      <span class="stat-donnee">{{semaine.stats['moyenneParJour'].data | duree}}</span>
+                      <span class="stat-donnee">{{semaine.ensembleCours.setCoursActifs.stats['moyenneParJour'].data | duree}}</span>
                       <span class="font-weight-bold">heures / jour</span>
                     </div>
                   </div>
@@ -79,19 +79,19 @@
                 <div class="col">
                   <div class="row">
                     <div class="col-12">
-                      <span class="stat-donnee">{{semaine.setCoursActifs.cours.length}}</span>
+                      <span class="stat-donnee">{{semaine.ensembleCours.setCoursActifs.cours.length}}</span>
                       <span class="font-weight-bold">cours actifs</span>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-12">
-                      <span class="stat-donnee">{{semaine.setCoursCaches.cours.length}}</span>
+                      <span class="stat-donnee">{{semaine.ensembleCours.setCoursCaches.cours.length}}</span>
                       <span class="font-weight-bold">cours cachés</span>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-12">
-                      <span class="stat-donnee">{{semaine.setCoursSupprimes.cours.length}}</span>
+                      <span class="stat-donnee">{{semaine.ensembleCours.setCoursSupprimes.cours.length}}</span>
                       <span class="font-weight-bold">cours supprimés</span>
                     </div>
                   </div>
@@ -107,11 +107,11 @@
           <div class="row">
             <div class="col">
               <dl>
-                <dt *ngIf="semaine.setCoursActifs.coursActuel">Cours actuel</dt>
-                <dd *ngIf="semaine.setCoursActifs.coursActuel"><b>{{semaine.setCoursActifs.coursActuel.nom}}</b> en <span class="font-italic" *ngFor="let s of semaine.setCoursActifs.coursActuel.salles">{{s.batiment}} {{s.salle}}</span></dd>
+                <dt *ngIf="semaine.ensembleCours.setCoursActifs.coursActuel">Cours actuel</dt>
+                <dd *ngIf="semaine.ensembleCours.setCoursActifs.coursActuel"><b>{{semaine.ensembleCours.setCoursActifs.coursActuel.nom}}</b> en <span class="font-italic" *ngFor="let s of semaine.ensembleCours.setCoursActifs.coursActuel.salles">{{s.batiment}} {{s.salle}}</span></dd>
 
-                <dt *ngIf="semaine.setCoursActifs.coursSuivant">Cours suivant <span style="font-size: 75%; color: gray">dans {{prochainCoursTimer | amDuration:'milliseconds'}}</span></dt>
-                <dd *ngIf="semaine.setCoursActifs.coursSuivant"><b>{{semaine.setCoursActifs.coursSuivant.nom}}</b> en <span class="font-italic" *ngFor="let s of semaine.setCoursActifs.coursSuivant.salles">{{s.batiment}} {{s.salle}}</span></dd>
+                <dt *ngIf="semaine.ensembleCours.setCoursActifs.coursSuivant">Cours suivant <span style="font-size: 75%; color: gray">dans {{prochainCoursTimer | amDuration:'milliseconds'}}</span></dt>
+                <dd *ngIf="semaine.ensembleCours.setCoursActifs.coursSuivant"><b>{{semaine.ensembleCours.setCoursActifs.coursSuivant.nom}}</b> en <span class="font-italic" *ngFor="let s of semaine.ensembleCours.setCoursActifs.coursSuivant.salles">{{s.batiment}} {{s.salle}}</span></dd>
               </dl>
             </div>
           </div>

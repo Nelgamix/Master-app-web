@@ -1,8 +1,8 @@
 import {Jour} from './Jour';
 import {Exclusion} from './Exclusion';
 import {Cours} from './Cours';
-import {SetCours} from './SetCours';
 import {PositionTemps} from './PositionTemps';
+import {EnsembleCours} from './EnsembleCours';
 import * as moment from 'moment';
 
 export class SemaineDate {
@@ -53,11 +53,7 @@ export class Semaine {
    * L'ensemble des cours dans la semaine.
    * Il contient donc tous les cours de chaque jour de la semaine.
    */
-  setCours: SetCours;
-  setCoursActifs: SetCours;
-  setCoursCaches: SetCours;
-  setCoursSupprimes: SetCours;
-  setCoursPrives: SetCours;
+  ensembleCours: EnsembleCours;
 
   /**
    * Le premier jour de la semaine (Lundi) sous forme de moment()
@@ -69,65 +65,39 @@ export class Semaine {
    */
   dernierJour: Jour;
 
-  /**
-   * Objet contenant les stats calculées sur cette semaine.
-   */
-  stats: any;
-
   positionTemps: PositionTemps;
 
   constructor(week: number, year: number) {
-    const wd = Semaine.getWeekDays(week, year); // Week days
-
     // On créé les jours
     this.date = SemaineDate.fromSemaineAnnee(week, year);
     this.positionTemps = PositionTemps.INDEFINI;
     this.jours = [];
-    for (const d of wd) {
-      this.jours.push(new Jour(d));
-    }
+    this.ensembleCours = new EnsembleCours();
 
-    this.analyse(moment());
+    const wd = this.getWeekDays(); // Week days
+    wd.forEach(d => this.jours.push(new Jour(d)));
+
+    this.preAnalyse(moment());
   }
 
-  /**
-   * Récupère tous les jours de la semaine de numéro week.
-   * Renvoie un array contenant ces jours.
-   * @param {number} week
-   * @param {number} year
-   * @returns {any[]}
-   */
-  private static getWeekDays(week: number, year: number): any[] {
-    const a = []; // array qui contiendra les valeurs
-    // On calcule le début de la semaine.
-    const beginningOfWeek = moment().year(year).week(week).startOf('week');
+  preAnalyse(now: any): void {
+    this.jours.forEach(j => j.preAnalyse(now));
 
-    // On ajoute à l'array
-    a.push(beginningOfWeek);
+    this.analysePremierJour();
+    this.analyseDernierJour();
 
-    // Boucle pour le reste de la semaine
-    for (let i = 1; i < 5; i++) {
-      a.push(beginningOfWeek.clone().add(i, 'days'));
-    }
-
-    return a;
+    this.analysePositionTemps(now);
   }
 
   /**
    * Analyse la semaine.
    * @param opt les options
    */
-  analyse(now: any, opt?: any): void {
-    this.jours.forEach(j => j.analyse(now, opt));
+  analyse(opt?: any): void {
+    this.jours.forEach(j => j.analyse(opt));
 
-    this.analysePremierJour();
-    this.analyseDernierJour();
-
-    this.analysePositionTemps(now);
-
-    this.analyseCours();
-    this.setCours.analyse(now);
-    this.stats = this.setCours.getStats();
+    this.ensembleCours.sum(this.jours.map(j => j.ensembleCours));
+    this.ensembleCours.analyse(opt);
   }
 
   /**
@@ -148,8 +118,7 @@ export class Semaine {
     for (const j of this.jours) {
       if (d.isSame(j.debutJour)) {
         // Le bon jour
-        if (success = (j.setCours.getTaille() === j.addCours(cours) - 1)) {
-          this.setCours.addCours(cours);
+        if (success = (j.ensembleCours.setCours.getTaille() === j.addCours(cours) - 1)) {
           break;
         }
       }
@@ -181,19 +150,8 @@ export class Semaine {
    */
   applyExclusions(exclusions: Exclusion[]): number {
     let total = 0;
-
-    // Obligé: si il n'y a pas d'exclusion, alors les cours ne sont jamais reset
-    for (const c of this.setCours.cours) {
-      c.cache = false;
-      c.supprime = false;
-    }
-
-    // Filtrage
-    for (const e of exclusions) {
-      e.count = 0;
-      total += e.testePlusieursCours(this.setCours.cours);
-    }
-
+    exclusions.forEach(e => e.count = 0);
+    this.jours.forEach(j => total += j.applyExclusions(exclusions));
     return total;
   }
 
@@ -224,27 +182,25 @@ export class Semaine {
   }
 
   /**
-   * Met à jour la variable cours de la semaine en y ajoutant tous les cours de chaque jour.
-   * @returns {Cours[]} la liste des cours de la semaine.
+   * Récupère tous les jours de la semaine de numéro week.
+   * Renvoie un array contenant ces jours.
+   * @param {number} week
+   * @param {number} year
+   * @returns {any[]}
    */
-  private analyseCours(): void {
-    let ac = [];
-    let aca = [];
-    let acc = [];
-    let acs = [];
-    let acp = [];
-    this.jours.forEach(j => {
-      ac = ac.concat(j.setCours.cours);
-      aca = aca.concat(j.setCoursActifs.cours);
-      acc = acc.concat(j.setCoursCaches.cours);
-      acs = acs.concat(j.setCoursSupprimes.cours);
-      acp = acp.concat(j.setCoursPrives.cours);
-    });
+  private getWeekDays(): any[] {
+    const a = []; // array qui contiendra les valeurs
+    // On calcule le début de la semaine.
+    const beginningOfWeek = moment().year(this.date.annee).week(this.date.semaine).startOf('week');
 
-    this.setCours = new SetCours(ac, true);
-    this.setCoursActifs = new SetCours(aca, true);
-    this.setCoursCaches = new SetCours(acc, true);
-    this.setCoursSupprimes = new SetCours(acs, true);
-    this.setCoursPrives = new SetCours(acp, true);
+    // On ajoute à l'array
+    a.push(beginningOfWeek);
+
+    // Boucle pour le reste de la semaine
+    for (let i = 1; i < 5; i++) {
+      a.push(beginningOfWeek.clone().add(i, 'days'));
+    }
+
+    return a;
   }
 }

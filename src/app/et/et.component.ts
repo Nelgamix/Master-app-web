@@ -1,5 +1,6 @@
 import {EmploiTempsService} from '../services/emploi-temps.service';
 import {DatesService} from '../services/dates.service';
+import {MessageService} from '../services/message.service';
 
 import {Component, OnInit} from '@angular/core';
 import {Semaine, SemaineDate} from '../model/et/Semaine';
@@ -9,7 +10,6 @@ import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/observable/of';
 import * as moment from 'moment';
-import {MessageService} from '../services/message.service';
 
 // TODO: Settings screen (comme info) avec exclusions, remove cours passés, changer couleurs
 // TODO: exclusions -> settings
@@ -116,7 +116,7 @@ export class EtComponent implements OnInit {
   }
 
   closeSettings() {
-    this.etService.analyse();
+    this.etService.analyse([this.semaine]);
     this.vueType = VueType.ET;
   }
 
@@ -128,7 +128,7 @@ export class EtComponent implements OnInit {
           CoursPersoRecurrence.SEMAINE, moment(), 9 * 60, 11 * 60 + 30, 'TER', 'TER', 'TP', 'DEMEURE Alexandre', 'IMAG'
         );
 
-        this.etService.ajoutCoursPerso([cp]);
+        this.etService.ajoutCoursPerso([cp], [this.semaine]);
         break;
       case 1:
         this.messageService.showMessage('Test!');

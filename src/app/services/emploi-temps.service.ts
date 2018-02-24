@@ -47,16 +47,10 @@ export class EmploiTempsService {
    */
   coursPersos: CoursPerso[];
 
-  /**
-   * Si vrai, alors aucune analyse ne sera effectuée.
-   */
-  analyseDisabled: boolean;
-
   options: any;
 
   constructor(private http: HttpClient,
               private cookiesService: CookieService) {
-    this.analyseDisabled = false;
     this.emploiTemps = new EmploiTemps();
 
     this.initOptionsFromCookies();
@@ -93,7 +87,7 @@ export class EmploiTempsService {
               }
             });
       } else {
-        this.analyse();
+        this.analyse([t]);
         obs.next(t);
         if (cb) {
           cb();
@@ -108,16 +102,16 @@ export class EmploiTempsService {
     });
   }
 
-  exclure(exclusion: Exclusion): void {
+  exclure(exclusion: Exclusion, s: Semaine[]): void {
     this.exclusions.push(exclusion);
-    this.filterExclusions(this.exclusions);
+    this.filterExclusions(this.exclusions, s);
   }
 
   /**
    * Filtrer les cours avec les exclusions fournies en paramètre.
    * @param {Exclusion[]} exclusions les exclusions qui vont exclure les cours.
    */
-  filterExclusions(exclusions: Exclusion[]): number {
+  filterExclusions(exclusions: Exclusion[], s: Semaine[]): number {
     if (exclusions !== this.exclusions) {
       this.exclusions.splice(0, this.exclusions.length); // remove all (clear)
       for (const e of exclusions) {
@@ -125,14 +119,15 @@ export class EmploiTempsService {
       }
     }
 
-    const total = this.emploiTemps.applyExclusions(this.exclusions);
-    this.analyse();
     this.sauvegardeExclusionsToCookies();
 
-    return total;
+    let t = 0;
+    s.forEach(ss => t += ss.applyExclusions(this.exclusions));
+
+    return t;
   }
 
-  ajoutCoursPerso(coursPerso: CoursPerso[]): void {
+  ajoutCoursPerso(coursPerso: CoursPerso[], s: Semaine[]): void {
     if (coursPerso !== this.coursPersos) {
       this.coursPersos.splice(0, this.coursPersos.length); // remove all (clear)
       for (const e of coursPerso) {
@@ -140,20 +135,22 @@ export class EmploiTempsService {
       }
     }
 
-    coursPerso.forEach(c => c.testePlusieursSemaine(this.emploiTemps.semaines));
-    this.analyse();
     this.sauvegardeCoursPersoToCookies();
+
+    coursPerso.forEach(c => c.testePlusieursSemaine(s));
+  }
+
+  preAnalyse(s: Semaine[]): void {
+    this.emploiTemps.preAnalyse(moment(), s);
   }
 
   /**
    * Analyse l'ensemble des semaines sélectionnées.
    */
-  analyse(): void {
-    if (this.analyseDisabled) {
-      return;
-    }
-
-    this.emploiTemps.analyse(this.options);
+  analyse(s: Semaine[]): void {
+    this.filterExclusions(this.exclusions, s);
+    this.ajoutCoursPerso(this.coursPersos, s);
+    this.emploiTemps.analyse(this.options, s);
   }
 
   initOptionsFromCookies(): any {
@@ -178,7 +175,7 @@ export class EmploiTempsService {
   }
 
   sauvegardeOptionsToCookies(): void {
-    this.cookiesService.set(this.optionsCookie, JSON.stringify(this.options));
+    this.cookiesService.set(this.optionsCookie, JSON.stringify(this.options), 0, '/');
   }
 
   /**
@@ -215,7 +212,7 @@ export class EmploiTempsService {
    * Sauvegarde les cours perso dans les cookies.
    */
   private sauvegardeCoursPersoToCookies(): void {
-    this.cookiesService.set(this.coursPersoCookie, JSON.stringify(this.coursPersos));
+    this.cookiesService.set(this.coursPersoCookie, JSON.stringify(this.coursPersos), 0, '/');
   }
 
   /**
@@ -240,7 +237,7 @@ export class EmploiTempsService {
    * Sauvegarde les exclusions dans les cookies.
    */
   private sauvegardeExclusionsToCookies(): void {
-    this.cookiesService.set(this.exclusionsCookie, JSON.stringify(this.exclusions));
+    this.cookiesService.set(this.exclusionsCookie, JSON.stringify(this.exclusions), 0, '/');
   }
 
   /**
@@ -276,7 +273,7 @@ export class EmploiTempsService {
         return 0;
       });
 
-      const sts = []; // semaines to select (semaine qui vont être sélectionnées à la fin)
+      const sts: Semaine[] = []; // semaines to select (semaine qui vont être sélectionnées à la fin)
 
       // pour chaque semaine
       for (const s of semaines) {
@@ -285,7 +282,7 @@ export class EmploiTempsService {
         const u = s['updated'];
         const cs = s['cours'];
 
-        const added = this.emploiTemps.addSemaine(w, y);
+        const added = this.emploiTemps.ajoutSemaine(w, y);
         const so = this.emploiTemps.trouverSemaine(w, y);
         if (added) {
           so.updated = moment(u, 'DD-MM-YYYY HH:mm');
@@ -297,12 +294,14 @@ export class EmploiTempsService {
         sts.push(so);
       }
 
-      this.analyseDisabled = true;
-      this.filterExclusions(this.exclusions);
-      this.ajoutCoursPerso(this.coursPersos);
-      this.analyseDisabled = false;
+      this.preAnalyse(sts);
 
-      this.analyse();
+      /*this.analyseDisabled = true;
+      this.filterExclusions(this.exclusions, sts);
+      this.ajoutCoursPerso(this.coursPersos, sts);
+      this.analyseDisabled = false;*/
+
+      this.analyse(sts);
 
       if (selectAll) {
         obs.next(sts);

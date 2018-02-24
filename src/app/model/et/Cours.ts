@@ -140,7 +140,7 @@ export class Cours {
     });
   }
 
-  static analyseGroupe(groupe: string): any[] {
+  private static analyseGroupe(groupe: string): any[] {
     if (groupe.length === 0) {
       return [];
     }
@@ -148,7 +148,7 @@ export class Cours {
     return groupe.split(', ');
   }
 
-  static analyseType(type: string): any[] {
+  private static analyseType(type: string): any[] {
     if (type.length === 0) {
       return [];
     }
@@ -156,7 +156,7 @@ export class Cours {
     return type.split('/');
   }
 
-  static analyseSalle(salle: string): [string[], string[]] {
+  private static analyseSalle(salle: string): [string[], string[]] {
     const salles = [];
 
     // On définit les regex.
@@ -196,8 +196,11 @@ export class Cours {
     return [salles, salles_types];
   }
 
-  analyse(now: any): void {
+  preAnalyse(now: any): void {
     this.analysePositionTemps(now);
+  }
+
+  analyse(opt?: any): void {
     this.calculeHash();
   }
 

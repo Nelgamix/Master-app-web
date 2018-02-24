@@ -7,8 +7,8 @@ import {ModalEtExclusionsComponent} from '../modal/et-exclusions.component';
 import {Exclusion} from '../model/et/Exclusion';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {EmploiTempsService} from '../services/emploi-temps.service';
-import * as moment from 'moment';
 import {Semaine} from '../model/et/Semaine';
+import * as moment from 'moment';
 
 enum VueType {
   TABLE,
@@ -58,7 +58,7 @@ export class EtDetailsComponent implements OnChanges {
 
   openStats() {
     const modalRef = this.modalService.open(ModalEtStatsComponent, {size: 'lg'});
-    modalRef.componentInstance.stats = this.semaine.stats;
+    modalRef.componentInstance.stats = this.semaine.ensembleCours.setCours.stats;
   }
 
   openExclusions() {
@@ -70,16 +70,19 @@ export class EtDetailsComponent implements OnChanges {
     const stats = ['noms', 'types', 'professeurs', 'salles'];
     const possibilites = {};
 
-    stats.forEach(s => possibilites[s] = Object.keys(this.semaine.setCours.getStats()[s].data).sort());
+    stats.forEach(s => possibilites[s] = Object.keys(this.semaine.ensembleCours.setCours.getStats()[s].data).sort());
 
     // Ouvrir modal
     const modalRef = this.modalService.open(ModalEtExclusionsComponent, {size: 'lg'});
     modalRef.componentInstance.exclusions = ne;
     modalRef.componentInstance.possibilites = possibilites;
-    modalRef.result.then(r => {
-      this.etService.filterExclusions(r);
-    }, r => {
-    });
+    modalRef.result.then(
+      r => {
+        this.etService.filterExclusions(r, [this.semaine]);
+        this.etService.analyse([this.semaine]);
+      }, r => {
+      }
+    );
   }
 
   private updateWeekProgress(): void {
@@ -119,8 +122,8 @@ export class EtDetailsComponent implements OnChanges {
       this.semaineProgress = (now.diff(first, 'minutes') / (last.diff(first, 'minutes'))) * 100;
     }
 
-    if (this.semaine.setCoursActifs.coursSuivant) {
-      this.prochainCoursTimer = moment.duration(now.diff(this.semaine.setCoursActifs.coursSuivant.debut));
+    if (this.semaine.ensembleCours.setCoursActifs.coursSuivant) {
+      this.prochainCoursTimer = moment.duration(now.diff(this.semaine.ensembleCours.setCoursActifs.coursSuivant.debut));
     }
   }
 }

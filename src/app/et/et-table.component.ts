@@ -46,7 +46,8 @@ export class EtTableComponent {
     }
 
     if (e !== null) {
-      this.etService.exclure(e);
+      this.etService.exclure(e, [this.semaine]);
+      this.etService.analyse([this.semaine]);
     }
   }
 }

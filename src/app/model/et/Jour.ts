@@ -1,6 +1,7 @@
 import {Cours} from './Cours';
 import {PositionTemps} from './PositionTemps';
-import {SetCours} from './SetCours';
+import {EnsembleCours} from './EnsembleCours';
+import {Exclusion} from './Exclusion';
 
 /**
  * Représente un jour dans l'emploi du temps.
@@ -11,42 +12,57 @@ export class Jour {
   debutJour: any;
   finJour: any;
 
-  setCours: SetCours;
-  setCoursActifs: SetCours;
-  setCoursCaches: SetCours;
-  setCoursSupprimes: SetCours;
-  setCoursPrives: SetCours;
+  ensembleCours: EnsembleCours;
 
   positionTemps: PositionTemps;
 
   constructor(date: any) {
     this.date = date;
     this.positionTemps = PositionTemps.INDEFINI;
-    this.setCours = new SetCours();
+    this.ensembleCours = new EnsembleCours();
   }
 
   addCours(cours: Cours): number {
-    return this.setCours.addCours(cours);
+    return this.ensembleCours.fill([cours]);
   }
 
-  analyse(now: any, opt?: any): void {
+  preAnalyse(now: any): void {
+    this.ensembleCours.setCours.cours.forEach(c => c.preAnalyse(now));
+
     // Analyse du jour
     this.analyseDebutJour();
     this.analyseFinJour();
+
     this.analysePositionTemps(now);
+  }
+
+  analyse(opt?: any): void {
+    this.ensembleCours.setCours.cours.forEach(c => c.analyse(opt));
 
     // Analyse/filtrage des sets
-    this.setCours.analyse(now, opt);
-    this.analyseCoursActifs();
-    this.analyseCoursCaches();
-    this.analyseCoursSupprimes();
-    this.analyseCoursPrives();
+    this.ensembleCours.analyse(opt);
+  }
 
-    // Analyse des sets
-    this.setCoursActifs.analyse(now, opt);
-    this.setCoursCaches.analyse(now, opt);
-    this.setCoursSupprimes.analyse(now, opt);
-    this.setCoursPrives.analyse(now, opt);
+  /**
+   * Applique les exclusions passées en paramètre.
+   * @param {Exclusion[]} exclusions les exclusions à appliquer.
+   * @returns {number} le nombre de cours exclus par les exclusions.
+   */
+  applyExclusions(exclusions: Exclusion[]): number {
+    let total = 0;
+
+    // Obligé: si il n'y a pas d'exclusion, alors les cours ne sont jamais reset
+    for (const c of this.ensembleCours.setCours.cours) {
+      c.cache = false;
+      c.supprime = false;
+    }
+
+    // Filtrage
+    for (const e of exclusions) {
+      total += e.testePlusieursCours(this.ensembleCours.setCours.cours);
+    }
+
+    return total;
   }
 
   private analysePositionTemps(now: any): void {
@@ -65,21 +81,5 @@ export class Jour {
 
   private analyseFinJour(): any {
     return (this.finJour = this.date.clone().add(23, 'hours').add(59, 'minutes').add(59, 'seconds'));
-  }
-
-  private analyseCoursActifs(): SetCours {
-    return (this.setCoursActifs = new SetCours(this.setCours.coursActifs));
-  }
-
-  private analyseCoursCaches(): SetCours {
-    return (this.setCoursCaches = new SetCours(this.setCours.coursCaches));
-  }
-
-  private analyseCoursSupprimes(): SetCours {
-    return (this.setCoursSupprimes = new SetCours(this.setCours.coursSupprimes));
-  }
-
-  private analyseCoursPrives(): SetCours {
-    return (this.setCoursPrives = new SetCours(this.setCours.coursPrives));
   }
 }

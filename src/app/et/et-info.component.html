@@ -41,47 +41,47 @@
             <b>Mis à jour le</b> {{s.updated | amDateFormat:'D MMMM YYYY HH:mm'}}
           </div>
           <div class="col-12 col-md">
-            <b>Nombre d'heures sans conflits</b>: {{s.setCours.duree | duree}}
+            <b>Nombre d'heures sans conflits</b>: {{s.ensembleCours.setCours.duree | duree}}
           </div>
           <div class="col-12 col-md">
-            <b>Nombre d'heures au total</b>: {{s.setCours.dureeTotale | duree}}
+            <b>Nombre d'heures au total</b>: {{s.ensembleCours.setCours.dureeTotale | duree}}
           </div>
         </div>
 
-        <ng-container *ngIf="!s.setCours.estVide()">
+        <ng-container *ngIf="!s.ensembleCours.setCours.estVide()">
           <div class="row">
             <div class="col-12 col-md">
-              <b>Nombre de cours</b>: {{s.setCours.getTaille()}}
+              <b>Nombre de cours</b>: {{s.ensembleCours.setCours.getTaille()}}
             </div>
             <div class="col-12 col-md">
-              <b>Moyenne par jour</b>: {{s.setCours.moyenneParJour | duree}}
+              <b>Moyenne par jour</b>: {{s.ensembleCours.setCours.moyenneParJour | duree}}
             </div>
             <div class="col-12 col-md">
-              <b>Moyenne par cours</b>: {{s.setCours.moyenneParCours | duree}}
+              <b>Moyenne par cours</b>: {{s.ensembleCours.setCours.moyenneParCours | duree}}
             </div>
           </div>
 
           <div class="row">
             <div class="col-12 col-md">
-              <b>Nombre de cours actifs</b>: {{s.setCours.coursActifs.length}}
+              <b>Nombre de cours actifs</b>: {{s.ensembleCours.setCours.coursActifs.length}}
             </div>
             <div class="col-12 col-md">
-              <b>Nombre de cours cachés</b>: {{s.setCours.coursCaches.length}}
+              <b>Nombre de cours cachés</b>: {{s.ensembleCours.setCours.coursCaches.length}}
             </div>
             <div class="col-12 col-md">
-              <b>Nombre de cours supprimés</b>: {{s.setCours.coursSupprimes.length}}
+              <b>Nombre de cours supprimés</b>: {{s.ensembleCours.setCours.coursSupprimes.length}}
             </div>
           </div>
 
           <div class="row">
             <div class="col-12 col-md">
-              <b>Nombre de cours privés</b>: {{s.setCours.coursPrives.length}}
+              <b>Nombre de cours privés</b>: {{s.ensembleCours.setCours.coursPrives.length}}
             </div>
             <div class="col-12 col-md">
-              <b>Nombre de cours passés</b>: {{s.setCours.coursPasses.length}}
+              <b>Nombre de cours passés</b>: {{s.ensembleCours.setCours.coursPasses.length}}
             </div>
             <div class="col-12 col-md">
-              <b>Nombre de cours futurs</b>: {{s.setCours.coursFuturs.length}}
+              <b>Nombre de cours futurs</b>: {{s.ensembleCours.setCours.coursFuturs.length}}
             </div>
           </div>
 
@@ -111,7 +111,7 @@
             </div>
           </ng-container>
         </ng-container>
-        <div class="row" *ngIf="s.setCours.estVide()">
+        <div class="row" *ngIf="s.ensembleCours.setCours.estVide()">
           <div class="col text-center">
             <img src="assets/icons_perso/drawing4empty.svg" alt="Vide" width="80" height="80" class="my-3">
           </div>
@@ -120,6 +120,7 @@
     </div>
   </ng-container>
 </ng-container>
+
 <div *ngIf="!loaded" class="text-center" style="background: radial-gradient(circle, #F0F0FF, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0))">
   <img src="assets/spinners/giphy_mod.gif" alt="Loading">
 </div>
