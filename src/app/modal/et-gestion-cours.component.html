@@ -10,51 +10,126 @@
       <div class="alert alert-warning">En construction!</div>
     </div>
   </div>
-  <div class="row" *ngFor="let c of cours">
-    <div class="col">
-      <form>
-        <div class="form-group">
-          <label for="rec">Récurrence</label>
-          <select class="form-control" name="rec" id="rec" [(ngModel)]="c.recurrence">
-            <option [value]="o.key" *ngFor="let o of CoursPersoRecurrence | enumKeys">{{o.value}}</option>
-          </select>
+  <ng-container [ngSwitch]="vue">
+    <ng-container *ngSwitchCase="VueType.LISTE">
+      <div class="row">
+        <div class="col">
+          <button type="button" class="btn btn-success" (click)="new()">Nouveau</button>
         </div>
-        <div class="form-group">
-          <label for="dat">Date</label>
-          <input type="text" class="form-control" id="dat" name="dat" placeholder="Date">
+      </div>
+      <div class="row" *ngFor="let c of cours">
+        <div class="col-12 col-md-6 col-lg-3">
+          {{CoursPersoRecurrence[c.recurrence]}}
         </div>
-        <div class="form-group">
-          <label for="deb">Début</label>
-          <input type="text" class="form-control" id="deb" name="deb" placeholder="Début">
+        <div class="col-12 col-md-6 col-lg-2">
+          {{c.type}}
         </div>
-        <div class="form-group">
-          <label for="fin">Fin</label>
-          <input type="text" class="form-control" id="fin" name="fin" placeholder="Fin">
+        <div class="col-12 col-md-6 col-lg-3">
+          {{c.nom}}
         </div>
-        <div class="form-group">
-          <label for="des">Description</label>
-          <input type="text" class="form-control" id="des" name="des" placeholder="Description" [(ngModel)]="c.description">
+        <div class="col-12 col-md-6 col-lg-4">
+          <button type="button" class="btn btn-success" (click)="open(c)">Editer</button>
+          <button type="button" class="btn btn-danger" (click)="delete(c)">Supprimer</button>
         </div>
-        <div class="form-group">
-          <label for="nom">Nom</label>
-          <input type="text" class="form-control" id="nom" name="nom" placeholder="Nom" [(ngModel)]="c.nom">
+        <div class="col-12 col-md-6 col-lg-6">
+          {{c.description}}
         </div>
-        <div class="form-group">
-          <label for="typ">Type</label>
-          <input type="text" class="form-control" id="typ" name="typ" placeholder="Type" [(ngModel)]="c.type">
+        <div class="col-12 col-md-6 col-lg-3">
+          {{c.professeur}}
         </div>
-        <div class="form-group">
-          <label for="pro">Professeur</label>
-          <input type="text" class="form-control" id="pro" name="pro" placeholder="Professeur" [(ngModel)]="c.professeur">
+        <div class="col-12 col-md-6 col-lg-3">
+          {{c.lieu}}
         </div>
-        <div class="form-group">
-          <label for="lie">Lieu</label>
-          <input type="text" class="form-control" id="lie" name="lie" placeholder="Lieu" [(ngModel)]="c.lieu">
+      </div>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="VueType.DETAILS">
+      <div class="row">
+        <div class="col">
+          <div class="row">
+            <div class="col">
+              <button type="button" class="btn btn-dark" (click)="close()">&larr;</button>
+            </div>
+          </div>
+          <form>
+            <div class="form-group row">
+              <label for="rec" class="col-sm-3 col-form-label">Récurrence</label>
+              <div class="col-sm-9">
+                <select class="form-control" name="rec" id="rec" [(ngModel)]="coursSelectionne.recurrence">
+                  <option [value]="o.key" *ngFor="let o of CoursPersoRecurrence | enumKeys">{{o.value}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="dat" class="col-sm-3 col-form-label">Date</label>
+              <div class="col-sm-9">
+                <div class="input-group">
+                  <input class="form-control" placeholder="yyyy-mm-dd" name="dat" id="dat" [(ngModel)]="coursSelectionne.date" ngbDatepicker #d="ngbDatepicker">
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
+                      <img src="assets/icons/calendar.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="hdeb" class="col-sm-3 col-form-label">Heure début</label>
+              <div class="col-sm-3">
+                <input type="number" class="form-control" id="hdeb" name="hdeb" placeholder="Heure début" [(ngModel)]="heures.debut.heure">
+              </div>
+              <label for="mdeb" class="col-sm-3 col-form-label">Minute début</label>
+              <div class="col-sm-3">
+                <input type="number" class="form-control" id="mdeb" name="mdeb" placeholder="Minute début" step="15" [(ngModel)]="heures.debut.minute">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="hfin" class="col-sm-3 col-form-label">Heure fin</label>
+              <div class="col-sm-3">
+                <input type="number" class="form-control" id="hfin" name="hfin" placeholder="Heure fin" [(ngModel)]="heures.fin.heure">
+              </div>
+              <label for="mfin" class="col-sm-3 col-form-label">Minute fin</label>
+              <div class="col-sm-3">
+                <input type="number" class="form-control" id="mfin" name="mfin" placeholder="Minute fin" step="15" [(ngModel)]="heures.fin.minute">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="des" class="col-sm-3 col-form-label">Description</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" id="des" name="des" placeholder="Description" [(ngModel)]="coursSelectionne.description">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="nom" class="col-sm-3 col-form-label">Nom</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" id="nom" name="nom" placeholder="Nom" [(ngModel)]="coursSelectionne.nom">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="typ" class="col-sm-3 col-form-label">Type</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" id="typ" name="typ" placeholder="Type" [(ngModel)]="coursSelectionne.type">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="pro" class="col-sm-3 col-form-label">Professeur</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" id="pro" name="pro" placeholder="Professeur" [(ngModel)]="coursSelectionne.professeur">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="lie" class="col-sm-3 col-form-label">Lieu</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" id="lie" name="lie" placeholder="Lieu" [(ngModel)]="coursSelectionne.lieu">
+              </div>
+            </div>
+          </form>
         </div>
-      </form>
-    </div>
-  </div>
+      </div>
+    </ng-container>
+  </ng-container>
 </div>
+
 <div class="modal-footer">
   <button type="button" class="btn btn-danger" (click)="activeModal.dismiss('Cancel')">Annuler</button>
   <button type="button" class="btn btn-success" (click)="valider()">Valider</button>

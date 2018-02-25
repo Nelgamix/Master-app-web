@@ -116,7 +116,7 @@ export class EmploiTempsService {
   }
 
   addExclusions(exclusions: Exclusion[]): void {
-    this.exclusions.push(...this.exclusions);
+    this.exclusions.push(...exclusions);
   }
 
   setExclusions(exclusions: Exclusion[]): void {
@@ -144,6 +144,7 @@ export class EmploiTempsService {
   initOptionsFromCookies(): any {
     this.options = {
       cacherCoursPasses: false,
+      coursPersoSemaineVide: false,
       couleur: {
         CM: {defaut: 'rgba(220, 20, 60, 0.4)', couleur: 'rgba(220, 20, 60, 0.4)'},
         TD: {defaut: 'rgba(30, 144, 255, 0.4)', couleur: 'rgba(30, 144, 255, 0.4)'},
@@ -196,7 +197,7 @@ export class EmploiTempsService {
       }
     }));
 
-    coursPerso.forEach(c => c.testePlusieursSemaine(s, moment()));
+    coursPerso.forEach(c => c.testePlusieursSemaine(s, moment(), this.options));
   }
 
   /**

@@ -65,17 +65,25 @@
 </div>
 
 <context-menu>
-  <ng-template contextMenuItem let-item [visible]="isNotCache" (execute)="cacher($event.item, 0)">
+  <ng-template contextMenuItem let-item [visible]="isActif" (execute)="cacher($event.item, 0)">
     Cacher {{item?.nom}}
   </ng-template>
-  <ng-template contextMenuItem let-item [visible]="isNotCache" (execute)="cacher($event.item, 1)">
-    Cacher {{item?.nom}} &amp;&amp; {{item?.professeur}}
+  <ng-template contextMenuItem let-item [visible]="isActifAndType" (execute)="cacher($event.item, 1)">
+    Cacher ['{{item?.nom}}', '{{item?.type[0]}}']
   </ng-template>
-  <ng-template contextMenuItem let-item divider="true" [visible]="isNotCache"></ng-template>
+  <ng-template contextMenuItem let-item [visible]="isActifAndProf" (execute)="cacher($event.item, 2)">
+    Cacher ['{{item?.nom}}', '{{item?.professeur}}']
+  </ng-template>
+
+  <ng-template contextMenuItem let-item divider="true" [visible]="isActif"></ng-template>
+
   <ng-template contextMenuItem let-item (execute)="exclure($event.item, 0)">
     Exclure {{item?.nom}}
   </ng-template>
-  <ng-template contextMenuItem let-item (execute)="exclure($event.item, 1)">
-    Exclure {{item?.nom}} &amp;&amp; {{item?.professeur}}
+  <ng-template contextMenuItem let-item [visible]="isType" (execute)="exclure($event.item, 1)">
+    Exclure ['{{item?.nom}}', '{{item?.type[0]}}']
+  </ng-template>
+  <ng-template contextMenuItem let-item [visible]="isProf" (execute)="exclure($event.item, 2)">
+    Exclure ['{{item?.nom}}', '{{item?.professeur}}']
   </ng-template>
 </context-menu>

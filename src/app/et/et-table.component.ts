@@ -31,8 +31,24 @@ export class EtTableComponent {
     this.ajouterExclusion(cours, type, true);
   }
 
-  isNotCache(item: Cours): boolean {
-    return item.etat !== EtatCours.ACTIF;
+  isActif(item: Cours): boolean {
+    return item.etat === EtatCours.ACTIF;
+  }
+
+  isActifAndProf(item: Cours): boolean {
+    return item.etat === EtatCours.ACTIF && item.professeur.length > 0;
+  }
+
+  isActifAndType(item: Cours): boolean {
+    return item.etat === EtatCours.ACTIF && item.type[0].length > 0;
+  }
+
+  isProf(item: Cours): boolean {
+    return item.professeur.length > 0;
+  }
+
+  isType(item: Cours): boolean {
+    return item.type[0].length > 0;
   }
 
   private ajouterExclusion(cours: Cours, type: number, supprimer: boolean): void {
@@ -41,7 +57,10 @@ export class EtTableComponent {
       case 0: // exclure uniquement le nom.
         e = new Exclusion('', cours.nom, '', '', supprimer, false);
         break;
-      case 1:
+      case 1: // exclure nom + type
+        e = new Exclusion(cours.type[0], cours.nom, '', '', supprimer, false);
+        break;
+      case 2: // exclure nom + prof
         e = new Exclusion('', cours.nom, cours.professeur, '', supprimer, false);
         break;
     }

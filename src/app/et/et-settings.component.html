@@ -9,6 +9,12 @@
     </div>
   </div>
   <div class="form-group">
+  <div class="custom-control custom-checkbox">
+    <input type="checkbox" class="custom-control-input" id="cCoursPersoSemaineVide" name="cCoursPersoSemaineVide" [(ngModel)]="options.coursPersoSemaineVide">
+    <label class="custom-control-label" for="cCoursPersoSemaineVide">Cours perso pendant les semaines vides</label>
+  </div>
+</div>
+  <div class="form-group">
     <label for="couleurCM">Couleur CM</label>
     <div class="input-group">
       <input class="form-control" name="couleurCM" id="couleurCM" [(colorPicker)]="couleur.CM.couleur" [style.background]="couleur.CM.couleur">
@@ -75,6 +81,16 @@
         <mark>Perso</mark>: le cours vient de l'utilisateur. Ces cours ne peuvent pas être cachés, ni supprimés, car ils sont définis par l'utilisateur.
       </li>
     </ul>
+
+    <h4>Cours Perso</h4>
+    <p>
+      Les cours perso sont des cours qui ne sont pas renseignés dans l'emploi du temps, car il ne concernent qu'une seule personne,
+      ou qu'ils sont externes à la formation. <br>
+      Ces cours sont configurables depuis une pop-up ouvrable au dessus de l'emploi du temps. <br>
+      Chaque cours perso possède une récurrence (<s>UNIQUE</s>, JOUR, SEMAINE), à laquelle le cours viendra se rajouter. <br>
+      Chaque cours perso possède aussi une heure de début et une heure de fin (un cours perso ne peut pas être sur deux jours). <br>
+      Le reste des éléments (nom, description, type, professeur, lieu) sont des éléments qui sont utilisés comme pour les cours réguliers.
+    </p>
 
     <h4>Exclusions</h4>
     <p>

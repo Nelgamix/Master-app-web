@@ -76,9 +76,9 @@ export class CoursPerso {
     this.lieu = lieu;
   }
 
-  testePlusieursSemaine(semaines: Semaine[], now: any): number {
+  testePlusieursSemaine(semaines: Semaine[], now: any, opt?: any): number {
     let total = 0;
-    semaines.forEach(s => total += this.testeSemaine(s, now));
+    semaines.forEach(s => total += this.testeSemaine(s, now, opt));
     return total;
   }
 
@@ -92,7 +92,11 @@ export class CoursPerso {
       this.debut < this.fin;
   }
 
-  testeSemaine(semaine: Semaine, now: any): number {
+  testeSemaine(semaine: Semaine, now: any, opt?: any): number {
+    if (opt && !opt.coursPersoSemaineVide && semaine.ensembleCours.setCours.getTaille() === 0) {
+      return 0;
+    }
+
     let total = 0;
     let d, debut, fin;
     switch (this.recurrence) {
