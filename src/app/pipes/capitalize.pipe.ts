@@ -10,6 +10,6 @@ export class Capitalize implements PipeTransform {
       return '';
     }
 
-    return item.charAt(0).toUpperCase() + item.slice(1);
+    return item.charAt(0).toUpperCase() + item.slice(1).toLowerCase();
   }
 }

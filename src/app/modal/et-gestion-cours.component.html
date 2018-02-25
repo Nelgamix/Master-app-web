@@ -5,50 +5,43 @@
   </button>
 </div>
 <div class="modal-body">
-  <div class="row">
-    <div class="col">
-      <div class="alert alert-warning">En construction!</div>
-    </div>
-  </div>
   <ng-container [ngSwitch]="vue">
     <ng-container *ngSwitchCase="VueType.LISTE">
-      <div class="row">
+      <div class="row mb-2">
         <div class="col">
           <button type="button" class="btn btn-success" (click)="new()">Nouveau</button>
         </div>
       </div>
-      <div class="row" *ngFor="let c of cours">
-        <div class="col-12 col-md-6 col-lg-3">
-          {{CoursPersoRecurrence[c.recurrence]}}
+      <div class="row" style="font-weight: bold;">
+        <div class="col-12 col-md-6 col-lg-2">
+          Récurrence
+        </div>
+        <div class="col-12 col-md-6 col-lg-1">
+          Type
         </div>
         <div class="col-12 col-md-6 col-lg-2">
-          {{c.type}}
+          Nom
         </div>
-        <div class="col-12 col-md-6 col-lg-3">
-          {{c.nom}}
+        <div class="col-12 col-md-6 col-lg-3 text-truncate">
+          Description
         </div>
-        <div class="col-12 col-md-6 col-lg-4">
-          <button type="button" class="btn btn-success" (click)="open(c)">Editer</button>
-          <button type="button" class="btn btn-danger" (click)="delete(c)">Supprimer</button>
+        <div class="col-12 col-md-6 col-lg-2 text-truncate">
+          Professeur
         </div>
-        <div class="col-12 col-md-6 col-lg-6">
-          {{c.description}}
-        </div>
-        <div class="col-12 col-md-6 col-lg-3">
-          {{c.professeur}}
-        </div>
-        <div class="col-12 col-md-6 col-lg-3">
-          {{c.lieu}}
+        <div class="col-12 col-md-6 col-lg-2">
+          Lieu
         </div>
       </div>
+      <app-modal-et-gestion-cours-cours [cours]="c" (onSelect)="open($event)" *ngFor="let c of cours"></app-modal-et-gestion-cours-cours>
     </ng-container>
 
     <ng-container *ngSwitchCase="VueType.DETAILS">
       <div class="row">
         <div class="col">
-          <div class="row">
+          <div class="row mb-2">
             <div class="col">
               <button type="button" class="btn btn-dark" (click)="close()">&larr;</button>
+              <button type="button" class="btn btn-danger float-right" (click)="delete(coursSelectionne); close()">✕</button>
             </div>
           </div>
           <form>

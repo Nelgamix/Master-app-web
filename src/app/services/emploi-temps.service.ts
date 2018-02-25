@@ -136,6 +136,7 @@ export class EmploiTempsService {
    * Analyse l'ensemble des semaines sélectionnées.
    */
   analyse(s: Semaine[]): void {
+    this.emploiTemps.analyse(this.options, s);
     this.filterExclusions(this.exclusions, s);
     this.ajoutCoursPerso(this.coursPersos, s);
     this.emploiTemps.analyse(this.options, s);

@@ -14,7 +14,7 @@
 }
 
 #head-summary {
-  font-size: 112%;
+  font-size: 108%;
 }
 
 .btn.img-text > img {
@@ -31,6 +31,7 @@
 
 .stat-donnee {
   color: blueviolet;
+  font-weight: bold;
 }
 
 .demo-td {

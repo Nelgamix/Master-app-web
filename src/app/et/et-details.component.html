@@ -60,19 +60,19 @@
                   <div class="row">
                     <div class="col-12">
                       <span class="stat-donnee">{{semaine.ensembleCours.setCoursActifs.stats['duree'].data | duree}}</span>
-                      <span class="font-weight-bold">heures</span>
+                      <span>heures</span>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-12">
                       <span class="stat-donnee">{{semaine.ensembleCours.setCoursActifs.stats['moyenneParCours'].data | duree}}</span>
-                      <span class="font-weight-bold">heure(s) / cours</span>
+                      <span>heure(s) / cours</span>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-12">
                       <span class="stat-donnee">{{semaine.ensembleCours.setCoursActifs.stats['moyenneParJour'].data | duree}}</span>
-                      <span class="font-weight-bold">heures / jour</span>
+                      <span>heures / jour</span>
                     </div>
                   </div>
                 </div>
@@ -80,19 +80,19 @@
                   <div class="row">
                     <div class="col-12">
                       <span class="stat-donnee">{{semaine.ensembleCours.setCoursActifs.cours.length}}</span>
-                      <span class="font-weight-bold">cours actifs</span>
+                      cours <span class="font-weight-bold" style="color: lightseagreen;">actifs</span>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-12">
                       <span class="stat-donnee">{{semaine.ensembleCours.setCoursCaches.cours.length}}</span>
-                      <span class="font-weight-bold">cours cachés</span>
+                      cours <span class="font-weight-bold" style="color: coral">cachés</span>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-12">
                       <span class="stat-donnee">{{semaine.ensembleCours.setCoursSupprimes.cours.length}}</span>
-                      <span class="font-weight-bold">cours supprimés</span>
+                      cours <span class="font-weight-bold" style="color: darkred">supprimés</span>
                     </div>
                   </div>
                 </div>
@@ -103,7 +103,7 @@
 
         <!-- Deb & fin pannel -->
         <div class="col-12 col-md-6 mb-2">
-          <h5>Début &amp; fin des cours</h5>
+          <h5>Informations rapides</h5>
           <div class="row">
             <div class="col">
               <dl>

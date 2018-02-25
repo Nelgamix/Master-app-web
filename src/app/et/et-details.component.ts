@@ -60,7 +60,7 @@ export class EtDetailsComponent implements OnChanges {
 
   openStats() {
     const modalRef = this.modalService.open(ModalEtStatsComponent, {size: 'lg'});
-    modalRef.componentInstance.stats = this.semaine.ensembleCours.setCours.stats;
+    modalRef.componentInstance.stats = this.semaine.ensembleCours.setCoursActifs.stats;
   }
 
   openExclusions() {

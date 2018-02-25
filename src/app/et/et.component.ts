@@ -11,13 +11,13 @@ import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/observable/of';
 import * as moment from 'moment';
 
-// TODO: Settings screen (comme info) avec exclusions, remove cours passés, changer couleurs
-// TODO: exclusions -> settings
-// TODO: info: stats générales, sur les exclusion, les notes, graph sur les heures moyennes
-// TODO: filtrage sur et visuel
-// TODO: cours perso ui
-// TODO: plus d'info sur chaque jour (nb cours...)
-// TODO: fix vue mobile
+// TODO: Settings screen (comme info) avec exclusions, remove cours passés, changer couleurs (90%)
+// TODO: exclusions -> settings (80%)
+// TODO: info: stats générales, sur les exclusion, les notes, graph sur les heures moyennes (50%)
+// TODO: filtrage sur et visuel (0%)
+// TODO: cours perso ui (80%)
+// TODO: plus d'info sur chaque jour (nb cours...) (0%)
+// TODO: fix vue mobile (50%)
 
 enum VueType {
   ET,

@@ -42,7 +42,7 @@ import {EtVisuelComponent} from './et/et-visuel.component';
 import {EtTableComponent} from './et/et-table.component';
 import {AppRoutingModule} from './app-routing.module';
 import {ExclusionComponent} from './et/exclusion.component';
-import {ModalEtGestionCoursComponent} from './modal/et-gestion-cours.component';
+import {CoursPersoComponent, ModalEtGestionCoursComponent} from './modal/et-gestion-cours.component';
 import {GestionCoursComponent} from './et/gestion-cours.component';
 import {ModalEtNotesComponent} from './modal/et-notes.component';
 import {NotesService} from './services/notes.service';
@@ -85,6 +85,7 @@ import {EnumKeysPipe} from './pipes/enumKeys.pipe';
     Capitalize,
     EvenementComponent,
     ExclusionComponent,
+    CoursPersoComponent,
     GestionCoursComponent,
     EtVisuelComponent,
     EtTableComponent

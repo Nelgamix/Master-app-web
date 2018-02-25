@@ -1,11 +1,85 @@
 import {NgbActiveModal, NgbDateAdapter, NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
-import {Component, EventEmitter, Injectable, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, HostListener, Injectable, Input, OnInit, Output} from '@angular/core';
 import {CoursPerso, CoursPersoRecurrence} from '../model/et/CoursPerso';
 import * as moment from 'moment';
+
+import {
+  trigger,
+  state,
+  style,
+  animate,
+  transition
+} from '@angular/animations';
 
 enum VueType {
   LISTE,
   DETAILS
+}
+
+@Component({
+  selector: 'app-modal-et-gestion-cours-cours',
+  template:
+  `
+    <div id="cours" class="row" [@selection]="selected" (mouseenter)="onMouseEnter($event)" (mouseleave)="onMouseLeave($event)">
+      <div class="col-12 col-md-6 col-lg-2">
+        {{CoursPersoRecurrence[cours.recurrence] | capitalize}}
+      </div>
+      <div class="col-12 col-md-6 col-lg-1">
+        {{cours.type}}
+      </div>
+      <div class="col-12 col-md-6 col-lg-2">
+        {{cours.nom}}
+      </div>
+      <div class="col-12 col-md-6 col-lg-3 text-truncate">
+        {{cours.description}}
+      </div>
+      <div class="col-12 col-md-6 col-lg-2 text-truncate">
+        {{cours.professeur}}
+      </div>
+      <div class="col-12 col-md-6 col-lg-2">
+        {{cours.lieu}}
+      </div>
+    </div>
+  `,
+  styles: ['#cours:hover {cursor: pointer}'],
+  animations: [
+    trigger('selection', [
+      state('0', style({
+        background: 'inherit',
+        borderLeft: 'inherit'
+      })),
+      state('1', style({
+        background: 'linear-gradient(to right, #ffa51e5e, #ceca531f)',
+        borderLeft: '5px solid black'
+      })),
+      transition('0 => 1', animate('200ms')),
+      transition('1 => 0', animate('200ms'))
+    ])
+  ]
+})
+export class CoursPersoComponent {
+  @Input() cours: CoursPerso;
+  @Output() onSelect = new EventEmitter<CoursPerso>();
+
+  selected: boolean;
+
+  CoursPersoRecurrence = CoursPersoRecurrence;
+
+  @HostListener('click') onClick() {
+    this.onSelect.emit(this.cours);
+  }
+
+  onMouseEnter() {
+    this.selected = true;
+  }
+
+  onMouseLeave() {
+    this.selected = false;
+  }
+
+  constructor() {
+    this.selected = false;
+  }
 }
 
 @Injectable()
@@ -24,7 +98,7 @@ export class NgbDateMomentAdapter extends NgbDateAdapter<moment.Moment> {
   templateUrl: './et-gestion-cours.component.html',
   providers: [{provide: NgbDateAdapter, useClass: NgbDateMomentAdapter}]
 })
-export class ModalEtGestionCoursComponent implements OnInit {
+export class ModalEtGestionCoursComponent {
   @Input() cours: CoursPerso[];
   @Output() out = new EventEmitter();
 
@@ -46,9 +120,6 @@ export class ModalEtGestionCoursComponent implements OnInit {
   CoursPersoRecurrence = CoursPersoRecurrence;
 
   constructor(public activeModal: NgbActiveModal) {
-  }
-
-  ngOnInit() {
   }
 
   open(cours: CoursPerso): void {
