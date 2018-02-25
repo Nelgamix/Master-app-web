@@ -1,6 +1,12 @@
 import {PositionTemps} from './PositionTemps';
 import * as moment from 'moment';
 
+export enum EtatCours {
+  ACTIF,
+  CACHE,
+  SUPPRIME
+}
+
 /**
  * Représente un cours.
  */
@@ -72,15 +78,7 @@ export class Cours {
    */
   duree: any;
 
-  /**
-   * Réprésente le fait que le cours soit caché par l'utilisateur.
-   */
-  cache: boolean;
-
-  /**
-   * Représente le fait que le cours soit supprimé par l'utilisateur.
-   */
-  supprime: boolean;
+  etat: EtatCours;
 
   /**
    * Donne la position dans le temps par rapport au moment de l'analyse.
@@ -110,8 +108,7 @@ export class Cours {
       }
     }
 
-    this.cache = false;
-    this.supprime = false;
+    this.etat = EtatCours.ACTIF;
     this.positionTemps = PositionTemps.INDEFINI;
     this.duree = moment.duration(this.fin.diff(this.debut));
   }

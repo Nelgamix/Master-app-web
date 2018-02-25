@@ -43,8 +43,10 @@ export class EtDetailsComponent implements OnChanges {
 
   openPersonnel() {
     const modalRef = this.modalService.open(ModalEtGestionCoursComponent, {size: 'lg'});
-    /*modalRef.componentInstance.cours = this.etService.emploiTemps.coursPrives;*/
+    modalRef.componentInstance.cours = this.etService.coursPersos.map(c => c.clone());
     modalRef.result.then(r => {
+      this.etService.setCoursPerso(r);
+      this.etService.analyse([this.semaine]);
     }, r => {
     });
   }
@@ -78,7 +80,7 @@ export class EtDetailsComponent implements OnChanges {
     modalRef.componentInstance.possibilites = possibilites;
     modalRef.result.then(
       r => {
-        this.etService.filterExclusions(r, [this.semaine]);
+        this.etService.setExclusions(r);
         this.etService.analyse([this.semaine]);
       }, r => {
       }

@@ -27,7 +27,7 @@
         </div>
         <div class="col-12">
           <div class="row" *ngFor="let cours of j.ensembleCours.setCours.getCours() | coursfilter:filtre">
-            <div class="col-12" [class.cache]="cours.cache" [class.supprime]="cours.supprime">
+            <div class="col-12" [class.cache]="cours.etat === EtatCours.CACHE" [class.supprime]="cours.etat === EtatCours.SUPPRIME">
               <div class="row cours"
                    [contextMenu]="menu"
                    [contextMenuSubject]="cours"

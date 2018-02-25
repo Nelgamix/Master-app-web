@@ -28,17 +28,17 @@ export class ModalEtStatsComponent implements OnInit {
 
   toString(val): string {
     if (!val) {
-      return 'Invalid';
+      return 'Pas de valeur';
     } else if (typeof val === 'string') {
       return val;
     } else if (typeof val === 'number') {
       return val.toString();
     } else if (Array.isArray(val)) {
-      return 'Array (' + val.length + ')'/*JSON.stringify(val)*/;
+      return 'Array (' + val.length + ' éléments)';
     } else if (moment.isDuration(val)) {
       return new Duree().transform(val);
     } else {
-      return 'Unrecognized: ' + typeof val;
+      return 'Inconnu: ' + typeof val;
     }
   }
 }

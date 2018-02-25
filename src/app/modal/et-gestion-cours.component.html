@@ -10,7 +10,52 @@
       <div class="alert alert-warning">En construction!</div>
     </div>
   </div>
+  <div class="row" *ngFor="let c of cours">
+    <div class="col">
+      <form>
+        <div class="form-group">
+          <label for="rec">Récurrence</label>
+          <select class="form-control" name="rec" id="rec" [(ngModel)]="c.recurrence">
+            <option [value]="o.key" *ngFor="let o of CoursPersoRecurrence | enumKeys">{{o.value}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="dat">Date</label>
+          <input type="text" class="form-control" id="dat" name="dat" placeholder="Date">
+        </div>
+        <div class="form-group">
+          <label for="deb">Début</label>
+          <input type="text" class="form-control" id="deb" name="deb" placeholder="Début">
+        </div>
+        <div class="form-group">
+          <label for="fin">Fin</label>
+          <input type="text" class="form-control" id="fin" name="fin" placeholder="Fin">
+        </div>
+        <div class="form-group">
+          <label for="des">Description</label>
+          <input type="text" class="form-control" id="des" name="des" placeholder="Description" [(ngModel)]="c.description">
+        </div>
+        <div class="form-group">
+          <label for="nom">Nom</label>
+          <input type="text" class="form-control" id="nom" name="nom" placeholder="Nom" [(ngModel)]="c.nom">
+        </div>
+        <div class="form-group">
+          <label for="typ">Type</label>
+          <input type="text" class="form-control" id="typ" name="typ" placeholder="Type" [(ngModel)]="c.type">
+        </div>
+        <div class="form-group">
+          <label for="pro">Professeur</label>
+          <input type="text" class="form-control" id="pro" name="pro" placeholder="Professeur" [(ngModel)]="c.professeur">
+        </div>
+        <div class="form-group">
+          <label for="lie">Lieu</label>
+          <input type="text" class="form-control" id="lie" name="lie" placeholder="Lieu" [(ngModel)]="c.lieu">
+        </div>
+      </form>
+    </div>
+  </div>
 </div>
 <div class="modal-footer">
-  <button type="button" class="btn btn-dark" (click)="activeModal.close('Close click')">Fermer</button>
+  <button type="button" class="btn btn-danger" (click)="activeModal.dismiss('Cancel')">Annuler</button>
+  <button type="button" class="btn btn-success" (click)="valider()">Valider</button>
 </div>

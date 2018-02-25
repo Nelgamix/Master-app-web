@@ -1,4 +1,4 @@
-import {Cours} from './Cours';
+import {Cours, EtatCours} from './Cours';
 import {PositionTemps} from './PositionTemps';
 import * as moment from 'moment';
 
@@ -101,8 +101,8 @@ export class SetCours {
 
     if (opt && opt.cacherCoursPasses) {
       this.cours.forEach(c => {
-        if (!c.cache && !c.supprime && c.positionTemps === PositionTemps.PASSE) {
-          c.cache = true;
+        if (c.etat === EtatCours.ACTIF && c.positionTemps === PositionTemps.PASSE) {
+          c.etat = EtatCours.CACHE;
         }
       });
     }
@@ -319,9 +319,9 @@ export class SetCours {
   }
 
   private analyseFiltrerCours(): void {
-    this.coursActifs = this.getCours().filter(c => !c.cache && !c.supprime);
-    this.coursCaches = this.getCours().filter(c => c.cache);
-    this.coursSupprimes = this.getCours().filter(c => c.supprime);
+    this.coursActifs = this.getCours().filter(c => c.etat === EtatCours.ACTIF);
+    this.coursCaches = this.getCours().filter(c => c.etat === EtatCours.CACHE);
+    this.coursSupprimes = this.getCours().filter(c => c.etat === EtatCours.SUPPRIME);
     this.coursPrives = this.getCours().filter(c => c.prive);
     this.coursPasses = this.getCours().filter(c => c.positionTemps === PositionTemps.PASSE);
     this.coursFuturs = this.getCours().filter(c => c.positionTemps === PositionTemps.FUTUR);

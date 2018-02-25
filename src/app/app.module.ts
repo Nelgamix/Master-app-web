@@ -55,6 +55,7 @@ import {EtSettingsComponent} from './et/et-settings.component';
 import {MessageService} from './services/message.service';
 import {MessageComponent} from './message/message.component';
 import {ColorPickerModule} from 'ngx-color-picker';
+import {EnumKeysPipe} from './pipes/enumKeys.pipe';
 
 @NgModule({
   declarations: [
@@ -79,6 +80,7 @@ import {ColorPickerModule} from 'ngx-color-picker';
     CoursFilter,
     Duree,
     Keys,
+    EnumKeysPipe,
     Objet,
     Capitalize,
     EvenementComponent,

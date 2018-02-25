@@ -1,6 +1,7 @@
 import {Component, Input, OnChanges} from '@angular/core';
 
 import {Semaine} from '../model/et/Semaine';
+import {EtatCours} from '../model/et/Cours';
 
 @Component({
   selector: 'app-et-visuel',
@@ -11,6 +12,8 @@ export class EtVisuelComponent implements OnChanges {
   @Input() semaine: Semaine;
 
   jours: {};
+
+  EtatCours = EtatCours;
 
   legendeHeures = {
     debut: 8,
@@ -51,7 +54,7 @@ export class EtVisuelComponent implements OnChanges {
       }
 
       for (const c of j.ensembleCours.setCours.getCours()) {
-        if (c.supprime) {
+        if (c.etat === EtatCours.SUPPRIME) {
           continue;
         }
 

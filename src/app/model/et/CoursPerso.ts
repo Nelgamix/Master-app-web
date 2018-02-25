@@ -76,13 +76,23 @@ export class CoursPerso {
     this.lieu = lieu;
   }
 
-  testePlusieursSemaine(semaines: Semaine[]): number {
+  testePlusieursSemaine(semaines: Semaine[], now: any): number {
     let total = 0;
-    semaines.forEach(s => total += this.testeSemaine(s));
+    semaines.forEach(s => total += this.testeSemaine(s, now));
     return total;
   }
 
-  testeSemaine(semaine: Semaine): number {
+  estVide(): boolean {
+    return this.nom.length < 1 &&
+      this.date &&
+      this.debut > -1 &&
+      this.fin > -1 &&
+      this.debut < 24 * 60 &&
+      this.fin < 24 * 60 &&
+      this.debut < this.fin;
+  }
+
+  testeSemaine(semaine: Semaine, now: any): number {
     let total = 0;
     let d, debut, fin;
     switch (this.recurrence) {
@@ -95,7 +105,7 @@ export class CoursPerso {
           debut = d.add(this.debut, 'minutes');
           fin = debut.clone().add(this.fin - this.debut, 'minutes');
 
-          if (!this.addCoursToSemaine(semaine, debut, fin)) {
+          if (!this.addCoursToSemaine(semaine, debut, fin, now)) {
             console.error('could not add cours perso to semaine');
           }
 
@@ -109,7 +119,7 @@ export class CoursPerso {
         debut = d.add(this.debut, 'minutes');
         fin = debut.clone().add(this.fin - this.debut, 'minutes');
 
-        if (!this.addCoursToSemaine(semaine, debut, fin)) {
+        if (!this.addCoursToSemaine(semaine, debut, fin, now)) {
           console.error('could not add cours perso to semaine');
         }
 
@@ -120,8 +130,22 @@ export class CoursPerso {
     return total;
   }
 
-  private addCoursToSemaine(semaine: Semaine, debut: any, fin: any): boolean {
-    return semaine.addCours(new Cours({
+  clone(): CoursPerso {
+    return new CoursPerso(
+      this.recurrence,
+      this.date.clone(),
+      this.debut,
+      this.fin,
+      this.description,
+      this.nom,
+      this.type,
+      this.professeur,
+      this.lieu
+    );
+  }
+
+  private addCoursToSemaine(semaine: Semaine, debut: any, fin: any, now: any): boolean {
+    const nc = new Cours({
       nom: this.nom,
       description: this.description,
       type: [this.type],
@@ -130,6 +154,9 @@ export class CoursPerso {
       debut: debut,
       fin: fin,
       prive: true
-    }));
+    });
+    nc.preAnalyse(now);
+
+    return semaine.addCours(nc);
   }
 }

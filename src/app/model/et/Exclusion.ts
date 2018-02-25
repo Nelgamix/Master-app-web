@@ -1,4 +1,4 @@
-import {Cours} from './Cours';
+import {Cours, EtatCours} from './Cours';
 
 export class Exclusion {
   /**
@@ -99,7 +99,7 @@ export class Exclusion {
    * @returns {boolean}
    */
   testeCours(c: Cours): boolean {
-    if (c.supprime || !this.supprimer && c.cache || c.prive) {
+    if (c.etat === EtatCours.SUPPRIME || !this.supprimer && c.etat === EtatCours.CACHE || c.prive) {
       return false;
     }
 
@@ -135,10 +135,9 @@ export class Exclusion {
     this.count++;
 
     if (this.supprimer) {
-      c.supprime = true;
-      c.cache = false;
+      c.etat = EtatCours.SUPPRIME;
     } else {
-      c.cache = true;
+      c.etat = EtatCours.CACHE;
     }
 
     return true;

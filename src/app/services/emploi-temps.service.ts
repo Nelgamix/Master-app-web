@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 
 import {EmploiTemps} from '../model/et/EmploiTemps';
 import {HttpClient} from '@angular/common/http';
-import {Cours} from '../model/et/Cours';
+import {Cours, EtatCours} from '../model/et/Cours';
 import {CookieService} from 'ngx-cookie-service';
 import {Exclusion} from '../model/et/Exclusion';
 import {CoursPerso} from '../model/et/CoursPerso';
@@ -102,42 +102,30 @@ export class EmploiTempsService {
     });
   }
 
-  exclure(exclusion: Exclusion, s: Semaine[]): void {
-    this.exclusions.push(exclusion);
-    this.filterExclusions(this.exclusions, s);
+  addCoursPerso(coursPerso: CoursPerso[]): void {
+    this.coursPersos.push(...coursPerso);
   }
 
-  /**
-   * Filtrer les cours avec les exclusions fournies en paramètre.
-   * @param {Exclusion[]} exclusions les exclusions qui vont exclure les cours.
-   */
-  filterExclusions(exclusions: Exclusion[], s: Semaine[]): number {
-    if (exclusions !== this.exclusions) {
-      this.exclusions.splice(0, this.exclusions.length); // remove all (clear)
-      for (const e of exclusions) {
-        this.exclusions.push(e);
-      }
-    }
-
-    this.sauvegardeExclusionsToCookies();
-
-    let t = 0;
-    s.forEach(ss => t += ss.applyExclusions(this.exclusions));
-
-    return t;
-  }
-
-  ajoutCoursPerso(coursPerso: CoursPerso[], s: Semaine[]): void {
+  setCoursPerso(coursPerso: CoursPerso[]): void {
     if (coursPerso !== this.coursPersos) {
       this.coursPersos.splice(0, this.coursPersos.length); // remove all (clear)
       for (const e of coursPerso) {
         this.coursPersos.push(e);
       }
     }
+  }
 
-    this.sauvegardeCoursPersoToCookies();
+  addExclusions(exclusions: Exclusion[]): void {
+    this.exclusions.push(...this.exclusions);
+  }
 
-    coursPerso.forEach(c => c.testePlusieursSemaine(s));
+  setExclusions(exclusions: Exclusion[]): void {
+    if (exclusions !== this.exclusions) {
+      this.exclusions.splice(0, this.exclusions.length); // remove all (clear)
+      for (const e of exclusions) {
+        this.exclusions.push(e);
+      }
+    }
   }
 
   preAnalyse(s: Semaine[]): void {
@@ -176,6 +164,39 @@ export class EmploiTempsService {
 
   sauvegardeOptionsToCookies(): void {
     this.cookiesService.set(this.optionsCookie, JSON.stringify(this.options), 0, '/');
+  }
+
+  /**
+   * Filtrer les cours avec les exclusions fournies en paramètre.
+   * @param {Exclusion[]} exclusions les exclusions qui vont exclure les cours.
+   */
+  private filterExclusions(exclusions: Exclusion[], s: Semaine[]): number {
+    this.sauvegardeExclusionsToCookies();
+
+    let t = 0;
+    // reset état
+    s.forEach(ss => ss.jours.forEach(j => j.ensembleCours.setCours.cours.forEach(c => c.etat = EtatCours.ACTIF)));
+
+    // filtre
+    s.forEach(ss => t += ss.applyExclusions(this.exclusions));
+
+    return t;
+  }
+
+  private ajoutCoursPerso(coursPerso: CoursPerso[], s: Semaine[]): void {
+    this.sauvegardeCoursPersoToCookies();
+
+    // delete tous les cours prives
+    s.forEach(ss => ss.jours.forEach(j => {
+      const a = j.ensembleCours.setCours.cours;
+      for (let i = 0; i < a.length; i++) {
+        if (a[i].prive) {
+          a.splice(i, 1);
+        }
+      }
+    }));
+
+    coursPerso.forEach(c => c.testePlusieursSemaine(s, moment()));
   }
 
   /**

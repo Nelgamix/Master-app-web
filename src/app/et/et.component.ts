@@ -128,7 +128,7 @@ export class EtComponent implements OnInit {
           CoursPersoRecurrence.SEMAINE, moment().weekday(1), 9 * 60, 11 * 60 + 30, 'TER', 'TER', 'TP', 'DEMEURE Alexandre', 'IMAG'
         );
 
-        this.etService.ajoutCoursPerso([cp], [this.semaine]);
+        this.etService.addCoursPerso([cp]);
         this.etService.analyse([this.semaine]);
         break;
       case 1:

@@ -51,12 +51,6 @@ export class Jour {
   applyExclusions(exclusions: Exclusion[]): number {
     let total = 0;
 
-    // Obligé: si il n'y a pas d'exclusion, alors les cours ne sont jamais reset
-    for (const c of this.ensembleCours.setCours.cours) {
-      c.cache = false;
-      c.supprime = false;
-    }
-
     // Filtrage
     for (const e of exclusions) {
       total += e.testePlusieursCours(this.ensembleCours.setCours.cours);

@@ -4,7 +4,7 @@ import {EmploiTempsService} from '../services/emploi-temps.service';
 import {Semaine} from '../model/et/Semaine';
 import {ContextMenuComponent} from 'ngx-contextmenu';
 import {PositionTemps} from '../model/et/PositionTemps';
-import {Cours} from '../model/et/Cours';
+import {Cours, EtatCours} from '../model/et/Cours';
 import {Exclusion} from '../model/et/Exclusion';
 
 @Component({
@@ -18,6 +18,7 @@ export class EtTableComponent {
   @ViewChild(ContextMenuComponent) public menu: ContextMenuComponent;
 
   PositionTemps = PositionTemps;
+  EtatCours = EtatCours;
 
   constructor(public etService: EmploiTempsService) {
   }
@@ -30,8 +31,8 @@ export class EtTableComponent {
     this.ajouterExclusion(cours, type, true);
   }
 
-  isNotCache(item: any): boolean {
-    return !item.cache;
+  isNotCache(item: Cours): boolean {
+    return item.etat !== EtatCours.ACTIF;
   }
 
   private ajouterExclusion(cours: Cours, type: number, supprimer: boolean): void {
@@ -46,7 +47,7 @@ export class EtTableComponent {
     }
 
     if (e !== null) {
-      this.etService.exclure(e, [this.semaine]);
+      this.etService.addExclusions([e]);
       this.etService.analyse([this.semaine]);
     }
   }
