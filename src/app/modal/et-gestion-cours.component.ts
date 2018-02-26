@@ -20,7 +20,7 @@ enum VueType {
   selector: 'app-modal-et-gestion-cours-cours',
   template:
   `
-    <div id="cours" class="row" [@selection]="selected" (mouseenter)="onMouseEnter($event)" (mouseleave)="onMouseLeave($event)">
+    <div id="cours" class="row" [@selection]="selected" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()">
       <div class="col-12 col-md-6 col-lg-2">
         {{CoursPersoRecurrence[cours.recurrence] | capitalize}}
       </div>

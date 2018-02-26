@@ -120,13 +120,24 @@ export class Cours {
     const type = this.analyseType(c.type);
 
     const tmp = this.analyseSalle(c.salle);
-    const salles = tmp[0];
-    const salles_types = tmp[1];
+    const salles: any[] = tmp[0];
+    const salles_types: any[] = tmp[1];
+
+    let descr =
+      debut.format('HH:mm')
+      + ' -> '
+      + fin.format('HH:mm')
+      + ': '
+      + c.nom
+      + ' avec '
+      + c.professeur
+      + ' en ';
+    salles.forEach((s: {salle: string, batiment: string}) => descr += ' ' + s.salle);
 
     return new Cours({
       nom: c.nom,
       professeur: c.professeur,
-      description: c.description,
+      description: descr,
       debut: debut,
       fin: fin,
       groupe: groupe,

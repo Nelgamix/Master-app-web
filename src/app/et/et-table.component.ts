@@ -40,7 +40,7 @@ export class EtTableComponent {
   }
 
   isActifAndType(item: Cours): boolean {
-    return item.etat === EtatCours.ACTIF && item.type[0].length > 0;
+    return item.etat === EtatCours.ACTIF && item.type[0] && item.type[0].length > 0;
   }
 
   isProf(item: Cours): boolean {
@@ -48,7 +48,7 @@ export class EtTableComponent {
   }
 
   isType(item: Cours): boolean {
-    return item.type[0].length > 0;
+    return item.type[0] && item.type[0].length > 0;
   }
 
   private ajouterExclusion(cours: Cours, type: number, supprimer: boolean): void {

@@ -7,18 +7,43 @@
 </div>
 <ng-container *ngIf="loaded">
   <div class="row">
-    <div class="col p-0" style="height: 300px">
-      <ngx-charts-line-chart
-        [scheme]="colorScheme"
-        [results]="chartData"
-        [legend]="true"
-        [xAxis]="true"
-        [yAxis]="true"
-        [showXAxisLabel]="true"
-        [showYAxisLabel]="true"
-        [xAxisLabel]="'Semaines'"
-        [yAxisLabel]="'Nombre de cours'">
-      </ngx-charts-line-chart>
+    <div class="col">
+      <ngb-tabset justify="justified">
+        <ngb-tab title="Nombre de cours">
+          <ng-template ngbTabContent>
+            <div class="div-chart">
+              <ngx-charts-line-chart
+                [scheme]="colorScheme"
+                [results]="chartDataCours"
+                [legend]="true"
+                [xAxis]="true"
+                [yAxis]="true"
+                [showXAxisLabel]="true"
+                [showYAxisLabel]="true"
+                [xAxisLabel]="'Semaines'"
+                [yAxisLabel]="'Nombre de cours'">
+              </ngx-charts-line-chart>
+            </div>
+          </ng-template>
+        </ngb-tab>
+        <ngb-tab title="Heures moyennes">
+          <ng-template ngbTabContent>
+            <div class="div-chart">
+              <ngx-charts-line-chart
+                [scheme]="colorScheme"
+                [results]="chartDataHeures"
+                [legend]="true"
+                [xAxis]="true"
+                [yAxis]="true"
+                [showXAxisLabel]="true"
+                [showYAxisLabel]="true"
+                [xAxisLabel]="'Semaines'"
+                [yAxisLabel]="'Heures moyennes'">
+              </ngx-charts-line-chart>
+            </div>
+          </ng-template>
+        </ngb-tab>
+      </ngb-tabset>
     </div>
   </div>
   <ng-container *ngFor="let s of semaines; let i = index;">
