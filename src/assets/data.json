@@ -75,16 +75,12 @@
 		},
 		{
 			"nom": "Hardware.fr",
-			"url": "http://www.hardware.fr/"
+			"url": "https://www.hardware.fr/"
 		},
 		{
 			"nom": "GSMArena",
-			"url": "http://www.gsmarena.com/"
-		},
-    {
-      "nom": "PCarré",
-      "url": "http://im2ag-pcarre.e.ujf-grenoble.fr/"
-    }
+			"url": "https://www.gsmarena.com/"
+		}
 	],
 	"semestres": [
 		{

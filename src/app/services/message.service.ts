@@ -2,8 +2,8 @@ import {EventEmitter, Injectable} from '@angular/core';
 
 @Injectable()
 export class MessageService {
-  messages$: EventEmitter<string>;
-  loading$: EventEmitter<boolean>;
+  private messages$: EventEmitter<string>;
+  private loading$: EventEmitter<boolean>;
 
   showMessage(message: string): void {
     this.messages$.emit(message);

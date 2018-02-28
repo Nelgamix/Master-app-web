@@ -5,7 +5,3 @@ body {
   background: url(assets/backgrounds/polygonal-background.jpg);
   background-size: 100% auto;
 }
-
-#progress-main .progress {
-  background-color: rgba(200, 200, 200, .7);
-}

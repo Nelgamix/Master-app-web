@@ -5,7 +5,7 @@ import * as moment from 'moment';
 
 @Injectable()
 export class NotesService {
-  readonly notesCookie = 'et-notes';
+  private readonly notesCookie = 'et-notes';
 
   notes: Note[];
 

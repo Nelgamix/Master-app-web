@@ -7,6 +7,13 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
 import * as moment from 'moment';
 
+interface IDate {
+  week: string;
+  year: string;
+  debut: string;
+  fin: string;
+}
+
 @Injectable()
 export class DatesService {
   semaines: SemaineDate[];
@@ -44,7 +51,7 @@ export class DatesService {
   }
 
   updateDates(cb?: Function): void {
-    this.http.get('php/dates.php').subscribe(data => this.loadDates(data, cb));
+    this.http.get<IDate[]>('php/dates.php').subscribe(data => this.loadDates(data, cb));
   }
 
   private findClosestDate(): void {
@@ -80,12 +87,10 @@ export class DatesService {
     }
   }
 
-  private loadDates(data, cb?: Function): void {
-    for (const d of data) {
-      this.semaines.push(new SemaineDate(d.week, d.year, d.debut, d.fin));
-    }
+  private loadDates(data: IDate[], cb?: Function): void {
+    data.forEach(d => this.semaines.push(new SemaineDate(+d.week, +d.year, d.debut, d.fin)));
 
-    if (!this.semaines || this.semaines.length < 1) {
+    if (this.semaines.length < 1) {
       throw new Error('dates script didn\'t return any year/week json object');
     }
 

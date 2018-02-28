@@ -13,8 +13,10 @@
         </div>
         <div class="col-12 col-md" *ngIf="!j.ensembleCours.setCoursActifs.estVide()">
           <h5 class="d-inline-block float-right pt-2 mb-0">
-            <span class="jour-stats-duree">{{j.ensembleCours.setCoursActifs.premierCours.debut | date: 'HH:mm'}} &rarr; {{j.ensembleCours.setCoursActifs.dernierCours.fin | date: 'HH:mm'}} ({{j.ensembleCours.setCoursActifs.duree | duree}})</span>
-            <ng-container *ngIf="(j.ensembleCours.setCoursActifs.types | objet).length > 0">
+            <span class="badge badge-dark">{{j.ensembleCours.setCoursActifs.premierCours.debut | date: 'HH:mm'}} &rarr; {{j.ensembleCours.setCoursActifs.dernierCours.fin | date: 'HH:mm'}}</span>
+            <span class="jour-stats-type badge badge-info">{{j.ensembleCours.setCoursActifs.duree | duree}}</span><!--
+            --><span class="jour-stats-type badge badge-info">{{j.ensembleCours.setCoursActifs.getTaille()}} cours</span><!--
+            --><ng-container *ngIf="(j.ensembleCours.setCoursActifs.types | objet).length > 0">
               <span *ngFor="let t of j.ensembleCours.setCoursActifs.types | objet" class="jour-stats-type badge badge-warning">{{t.value}}&nbsp;{{t.key}}</span>
             </ng-container>
           </h5>

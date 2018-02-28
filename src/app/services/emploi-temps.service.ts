@@ -16,15 +16,15 @@ export class EmploiTempsService {
    * Nom pour le stockage du cookie contenant les exclusions.
    * @type {string}
    */
-  readonly exclusionsCookie = 'et-exclusions';
+  private readonly exclusionsCookie = 'et-exclusions';
 
   /**
    * Nom pour le stockage du cookie contenant les cours perso.
    * @type {string}
    */
-  readonly coursPersoCookie = 'et-cours-perso';
+  private readonly coursPersoCookie = 'et-cours-perso';
 
-  readonly optionsCookie = 'et-options';
+  private readonly optionsCookie = 'et-options';
 
   /**
    * Objet contenant les métadonnées pour l'emploi du temps (ADE)
