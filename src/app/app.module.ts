@@ -39,7 +39,7 @@ import {DatesService} from './services/dates.service';
 // Autres
 import {EvenementComponent} from './evenements/evenement.component';
 import {EtVisuelComponent} from './et/et-visuel.component';
-import {EtTableComponent} from './et/et-table.component';
+import {CoursDirective, EtTableComponent} from './et/et-table.component';
 import {AppRoutingModule} from './app-routing.module';
 import {ExclusionComponent} from './et/exclusion.component';
 import {CoursPersoComponent, ModalEtGestionCoursComponent} from './modal/et-gestion-cours.component';
@@ -88,7 +88,8 @@ import {EnumKeysPipe} from './pipes/enumKeys.pipe';
     CoursPersoComponent,
     GestionCoursComponent,
     EtVisuelComponent,
-    EtTableComponent
+    EtTableComponent,
+    CoursDirective
   ],
   imports: [
     CommonModule,

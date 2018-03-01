@@ -1,11 +1,14 @@
 .cours {
   text-align: center;
   background-color: rgba(140, 140, 140, 0.4);
-  border: 1px solid rgba(140, 140, 140, 0.2);
+  border-bottom: 1px solid rgb(140, 140, 140);
   border-left: 0;
   border-right: 0;
   transition: box-shadow 200ms;
   padding: 5px 8px;
+}
+.liste-cours > .row:last-child .cours {
+  border-bottom: unset;
 }
 .cours:hover {
   cursor: pointer;

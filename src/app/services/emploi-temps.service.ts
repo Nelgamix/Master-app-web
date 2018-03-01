@@ -58,12 +58,20 @@ export class EmploiTempsService {
     this.initCoursPersoFromCookies();
   }
 
-  getCouleurOf(cours: Cours): string {
-    if (this.options.couleur[cours.type[0]]) {
-      return this.options.couleur[cours.type[0]].couleur;
-    } else {
-      return this.options.couleur.Autre.couleur;
+  getCouleurOf(cours: Cours): string[] {
+    let tc: string[] = [];
+
+    for (const t of cours.type) {
+      const c = this.options.couleur[t];
+      if (c && tc.indexOf(c.couleur) < 0) {
+        tc.push(c.couleur);
+      } else {
+        tc = [this.options.couleur.Autre.couleur];
+        break;
+      }
     }
+
+    return tc;
   }
 
   /**

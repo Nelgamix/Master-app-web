@@ -1,4 +1,4 @@
-import {Component, Input, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 
 import {EmploiTempsService} from '../services/emploi-temps.service';
 import {Semaine} from '../model/et/Semaine';
@@ -6,6 +6,34 @@ import {ContextMenuComponent} from 'ngx-contextmenu';
 import {PositionTemps} from '../model/et/PositionTemps';
 import {Cours, EtatCours} from '../model/et/Cours';
 import {Exclusion} from '../model/et/Exclusion';
+
+import {Directive} from '@angular/core';
+
+@Directive({selector: '[appCours]'})
+export class CoursDirective implements OnInit {
+  @Input('appCours') couleurs: string[];
+
+  el: HTMLElement;
+  style: CSSStyleDeclaration;
+
+  constructor(el: ElementRef) {
+    this.el = el.nativeElement;
+    this.style = this.el.style;
+  }
+
+  ngOnInit() {
+    switch (this.couleurs.length) {
+      case 1:
+        this.style.backgroundColor = this.couleurs[0];
+        break;
+      case 2:
+        this.style.background = 'linear-gradient(to bottom right, ' + this.couleurs[0] + ' 50%, ' + this.couleurs[1] + ' 50%)';
+        break;
+      default:
+        console.error(this.couleurs.length + ' couleurs non supporté sur le cours!');
+    }
+  }
+}
 
 @Component({
   selector: 'app-et-table',
