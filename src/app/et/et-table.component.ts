@@ -8,6 +8,8 @@ import {Cours, EtatCours} from '../model/et/Cours';
 import {Exclusion} from '../model/et/Exclusion';
 
 import {Directive} from '@angular/core';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {ModalEtCoursDetailsComponent} from '../modal/et-cours-details.component';
 
 @Directive({selector: '[appCours]'})
 export class CoursDirective implements OnInit {
@@ -48,7 +50,16 @@ export class EtTableComponent {
   PositionTemps = PositionTemps;
   EtatCours = EtatCours;
 
-  constructor(public etService: EmploiTempsService) {
+  constructor(public etService: EmploiTempsService,
+              public modalService: NgbModal) {
+  }
+
+  openDetailsCours(cours: Cours): void {
+    const modalRef = this.modalService.open(ModalEtCoursDetailsComponent);
+    modalRef.componentInstance.cours = cours;
+    modalRef.result.then(r => {
+    }, r => {
+    });
   }
 
   cacher(cours: Cours, type: number): void {

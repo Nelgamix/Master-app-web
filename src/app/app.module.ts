@@ -56,6 +56,7 @@ import {MessageService} from './services/message.service';
 import {MessageComponent} from './message/message.component';
 import {ColorPickerModule} from 'ngx-color-picker';
 import {EnumKeysPipe} from './pipes/enumKeys.pipe';
+import {ModalEtCoursDetailsComponent} from './modal/et-cours-details.component';
 
 @NgModule({
   declarations: [
@@ -76,6 +77,7 @@ import {EnumKeysPipe} from './pipes/enumKeys.pipe';
     ModalEtGestionCoursComponent,
     ModalEtNotesComponent,
     ModalEtStatsComponent,
+    ModalEtCoursDetailsComponent,
     DateFilter,
     CoursFilter,
     Duree,
@@ -123,7 +125,8 @@ import {EnumKeysPipe} from './pipes/enumKeys.pipe';
     ModalEtExclusionsComponent,
     ModalEtGestionCoursComponent,
     ModalEtNotesComponent,
-    ModalEtStatsComponent
+    ModalEtStatsComponent,
+    ModalEtCoursDetailsComponent
   ]
 })
 export class AppModule {}

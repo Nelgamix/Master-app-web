@@ -1,0 +1,126 @@
+<div class="modal-header">
+  <h4 class="modal-title">Détails du cours</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="modal-body">
+  <div class="row section">
+    <div class="col-4" placement="top" ngbTooltip="ID généré à partir des données du cours.">
+      ID
+    </div>
+    <div class="col-8">
+      {{cours.hash_id}}
+    </div>
+  </div>
+  <div class="row section">
+    <div class="col-4" placement="top" ngbTooltip="Nom du cours.">
+      Nom
+    </div>
+    <div class="col-8">
+      {{cours.nom}}
+    </div>
+  </div>
+  <div class="row section">
+    <div class="col-4" placement="top" ngbTooltip="Description du cours.">
+      Description
+    </div>
+    <div class="col-8">
+      {{cours.description}}
+    </div>
+  </div>
+  <div class="row section">
+    <div class="col-4" placement="top" ngbTooltip="Jour et heure de début du cours.">
+      Début
+    </div>
+    <div class="col-8">
+      {{cours.debut | amDateFormat:'D MMMM YYYY HH:mm'}}
+    </div>
+  </div>
+  <div class="row section">
+    <div class="col-4" placement="top" ngbTooltip="Jour et heure de la fin du cours.">
+      Fin
+    </div>
+    <div class="col-8">
+      {{cours.fin | amDateFormat:'D MMMM YYYY HH:mm'}}
+    </div>
+  </div>
+  <div class="row section">
+    <div class="col-4" placement="top" ngbTooltip="Durée du cours.">
+      Durée
+    </div>
+    <div class="col-8">
+      {{cours.duree | duree}}
+    </div>
+  </div>
+  <div class="row section">
+    <div class="col-4" placement="top" ngbTooltip="Professeur qui s'occupe du cours.">
+      Professeur
+    </div>
+    <div class="col-8">
+      {{cours.professeur}}
+    </div>
+  </div>
+  <div class="row section">
+    <div class="col-4" placement="top" ngbTooltip="Salles dans lesquelles se déroule le cours.">
+      Salles
+    </div>
+    <div class="col-8">
+      <span *ngFor="let s of cours.salles">{{s.batiment}} {{s.salle}}</span>
+    </div>
+  </div>
+  <div class="row section">
+    <div class="col-4" placement="top" ngbTooltip="Type des salles indiquées au dessus.">
+      Types des salles
+    </div>
+    <div class="col-8">
+      <span *ngFor="let t of cours.sallesTypes; let i = index"><span *ngIf="i > 0">, </span>{{t}}</span>
+    </div>
+  </div>
+  <div class="row section">
+    <div class="col-4" placement="top" ngbTooltip="&Eacute;tat dans lequel est le cours (actif, caché ou supprimé).">
+      &Eacute;tat
+    </div>
+    <div class="col-8">
+      {{EtatCours[cours.etat] | capitalize}}
+    </div>
+  </div>
+  <div class="row section">
+    <div class="col-4" placement="top" ngbTooltip="Position du cours dans le temps (passé, présent ou futur/à venir).">
+      Position
+    </div>
+    <div class="col-8">
+      {{PositionTemps[cours.positionTemps] | capitalize}}
+    </div>
+  </div>
+  <div class="row section">
+    <div class="col-4" placement="top" ngbTooltip="Groupes concernés par le cours (si vide, tous les groupes).">
+      Groupes
+    </div>
+    <div class="col-8">
+      <span *ngFor="let g of cours.groupe; let i = index"><span *ngIf="i > 0">, </span>{{g}}</span>
+    </div>
+  </div>
+  <div class="row section">
+    <div class="col-4" placement="top" ngbTooltip="Types du cours.">
+      Types
+    </div>
+    <div class="col-8">
+      <span *ngFor="let t of cours.type; let i = index"><span *ngIf="i > 0">, </span>{{t}}</span>
+    </div>
+  </div>
+  <div class="row section">
+    <div class="col-4" placement="top" ngbTooltip="Si oui, le cours est défini par l'utilisateur, sinon il vient d'ADE.">
+      Est privé?
+    </div>
+    <div class="col-8">
+      <span *ngIf="cours.prive">Oui</span>
+      <span *ngIf="!cours.prive">Non</span>
+    </div>
+  </div>
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-dark" (click)="activeModal.dismiss('Back')">Retour</button>
+</div>

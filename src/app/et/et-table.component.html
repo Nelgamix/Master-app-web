@@ -28,7 +28,7 @@
           <img src="assets/icons_perso/drawing4empty.svg" alt="Empty">
         </div>
         <div class="col-12 liste-cours">
-          <div class="row" *ngFor="let cours of j.ensembleCours.setCours.getCours() | coursfilter:filtre">
+          <div class="row" *ngFor="let cours of j.ensembleCours.setCours.getCours() | coursfilter:filtre" (click)="openDetailsCours(cours)">
             <div class="col-12" [class.cache]="cours.etat === EtatCours.CACHE" [class.supprime]="cours.etat === EtatCours.SUPPRIME">
               <div class="row cours"
                    [contextMenu]="menu"
