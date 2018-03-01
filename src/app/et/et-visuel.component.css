@@ -50,3 +50,11 @@
 .cache > p {
   text-decoration: line-through;
 }
+
+.legende-heure {
+  position: absolute;
+  transform: translateY(-60%);
+  width: 100%;
+  right: 15%;
+  text-align: right;
+}

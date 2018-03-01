@@ -33,7 +33,7 @@ export class EtVisuelComponent implements OnChanges {
   constructor() {
     const le = this.legendeHeures;
     for (let i = le.debut; i <= le.fin; i = i + le.interval) {
-      le.legendes.push(i);
+      le.legendes.push({heure: i, place: ((i - this.legendeHeures.debut) / (this.legendeHeures.fin - this.legendeHeures.debut)) * 100});
     }
   }
 
