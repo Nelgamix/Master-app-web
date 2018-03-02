@@ -154,6 +154,7 @@ export class EmploiTempsService {
     this.options = {
       cacherCoursPasses: false,
       coursPersoSemaineVide: false,
+      coursMultiCouleurs: true,
       couleur: {
         CM: {defaut: 'rgba(220, 20, 60, 0.4)', couleur: 'rgba(220, 20, 60, 0.4)'},
         TD: {defaut: 'rgba(30, 144, 255, 0.4)', couleur: 'rgba(30, 144, 255, 0.4)'},

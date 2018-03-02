@@ -9,11 +9,17 @@
     </div>
   </div>
   <div class="form-group">
-  <div class="custom-control custom-checkbox">
-    <input type="checkbox" class="custom-control-input" id="cCoursPersoSemaineVide" name="cCoursPersoSemaineVide" [(ngModel)]="options.coursPersoSemaineVide">
-    <label class="custom-control-label" for="cCoursPersoSemaineVide">Cours perso pendant les semaines vides</label>
+    <div class="custom-control custom-checkbox">
+      <input type="checkbox" class="custom-control-input" id="cCoursPersoSemaineVide" name="cCoursPersoSemaineVide" [(ngModel)]="options.coursPersoSemaineVide">
+      <label class="custom-control-label" for="cCoursPersoSemaineVide">Cours perso pendant les semaines vides</label>
+    </div>
   </div>
-</div>
+  <div class="form-group">
+    <div class="custom-control custom-checkbox">
+      <input type="checkbox" class="custom-control-input" id="cCoursMultiCouleurs" name="cCoursMultiCouleurs" [(ngModel)]="options.coursMultiCouleurs">
+      <label class="custom-control-label" for="cCoursMultiCouleurs">Multiples couleurs pour l'affichage des cours en fonction de leur types</label>
+    </div>
+  </div>
   <div class="form-group">
     <label for="couleurCM">Couleur CM</label>
     <div class="input-group">

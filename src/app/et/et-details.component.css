@@ -32,6 +32,9 @@
   color: blueviolet;
   font-weight: bold;
 }
+:host-context(.dark-theme) .stat-donnee {
+  color: #ad7bff;
+}
 
 dl {
   margin-bottom: 0;

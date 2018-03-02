@@ -4,7 +4,7 @@
     <button class="navbar-toggler hidden-sm-up" type="button" (click)="isNavbarCollapsed = !isNavbarCollapsed" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
       &#9776;
     </button>
-    <div [ngbCollapse]="isNavbarCollapsed" class="collapse navbar-collapse" id="navbar">
+    <div [ngbCollapse]="isNavbarCollapsed" class="collapse navbar-collapse mr-auto" id="navbar">
       <div class="navbar-nav">
         <a class="nav-item nav-link" (click)="isNavbarCollapsed = !isNavbarCollapsed" routerLink="/accueil" routerLinkActive="active">Accueil</a>
         <a class="nav-item nav-link" (click)="isNavbarCollapsed = !isNavbarCollapsed" routerLink="/et" routerLinkActive="active">Emploi du temps</a>
@@ -12,15 +12,20 @@
         <a class="nav-item nav-link" (click)="isNavbarCollapsed = !isNavbarCollapsed" routerLink="/contact" routerLinkActive="active">Contact</a>
       </div>
     </div>
+    <span class="navbar-text" id="change-theme" (click)="darkTheme = !darkTheme"></span>
   </div>
 </nav>
 
-<div class="container" id="app-container">
-  <router-outlet></router-outlet>
-  <hr>
-  <p>
-    Copyright 2017-2018 &copy; Nicolas Huchet (<a href="http://www.github.com/Nelgamix">@Nelgamix</a>)
-  </p>
-</div>
+<div [class.dark-theme]="darkTheme">
+  <div id="background"></div>
 
-<app-message></app-message>
+  <div class="container" id="app-container">
+    <router-outlet></router-outlet>
+    <hr>
+    <p>
+      Copyright 2017-2018 &copy; Nicolas Huchet (<a href="http://www.github.com/Nelgamix">@Nelgamix</a>)
+    </p>
+  </div>
+
+  <app-message></app-message>
+</div>

@@ -34,6 +34,7 @@
                    [contextMenu]="menu"
                    [contextMenuSubject]="cours"
                    [appCours]="etService.getCouleurOf(cours)"
+                   [options]="etService.options"
                    ngbTooltip="{{cours.description}}">
                 <div class="indicateur-gauche-absolu" *ngIf="cours.positionTemps === PositionTemps.PASSE">
                   <img src="assets/icons_perso/drawing2past.svg" alt="Passé" width="24" height="24">

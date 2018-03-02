@@ -14,6 +14,7 @@ import {ModalEtCoursDetailsComponent} from '../modal/et-cours-details.component'
 @Directive({selector: '[appCours]'})
 export class CoursDirective implements OnInit {
   @Input('appCours') couleurs: string[];
+  @Input() options: any;
 
   el: HTMLElement;
   style: CSSStyleDeclaration;
@@ -29,7 +30,12 @@ export class CoursDirective implements OnInit {
         this.style.backgroundColor = this.couleurs[0];
         break;
       case 2:
-        this.style.background = 'linear-gradient(to bottom right, ' + this.couleurs[0] + ' 50%, ' + this.couleurs[1] + ' 50%)';
+        if (this.options && this.options.coursMultiCouleurs) {
+          this.style.background = 'linear-gradient(to bottom right, ' + this.couleurs[0] + ' 45%, ' + this.couleurs[1] + ' 55%)';
+        } else {
+          this.style.backgroundColor = this.couleurs[0];
+        }
+
         break;
       default:
         console.error(this.couleurs.length + ' couleurs non supporté sur le cours!');
