@@ -1,0 +1,5 @@
+:host-context(.dark-theme) #sel-date {
+  background-color: #555;
+  color: white;
+  border-color: #888;
+}

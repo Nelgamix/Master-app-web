@@ -1,5 +1,5 @@
-import {UeType} from './ueType';
-import {Lien} from './lien';
+import {UeType} from './UEType';
+import {Lien} from './Lien';
 
 export class UE {
   private initiales: string;
@@ -36,6 +36,6 @@ export class UE {
 
   public ajoutLien(lien: Lien): boolean {
     const l = this.liens.length;
-    return lien.isValid() && l + 1 === this.liens.push(lien);
+    return l + 1 === this.liens.push(lien);
   }
 }

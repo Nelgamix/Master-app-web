@@ -6,10 +6,10 @@
     </button>
     <div [ngbCollapse]="isNavbarCollapsed" class="collapse navbar-collapse mr-auto" id="navbar">
       <div class="navbar-nav">
-        <a class="nav-item nav-link" (click)="isNavbarCollapsed = !isNavbarCollapsed" routerLink="/accueil" routerLinkActive="active">Accueil</a>
-        <a class="nav-item nav-link" (click)="isNavbarCollapsed = !isNavbarCollapsed" routerLink="/et" routerLinkActive="active">Emploi du temps</a>
-        <a class="nav-item nav-link" (click)="isNavbarCollapsed = !isNavbarCollapsed" routerLink="/evenements" routerLinkActive="active">&Eacute;vènements</a>
-        <a class="nav-item nav-link" (click)="isNavbarCollapsed = !isNavbarCollapsed" routerLink="/contact" routerLinkActive="active">Contact</a>
+        <a class="nav-item nav-link" (click)="isNavbarCollapsed = false" routerLink="/accueil" routerLinkActive="active">Accueil</a>
+        <a class="nav-item nav-link" (click)="isNavbarCollapsed = false" routerLink="/et" routerLinkActive="active">Emploi du temps</a>
+        <a class="nav-item nav-link" (click)="isNavbarCollapsed = false" routerLink="/evenements" routerLinkActive="active">&Eacute;vènements</a>
+        <a class="nav-item nav-link" (click)="isNavbarCollapsed = false" routerLink="/contact" routerLinkActive="active">Contact</a>
       </div>
     </div>
     <span class="navbar-text" id="change-theme" (click)="darkTheme = !darkTheme"></span>

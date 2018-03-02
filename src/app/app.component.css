@@ -1,5 +1,5 @@
 #background {
-  background: url(assets/backgrounds/polygonal-background.jpg);
+  background: url(../assets/backgrounds/polygonal-background.jpg);
   background-size: 100% auto;
   position: fixed;
   top: 0;
@@ -9,7 +9,8 @@
   z-index: -1;
 }
 .dark-theme #background {
-  background: url(assets/backgrounds/polygonal-background_dark.jpg);
+  background: url(../assets/backgrounds/polygonal-background_dark.jpg);
+  background-size: 100% auto;
 }
 
 #app-container {
@@ -32,11 +33,11 @@
   display: inline-block;
   width: 24px;
   height: 24px;
-  background-image: url(assets/icons/sun.svg);
+  background-image: url(../assets/icons/sun.svg);
   background-size: cover;
 }
 #change-theme:hover {
-  background-image: url(assets/icons/sun_hover.svg);
+  background-image: url(../assets/icons/sun_hover.svg);
   cursor: pointer;
 }
 

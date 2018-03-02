@@ -71,6 +71,10 @@ export class EmploiTempsService {
       }
     }
 
+    if (!tc.length) {
+      tc = [this.options.couleur.Autre.couleur];
+    }
+
     return tc;
   }
 
@@ -327,12 +331,6 @@ export class EmploiTempsService {
       }
 
       this.preAnalyse(sts);
-
-      /*this.analyseDisabled = true;
-      this.filterExclusions(this.exclusions, sts);
-      this.ajoutCoursPerso(this.coursPersos, sts);
-      this.analyseDisabled = false;*/
-
       this.analyse(sts);
 
       if (selectAll) {

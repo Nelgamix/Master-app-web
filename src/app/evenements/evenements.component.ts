@@ -4,7 +4,7 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
-import {Evenement} from '../model/ev/evenement';
+import {Evenement} from '../model/ev/Evenement';
 import {ModalEvenementsLoginComponent} from '../modal/evenements-login.component';
 import {ModalEvenementsEditComponent} from '../modal/evenements-edit.component';
 

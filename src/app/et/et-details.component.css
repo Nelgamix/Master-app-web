@@ -1,7 +1,7 @@
 #head-title {
   border-top: 1px solid grey;
   border-bottom: 1px solid grey;
-  background-image: url(assets/backgrounds/line_angle_light_shadow.jpg);
+  background-image: url(../../assets/backgrounds/line_angle_light_shadow.jpg);
   background-size: cover;
   color: white;
 }
@@ -50,4 +50,18 @@ hr {
 
 /deep/ #progress-main .progress {
   background-color: rgba(200, 200, 200, .7);
+}
+
+:host-context(.dark-theme) #head-details {
+  background: linear-gradient(to bottom, #fff4, #ddd3);
+}
+
+:host-context(.dark-theme) #basic-search {
+  background-color: #666;
+  border-color: #888;
+}
+
+:host-context(.dark-theme) input[type='text'] {
+  background-color: #555;
+  border-color: #888;
 }

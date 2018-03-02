@@ -2,35 +2,23 @@
 	"primaire": [
 		[
       {
-        "nom": "ADE G1",
-        "description": "Emploi du temps (groupe 1).",
-        "url": "https://ade6-ujf.grenet.fr/direct/index.jsp?resources=9645&projectId=2&data=1d04874d83cdeb532b5be82d6dc7b4928036957750ce9817205161f6e22f6829f9355e402da57010f6819307ed738001824027a8904c9a5cef6f1a28ea35c418c025f5e16438a90e7406158408bd7b08"
-      },
-      {
-        "nom": "ADE G2",
-        "description": "Emploi du temps (groupe 2).",
+        "nom": "ADE",
+        "description": "Emploi du temps.",
         "url": "https://ade6-ujf.grenet.fr/direct/index.jsp?resources=9756&projectId=2&data=1d04874d83cdeb532b5be82d6dc7b4928036957750ce9817205161f6e22f6829f9355e402da57010f6819307ed738001824027a8904c9a5cef6f1a28ea35c418c025f5e16438a90e7406158408bd7b08"
       },
       {
-        "nom": "ADE G3",
-        "description": "Emploi du temps (groupe 3).",
-        "url": "https://ade6-ujf.grenet.fr/direct/index.jsp?resources=12710&projectId=2&data=1d04874d83cdeb532b5be82d6dc7b4928036957750ce9817205161f6e22f6829f9355e402da57010f6819307ed738001824027a8904c9a5cef6f1a28ea35c418c025f5e16438a90e7406158408bd7b08"
-      }
-    ],
-		[
-      {
         "nom": "Zimbra UGA",
-        "description": "La messagerie personnelle pour les étudiants de l'UGA.",
+        "description": "Webmail de l'UGA.",
         "url": "https://webmail.etu.univ-grenoble-alpes.fr"
       },
       {
         "nom": "Moodle",
-        "description": "Le moodle de l'IM²AG. Regroupe les enseignements du Master.",
+        "description": "Moodle de l'IM²AG.",
         "url": "https://im2ag-moodle.e.ujf-grenoble.fr/course/index.php?categoryid=30"
       },
       {
         "nom": "Vie de la filière",
-        "description": "Toutes les informations importantes (dates, options...) du Master.",
+        "description": "Informations importantes.",
         "url": "https://im2ag-moodle.e.ujf-grenoble.fr/course/view.php?id=292"
       }
     ]
@@ -82,6 +70,153 @@
 			"url": "https://www.gsmarena.com/"
 		}
 	],
+  "liens-plus": [
+    {
+      "nom": "Général",
+      "liens": [
+        {
+          "nom": "Google Docs",
+          "description": "Documents by Google.",
+          "lien": "https://www.google.fr/intl/fr/docs/about/"
+        },
+        {
+          "nom": "Google Mail",
+          "description": "Mails by Google.",
+          "lien": "https://www.google.com/gmail/"
+        },
+        {
+          "nom": "ROMMA",
+          "description": "Réseau d'Observation Météo du Massif Alpin.",
+          "lien": "http://romma.fr/"
+        },
+        {
+          "nom": "Dealabs",
+          "description": "Bon plans et codes promo.",
+          "lien": "https://www.dealabs.com/"
+        },
+        {
+          "nom": "Pastebin",
+          "description": "Enregistrer du texte brut.",
+          "lien": "https://pastebin.com/"
+        }
+      ]
+    },
+    {
+      "nom": "Média",
+      "liens": [
+        {
+          "nom": "YouTube",
+          "description": "Plateforme de VOD.",
+          "lien": "https://www.youtube.com/"
+        },
+        {
+          "nom": "Twitch",
+          "description": "Plateforme de streaming.",
+          "lien": "https://www.twitch.tv/"
+        },
+        {
+          "nom": "Spotify Web",
+          "description": "Plateforme de streaming musique.",
+          "lien": "https://open.spotify.com/"
+        },
+        {
+          "nom": "Soundcloud",
+          "description": "Plateforme de streaming musique.",
+          "lien": "https://soundcloud.com/"
+        },
+        {
+          "nom": "Netflix",
+          "description": "Plateforme de films & séries.",
+          "lien": "https://www.netflix.com/"
+        },
+        {
+          "nom": "9Gag",
+          "description": "GIFS, vidéos et images diverses.",
+          "lien": "https://9gag.com/"
+        },
+        {
+          "nom": "Wallhaven",
+          "description": "Fond d'écrans.",
+          "lien": "https://alpha.wallhaven.cc/"
+        }
+      ]
+    },
+    {
+      "nom": "Réseau social",
+      "liens": [
+        {
+          "nom": "Twitter",
+          "description": "Twits.",
+          "lien": "https://www.twitter.com/"
+        },
+        {
+          "nom": "Reddit",
+          "description": "Réseau social.",
+          "lien": "https://www.reddit.com/"
+        }
+      ]
+    },
+    {
+      "nom": "Achat",
+      "liens": [
+        {
+          "nom": "Amazon",
+          "description": "Tout & n'importe quoi.",
+          "lien": "https://www.amazon.fr/"
+        },
+        {
+          "nom": "AliExpress",
+          "description": "Boutique asiatique.",
+          "lien": "https://fr.aliexpress.com/"
+        },
+        {
+          "nom": "Humble Bundle",
+          "description": "Boutique & bundles de jeux vidéos (dématérialisé).",
+          "lien": "https://www.humblebundle.com/"
+        },
+        {
+          "nom": "Instant-Gaming",
+          "description": "Boutique de jeux vidéos (dématérialisé).",
+          "lien": "https://www.instant-gaming.com/fr/"
+        }
+      ]
+    },
+    {
+      "nom": "Steam",
+      "liens": [
+        {
+          "nom": "Steam Store",
+          "description": "Page de la boutique.",
+          "lien": "https://store.steampowered.com/"
+        },
+        {
+          "nom": "Steam Community",
+          "description": "Page communauté.",
+          "lien": "https://steamcommunity.com/"
+        },
+        {
+          "nom": "Steam Charts",
+          "description": "Historique et stats du nombre de joueurs sur Steam.",
+          "lien": "http://steamcharts.com/"
+        },
+        {
+          "nom": "SteamSpy",
+          "description": "Stats et infos pour Steam.",
+          "lien": "https://steamspy.com/"
+        },
+        {
+          "nom": "SteamDB",
+          "description": "Stats et infos pour Steam.",
+          "lien": "https://steamdb.info/"
+        },
+        {
+          "nom": "SteamPrices",
+          "description": "Historique des prix des jeux vidéos sur Steam.",
+          "lien": "https://www.steamprices.com/fr/"
+        }
+      ]
+    }
+  ],
 	"semestres": [
 		{
 			"numero": 7,
@@ -217,7 +352,7 @@
 			"numero": 8,
 			"ue": [
         {
-          "nom": "Cybersécurité",
+          "nom": "Sécurité des systèmes informatiques",
           "initiales": "CS",
           "type": "Sécurité",
           "liens": [
@@ -228,8 +363,8 @@
           ]
         },
         {
-          "nom": "Robotics",
-          "initiales": "R",
+          "nom": "Robotics and connected",
+          "initiales": "RC",
           "type": "Général",
           "liens": [
             {
@@ -239,7 +374,7 @@
           ]
         },
         {
-          "nom": "Introduction à l'administration des réseaux",
+          "nom": "Administration des réseaux",
           "initiales": "IRES",
           "type": "Réseaux",
           "liens": [
@@ -265,7 +400,7 @@
           ]
         },
         {
-          "nom": "Cryptologie",
+          "nom": "Cryptology & coding",
           "initiales": "",
           "type": "Sécurité",
           "liens": [
@@ -276,7 +411,7 @@
           ]
         },
         {
-          "nom": "Complexité algorithmique de problèmes",
+          "nom": "Complexité",
           "initiales": "",
           "type": "Général",
           "liens": [

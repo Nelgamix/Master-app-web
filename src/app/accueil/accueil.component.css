@@ -10,12 +10,13 @@
   margin-top: .5rem;
   border-top: 2px solid #444;
   border-bottom: 2px solid #444;
-  background-color: rgba(0,0,0,.03);
+  background-color: rgba(0,0,0,.08);
   box-shadow: 0 2px 4px #aaa;
 }
 :host-context(.dark-theme) .section {
   box-shadow: 0 2px 4px #444;
   border-color: #aaa;
+  background-color: rgba(0,0,0,.2);
 }
 
 .section:first-of-type {
@@ -74,7 +75,6 @@
   font-weight: bold;
 }
 .ue .nom {
-
 }
 .ue .type {
   font-style: italic;
@@ -84,7 +84,8 @@
   margin-bottom: 4px;
 }
 
-.titre {
+#liens-plus {
+  cursor: pointer;
 }
 
 /** Classes pour la lib dropdown */

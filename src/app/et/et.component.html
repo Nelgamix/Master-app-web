@@ -24,7 +24,7 @@
           <button class="btn btn-secondary" (click)="previousWeek()" placement="bottom" ngbTooltip="Semaine précédente">&lArr;</button>
         </div>
         <div class="col-auto">
-          <select [ngModel]="date" (ngModelChange)="navigateToWeek($event)" class="custom-select form-control" name="selDate" id="selDate">
+          <select [ngModel]="date" (ngModelChange)="navigateToWeek($event)" class="custom-select form-control" name="sel-date" id="sel-date">
             <option [ngValue]="i" *ngFor="let i of datesService.semaines">
               ({{i.semaine}}) {{i.dateDebut | amDateFormat:'YYYY-MM-DD'}} &rarr; {{i.dateFin | amDateFormat:'YYYY-MM-DD'}}
             </option>

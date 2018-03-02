@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, ElementRef, Input, ViewChild} from '@angular/core';
 
-import {Evenement} from '../model/ev/evenement';
+import {Evenement} from '../model/ev/Evenement';
 
 @Component({
   selector: 'app-evenement',

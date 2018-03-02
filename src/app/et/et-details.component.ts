@@ -52,10 +52,7 @@ export class EtDetailsComponent implements OnChanges {
   }
 
   openNotes() {
-    const modalRef = this.modalService.open(ModalEtNotesComponent, {size: 'lg'});
-    modalRef.result.then(r => {
-    }, r => {
-    });
+    this.modalService.open(ModalEtNotesComponent, {size: 'lg'});
   }
 
   openStats() {

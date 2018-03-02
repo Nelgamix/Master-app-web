@@ -1,4 +1,4 @@
-import {Lien} from './lien';
+import {Lien} from './Lien';
 
 export class Groupe {
   private nom: string;

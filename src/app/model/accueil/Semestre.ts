@@ -1,5 +1,5 @@
-import {UE} from './ue';
-import {Lien} from './lien';
+import {UE} from './UE';
+import {Lien} from './Lien';
 
 export class Semestre {
   private numero: number;

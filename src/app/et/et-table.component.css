@@ -1,9 +1,6 @@
 .cours {
   text-align: center;
   background-color: rgba(140, 140, 140, 0.4);
-  border-bottom: 1px solid rgb(140, 140, 140);
-  border-left: 0;
-  border-right: 0;
   transition: box-shadow 200ms;
   padding: 5px 8px;
 }
@@ -72,8 +69,22 @@
   top: -2px;
 }
 
-.jour .header {
+.header {
   border-bottom: 1px solid grey;
   box-shadow: 0 1px 8px #999;
   background-color: rgba(200, 200, 200, .1);
+}
+
+:host-context(.dark-theme) .jour {
+  box-shadow: 0 3px 6px #444;
+  border-color: #ccc;
+}
+
+:host-context(.dark-theme) .jour-title-date {
+  color: #ddd;
+}
+
+:host-context(.dark-theme) .header {
+  background-color: #ddd5;
+  box-shadow: 0 6px 8px -2px #666;
 }

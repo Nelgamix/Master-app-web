@@ -16,8 +16,8 @@ import * as moment from 'moment';
 // TODO: info: stats générales, sur les exclusion, les notes, graph sur les heures moyennes (50%)
 // TODO: filtrage sur et visuel (0%)
 // TODO: cours perso ui (80%)
-// TODO: plus d'info sur chaque jour (nb cours...) (0%)
-// TODO: fix vue mobile (50%)
+// TODO: plus d'info sur chaque jour (nb cours...) (100%)
+// TODO: fix vue mobile (60%)
 
 enum VueType {
   ET,
@@ -123,15 +123,7 @@ export class EtComponent implements OnInit {
   boutonMagique(id: number) {
     // Indiquer que fait chaque id.
     switch (id) {
-      case 0: // test cours perso
-        const cp = new CoursPerso(
-          CoursPersoRecurrence.SEMAINE, moment().weekday(1), 9 * 60, 11 * 60 + 30, 'TER', 'TER', 'TP', 'DEMEURE Alexandre', 'IMAG'
-        );
-
-        this.etService.addCoursPerso([cp]);
-        this.etService.analyse([this.semaine]);
-        break;
-      case 1:
+      case 0:
         this.messageService.showMessage('Test!');
         break;
     }
