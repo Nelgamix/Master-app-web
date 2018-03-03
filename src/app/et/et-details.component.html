@@ -124,11 +124,11 @@
     <div class="col-md-6 col-sm-12">
       <div class="input-group">
         <div class="input-group-prepend">
-          <span class="input-group-text" id="basic-search"><img src="assets/icons/search.png" alt="Filtrer"></span>
+          <span class="input-group-text" id="basic-search"><img src="assets/icons/et_filtre.png" alt="Filtrer"></span>
         </div>
         <input type="text" class="form-control" placeholder="Filtrer par nom" aria-label="Filtrer par nom" aria-describedby="basic-search" [(ngModel)]="filtre">
         <div class="input-group-append" *ngIf="filtre.length > 0">
-          <button type="button" class="btn btn-danger" (click)="filtre = ''"><img src="assets/icons/delete.png" alt="Clear"></button>
+          <button type="button" class="btn btn-danger" (click)="filtre = ''"><img src="assets/icons/modal_et_supprimer_tout.png" alt="Clear"></button>
         </div>
       </div>
     </div>
@@ -136,20 +136,20 @@
       <div class="float-right">
         <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" [(ngModel)]="vueType">
           <label ngbButtonLabel class="btn-primary px-4">
-            <input ngbButton type="radio" [value]="VueType.TABLE"><img src="assets/icons/options.png" alt="Tables">
+            <input ngbButton type="radio" [value]="VueType.TABLE"><img src="assets/icons/et_table.png" alt="Tables">
           </label>
           <label ngbButtonLabel class="btn-primary px-4">
-            <input ngbButton type="radio" [value]="VueType.VISUEL"><img src="assets/icons/expand.png" alt="Visuel">
+            <input ngbButton type="radio" [value]="VueType.VISUEL"><img src="assets/icons/et_visuel.png" alt="Visuel">
           </label>
         </div>
         <button type="button" class="btn btn-danger img-text" (click)="openExclusions()">
-          <img src="assets/icons/cancel.svg" width="24" height="24" alt="Exclusions">Exclusions
+          <img src="assets/icons/et_exclusions.svg" width="24" height="24" alt="Exclusions">Exclusions
         </button>
         <button type="button" class="btn btn-success img-text" (click)="openPersonnel()">
-          <img src="assets/icons/push-pin.png" alt="Cours">Personnel
+          <img src="assets/icons/et_personnel.png" alt="Cours">Personnel
         </button>
         <button type="button" class="btn btn-warning img-text" (click)="openNotes()">
-          <img src="assets/icons/file.png" alt="Notes">Notes
+          <img src="assets/icons/et_notes.png" alt="Notes">Notes
         </button>
       </div>
     </div>

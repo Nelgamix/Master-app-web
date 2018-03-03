@@ -17,26 +17,26 @@
             <!-- Details -->
             <div class="btn-group btn-group-toggle" [ngbTooltip]="'Afficher les paramètres supplémentaires'">
               <label class="btn-success" ngbButtonLabel>
-                <input name="d{{id}}" type="checkbox" ngbButton [(ngModel)]="details"><img src="assets/icons/download.png" alt="Développer">
+                <input name="d{{id}}" type="checkbox" ngbButton [(ngModel)]="details"><img src="assets/icons/modal_et_plus.png" alt="Développer">
               </label>
             </div>
 
             <!-- Include / Full -->
             <div class="btn-group btn-group-toggle" [ngbTooltip]="'Chercher dans les entrées (sinon, on ne cherche que les entrées exactement égales)'">
               <label class="btn-primary" ngbButtonLabel>
-                <input name="i{{id}}" type="checkbox" ngbButton [(ngModel)]="exclusion.includes"><img src="assets/icons/resize.png" alt="Inclure">
+                <input name="i{{id}}" type="checkbox" ngbButton [(ngModel)]="exclusion.includes"><img src="assets/icons/modal_et_inclure.png" alt="Inclure">
               </label>
             </div>
 
             <!-- Cacher / Supprimer le cours -->
             <div class="btn-group btn-group-toggle" [ngbTooltip]="'Cacher les cours complètement'">
               <label class="btn-warning" ngbButtonLabel>
-                <input name="s{{id}}" type="checkbox" ngbButton [(ngModel)]="exclusion.supprimer"><img src="assets/icons/eye.png" alt="Cacher">
+                <input name="s{{id}}" type="checkbox" ngbButton [(ngModel)]="exclusion.supprimer"><img src="assets/icons/modal_et_cacher.png" alt="Cacher">
               </label>
             </div>
 
             <!-- Delete -->
-            <button type="button" class="btn btn-danger ml-3" (click)="suppressionExclusion()" [ngbTooltip]="'Supprimer l\'exclusion'"><img src="assets/icons/cancel.png" alt="Supprimer"></button>
+            <button type="button" class="btn btn-danger ml-3" (click)="suppressionExclusion()" [ngbTooltip]="'Supprimer l\'exclusion'"><img src="assets/icons/modal_et_supprimer.png" alt="Supprimer"></button>
           </div>
         </div>
       </div>

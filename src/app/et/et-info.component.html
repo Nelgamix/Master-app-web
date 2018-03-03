@@ -53,9 +53,9 @@
         <div class="row">
           <div class="col">
             <h4>
-              <img src="assets/icons_perso/drawing2past.svg" alt="Passé" class="indicateur-gauche-relative" width="24" height="24" *ngIf="s.positionTemps === PositionTemps.PASSE">
-              <img src="assets/icons_perso/drawing1present.svg" alt="Présent" class="indicateur-gauche-relative" width="24" height="24" *ngIf="s.positionTemps === PositionTemps.PRESENT">
-              <img src="assets/icons_perso/drawing3futur.svg" alt="Futur" class="indicateur-gauche-relative" width="24" height="24" *ngIf="s.positionTemps === PositionTemps.FUTUR">
+              <img src="assets/icons_perso/et_passe.svg" alt="Passé" class="indicateur-gauche-relative" width="24" height="24" *ngIf="s.positionTemps === PositionTemps.PASSE">
+              <img src="assets/icons_perso/et_present.svg" alt="Présent" class="indicateur-gauche-relative" width="24" height="24" *ngIf="s.positionTemps === PositionTemps.PRESENT">
+              <img src="assets/icons_perso/et_futur.svg" alt="Futur" class="indicateur-gauche-relative" width="24" height="24" *ngIf="s.positionTemps === PositionTemps.FUTUR">
               Semaine {{s.date.semaine}} de {{s.date.annee}} <small class="text-muted">du {{s.premierJour.date | amDateFormat:'D MMMM YYYY'}} au {{s.dernierJour.date | amDateFormat:'D MMMM YYYY'}}</small>
             </h4>
           </div>
@@ -138,7 +138,7 @@
         </ng-container>
         <div class="row" *ngIf="s.ensembleCours.setCours.estVide()">
           <div class="col text-center">
-            <img src="assets/icons_perso/drawing4empty.svg" alt="Vide" width="80" height="80" class="my-3">
+            <img src="assets/icons_perso/et_vide.svg" alt="Vide" width="80" height="80" class="my-3">
           </div>
         </div>
       </div>

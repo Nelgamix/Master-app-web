@@ -3,7 +3,7 @@
     <div>&hellip;</div>
   </div>
 	<div class="col-3 ev-dates" [style.border-color]="ev.couleur">
-		<img class="align-top mt-1 mr-1" src="assets/icons/link.svg" width="14" height="14" alt="Lien disponible" *ngIf="ev.url.length > 0"><b>{{ev.type}}</b><br>
+		<img class="align-top mt-1 mr-1" src="assets/icons/ev_lien.svg" width="14" height="14" alt="Lien disponible" *ngIf="ev.url.length > 0"><b>{{ev.type}}</b><br>
 		{{ev.debut | amLocale: 'fr' | amDateFormat:'D MMMM YYYY HH:mm' | capitalize}}<br>
 		<span *ngIf="ev.timable">{{ev.fin | amLocale: 'fr' | amDateFormat:'D MMMM YYYY HH:mm' | capitalize}}</span><br>
 	</div>
