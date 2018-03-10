@@ -28,7 +28,7 @@
 
 <div class="row mt-4" *ngIf="semaine.ensembleCours.setCours.estVide(); else elseBlock">
   <div class="col text-center">
-    <img src="assets/icons_perso/drawing4empty.svg" alt="Empty" class="m-5" width="120" height="120">
+    <img src="assets/icons_perso/et_vide.svg" alt="Empty" class="m-5" width="120" height="120">
   </div>
 </div>
 
@@ -101,18 +101,50 @@
           </div>
         </div>
 
-        <!-- Deb & fin pannel -->
-        <div class="col-12 col-md-6 mb-2">
+        <!-- Infos rapides pannel -->
+        <div class="col-12 col-md-6 mb-2" id="infos-rapide">
           <h5>Informations rapides</h5>
-          <div class="row">
+          <div class="row" *ngIf="semaine.ensembleCours.setCoursActifs.coursActuel">
             <div class="col">
-              <dl>
-                <dt *ngIf="semaine.ensembleCours.setCoursActifs.coursActuel">Cours actuel</dt>
-                <dd *ngIf="semaine.ensembleCours.setCoursActifs.coursActuel"><b>{{semaine.ensembleCours.setCoursActifs.coursActuel.nom}}</b> en <span class="font-italic" *ngFor="let s of semaine.ensembleCours.setCoursActifs.coursActuel.salles">{{s.batiment}} {{s.salle}}</span></dd>
-
-                <dt *ngIf="semaine.ensembleCours.setCoursActifs.coursSuivant">Cours suivant <span style="font-size: 75%; color: gray">dans {{prochainCoursTimer | amDuration:'milliseconds'}}</span></dt>
-                <dd *ngIf="semaine.ensembleCours.setCoursActifs.coursSuivant"><b>{{semaine.ensembleCours.setCoursActifs.coursSuivant.nom}}</b> en <span class="font-italic" *ngFor="let s of semaine.ensembleCours.setCoursActifs.coursSuivant.salles">{{s.batiment}} {{s.salle}}</span></dd>
-              </dl>
+              <h6>Cours actuel</h6>
+              <div class="row">
+                <div class="col">
+                  &#8594;
+                  <b>
+                    {{semaine.ensembleCours.setCoursActifs.coursActuel.nom}}
+                  </b>
+                  <span *ngIf="semaine.ensembleCours.setCoursActifs.coursActuel.salles.length > 0">
+                    en
+                    <span class="font-italic" *ngFor="let s of semaine.ensembleCours.setCoursActifs.coursActuel.salles">
+                      {{s.batiment}} {{s.salle}}
+                    </span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row" *ngIf="semaine.ensembleCours.setCoursActifs.coursSuivant">
+            <div class="col">
+              <h6>
+                Cours suivant
+                <small>
+                  dans {{prochainCoursTimer | amDuration:'milliseconds'}}
+                </small>
+              </h6>
+              <div class="row">
+                <div class="col">
+                  &#8594;
+                  <b>
+                    {{semaine.ensembleCours.setCoursActifs.coursSuivant.nom}}
+                  </b>
+                  <span *ngIf="semaine.ensembleCours.setCoursActifs.coursSuivant.salles.length > 0">
+                    en
+                    <span class="font-italic" *ngFor="let s of semaine.ensembleCours.setCoursActifs.coursSuivant.salles">
+                      {{s.batiment}} {{s.salle}}
+                    </span>
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
         </div>

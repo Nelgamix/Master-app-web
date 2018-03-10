@@ -15,12 +15,12 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 ## Project notes
 
 ### Images
-Mise à jour des images: 1.3.1
+Mise à jour des images: 1.4.1
 
 #### Accueil
-![Accueil](screenshots/1_3/accueil.png)
+![Accueil](screenshots/1_4_1/accueil.png)
 #### Emploi du temps
-![ET](screenshots/1_3/et.png)
+![ET](screenshots/1_4_1/et.png)
 #### Evenements
 ![EV](screenshots/1_3/ev.png)
 #### Contact

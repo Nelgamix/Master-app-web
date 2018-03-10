@@ -24,7 +24,7 @@
       </div>
 
       <div class="row">
-        <div class="col no-cours mt-1 mb-3" *ngIf="(j.ensembleCours.setCoursActifs.getCours()|coursfilter:filtre).length + (j.ensembleCours.setCoursCaches.getCours()|coursfilter:filtre).length === 0">
+        <div class="col no-cours mt-1 mb-3 pt-2" *ngIf="(j.ensembleCours.setCoursActifs.getCours()|coursfilter:filtre).length + (j.ensembleCours.setCoursCaches.getCours()|coursfilter:filtre).length === 0">
           <img src="assets/icons_perso/et_vide.svg" alt="Vide">
         </div>
         <div class="col-12 liste-cours">
