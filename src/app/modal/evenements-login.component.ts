@@ -30,6 +30,9 @@ export class ModalEvenementsLoginComponent implements OnInit {
       } else {
         this.incorrect = true;
       }
+    }, err => {
+      console.error(err);
+      this.incorrect = true;
     });
   }
 }
