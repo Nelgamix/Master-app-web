@@ -107,7 +107,16 @@
         <h3>{{g.getNom()}}</h3>
         <div class="row mb-2 mb-lg-0" *ngFor="let l of g.getLiens()">
           <div class="col-lg-3 col-md-4 col-12">
-            <h5>{{l.getNom()}}</h5>
+            <h5>
+              <img
+                src="assets/liens_plus_icons/{{getIconName(l)}}.ico"
+                alt="Icon"
+                width="24"
+                height="24"
+                onError="this.src = 'assets/liens_plus_icons/default.svg'"
+                style="margin-right: 8px">
+              {{l.getNom()}}
+            </h5>
           </div>
           <div class="col-lg-5 col-md-8 col-12">
             {{l.getDescription()}}

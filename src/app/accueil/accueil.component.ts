@@ -62,6 +62,11 @@ export class AccueilComponent implements OnInit {
     modalRef.componentInstance.data = semestreData;
   }
 
+  // Doit être la même fonction (adaptée) que celle du code python qui récupère les icones.
+  getIconName(l: Lien): string {
+    return l.getNom().replace(' ', '_').toLowerCase();
+  }
+
   private analyseSemestre(): void {
     const now = moment();
     if (now.isBefore(moment([2018, 0, 15]))) {
