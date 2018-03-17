@@ -1,0 +1,467 @@
+{
+	"primaire": [
+		[
+      {
+        "nom": "ADE",
+        "description": "Emploi du temps.",
+        "url": "https://ade6-ujf.grenet.fr/direct/index.jsp?resources=9756&projectId=2&data=1d04874d83cdeb532b5be82d6dc7b4928036957750ce9817205161f6e22f6829f9355e402da57010f6819307ed738001824027a8904c9a5cef6f1a28ea35c418c025f5e16438a90e7406158408bd7b08"
+      },
+      {
+        "nom": "Zimbra UGA",
+        "description": "Webmail de l'UGA.",
+        "url": "https://webmail.etu.univ-grenoble-alpes.fr"
+      },
+      {
+        "nom": "Moodle",
+        "description": "Moodle de l'IM²AG.",
+        "url": "https://im2ag-moodle.e.ujf-grenoble.fr/course/index.php?categoryid=30"
+      },
+      {
+        "nom": "Vie de la filière",
+        "description": "Informations importantes.",
+        "url": "https://im2ag-moodle.e.ujf-grenoble.fr/course/view.php?id=292"
+      }
+    ]
+	],
+	"secondaire": [
+		{
+			"nom": "UGA",
+			"liens": [
+				{
+					"nom": "Portail",
+					"url": "http://www.univ-grenoble-alpes.fr"
+				},
+				{
+					"nom": "Page master",
+					"url": "http://formations.univ-grenoble-alpes.fr/fr/catalogue/master-XB/sciences-technologies-sante-STS/master-informatique-program-master-informatique.html"
+				},
+				{
+					"nom": "Page 1ère année",
+					"url": "http://formations.univ-grenoble-alpes.fr/fr/catalogue/master-XB/sciences-technologies-sante-STS/master-informatique-program-master-informatique/parcours-informatique-classique-1re-annee-subprogram-parcours-genie-informatique-informatique-m1-classique.html"
+				},
+				{
+					"nom": "Page 2ème année",
+					"url": "http://formations.univ-grenoble-alpes.fr/fr/catalogue/master-XB/sciences-technologies-sante-STS/master-informatique-program-master-informatique/parcours-genie-informatique-classique-2e-annee-subprogram-genie-informatique-m2-classique.html"
+				},
+        {
+          "nom": "LEO",
+          "url": "https://leo.univ-grenoble-alpes.fr/"
+        }
+			]
+		},
+		{
+			"nom": "GitHub",
+			"url": "https://github.com/"
+		},
+		{
+			"nom": "Stack Overflow",
+			"url": "https://stackoverflow.com/"
+		},
+		{
+			"nom": "Developpez.com",
+			"url": "https://www.developpez.com/"
+		},
+		{
+			"nom": "Hardware.fr",
+			"url": "https://www.hardware.fr/"
+		},
+		{
+			"nom": "GSMArena",
+			"url": "https://www.gsmarena.com/"
+		}
+	],
+  "liens-plus": [
+    {
+      "nom": "Général",
+      "liens": [
+        {
+          "nom": "Google Docs",
+          "description": "Documents by Google.",
+          "lien": "https://www.google.fr/intl/fr/docs/about/"
+        },
+        {
+          "nom": "Google Mail",
+          "description": "Mails by Google.",
+          "lien": "https://www.google.com/gmail/"
+        },
+        {
+          "nom": "ROMMA",
+          "description": "Réseau d'Observation Météo du Massif Alpin.",
+          "lien": "http://romma.fr/"
+        },
+        {
+          "nom": "Dealabs",
+          "description": "Bon plans et codes promo.",
+          "lien": "https://www.dealabs.com/"
+        },
+        {
+          "nom": "Pastebin",
+          "description": "Enregistrer du texte brut.",
+          "lien": "https://pastebin.com/"
+        }
+      ]
+    },
+    {
+      "nom": "Média",
+      "liens": [
+        {
+          "nom": "YouTube",
+          "description": "Plateforme de VOD.",
+          "lien": "https://www.youtube.com/"
+        },
+        {
+          "nom": "Twitch",
+          "description": "Plateforme de streaming.",
+          "lien": "https://www.twitch.tv/"
+        },
+        {
+          "nom": "Spotify Web",
+          "description": "Plateforme de streaming musique.",
+          "lien": "https://open.spotify.com/"
+        },
+        {
+          "nom": "Soundcloud",
+          "description": "Plateforme de streaming musique.",
+          "lien": "https://soundcloud.com/"
+        },
+        {
+          "nom": "Netflix",
+          "description": "Plateforme de films & séries.",
+          "lien": "https://www.netflix.com/"
+        },
+        {
+          "nom": "9Gag",
+          "description": "GIFS, vidéos et images diverses.",
+          "lien": "https://9gag.com/"
+        },
+        {
+          "nom": "Wallhaven",
+          "description": "Fond d'écrans.",
+          "lien": "https://alpha.wallhaven.cc/"
+        }
+      ]
+    },
+    {
+      "nom": "Réseau social",
+      "liens": [
+        {
+          "nom": "Twitter",
+          "description": "Twits.",
+          "lien": "https://www.twitter.com/"
+        },
+        {
+          "nom": "Reddit",
+          "description": "Réseau social.",
+          "lien": "https://www.reddit.com/"
+        }
+      ]
+    },
+    {
+      "nom": "Achat",
+      "liens": [
+        {
+          "nom": "Amazon",
+          "description": "Tout & n'importe quoi.",
+          "lien": "https://www.amazon.fr/"
+        },
+        {
+          "nom": "AliExpress",
+          "description": "Boutique asiatique.",
+          "lien": "https://fr.aliexpress.com/"
+        },
+        {
+          "nom": "Humble Bundle",
+          "description": "Boutique & bundles de jeux vidéos (dématérialisé).",
+          "lien": "https://www.humblebundle.com/"
+        },
+        {
+          "nom": "Instant-Gaming",
+          "description": "Boutique de jeux vidéos (dématérialisé).",
+          "lien": "https://www.instant-gaming.com/fr/"
+        }
+      ]
+    },
+    {
+      "nom": "Steam",
+      "liens": [
+        {
+          "nom": "Steam Store",
+          "description": "Page de la boutique.",
+          "lien": "https://store.steampowered.com/"
+        },
+        {
+          "nom": "Steam Community",
+          "description": "Page communauté.",
+          "lien": "https://steamcommunity.com/"
+        },
+        {
+          "nom": "Steam Charts",
+          "description": "Historique et stats du nombre de joueurs sur Steam.",
+          "lien": "http://steamcharts.com/"
+        },
+        {
+          "nom": "SteamSpy",
+          "description": "Stats et infos pour Steam.",
+          "lien": "https://steamspy.com/"
+        },
+        {
+          "nom": "SteamDB",
+          "description": "Stats et infos pour Steam.",
+          "lien": "https://steamdb.info/"
+        },
+        {
+          "nom": "SteamPrices",
+          "description": "Historique des prix des jeux vidéos sur Steam.",
+          "lien": "https://www.steamprices.com/fr/"
+        }
+      ]
+    }
+  ],
+	"semestres": [
+		{
+			"numero": 7,
+			"ue": [
+				{
+					"nom": "Sémantique des langages de programmation et compilation",
+          "initiales": "SLPC",
+					"type": "Général",
+					"liens": [
+						{
+							"nom": "Moodle",
+							"url": "https://im2ag-moodle.e.ujf-grenoble.fr/enrol/index.php?id=243"
+						}
+					]
+				},
+				{
+					"nom": "Génie logiciel",
+          "initiales": "GL",
+					"type": "Général",
+					"liens": [
+						{
+							"nom": "Site",
+							"url": "http://lig-membres.imag.fr/lalanda/lectures/lectures.php"
+						}
+					]
+				},
+				{
+					"nom": "Conception et programmation par objets",
+          "initiales": "CO",
+					"type": "Conception",
+					"liens": [
+						{
+							"nom": "Moodle",
+							"url": "https://im2ag-moodle.e.ujf-grenoble.fr/course/view.php?id=204"
+						}
+					]
+				},
+				{
+					"nom": "Conception des systèmes d'exploitation et programmation concurrente",
+          "initiales": "CSE",
+					"type": "Programmation",
+					"liens": [
+						{
+							"nom": "Moodle",
+							"url": "https://im2ag-moodle.e.ujf-grenoble.fr/course/view.php?id=104"
+						}
+					]
+				},
+				{
+					"nom": "Base de données",
+          "initiales": "BD",
+					"type": "Base de données",
+					"liens": [
+						{
+							"nom": "Moodle",
+							"url": "https://im2ag-moodle.e.ujf-grenoble.fr/course/view.php?id=67"
+						}
+					]
+				},
+				{
+					"nom": "Introduction aux réseaux",
+          "initiales": "IR",
+					"type": "Réseaux",
+					"liens": [
+						{
+							"nom": "Moodle",
+							"url": "https://im2ag-moodle.e.ujf-grenoble.fr/course/view.php?id=85"
+						},
+						{
+							"nom": "Site",
+							"url": "http://lig-membres.imag.fr/sicard/M1.html"
+						}
+					]
+				},
+				{
+					"nom": "Technique des logiciels interactifs",
+          "initiales": "TLI",
+					"type": "IHM",
+					"liens": [
+						{
+							"nom": "Moodle",
+							"url": "https://im2ag-moodle.e.ujf-grenoble.fr/enrol/index.php?id=264"
+						},
+						{
+							"nom": "Site",
+							"url": "http://iihm.imag.fr/BLANCH/M1/TLI/"
+						}
+					]
+				},
+				{
+					"nom": "Anglais scientifique écrit",
+					"type": "Général",
+					"liens": []
+				},
+				{
+					"nom": "Projet compilation",
+					"type": "Projet",
+					"liens": [
+            {
+              "nom": "Moodle",
+              "url": "https://im2ag-moodle.e.ujf-grenoble.fr/course/view.php?id=126"
+            },
+            {
+              "nom": "Site",
+              "url": "http://www-verimag.imag.fr/~bidinger/compilation/"
+            },
+            {
+              "nom": "Archive projet",
+              "url": "http://www-verimag.imag.fr/~bidinger/compilation/archive.tar.gz"
+            }
+          ]
+				},
+				{
+					"nom": "Projet système",
+					"type": "Projet",
+					"liens": [
+            {
+              "nom": "Moodle",
+              "url": "https://im2ag-moodle.e.ujf-grenoble.fr/course/view.php?id=234"
+            }
+          ]
+				}
+			],
+			"infos": "",
+			"liens": [
+				{
+					"nom": "Test (pas de lien)",
+					"url": "#"
+				}
+			]
+		},
+		{
+			"numero": 8,
+			"ue": [
+        {
+          "nom": "Sécurité des systèmes informatiques",
+          "initiales": "CS",
+          "type": "Sécurité",
+          "liens": [
+            {
+              "nom": "Site",
+              "url": "https://www-fourier.ujf-grenoble.fr/~pev/cybersec/"
+            }
+          ]
+        },
+        {
+          "nom": "Robotics and connected",
+          "initiales": "RC",
+          "type": "Général",
+          "liens": [
+            {
+              "nom": "Site",
+              "url": "http://lig-membres.imag.fr/aycard/html/Enseignement/M1/Robotics2/index.html"
+            }
+          ]
+        },
+        {
+          "nom": "Administration des réseaux",
+          "initiales": "IRES",
+          "type": "Réseaux",
+          "liens": [
+            {
+              "nom": "Moodle",
+              "url": "https://im2ag-moodle.e.ujf-grenoble.fr/course/view.php?id=86"
+            }
+          ]
+        },
+        {
+          "nom": "DevOps",
+          "initiales": "DO",
+          "type": "Général",
+          "liens": [
+            {
+              "nom": "Moodle",
+              "url": "https://im2ag-moodle.e.ujf-grenoble.fr/course/view.php?id=101"
+            },
+            {
+              "nom": "Site",
+              "url": "https://tropars.github.io/teaching/"
+            }
+          ]
+        },
+        {
+          "nom": "Cryptology & coding",
+          "initiales": "",
+          "type": "Sécurité",
+          "liens": [
+            {
+              "nom": "Site",
+              "url": "https://ljk.imag.fr/membres/Pierre.Karpman/tea.html"
+            }
+          ]
+        },
+        {
+          "nom": "Complexité",
+          "initiales": "",
+          "type": "Général",
+          "liens": [
+            {
+              "nom": "Moodle",
+              "url": "https://im2ag-moodle.e.ujf-grenoble.fr/course/view.php?id=297"
+            },
+            {
+              "nom": "Caseine",
+              "url": "http://caseine.org/course/view.php?id=102"
+            }
+          ]
+        },
+        {
+          "nom": "Introduction to distributed systems",
+          "initiales": "IDS",
+          "type": "Réseaux",
+          "liens": [
+            {
+              "nom": "Moodle",
+              "url": "https://im2ag-moodle.e.ujf-grenoble.fr/course/view.php?id=333"
+            }
+          ]
+        },
+        {
+          "nom": "Ergonomie des IHM",
+          "initiales": "EIHM",
+          "type": "IHM",
+          "liens": [
+            {
+              "nom": "Moodle",
+              "url": "https://im2ag-moodle.e.ujf-grenoble.fr/course/view.php?id=264"
+            }
+          ]
+        }
+      ],
+			"infos": "**Mot de passe Moodle DevOps**: `DEVOPS_2018`\r\n\r\n**Login CS**: `M1Info_M2GI_2018`, `Quantum_or_not_quantum?`",
+			"liens": []
+		},
+		{
+			"numero": 9,
+			"ue": [],
+			"infos": "",
+			"liens": []
+		},
+		{
+			"numero": 10,
+			"ue": [],
+			"infos": "Semestre de stage. Aucun cours, TD ou TP ne sera proposé.",
+			"liens": []
+		}
+	]
+}

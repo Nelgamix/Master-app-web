@@ -1,0 +1,6 @@
+{
+  "/php": {
+    "target": "http://localhost/~kryoxem",
+    "secure": false
+  }
+}

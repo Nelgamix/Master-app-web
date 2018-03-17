@@ -1,0 +1,5 @@
+RewriteEngine On
+
+RewriteRule backend/(.*) backend/$1 [L]
+RewriteRule frontend/(.*) frontend/$1 [L]
+RewriteRule (.*) frontend/$1 [L]

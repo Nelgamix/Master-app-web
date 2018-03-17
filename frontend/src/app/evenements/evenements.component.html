@@ -1,0 +1,71 @@
+<div class="row spaced" *ngIf="!admin" id="admin-log">
+  <div class="col">
+    <button type="button" class="btn btn-primary" style="float: right;" (click)="openLogin()">Login admin</button>
+  </div>
+</div>
+<div class="row" style="margin: 10px 0;">
+  <form class="form-inline">
+    <div class="custom-control custom-radio">
+      <input class="custom-control-input" type="radio" [(ngModel)]="filtre.temporel" [value]="1" name="r1" id="r1">
+      <label class="custom-control-label" for="r1">&Eacute;vènements futurs à partir de</label>
+    </div>
+
+    <div class="form-group ml-2 mr-4">
+      <div class="input-group">
+        <input class="form-control" placeholder="yyyy-mm-dd" name="filtreDate" [(ngModel)]="filtre.date" ngbDatepicker #d="ngbDatepicker">
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary" type="button" (click)="d.toggle()">
+            <img src="assets/icons/calendar.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="custom-control custom-radio">
+      <input class="custom-control-input" type="radio" [(ngModel)]="filtre.temporel" [value]="0" name="r0" id="r0">
+      <label class="custom-control-label" for="r0">&Eacute;vènements passés</label>
+    </div>
+  </form>
+</div>
+<div class="row filtre-type" style="text-align: center;">
+  <div class="col" *ngFor="let t of filtre.type; let i=index" style="border: 1px solid black; border-top: 3px solid black; margin: auto 15px;" [style.border-color]="t.couleur">
+    <div class="custom-control custom-checkbox">
+      <input type="checkbox" class="custom-control-input" [(ngModel)]="t.actif" id="cb{{i}}" [style.background-color]="t.couleur">
+      <label class="custom-control-label" for="cb{{i}}">{{t.type}}</label>
+    </div>
+  </div>
+</div>
+
+<div class="categ" *ngIf="(evenements | datefilter:filtre).length > 0">
+  <h3>En cours</h3>
+</div>
+<ng-container *ngFor="let ev of evenements | datefilter:filtre">
+  <app-evenement [ev]="ev" [source]="this"></app-evenement>
+</ng-container>
+
+<div class="categ" *ngIf="(evenements | datefilter:filtre:0:7).length > 0">
+  <h3>Moins d'une semaine</h3>
+</div>
+<ng-container *ngFor="let ev of evenements | datefilter:filtre:0:7">
+  <app-evenement [ev]="ev" [source]="this"></app-evenement>
+</ng-container>
+
+<div class="categ" *ngIf="(evenements | datefilter:filtre:7:30).length > 0">
+  <h3>Entre une semaine et un mois</h3>
+</div>
+<ng-container *ngFor="let ev of evenements | datefilter:filtre:7:30">
+  <app-evenement [ev]="ev" [source]="this"></app-evenement>
+</ng-container>
+
+<div class="categ" *ngIf="(evenements | datefilter:filtre:30:365).length > 0">
+  <h3>Plus d'un mois</h3>
+</div>
+<ng-container *ngFor="let ev of evenements | datefilter:filtre:30:365">
+  <app-evenement [ev]="ev" [source]="this"></app-evenement>
+</ng-container>
+
+<div class="row spaced" *ngIf="admin">
+  <div class="col">
+    <button type="button" class="btn btn-success" style="float: right;" (click)="openAjout()">Ajout nouvel évènement&hellip;</button>
+  </div>
+</div>

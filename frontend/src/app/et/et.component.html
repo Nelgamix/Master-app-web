@@ -1,0 +1,61 @@
+<ng-container *ngIf="vueType === VueType.ET && semaine">
+  <!-- Première colonne: contrôles de la semaine et info ET -->
+  <div class="row mb-2">
+    <!-- Informations sur l'emploi du temps (OK|NOK, ADE OK|ADE NOK, Last updated) -->
+    <div class="col-12 col-md-auto mr-md-auto">
+      <h4 class="h-100">
+        <span class="align-middle badge badge-success" *ngIf="etService.metadata['ok']">OK</span>
+        <span class="align-middle badge badge-danger" *ngIf="!etService.metadata['ok']">KO</span>
+
+        <span class="align-middle badge badge-success" *ngIf="etService.metadata['adeOnline']">ADE OK</span>
+        <span class="align-middle badge badge-danger" *ngIf="!etService.metadata['adeOnline']">ADE HS</span>
+
+        <span class="align-middle" style="font-size: 75%;" *ngIf="semaine">Dernière mise à jour <b>{{semaine.updated | amTimeAgo}}</b></span>
+      </h4>
+    </div>
+
+    <!-- Boutons de contrôle -->
+    <div class="col-12 col-md-auto">
+      <div class="form-row" id="form-selection-date">
+        <div class="col-auto">
+          <button class="btn btn-danger" (click)="nowWeek()" placement="bottom" ngbTooltip="Revenir à la semaine actuelle">&#8630;</button>
+        </div>
+        <div class="col-auto">
+          <button class="btn btn-secondary" (click)="previousWeek()" placement="bottom" ngbTooltip="Semaine précédente">&lArr;</button>
+        </div>
+        <div class="col-auto">
+          <select [ngModel]="date" (ngModelChange)="navigateToWeek($event)" class="custom-select form-control" name="sel-date" id="sel-date">
+            <option [ngValue]="i" *ngFor="let i of datesService.semaines">
+              ({{i.semaine}}) {{i.dateDebut | amDateFormat:'YYYY-MM-DD'}} &rarr; {{i.dateFin | amDateFormat:'YYYY-MM-DD'}}
+            </option>
+          </select>
+        </div>
+        <div class="col-auto">
+          <button class="btn btn-secondary" (click)="nextWeek()" placement="bottom" ngbTooltip="Semaine suivante">&rArr;</button>
+        </div>
+        <div class="col-auto">
+          <button class="btn btn-info" (click)="showInfo()" placement="bottom" ngbTooltip="Informations générales">&#8693;</button>
+        </div>
+        <div class="col-auto">
+          <button class="btn btn-warning" (click)="showSettings()" placement="bottom" ngbTooltip="Paramètres">#</button>
+        </div>
+        <!--<div class="col-auto">
+          <button class="btn btn-danger" (click)="boutonMagique(0)">BM</button>
+        </div>-->
+      </div>
+    </div>
+  </div>
+
+  <!-- Données HS, informe l'utilisateur -->
+  <div *ngIf="!etService.metadata['ok']" class="row mt-5">
+    <div class="col text-center">
+      <h2>ADE est hors-ligne, et les données n'ont pas été enregistrées sur la BD, donc retente plus tard&hellip;</h2>
+      <h3 class="text-muted">Peut être que le chargement depuis le serveur a échoué, essaye d'actualiser la page si tu viens d'arriver</h3>
+    </div>
+  </div>
+
+  <app-et-details *ngIf="etService.metadata['ok']" [semaine]="semaine"></app-et-details>
+</ng-container>
+
+<app-et-info *ngIf="vueType === VueType.INFO" (onClose)="closeInfo()"></app-et-info>
+<app-et-settings *ngIf="vueType === VueType.SETTINGS" (onClose)="closeSettings()"></app-et-settings>

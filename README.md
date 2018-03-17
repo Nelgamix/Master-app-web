@@ -1,65 +1,62 @@
-# MasterEtWeb
+## Frontend
+Contient le projet partie frontend en Angular 4.0+.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.2.3.
+## Backend
+Contient le projet partie backend en Php 7.1+.
 
-## Angular CLI
+## Utils
+Contient les utilitaires.
 
-### Code scaffolding
+## Build & serve
+La partie backend doit être servie par Apache avec Php (simple copie
+des fichiers dans le dossier backend de sortie).
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|module`.
+La partie frontend doit être compilée (via `npm run build`),
+puis servie par Apache (après compilation, simple copie des fichiers
+du dossier dist dans le dossier frontend de sortie).
 
-### Help
+Attention: Les fichiers .htaccess doivent être présents et
+le module Apache mod_rewriting activé pour l'URL rewriting.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+Une organisation de structure des fichiers suivante est conseillée:
 
-## Project notes
+* frontend
+    * index.html
+    * ...
+* backend
+    * ET
+    * EV
+    * ...
+* .htaccess
 
-### Images
-Mise à jour des images: 1.4.1
+## Code
+XAMPP
+PHP
+Angular
 
-#### Accueil
-![Accueil](screenshots/1_4_1/accueil.png)
-#### Emploi du temps
-![ET](screenshots/1_4_1/et.png)
-#### Evenements
-![EV](screenshots/1_3/ev.png)
-#### Contact
-![Contact](screenshots/1_3/contact.png)
+### Installer les pré-requis
 
-### Organisation
+### Configurer le serveur local
+#### Ajout d'un VHost
 
-Front-end: Angular 4+, dossier src/app
+Ajouter cette partie dans le fichier
+C:\xampp\apache\conf\extra\httpd-vhost.conf
+```
+<VirtualHost *:80>
+    DocumentRoot "C:/Users/Kryoxem/public_html/testredir"
+    ServerName testredir.test
+    ServerAlias www.testredir.test
+</VirtualHost>
+```
+et changer la ligne DocumentRoot avec le chemin vers le projet servi,
+changer le ServerName en nom du serveur voulu,
+changer l'alias en ajoutant www. puis le ServerName.
 
-Back-end: PHP 7+, dossier src/php
-
-Le build se fait avec:
-* `ng build`
-* `ng build --prod`
-* npm (voir [package.json](package.json))
-
-Pour dév en local, trois choses à changer:
-* [.htaccess](src/.htaccess): changer 3] `RewriteBase /` en `RewriteBase /xxx/yyy/`
-avec xxx/yyy/ étant le chemin depuis la racine web
-* [index.html](src/index.html): changer 6] `<base href="/">` en `<base href="/xxx/yyy/">`,
-pareil qu'au dessus OU lancer le build prod (npm)
-* [commons.php](src/php/commons.php): changer 5] `define("LOCAL", false);` en `define("LOCAL", true);`
-pour activer le mode local. Ne pas oublier de changer les valeurs des constantes pour la connexion à
-la BD!
-
-Quelques logiciels à installer:
-* [XAMPP](https://www.apachefriends.org/fr/index.html): serveur web + BD
-* [IntelliJ IDE](https://www.jetbrains.com/products.html): Des IDE pour dév
-
-Les images/icons: [Font Awesome](https://www.flaticon.com/packs/font-awesome)
-
-NG Bootstrap: https://ng-bootstrap.github.io/#/components/accordion/examples
-
-Bootstrap: https://getbootstrap.com/docs/4.0/components/alerts/
-
-Icons: https://www.flaticon.com/packs/multimedia-element-set
-
-### TODO
-
-* Page "News"?
-* Fixer style de la page d'accueil, de l'et
-* Fixer les couleurs de ev
+#### Local DNS
+Ajouter cette partie dans le fichier
+C:\Windows\System32\drivers\etc\hosts
+```
+127.0.0.1         testredir.test
+```
+et changer le nom du domaine (ici testredir.test) avec le nom
+donné dans le fichier de VHost pour Apache.

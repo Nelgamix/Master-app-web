@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <base href="/">
+	<meta charset="utf-8">
+	<title>Master App</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="Une application pour s'y retrouver en Master Info à l'UGA">
+	<meta name="keywords" content="emploi,temps,evenements,ressources,liens">
+	<meta name="author" content="Nicolas Huchet">
+	<link rel="icon" type="image/x-icon" href="favicon.ico">
+
+	<style>
+    #loader-wrapper {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: #262626;
+      animation: fadein 1s;
+    }
+
+		#loader {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+			animation: fadein 1s;
+		}
+
+		@keyframes fadein {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+	</style>
+</head>
+<body>
+	<app-root>
+    <div id="loader-wrapper">
+      <img src="assets/spinners/loading.gif" alt="Loader" id="loader">
+    </div>
+	</app-root>
+</body>
+</html>
