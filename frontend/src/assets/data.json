@@ -1,10 +1,15 @@
 {
-	"primaire": [
-		[
+  "primaire": [
+    [
       {
-        "nom": "ADE",
+        "nom": "ADE M2GI Classique",
         "description": "Emploi du temps.",
-        "url": "https://ade6-ujf.grenet.fr/direct/index.jsp?resources=9756&projectId=2&data=1d04874d83cdeb532b5be82d6dc7b4928036957750ce9817205161f6e22f6829f9355e402da57010f6819307ed738001824027a8904c9a5cef6f1a28ea35c418c025f5e16438a90e7406158408bd7b08"
+        "url": "https://ade-sts.grenet.fr/direct/?resources=9888&projectId=7&data=1d04874d83cdeb5385d65d6b866a55a8d69dd3eac92a4c3b251eabfaebcfeeece1ad7e9965f1d08ec86f839c03d7c55aedc5434d4a4b357a3de531f9a55c6ba30d0c3641b6fe233b32a63d42d29c99af67c5f6923b60b09b60ebae19a89fba7d"
+      },
+      {
+        "nom": "ADE M2GI Alternance",
+        "description": "Emploi du temps.",
+        "url": "https://ade-sts.grenet.fr/direct/?resources=9830&projectId=7&data=1d04874d83cdeb5385d65d6b866a55a8d69dd3eac92a4c3b251eabfaebcfeeece1ad7e9965f1d08ec86f839c03d7c55aedc5434d4a4b357a3de531f9a55c6ba30d0c3641b6fe233b32a63d42d29c99af67c5f6923b60b09b60ebae19a89fba7d"
       },
       {
         "nom": "Zimbra UGA",
@@ -14,62 +19,53 @@
       {
         "nom": "Moodle",
         "description": "Moodle de l'IM²AG.",
-        "url": "https://im2ag-moodle.e.ujf-grenoble.fr/course/index.php?categoryid=30"
-      },
-      {
-        "nom": "Vie de la filière",
-        "description": "Informations importantes.",
-        "url": "https://im2ag-moodle.e.ujf-grenoble.fr/course/view.php?id=292"
+        "url": "https://im2ag-moodle.e.ujf-grenoble.fr/course/index.php?categoryid=34"
       }
     ]
-	],
-	"secondaire": [
-		{
-			"nom": "UGA",
-			"liens": [
-				{
-					"nom": "Portail",
-					"url": "http://www.univ-grenoble-alpes.fr"
-				},
-				{
-					"nom": "Page master",
-					"url": "http://formations.univ-grenoble-alpes.fr/fr/catalogue/master-XB/sciences-technologies-sante-STS/master-informatique-program-master-informatique.html"
-				},
-				{
-					"nom": "Page 1ère année",
-					"url": "http://formations.univ-grenoble-alpes.fr/fr/catalogue/master-XB/sciences-technologies-sante-STS/master-informatique-program-master-informatique/parcours-informatique-classique-1re-annee-subprogram-parcours-genie-informatique-informatique-m1-classique.html"
-				},
-				{
-					"nom": "Page 2ème année",
-					"url": "http://formations.univ-grenoble-alpes.fr/fr/catalogue/master-XB/sciences-technologies-sante-STS/master-informatique-program-master-informatique/parcours-genie-informatique-classique-2e-annee-subprogram-genie-informatique-m2-classique.html"
-				},
+  ],
+  "secondaire": [
+    {
+      "nom": "UGA",
+      "liens": [
         {
           "nom": "LEO",
           "url": "https://leo.univ-grenoble-alpes.fr/"
+        },
+        {
+          "nom": "Portail",
+          "url": "http://www.univ-grenoble-alpes.fr"
+        },
+        {
+          "nom": "Page master",
+          "url": "http://formations.univ-grenoble-alpes.fr/fr/catalogue/master-XB/sciences-technologies-sante-STS/master-informatique-program-master-informatique.html"
+        },
+        {
+          "nom": "Page 2ème année",
+          "url": "http://formations.univ-grenoble-alpes.fr/fr/catalogue/master-XB/sciences-technologies-sante-STS/master-informatique-program-master-informatique/parcours-genie-informatique-classique-2e-annee-subprogram-genie-informatique-m2-classique.html"
         }
-			]
-		},
-		{
-			"nom": "GitHub",
-			"url": "https://github.com/"
-		},
-		{
-			"nom": "Stack Overflow",
-			"url": "https://stackoverflow.com/"
-		},
-		{
-			"nom": "Developpez.com",
-			"url": "https://www.developpez.com/"
-		},
-		{
-			"nom": "Hardware.fr",
-			"url": "https://www.hardware.fr/"
-		},
-		{
-			"nom": "GSMArena",
-			"url": "https://www.gsmarena.com/"
-		}
-	],
+      ]
+    },
+    {
+      "nom": "GitHub",
+      "url": "https://github.com/"
+    },
+    {
+      "nom": "Stack Overflow",
+      "url": "https://stackoverflow.com/"
+    },
+    {
+      "nom": "Developpez.com",
+      "url": "https://www.developpez.com/"
+    },
+    {
+      "nom": "Hardware.fr",
+      "url": "https://www.hardware.fr/"
+    },
+    {
+      "nom": "GSMArena",
+      "url": "https://www.gsmarena.com/"
+    }
+  ],
   "liens-plus": [
     {
       "nom": "Général",
@@ -217,104 +213,104 @@
       ]
     }
   ],
-	"semestres": [
-		{
-			"numero": 7,
-			"ue": [
-				{
-					"nom": "Sémantique des langages de programmation et compilation",
+  "semestres": [
+    {
+      "numero": 7,
+      "ue": [
+        {
+          "nom": "Sémantique des langages de programmation et compilation",
           "initiales": "SLPC",
-					"type": "Général",
-					"liens": [
-						{
-							"nom": "Moodle",
-							"url": "https://im2ag-moodle.e.ujf-grenoble.fr/enrol/index.php?id=243"
-						}
-					]
-				},
-				{
-					"nom": "Génie logiciel",
+          "type": "Général",
+          "liens": [
+            {
+              "nom": "Moodle",
+              "url": "https://im2ag-moodle.e.ujf-grenoble.fr/enrol/index.php?id=243"
+            }
+          ]
+        },
+        {
+          "nom": "Génie logiciel",
           "initiales": "GL",
-					"type": "Général",
-					"liens": [
-						{
-							"nom": "Site",
-							"url": "http://lig-membres.imag.fr/lalanda/lectures/lectures.php"
-						}
-					]
-				},
-				{
-					"nom": "Conception et programmation par objets",
+          "type": "Général",
+          "liens": [
+            {
+              "nom": "Site",
+              "url": "http://lig-membres.imag.fr/lalanda/lectures/lectures.php"
+            }
+          ]
+        },
+        {
+          "nom": "Conception et programmation par objets",
           "initiales": "CO",
-					"type": "Conception",
-					"liens": [
-						{
-							"nom": "Moodle",
-							"url": "https://im2ag-moodle.e.ujf-grenoble.fr/course/view.php?id=204"
-						}
-					]
-				},
-				{
-					"nom": "Conception des systèmes d'exploitation et programmation concurrente",
+          "type": "Conception",
+          "liens": [
+            {
+              "nom": "Moodle",
+              "url": "https://im2ag-moodle.e.ujf-grenoble.fr/course/view.php?id=204"
+            }
+          ]
+        },
+        {
+          "nom": "Conception des systèmes d'exploitation et programmation concurrente",
           "initiales": "CSE",
-					"type": "Programmation",
-					"liens": [
-						{
-							"nom": "Moodle",
-							"url": "https://im2ag-moodle.e.ujf-grenoble.fr/course/view.php?id=104"
-						}
-					]
-				},
-				{
-					"nom": "Base de données",
+          "type": "Programmation",
+          "liens": [
+            {
+              "nom": "Moodle",
+              "url": "https://im2ag-moodle.e.ujf-grenoble.fr/course/view.php?id=104"
+            }
+          ]
+        },
+        {
+          "nom": "Base de données",
           "initiales": "BD",
-					"type": "Base de données",
-					"liens": [
-						{
-							"nom": "Moodle",
-							"url": "https://im2ag-moodle.e.ujf-grenoble.fr/course/view.php?id=67"
-						}
-					]
-				},
-				{
-					"nom": "Introduction aux réseaux",
+          "type": "Base de données",
+          "liens": [
+            {
+              "nom": "Moodle",
+              "url": "https://im2ag-moodle.e.ujf-grenoble.fr/course/view.php?id=67"
+            }
+          ]
+        },
+        {
+          "nom": "Introduction aux réseaux",
           "initiales": "IR",
-					"type": "Réseaux",
-					"liens": [
-						{
-							"nom": "Moodle",
-							"url": "https://im2ag-moodle.e.ujf-grenoble.fr/course/view.php?id=85"
-						},
-						{
-							"nom": "Site",
-							"url": "http://lig-membres.imag.fr/sicard/M1.html"
-						}
-					]
-				},
-				{
-					"nom": "Technique des logiciels interactifs",
+          "type": "Réseaux",
+          "liens": [
+            {
+              "nom": "Moodle",
+              "url": "https://im2ag-moodle.e.ujf-grenoble.fr/course/view.php?id=85"
+            },
+            {
+              "nom": "Site",
+              "url": "http://lig-membres.imag.fr/sicard/M1.html"
+            }
+          ]
+        },
+        {
+          "nom": "Technique des logiciels interactifs",
           "initiales": "TLI",
-					"type": "IHM",
-					"liens": [
-						{
-							"nom": "Moodle",
-							"url": "https://im2ag-moodle.e.ujf-grenoble.fr/enrol/index.php?id=264"
-						},
-						{
-							"nom": "Site",
-							"url": "http://iihm.imag.fr/BLANCH/M1/TLI/"
-						}
-					]
-				},
-				{
-					"nom": "Anglais scientifique écrit",
-					"type": "Général",
-					"liens": []
-				},
-				{
-					"nom": "Projet compilation",
-					"type": "Projet",
-					"liens": [
+          "type": "IHM",
+          "liens": [
+            {
+              "nom": "Moodle",
+              "url": "https://im2ag-moodle.e.ujf-grenoble.fr/enrol/index.php?id=264"
+            },
+            {
+              "nom": "Site",
+              "url": "http://iihm.imag.fr/BLANCH/M1/TLI/"
+            }
+          ]
+        },
+        {
+          "nom": "Anglais scientifique écrit",
+          "type": "Général",
+          "liens": []
+        },
+        {
+          "nom": "Projet compilation",
+          "type": "Projet",
+          "liens": [
             {
               "nom": "Moodle",
               "url": "https://im2ag-moodle.e.ujf-grenoble.fr/course/view.php?id=126"
@@ -328,29 +324,29 @@
               "url": "http://www-verimag.imag.fr/~bidinger/compilation/archive.tar.gz"
             }
           ]
-				},
-				{
-					"nom": "Projet système",
-					"type": "Projet",
-					"liens": [
+        },
+        {
+          "nom": "Projet système",
+          "type": "Projet",
+          "liens": [
             {
               "nom": "Moodle",
               "url": "https://im2ag-moodle.e.ujf-grenoble.fr/course/view.php?id=234"
             }
           ]
-				}
-			],
-			"infos": "",
-			"liens": [
-				{
-					"nom": "Test (pas de lien)",
-					"url": "#"
-				}
-			]
-		},
-		{
-			"numero": 8,
-			"ue": [
+        }
+      ],
+      "infos": "",
+      "liens": [
+        {
+          "nom": "Test (pas de lien)",
+          "url": "#"
+        }
+      ]
+    },
+    {
+      "numero": 8,
+      "ue": [
         {
           "nom": "Sécurité des systèmes informatiques",
           "initiales": "CS",
@@ -448,25 +444,20 @@
           ]
         }
       ],
-			"infos": "**Mot de passe Moodle DevOps**: `DEVOPS_2018`\r\n\r\n**Login CS**: `M1Info_M2GI_2018`, `Quantum_or_not_quantum?`",
-			"liens": [
-        {
-          "nom": "ECandidat",
-          "url": "https://ecandidat.univ-grenoble-alpes.fr/"
-        }
-      ]
-		},
-		{
-			"numero": 9,
-			"ue": [],
-			"infos": "",
-			"liens": []
-		},
-		{
-			"numero": 10,
-			"ue": [],
-			"infos": "Semestre de stage. Aucun cours, TD ou TP ne sera proposé.",
-			"liens": []
-		}
-	]
+      "infos": "**Mot de passe Moodle DevOps**: `DEVOPS_2018`\r\n\r\n**Login CS**: `M1Info_M2GI_2018`, `Quantum_or_not_quantum?`",
+      "liens": []
+    },
+    {
+      "numero": 9,
+      "ue": [],
+      "infos": "",
+      "liens": []
+    },
+    {
+      "numero": 10,
+      "ue": [],
+      "infos": "Semestre de stage. Aucun cours, TD ou TP ne sera proposé.",
+      "liens": []
+    }
+  ]
 }
