@@ -3,10 +3,7 @@
   "compilerOptions": {
     "outDir": "../out-tsc/app",
     "baseUrl": "./",
-    "module": "es6",
-    "types": [
-      "prismjs"
-    ]
+    "module": "es6"
   },
   "exclude": [
     "php",

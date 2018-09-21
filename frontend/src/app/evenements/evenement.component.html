@@ -8,7 +8,7 @@
 		<span *ngIf="ev.timable">{{ev.fin | amLocale: 'fr' | amDateFormat:'D MMMM YYYY HH:mm' | capitalize}}</span><br>
 	</div>
 	<div class="col ev-info">
-		<markdown-to-html [data]="ev.info"></markdown-to-html>
+		<markdown [data]="ev.info"></markdown>
     <p id="url-domain" *ngIf="source.admin && ev.url?.length > 0">
       URL: <a href="{{ev.url}}">{{urlDomain}}</a>
     </p>

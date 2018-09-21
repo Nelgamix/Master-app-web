@@ -6,7 +6,7 @@ import {Cours, EtatCours} from '../model/et/Cours';
 import {CookieService} from 'ngx-cookie-service';
 import {Exclusion} from '../model/et/Exclusion';
 import {CoursPerso} from '../model/et/CoursPerso';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {Semaine} from '../model/et/Semaine';
 import * as moment from 'moment';
 

@@ -1,9 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Exclusion} from '../model/et/Exclusion';
-import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/distinctUntilChanged';
+import {Observable} from 'rxjs';
+import {debounceTime, distinctUntilChanged, map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-exclusion',
@@ -19,32 +17,32 @@ export class ExclusionComponent implements OnInit {
   details: boolean;
 
   searchNoms = (text$: Observable<string>) =>
-    text$
-      .debounceTime(200)
-      .distinctUntilChanged()
-      .map(term => term.length < 2 ? []
-        : this.possibilites.noms.filter(v => v.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 6));
+    text$.pipe(
+      debounceTime(200),
+      distinctUntilChanged(),
+      map(term => term.length < 2 ? []
+        : this.possibilites.noms.filter(v => v.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 6)));
 
   searchTypes = (text$: Observable<string>) =>
-    text$
-      .debounceTime(200)
-      .distinctUntilChanged()
-      .map(term => term.length < 1 ? []
-        : this.possibilites.types.filter(v => v.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 4));
+    text$.pipe(
+      debounceTime(200),
+      distinctUntilChanged(),
+      map(term => term.length < 1 ? []
+        : this.possibilites.types.filter(v => v.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 4)));
 
   searchProfesseurs = (text$: Observable<string>) =>
-    text$
-      .debounceTime(200)
-      .distinctUntilChanged()
-      .map(term => term.length < 2 ? []
-        : this.possibilites.professeurs.filter(v => v.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 6));
+    text$.pipe(
+      debounceTime(200),
+      distinctUntilChanged(),
+      map(term => term.length < 2 ? []
+        : this.possibilites.professeurs.filter(v => v.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 6)));
 
   searchSalles = (text$: Observable<string>) =>
-    text$
-      .debounceTime(200)
-      .distinctUntilChanged()
-      .map(term => term.length < 1 ? []
-        : this.possibilites.salles.filter(v => v.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 6));
+    text$.pipe(
+      debounceTime(200),
+      distinctUntilChanged(),
+      map(term => term.length < 1 ? []
+        : this.possibilites.salles.filter(v => v.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 6)));
 
   ngOnInit(): void {
     if (this.exclusion.type.length > 0

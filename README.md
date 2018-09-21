@@ -10,6 +10,9 @@ Contient les utilitaires.
 ## Build & serve
 La partie backend doit être servie par Apache avec Php (simple copie
 des fichiers dans le dossier backend de sortie).
+Il faut aussi modifier le fichier le config.php dans le dossier backend,
+pour notamment passer la ligne `define("LOCAL", true);`
+à `define("LOCAL", false);` si on deploie le serveur.
 
 La partie frontend doit être compilée (via `npm run build`),
 puis servie par Apache (après compilation, simple copie des fichiers
@@ -30,9 +33,10 @@ Une organisation de structure des fichiers suivante est conseillée:
 * .htaccess
 
 ## Code
-XAMPP
-PHP
-Angular
+* XAMPP
+* PHP (7.2)
+* NodeJS & npm
+* Angular (5.2.9)
 
 ### Installer les pré-requis
 
@@ -55,6 +59,7 @@ changer l'alias en ajoutant www. puis le ServerName.
 #### Local DNS
 Ajouter cette partie dans le fichier
 C:\Windows\System32\drivers\etc\hosts
+(ou /etc/hosts sous linux)
 ```
 127.0.0.1         testredir.test
 ```

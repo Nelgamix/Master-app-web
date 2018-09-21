@@ -2,10 +2,9 @@ import {Injectable} from '@angular/core';
 
 import {HttpClient} from '@angular/common/http';
 import {SemaineDate} from '../model/et/Semaine';
-import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/observable/of';
 import * as moment from 'moment';
+import {Observable, of} from 'rxjs';
+import {map} from 'rxjs/operators';
 
 interface IDate {
   week: string;
@@ -27,15 +26,15 @@ export class DatesService {
   }
 
   getSemaines(): Observable<SemaineDate[]> {
-    return Observable.of(this.semaines);
+    return of(this.semaines);
   }
 
   getObsDateFromWeekYear(semaine: number, annee: number): Observable<SemaineDate> {
-    return this.getSemaines().map(
+    return this.getSemaines().pipe(map(
       semaines => semaines.find(
         (s: SemaineDate) => s.annee === annee && s.semaine === semaine
       )
-    );
+    ));
   }
 
   nextWeek(semaine: SemaineDate): SemaineDate | null {
@@ -88,6 +87,7 @@ export class DatesService {
   }
 
   private loadDates(data: IDate[], cb?: Function): void {
+    this.semaines = [];
     data.forEach(d => this.semaines.push(new SemaineDate(+d.week, +d.year, d.debut, d.fin)));
 
     if (this.semaines.length < 1) {

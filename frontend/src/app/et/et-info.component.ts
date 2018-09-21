@@ -4,7 +4,7 @@ import {Semaine} from '../model/et/Semaine';
 import {PositionTemps} from '../model/et/PositionTemps';
 import {Objet} from '../pipes/objet.pipe';
 import {colorSets} from '@swimlane/ngx-charts/release/utils';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-et-info',

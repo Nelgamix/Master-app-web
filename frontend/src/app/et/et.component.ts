@@ -5,9 +5,8 @@ import {MessageService} from '../services/message.service';
 import {Component, OnInit} from '@angular/core';
 import {Semaine, SemaineDate} from '../model/et/Semaine';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
-import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/observable/of';
+import {Observable} from 'rxjs/index';
+import {switchMap} from 'rxjs/operators';
 
 // TODO: info: stats générales, sur les exclusion, les notes, graph sur les heures moyennes (50%)
 // TODO: filtrage sur et visuel (0%)
@@ -46,13 +45,13 @@ export class EtComponent implements OnInit {
   ngOnInit(): void {
     this.datesService.updateDates(() => {
       if (this.route.snapshot.paramMap.has('year') && this.route.snapshot.paramMap.has('week')) {
-        this.date$ = this.route.paramMap.switchMap((params: ParamMap) => {
+        this.date$ = this.route.paramMap.pipe(switchMap((params: ParamMap) => {
           return this.datesService.getObsDateFromWeekYear(+params.get('week'), +params.get('year'));
-        });
+        }));
 
         this.date$.subscribe(d => this.date = d);
 
-        this.semaine$ = this.route.paramMap.switchMap((params: ParamMap) => {
+        this.semaine$ = this.route.paramMap.pipe(switchMap((params: ParamMap) => {
           const a = +params.get('year');
           const s = +params.get('week');
 
@@ -61,9 +60,9 @@ export class EtComponent implements OnInit {
             return this.etService.updateSingleWeek(s, a);
           } else {
             console.error('invalid navigation: ' + a + ' ' + s);
-            return Observable.of(null);
+            return Observable.create(null);
           }
-        });
+        }));
 
         this.semaine$.subscribe((s: Semaine) => {
           if (!s) {

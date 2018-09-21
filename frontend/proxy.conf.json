@@ -1,6 +1,7 @@
 {
-  "/php": {
-    "target": "http://localhost/~kryoxem",
+  "/backend": {
+    "target": "http://master-app.test",
+    "changeOrigin": true,
     "secure": false
   }
 }

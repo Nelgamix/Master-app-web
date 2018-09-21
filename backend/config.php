@@ -25,8 +25,8 @@ define("ADMINMDP", [
 ]);
 
 // Partie ET
-define("ADEURL", "http://ade6-ujf.grenet.fr/ade/index.jsp");
+define("ADEURL", "https://ade-sts.grenet.fr/ade/index.jsp");
 define("URLTIMEOUT", 5); // request timeout before considering that ADE is down
 define("REFRESHINTERVAL", 2 * 60); // Refresh ical each REFRESHINTERVAL minutes
 define("FLUSHICAL", false);
-define("ADEICALURL", "http://ade6-ujf-ro.grenet.fr/jsp/custom/modules/plannings/anonymous_cal.jsp?resources=9756&projectId=2&calType=ical&firstDate=%s&lastDate=%s");
+define("ADEICALURL", "https://ade-sts.grenet.fr/jsp/custom/modules/plannings/anonymous_cal.jsp?resources=9888&projectId=7&calType=ical&firstDate=%s&lastDate=%s");

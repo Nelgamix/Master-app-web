@@ -4,6 +4,7 @@ import * as moment from 'moment';
 import {Duree} from '../pipes/duree.pipe';
 import {colorSets} from '@swimlane/ngx-charts/release/utils';
 
+// TODO: change PIPE (foreach objet in HTML) which is not pure and updates way too much the DOM (on each click!)
 @Component({
   selector: 'app-modal-et-stats',
   templateUrl: './et-stats.component.html'

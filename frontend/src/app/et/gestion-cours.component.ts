@@ -1,7 +1,4 @@
 import {Component, Input, OnInit} from '@angular/core';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/distinctUntilChanged';
 import {Cours} from '../model/et/Cours';
 
 @Component({

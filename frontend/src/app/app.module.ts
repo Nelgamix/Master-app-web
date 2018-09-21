@@ -5,7 +5,6 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {HttpClientModule} from '@angular/common/http';
 import {MomentModule} from 'angular2-moment';
 import {FormsModule} from '@angular/forms';
-import {MarkdownToHtmlModule} from 'ng2-markdown-to-html';
 import {CommonModule} from '@angular/common';
 import {CookieService} from 'ngx-cookie-service';
 
@@ -46,7 +45,6 @@ import {CoursPersoComponent, ModalEtGestionCoursComponent} from './modal/et-gest
 import {GestionCoursComponent} from './et/gestion-cours.component';
 import {ModalEtNotesComponent} from './modal/et-notes.component';
 import {NotesService} from './services/notes.service';
-import {DropdownModule} from 'angular-custom-dropdown';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
 import {ContextMenuModule} from 'ngx-contextmenu';
 import {EtInfoComponent} from './et/et-info.component';
@@ -57,6 +55,7 @@ import {MessageComponent} from './message/message.component';
 import {ColorPickerModule} from 'ngx-color-picker';
 import {EnumKeysPipe} from './pipes/enumKeys.pipe';
 import {ModalEtCoursDetailsComponent} from './modal/et-cours-details.component';
+import {MarkdownModule} from 'ngx-markdown';
 
 @NgModule({
   declarations: [
@@ -101,13 +100,12 @@ import {ModalEtCoursDetailsComponent} from './modal/et-cours-details.component';
     BrowserAnimationsModule,
     FormsModule,
     NgbModule.forRoot(),
-    MarkdownToHtmlModule.forRoot(),
+    MarkdownModule.forRoot(),
     ContextMenuModule.forRoot({
       useBootstrap4: true
     }),
     HttpClientModule,
     MomentModule,
-    DropdownModule,
     NgxChartsModule
   ],
   providers: [

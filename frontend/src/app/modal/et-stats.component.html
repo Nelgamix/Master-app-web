@@ -19,6 +19,7 @@
       </ngx-charts-bar-vertical>
     </div>
   </div>
+  <!-- TODO: CHANGE THE NGFOR! do the work in ngOnInit -->
   <div class="row" *ngFor="let s of stats | objet">
     <div class="col-8">
       <b>{{s.value.description}}</b>

@@ -11,7 +11,7 @@
 			<span style="font-style: italic;">Aucune information fournie&hellip;</span>
 		</ng-container>
 		<ng-container *ngIf="data.getInfos().length > 0">
-			<markdown-to-html data="{{data.getInfos()}}"></markdown-to-html>
+			<markdown data="{{data.getInfos()}}"></markdown>
 		</ng-container>
 	</div>
 	<hr />

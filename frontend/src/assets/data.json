@@ -449,7 +449,12 @@
         }
       ],
 			"infos": "**Mot de passe Moodle DevOps**: `DEVOPS_2018`\r\n\r\n**Login CS**: `M1Info_M2GI_2018`, `Quantum_or_not_quantum?`",
-			"liens": []
+			"liens": [
+        {
+          "nom": "ECandidat",
+          "url": "https://ecandidat.univ-grenoble-alpes.fr/"
+        }
+      ]
 		},
 		{
 			"numero": 9,

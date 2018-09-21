@@ -1,8 +1,8 @@
 <?php
 
-$annee_scolaire = 2017;
+$annee_scolaire = 2018;
 $a = [];
-$first_d = new DateTime($annee_scolaire . "/09/04");
+$first_d = new DateTime($annee_scolaire . "/09/03");
 
 while (intval($first_d->format('Y')) < $annee_scolaire + 1 || intval($first_d->format("m")) < 8)
 {
