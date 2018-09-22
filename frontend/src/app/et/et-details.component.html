@@ -80,19 +80,19 @@
                   <div class="row">
                     <div class="col-12">
                       <span class="stat-donnee">{{semaine.ensembleCours.setCoursActifs.cours.length}}</span>
-                      cours <span class="font-weight-bold" style="color: lightseagreen;">actifs</span>
+                      <span>cours <span class="font-weight-bold" style="color: lightseagreen;">actifs</span></span>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-12">
                       <span class="stat-donnee">{{semaine.ensembleCours.setCoursCaches.cours.length}}</span>
-                      cours <span class="font-weight-bold" style="color: coral">cachés</span>
+                      <span>cours <span class="font-weight-bold" style="color: coral">cachés</span></span>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-12">
                       <span class="stat-donnee">{{semaine.ensembleCours.setCoursSupprimes.cours.length}}</span>
-                      cours <span class="font-weight-bold" style="color: darkred">supprimés</span>
+                      <span>cours <span class="font-weight-bold" style="color: darkred">supprimés</span></span>
                     </div>
                   </div>
                 </div>
@@ -164,26 +164,24 @@
         </div>
       </div>
     </div>
-    <div class="col-md-6 col-sm-12 mt-2 mt-md-0">
-      <div class="float-right">
-        <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" [(ngModel)]="vueType">
-          <label ngbButtonLabel class="btn-primary px-4">
-            <input ngbButton type="radio" [value]="VueType.TABLE"><img src="assets/icons/et_table.png" alt="Tables">
-          </label>
-          <label ngbButtonLabel class="btn-primary px-4">
-            <input ngbButton type="radio" [value]="VueType.VISUEL"><img src="assets/icons/et_visuel.png" alt="Visuel">
-          </label>
-        </div>
-        <button type="button" class="btn btn-danger img-text" (click)="openExclusions()">
-          <img src="assets/icons/et_exclusions.svg" width="24" height="24" alt="Exclusions">Exclusions
-        </button>
-        <button type="button" class="btn btn-success img-text" (click)="openPersonnel()">
-          <img src="assets/icons/et_personnel.png" alt="Cours">Personnel
-        </button>
-        <button type="button" class="btn btn-warning img-text" (click)="openNotes()">
-          <img src="assets/icons/et_notes.png" alt="Notes">Notes
-        </button>
+    <div class="col-md-6 col-sm-12 mt-2 mt-md-0 d-flex" id="spe-func">
+      <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" [(ngModel)]="vueType">
+        <label ngbButtonLabel class="btn-primary px-4">
+          <input ngbButton type="radio" [value]="VueType.TABLE"><img src="assets/icons/et_table.png" alt="Tables">
+        </label>
+        <label ngbButtonLabel class="btn-primary px-4">
+          <input ngbButton type="radio" [value]="VueType.VISUEL"><img src="assets/icons/et_visuel.png" alt="Visuel">
+        </label>
       </div>
+      <button type="button" class="btn btn-danger img-text" (click)="openExclusions()">
+        <img src="assets/icons/et_exclusions.svg" width="24" height="24" alt="Exclusions">Exclusions
+      </button>
+      <button type="button" class="btn btn-success img-text" (click)="openPersonnel()">
+        <img src="assets/icons/et_personnel.png" alt="Cours">Personnel
+      </button>
+      <button type="button" class="btn btn-warning img-text" (click)="openNotes()">
+        <img src="assets/icons/et_notes.png" alt="Notes">Notes
+      </button>
     </div>
   </div>
 

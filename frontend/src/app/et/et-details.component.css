@@ -35,6 +35,7 @@
 .stat-donnee {
   color: blueviolet;
   font-weight: bold;
+  margin-right: .25rem;
 }
 :host-context(.dark-theme) .stat-donnee {
   color: #ad7bff;
@@ -50,6 +51,14 @@ dd {
 
 hr {
   margin: 8px auto;
+}
+
+#spe-func {
+  justify-content: flex-end;
+}
+
+#spe-func > * {
+  margin-left: .25rem;
 }
 
 /deep/ #progress-main .progress {

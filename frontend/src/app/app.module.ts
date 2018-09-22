@@ -94,12 +94,12 @@ import {MarkdownModule} from 'ngx-markdown';
   ],
   imports: [
     CommonModule,
-    AppRoutingModule,
-    ColorPickerModule,
     BrowserModule,
     BrowserAnimationsModule,
+    AppRoutingModule,
+    ColorPickerModule,
     FormsModule,
-    NgbModule.forRoot(),
+    NgbModule,
     MarkdownModule.forRoot(),
     ContextMenuModule.forRoot({
       useBootstrap4: true

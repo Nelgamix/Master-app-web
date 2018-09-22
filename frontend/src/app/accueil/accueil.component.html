@@ -24,11 +24,11 @@
         <!--Liens secondaires-->
         <div class="row">
           <div class="col-lg-2 col-md-4 col-sm-12 mb-2" *ngFor="let g of groupesSecondaires">
-            <div class="dropdown" dropdown>
-              <div class="dropdown-toggle quick-link" style="border-top-color: green" dropdownToggle><b>{{g.getNom()}}</b></div>
-              <ul class="dropdown-menu" dropdownMenu>
-                <li *ngFor="let o of g.getLiens()"><a href="{{o.getUrl()}}">{{o.getNom()}}</a></li>
-              </ul>
+            <div class="dropdown" ngbDropdown>
+              <div class="dropdown-toggle quick-link" style="border-top-color: green" ngbDropdownToggle><b>{{g.getNom()}}</b></div>
+              <div class="dropdown-menu" ngbDropdownMenu>
+                <a *ngFor="let o of g.getLiens()" href="{{o.getUrl()}}" class="dropdown-item">{{o.getNom()}}</a>
+              </div>
             </div>
           </div>
           <div class="col-lg-2 col-md-4 col-sm-12 mb-2" *ngFor="let l of liensSecondaires">

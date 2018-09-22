@@ -4,11 +4,15 @@
     <!-- Informations sur l'emploi du temps (OK|NOK, ADE OK|ADE NOK, Last updated) -->
     <div class="col-12 col-md-auto mr-md-auto">
       <h4 class="h-100">
-        <span class="align-middle badge badge-success" *ngIf="etService.metadata['ok']">OK</span>
-        <span class="align-middle badge badge-danger" *ngIf="!etService.metadata['ok']">KO</span>
+        <span class="mr-1">
+          <span class="align-middle badge badge-success" *ngIf="etService.metadata['ok']">OK</span>
+          <span class="align-middle badge badge-danger" *ngIf="!etService.metadata['ok']">KO</span>
+        </span>
 
-        <span class="align-middle badge badge-success" *ngIf="etService.metadata['adeOnline']">ADE OK</span>
-        <span class="align-middle badge badge-danger" *ngIf="!etService.metadata['adeOnline']">ADE HS</span>
+        <span class="mr-1">
+          <span class="align-middle badge badge-success" *ngIf="etService.metadata['adeOnline']">ADE OK</span>
+          <span class="align-middle badge badge-danger" *ngIf="!etService.metadata['adeOnline']">ADE HS</span>
+        </span>
 
         <span class="align-middle" style="font-size: 75%;" *ngIf="semaine">Dernière mise à jour <b>{{semaine.updated | amTimeAgo}}</b></span>
       </h4>
