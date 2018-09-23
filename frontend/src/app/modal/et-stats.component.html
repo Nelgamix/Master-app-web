@@ -4,12 +4,13 @@
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
+
 <div class="modal-body">
   <div class="row">
     <div class="col p-0">
       <ngx-charts-bar-vertical
         [scheme]="colorScheme"
-        [results]="data"
+        [results]="dataChart"
         [xAxis]="true"
         [yAxis]="true"
         [showXAxisLabel]="true"
@@ -19,16 +20,27 @@
       </ngx-charts-bar-vertical>
     </div>
   </div>
-  <!-- TODO: CHANGE THE NGFOR! do the work in ngOnInit -->
-  <div class="row" *ngFor="let s of stats | objet">
-    <div class="col-8">
+
+  <h4>Stats</h4>
+  <div class="row" *ngFor="let s of data" (click)="statSelected = s">
+    <div class="col-12 col-md-8">
       <b>{{s.value.description}}</b>
     </div>
-    <div class="col-4">
+    <div class="col-12 col-md-4">
       {{toString(s.value.data)}}
     </div>
   </div>
+
+  <ng-container *ngIf="statSelected">
+    <h4>Details</h4>
+    <div class="row">
+      <div class="col">
+        <ngx-json-viewer [json]="statSelected.value.data" [expanded]="false"></ngx-json-viewer>
+      </div>
+    </div>
+  </ng-container>
 </div>
+
 <div class="modal-footer">
   <button type="button" class="btn btn-dark" (click)="activeModal.close('Close click')">Fermer</button>
 </div>

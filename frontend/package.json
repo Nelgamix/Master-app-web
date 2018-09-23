@@ -36,6 +36,7 @@
     "ngx-color-picker": "^6.7.0",
     "ngx-contextmenu": "^5.0.3",
     "ngx-cookie-service": "^1.0.10",
+    "ngx-json-viewer": "^2.3.1",
     "ngx-markdown": "^6.2.0",
     "rxjs": "^6.3.2",
     "zone.js": "^0.8.26"

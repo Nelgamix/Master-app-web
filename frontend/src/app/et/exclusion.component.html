@@ -15,21 +15,21 @@
             <h5 class="d-inline-block mr-2 mb-0 align-middle">{{exclusion.count}} cours</h5>
 
             <!-- Details -->
-            <div class="btn-group btn-group-toggle" [ngbTooltip]="'Afficher les paramètres supplémentaires'">
+            <div class="btn-group btn-group-toggle ml-1" [ngbTooltip]="'Afficher les paramètres supplémentaires'">
               <label class="btn-success" ngbButtonLabel>
                 <input name="d{{id}}" type="checkbox" ngbButton [(ngModel)]="details"><img src="assets/icons/modal_et_plus.png" alt="Développer">
               </label>
             </div>
 
             <!-- Include / Full -->
-            <div class="btn-group btn-group-toggle" [ngbTooltip]="'Chercher dans les entrées (sinon, on ne cherche que les entrées exactement égales)'">
+            <div class="btn-group btn-group-toggle ml-1" [ngbTooltip]="'Chercher dans les entrées (sinon, on ne cherche que les entrées exactement égales)'">
               <label class="btn-primary" ngbButtonLabel>
                 <input name="i{{id}}" type="checkbox" ngbButton [(ngModel)]="exclusion.includes"><img src="assets/icons/modal_et_inclure.png" alt="Inclure">
               </label>
             </div>
 
             <!-- Cacher / Supprimer le cours -->
-            <div class="btn-group btn-group-toggle" [ngbTooltip]="'Cacher les cours complètement'">
+            <div class="btn-group btn-group-toggle ml-1" [ngbTooltip]="'Cacher les cours complètement'">
               <label class="btn-warning" ngbButtonLabel>
                 <input name="s{{id}}" type="checkbox" ngbButton [(ngModel)]="exclusion.supprimer"><img src="assets/icons/modal_et_cacher.png" alt="Cacher">
               </label>

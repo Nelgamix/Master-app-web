@@ -137,10 +137,10 @@ export class ModalEtGestionCoursComponent {
     this.vue = VueType.DETAILS;
   }
 
-  close(): void {
+  close(changeVue: boolean = true): void {
     this.coursSelectionne.debut = +this.heures.debut.heure * 60 + +this.heures.debut.minute;
     this.coursSelectionne.fin = +this.heures.fin.heure * 60 + +this.heures.fin.minute;
-    this.vue = VueType.LISTE;
+    if (changeVue) this.vue = VueType.LISTE;
   }
 
   new(): void {
@@ -150,8 +150,8 @@ export class ModalEtGestionCoursComponent {
         moment(),
         8 * 60,
         10 * 60,
-        'Nouveau cours perso',
-        'NM',
+        'Description',
+        'Cours',
         'Autre',
         '',
         ''
@@ -167,6 +167,10 @@ export class ModalEtGestionCoursComponent {
   }
 
   valider(): void {
+    if (this.vue === VueType.DETAILS) {
+      this.close(false);
+    }
+
     let i = 0;
     while (i < this.cours.length) {
       const e = this.cours[i];
@@ -176,6 +180,7 @@ export class ModalEtGestionCoursComponent {
         i++;
       }
     }
+
     this.activeModal.close(this.cours);
   }
 }

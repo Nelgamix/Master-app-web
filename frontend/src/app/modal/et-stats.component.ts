@@ -3,6 +3,8 @@ import {Component, Input, OnInit} from '@angular/core';
 import * as moment from 'moment';
 import {Duree} from '../pipes/duree.pipe';
 import {colorSets} from '@swimlane/ngx-charts/release/utils';
+import {Cours} from '../model/et/Cours';
+import {Objet} from '../pipes/objet.pipe';
 
 // TODO: change PIPE (foreach objet in HTML) which is not pure and updates way too much the DOM (on each click!)
 @Component({
@@ -12,19 +14,24 @@ import {colorSets} from '@swimlane/ngx-charts/release/utils';
 export class ModalEtStatsComponent implements OnInit {
   @Input() stats: any;
 
-  data: any[] = [];
+  data: any;
+  dataChart: any[] = [];
   colorScheme: any = colorSets.find(s => s.name === 'vivid');
+
+  statSelected: any;
 
   constructor(public activeModal: NgbActiveModal) {
   }
 
   ngOnInit() {
     for (const j of this.stats.jours.data) {
-      this.data.push({
+      this.dataChart.push({
         name: j.date.format('dddd'),
         value: j.cours.length
       });
     }
+
+    this.data = (new Objet()).transform(this.stats);
   }
 
   toString(val): string {
@@ -38,6 +45,8 @@ export class ModalEtStatsComponent implements OnInit {
       return 'Array (' + val.length + ' éléments)';
     } else if (moment.isDuration(val)) {
       return new Duree().transform(val);
+    } else if (val instanceof Cours) {
+      return val.nom;
     } else {
       return 'Inconnu: ' + typeof val;
     }

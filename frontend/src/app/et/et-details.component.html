@@ -158,7 +158,7 @@
         <div class="input-group-prepend">
           <span class="input-group-text" id="basic-search"><img src="assets/icons/et_filtre.png" alt="Filtrer"></span>
         </div>
-        <input type="text" class="form-control" placeholder="Filtrer par nom" aria-label="Filtrer par nom" aria-describedby="basic-search" [(ngModel)]="filtre">
+        <input type="text" class="form-control" placeholder="Filtrer par nom" aria-label="Filtrer par nom" aria-describedby="basic-search" [(ngModel)]="filtre" style="height: 40px;">
         <div class="input-group-append" *ngIf="filtre.length > 0">
           <button type="button" class="btn btn-danger" (click)="filtre = ''"><img src="assets/icons/modal_et_supprimer_tout.png" alt="Clear"></button>
         </div>

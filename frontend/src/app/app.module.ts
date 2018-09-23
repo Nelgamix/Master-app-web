@@ -56,6 +56,7 @@ import {ColorPickerModule} from 'ngx-color-picker';
 import {EnumKeysPipe} from './pipes/enumKeys.pipe';
 import {ModalEtCoursDetailsComponent} from './modal/et-cours-details.component';
 import {MarkdownModule} from 'ngx-markdown';
+import {NgxJsonViewerModule} from 'ngx-json-viewer';
 
 @NgModule({
   declarations: [
@@ -97,9 +98,10 @@ import {MarkdownModule} from 'ngx-markdown';
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    ColorPickerModule,
     FormsModule,
+    ColorPickerModule,
     NgbModule,
+    NgxJsonViewerModule,
     MarkdownModule.forRoot(),
     ContextMenuModule.forRoot({
       useBootstrap4: true
