@@ -449,7 +449,68 @@
     },
     {
       "numero": 9,
-      "ue": [],
+      "ue": [
+        {
+          "nom": "Systèmes et applications répartis",
+          "initiales": "SR",
+          "type": "Général",
+          "liens": [
+            {
+              "nom": "Javanaise Projet",
+              "url": "http://lig-membres.imag.fr/boyer/html/Documents/cours/JAVANAISE/index.htm"
+            },
+            {
+              "nom": "Cours",
+              "url": "http://lig-membres.imag.fr/boyer/html/Documents/cours/JAVANAISE/PresentationJavanaise.pdf"
+            },
+            {
+              "nom": "M1 RMI",
+              "url": "https://im2ag-moodle.e.ujf-grenoble.fr/course/view.php?id=333"
+            }
+          ]
+        },
+        {
+          "nom": "Génie Logiciel: cycle de vie et qualité",
+          "initiales": "CPL",
+          "type": "Général",
+          "liens": [
+            {
+              "nom": "Moodle",
+              "url": "https://im2ag-moodle.e.ujf-grenoble.fr/course/view.php?id=95"
+            }
+          ]
+        },
+        {
+          "nom": "Ingénierie Dirigée par les Modèles",
+          "initiales": "IDM",
+          "type": "Général",
+          "liens": [
+            {
+              "nom": "Moodle",
+              "url": "https://im2ag-moodle.e.ujf-grenoble.fr/course/view.php?id=183"
+            },
+            {
+              "nom": "Cours (Github)",
+              "url": "https://github.com/m2gi/m2gi-idm-info"
+            }
+          ]
+        },
+        {
+          "nom": "Projet ECOM",
+          "initiales": "ECOM",
+          "type": "Projet",
+          "liens": [
+            {
+              "nom": "Moodle",
+              "url": "https://im2ag-moodle.e.ujf-grenoble.fr/course/view.php?id=61"
+            },
+            {
+              "nom": "Présentation",
+              "url": "https://air.imag.fr/index.php/ECOM-M2PGI"
+            }
+          ]
+        }
+      ],
       "infos": "",
       "liens": []
     },
