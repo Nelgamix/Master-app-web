@@ -1,4 +1,8 @@
 <ng-container [ngSwitch]="vue" *ngIf="accueilData">
+  <div class="alert alert-warning" *ngIf="isPreview">
+    This is a preview. <a routerLink="/accueil-json">Get back to edition.</a>
+  </div>
+
   <div *ngSwitchCase="VueType.ACCUEIL">
     <div class="row section">
       <div class="col">

@@ -19,6 +19,7 @@ enum VueType {
   providers: [NgbTabsetConfig]
 })
 export class AccueilComponent implements OnInit {
+  isPreview = false;
   accueilData: AccueilData;
 
   @ViewChild('tab') tab;
@@ -33,10 +34,17 @@ export class AccueilComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.accueilService.getAccueilData('assets/data.json').subscribe(data => {
-      this.accueilData = data;
+    const d = this.accueilService.accueilDataPreview;
+    if (!d) {
+      this.accueilService.getAccueilData('assets/data.json').subscribe(data => {
+        this.accueilData = data;
+        this.analyseSemestre();
+      });
+    } else {
+      this.accueilData = d;
+      this.isPreview = true;
       this.analyseSemestre();
-    });
+    }
   }
 
   openLiensPlus(): void {

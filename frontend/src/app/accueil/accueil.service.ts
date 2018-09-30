@@ -14,6 +14,7 @@ import * as moment from 'moment';
 })
 export class AccueilService {
   private _accueilData: AccueilData;
+  private _accueilDataPreview: AccueilData;
 
   constructor(private http: HttpClient) {
   }
@@ -26,6 +27,10 @@ export class AccueilService {
 
   loadAccueilData(data: any): AccueilData {
     return this.parseData(data);
+  }
+
+  get accueilDataPreview(): AccueilData {
+    return this._accueilDataPreview;
   }
 
   get semestres(): Semestre[] {
@@ -50,6 +55,10 @@ export class AccueilService {
 
   get accueilData(): AccueilData {
     return this._accueilData;
+  }
+
+  set accueilDataPreview(value: AccueilData) {
+    this._accueilDataPreview = value;
   }
 
   formatData() {

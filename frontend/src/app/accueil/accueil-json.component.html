@@ -2,6 +2,7 @@
   <button class="btn btn-danger" (click)="deleteAll()">Tout supprimer</button>
   <button class="btn btn-warning" (click)="loadData()">Charger depuis le serveur</button>
   <button class="btn btn-primary" (click)="openModalInput(loadFromString)">Charger depuis une chaîne de caractère</button>
+  <button class="btn btn-success" (click)="openPreview()">Afficher la prévisualisation</button>
 </div>
 
 <div class="alert alert-danger mt-2" *ngIf="error">

@@ -9,6 +9,7 @@ import {AccueilData} from '../model/accueil/AccueilData';
 import {LZStringService} from 'ng-lz-string';
 import {JsonPipe} from '@angular/common';
 import {UEType} from '../model/accueil/interfaces';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-accueil-json',
@@ -26,16 +27,27 @@ export class AccueilJsonComponent implements OnInit {
 
   constructor(private accueilService: AccueilService,
               private lz: LZStringService,
+              private router: Router,
               private modalService: NgbModal) {}
 
   ngOnInit() {
     this.loadData();
   }
 
+  openPreview() {
+    this.accueilService.accueilDataPreview = this.accueilData;
+    this.router.navigate(['accueil']);
+  }
+
   loadData() {
-    this.accueilService.getAccueilData('assets/data.json').subscribe(data => {
-      this.accueilData = data;
-    });
+    const d = this.accueilService.accueilDataPreview;
+    if (!d) {
+      this.accueilService.getAccueilData('assets/data.json').subscribe(data => {
+        this.accueilData = data;
+      });
+    } else {
+      this.accueilData = d;
+    }
   }
 
   addLienPrimaire() {
