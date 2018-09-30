@@ -13,11 +13,11 @@ export class AccueilData {
 
   static construct(e: IAccueilData) {
     return new AccueilData(
-      e.liensPrimaires.map(Lien.construct),
-      e.groupesSecondaires.map(Groupe.construct),
-      e.liensSecondaires.map(Lien.construct),
-      e.liensPlus.map(Groupe.construct),
-      e.semestres.map(Semestre.construct)
+      e.liensPrimaires ? e.liensPrimaires.map(Lien.construct) : [],
+      e.groupesSecondaires ? e.groupesSecondaires.map(Groupe.construct) : [],
+      e.liensSecondaires ? e.liensSecondaires.map(Lien.construct) : [],
+      e.liensPlus ? e.liensPlus.map(Groupe.construct) : [],
+      e.semestres ? e.semestres.map(Semestre.construct) : []
     );
   }
 

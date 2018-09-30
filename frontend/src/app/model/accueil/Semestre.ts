@@ -16,10 +16,10 @@ export class Semestre {
     return new Semestre(
       e.numero,
       e.info,
-      moment(e.debut),
-      moment(e.fin),
-      e.liens.map(Lien.construct),
-      e.ue.map(UE.construct)
+      e.debut ? moment(e.debut) : moment(),
+      e.fin ? moment(e.fin) : moment(),
+      e.liens ? e.liens.map(Lien.construct) : [],
+      e.ue ? e.ue.map(UE.construct) : []
     );
   }
 

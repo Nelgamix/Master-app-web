@@ -2,23 +2,23 @@
   "liensPrimaires": [
     {
       "nom": "ADE M2GI Classique",
-      "description": "Emploi du temps.",
-      "url": "https://ade-sts.grenet.fr/direct/?resources=9888&projectId=7&data=1d04874d83cdeb5385d65d6b866a55a8d69dd3eac92a4c3b251eabfaebcfeeece1ad7e9965f1d08ec86f839c03d7c55aedc5434d4a4b357a3de531f9a55c6ba30d0c3641b6fe233b32a63d42d29c99af67c5f6923b60b09b60ebae19a89fba7d"
+      "url": "https://ade-sts.grenet.fr/direct/?resources=9888&projectId=7&data=1d04874d83cdeb5385d65d6b866a55a8d69dd3eac92a4c3b251eabfaebcfeeece1ad7e9965f1d08ec86f839c03d7c55aedc5434d4a4b357a3de531f9a55c6ba30d0c3641b6fe233b32a63d42d29c99af67c5f6923b60b09b60ebae19a89fba7d",
+      "description": "Emploi du temps."
     },
     {
       "nom": "ADE M2GI Alternance",
-      "description": "Emploi du temps.",
-      "url": "https://ade-sts.grenet.fr/direct/?resources=9830&projectId=7&data=1d04874d83cdeb5385d65d6b866a55a8d69dd3eac92a4c3b251eabfaebcfeeece1ad7e9965f1d08ec86f839c03d7c55aedc5434d4a4b357a3de531f9a55c6ba30d0c3641b6fe233b32a63d42d29c99af67c5f6923b60b09b60ebae19a89fba7d"
+      "url": "https://ade-sts.grenet.fr/direct/?resources=9830&projectId=7&data=1d04874d83cdeb5385d65d6b866a55a8d69dd3eac92a4c3b251eabfaebcfeeece1ad7e9965f1d08ec86f839c03d7c55aedc5434d4a4b357a3de531f9a55c6ba30d0c3641b6fe233b32a63d42d29c99af67c5f6923b60b09b60ebae19a89fba7d",
+      "description": "Emploi du temps."
     },
     {
       "nom": "Zimbra UGA",
-      "description": "Webmail de l'UGA.",
-      "url": "https://webmail.etu.univ-grenoble-alpes.fr"
+      "url": "https://webmail.etu.univ-grenoble-alpes.fr",
+      "description": "Webmail de l'UGA."
     },
     {
       "nom": "Moodle",
-      "description": "Moodle de l'IM²AG.",
-      "url": "https://im2ag-moodle.e.ujf-grenoble.fr/course/index.php?categoryid=34"
+      "url": "https://im2ag-moodle.e.ujf-grenoble.fr/course/index.php?categoryid=34",
+      "description": "Moodle de l'IM²AG."
     }
   ],
   "groupesSecondaires": [
@@ -72,28 +72,28 @@
       "liens": [
         {
           "nom": "Google Docs",
-          "description": "Documents by Google.",
-          "url": "https://www.google.fr/intl/fr/docs/about/"
+          "url": "https://www.google.fr/intl/fr/docs/about/",
+          "description": "Documents by Google."
         },
         {
           "nom": "Google Mail",
-          "description": "Mails by Google.",
-          "url": "https://www.google.com/gmail/"
+          "url": "https://www.google.com/gmail/",
+          "description": "Mails by Google."
         },
         {
           "nom": "ROMMA",
-          "description": "Réseau d'Observation Météo du Massif Alpin.",
-          "url": "http://romma.fr/"
+          "url": "http://romma.fr/",
+          "description": "Réseau d'Observation Météo du Massif Alpin."
         },
         {
           "nom": "Dealabs",
-          "description": "Bon plans et codes promo.",
-          "url": "https://www.dealabs.com/"
+          "url": "https://www.dealabs.com/",
+          "description": "Bon plans et codes promo."
         },
         {
           "nom": "Pastebin",
-          "description": "Enregistrer du texte brut.",
-          "url": "https://pastebin.com/"
+          "url": "https://pastebin.com/",
+          "description": "Enregistrer du texte brut."
         }
       ]
     },
@@ -102,38 +102,38 @@
       "liens": [
         {
           "nom": "YouTube",
-          "description": "Plateforme de VOD.",
-          "url": "https://www.youtube.com/"
+          "url": "https://www.youtube.com/",
+          "description": "Plateforme de VOD."
         },
         {
           "nom": "Twitch",
-          "description": "Plateforme de streaming.",
-          "url": "https://www.twitch.tv/"
+          "url": "https://www.twitch.tv/",
+          "description": "Plateforme de streaming."
         },
         {
           "nom": "Spotify Web",
-          "description": "Plateforme de streaming musique.",
-          "url": "https://open.spotify.com/"
+          "url": "https://open.spotify.com/",
+          "description": "Plateforme de streaming musique."
         },
         {
           "nom": "Soundcloud",
-          "description": "Plateforme de streaming musique.",
-          "url": "https://soundcloud.com/"
+          "url": "https://soundcloud.com/",
+          "description": "Plateforme de streaming musique."
         },
         {
           "nom": "Netflix",
-          "description": "Plateforme de films & séries.",
-          "url": "https://www.netflix.com/"
+          "url": "https://www.netflix.com/",
+          "description": "Plateforme de films & séries."
         },
         {
           "nom": "9Gag",
-          "description": "GIFS, vidéos et images diverses.",
-          "url": "https://9gag.com/"
+          "url": "https://9gag.com/",
+          "description": "GIFS, vidéos et images diverses."
         },
         {
           "nom": "Wallhaven",
-          "description": "Fond d'écrans.",
-          "url": "https://alpha.wallhaven.cc/"
+          "url": "https://alpha.wallhaven.cc/",
+          "description": "Fond d'écrans."
         }
       ]
     },
@@ -142,13 +142,13 @@
       "liens": [
         {
           "nom": "Twitter",
-          "description": "Twits.",
-          "url": "https://www.twitter.com/"
+          "url": "https://www.twitter.com/",
+          "description": "Twits."
         },
         {
           "nom": "Reddit",
-          "description": "Réseau social.",
-          "url": "https://www.reddit.com/"
+          "url": "https://www.reddit.com/",
+          "description": "Réseau social."
         }
       ]
     },
@@ -157,23 +157,23 @@
       "liens": [
         {
           "nom": "Amazon",
-          "description": "Tout & n'importe quoi.",
-          "url": "https://www.amazon.fr/"
+          "url": "https://www.amazon.fr/",
+          "description": "Tout & n'importe quoi."
         },
         {
           "nom": "AliExpress",
-          "description": "Boutique asiatique.",
-          "url": "https://fr.aliexpress.com/"
+          "url": "https://fr.aliexpress.com/",
+          "description": "Boutique asiatique."
         },
         {
           "nom": "Humble Bundle",
-          "description": "Boutique & bundles de jeux vidéos (dématérialisé).",
-          "url": "https://www.humblebundle.com/"
+          "url": "https://www.humblebundle.com/",
+          "description": "Boutique & bundles de jeux vidéos (dématérialisé)."
         },
         {
           "nom": "Instant-Gaming",
-          "description": "Boutique de jeux vidéos (dématérialisé).",
-          "url": "https://www.instant-gaming.com/fr/"
+          "url": "https://www.instant-gaming.com/fr/",
+          "description": "Boutique de jeux vidéos (dématérialisé)."
         }
       ]
     },
@@ -182,33 +182,33 @@
       "liens": [
         {
           "nom": "Steam Store",
-          "description": "Page de la boutique.",
-          "url": "https://store.steampowered.com/"
+          "url": "https://store.steampowered.com/",
+          "description": "Page de la boutique."
         },
         {
           "nom": "Steam Community",
-          "description": "Page communauté.",
-          "url": "https://steamcommunity.com/"
+          "url": "https://steamcommunity.com/",
+          "description": "Page communauté."
         },
         {
           "nom": "Steam Charts",
-          "description": "Historique et stats du nombre de joueurs sur Steam.",
-          "url": "http://steamcharts.com/"
+          "url": "http://steamcharts.com/",
+          "description": "Historique et stats du nombre de joueurs sur Steam."
         },
         {
           "nom": "SteamSpy",
-          "description": "Stats et infos pour Steam.",
-          "url": "https://steamspy.com/"
+          "url": "https://steamspy.com/",
+          "description": "Stats et infos pour Steam."
         },
         {
           "nom": "SteamDB",
-          "description": "Stats et infos pour Steam.",
-          "url": "https://steamdb.info/"
+          "url": "https://steamdb.info/",
+          "description": "Stats et infos pour Steam."
         },
         {
           "nom": "SteamPrices",
-          "description": "Historique des prix des jeux vidéos sur Steam.",
-          "url": "https://www.steamprices.com/fr/"
+          "url": "https://www.steamprices.com/fr/",
+          "description": "Historique des prix des jeux vidéos sur Steam."
         }
       ]
     }
@@ -218,6 +218,12 @@
       "numero": 7,
       "debut": "2017-09-01",
       "fin": "2018-01-15",
+      "liens": [
+        {
+          "nom": "Test (pas de lien)",
+          "url": "#"
+        }
+      ],
       "ue": [
         {
           "nom": "Sémantique des langages de programmation et compilation",
@@ -306,8 +312,7 @@
         },
         {
           "nom": "Anglais scientifique écrit",
-          "type": "Général",
-          "liens": []
+          "type": "Général"
         },
         {
           "nom": "Projet compilation",
@@ -337,17 +342,11 @@
             }
           ]
         }
-      ],
-      "info": "",
-      "liens": [
-        {
-          "nom": "Test (pas de lien)",
-          "url": "#"
-        }
       ]
     },
     {
       "numero": 8,
+      "info": "**Mot de passe Moodle DevOps**: `DEVOPS_2018`\r\n\r\n**Login CS**: `M1Info_M2GI_2018`, `Quantum_or_not_quantum?`",
       "debut": "2018-01-15",
       "fin": "2018-06-01",
       "ue": [
@@ -401,7 +400,6 @@
         },
         {
           "nom": "Cryptology & coding",
-          "initiales": "",
           "type": "Sécurité",
           "liens": [
             {
@@ -412,7 +410,6 @@
         },
         {
           "nom": "Complexité",
-          "initiales": "",
           "type": "Général",
           "liens": [
             {
@@ -447,9 +444,7 @@
             }
           ]
         }
-      ],
-      "info": "**Mot de passe Moodle DevOps**: `DEVOPS_2018`\r\n\r\n**Login CS**: `M1Info_M2GI_2018`, `Quantum_or_not_quantum?`",
-      "liens": []
+      ]
     },
     {
       "numero": 9,
@@ -516,16 +511,13 @@
             }
           ]
         }
-      ],
-      "liens": []
+      ]
     },
     {
       "numero": 10,
-      "debut": "2019-01-15",
-      "fin": "2019-08-30",
-      "ue": [],
       "info": "Semestre de stage. Aucun cours, TD ou TP ne sera proposé.",
-      "liens": []
+      "debut": "2019-01-15",
+      "fin": "2019-08-30"
     }
   ]
 }

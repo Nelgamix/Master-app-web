@@ -13,7 +13,7 @@ export class UE {
       e.nom,
       e.initiales,
       e.type,
-      e.liens.map(Lien.construct)
+      e.liens ? e.liens.map(Lien.construct) : []
     );
   }
 

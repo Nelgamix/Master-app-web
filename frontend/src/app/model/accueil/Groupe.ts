@@ -9,7 +9,7 @@ export class Groupe {
   static construct(e: IGroupe) {
     return new Groupe(
       e.nom,
-      e.liens.map(Lien.construct)
+      e.liens ? e.liens.map(Lien.construct) : []
     );
   }
 
