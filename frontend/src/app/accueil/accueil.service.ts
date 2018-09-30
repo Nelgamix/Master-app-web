@@ -53,17 +53,13 @@ export class AccueilService {
   }
 
   get currentSemestre(): Semestre {
-    console.log('exec');
     const n = moment();
 
     for (const s of this.accueilData.semestres) {
       if (n.isBetween(s.debut, s.fin)) {
-        console.log('s', s);
         return s;
       }
     }
-
-    console.log('null');
 
     return null;
   }
@@ -77,71 +73,5 @@ export class AccueilService {
     this.reorderSemestres();
 
     return this.accueilData;
-
-    /*const semestres: Semestre[] = [];
-    const liensPrimaires: Lien[] = [];
-    const liensSecondaires: Lien[] = [];
-    const liensPlus: Groupe[] = [];
-    const groupesSecondaires: Groupe[] = [];
-
-    for (const g of data['primaire']) { // pour chaque groupe
-      for (const l of g) { // pour chaque lien
-        liensPrimaires.push(this.parseLien(l));
-      }
-    }
-
-    let gtmp;
-    for (const l of data['secondaire']) { // pour chaque lien
-      if (l['liens'] != null) {
-        gtmp = new Groupe(l['nom']);
-        for (const ll of l['liens']) {
-          gtmp.ajoutLien(this.parseLien(ll));
-        }
-
-        groupesSecondaires.push(gtmp);
-      } else {
-        liensSecondaires.push(this.parseLien(l));
-      }
-    }
-
-    for (const g of data['liens-plus']) {
-      gtmp = new Groupe(g['nom']);
-      for (const l of g['liens']) {
-        gtmp.ajoutLien(new Lien(l['nom'], l['description'], l['lien']));
-      }
-      liensPlus.push(gtmp);
-    }
-
-    let stmp, uetmp, ttmp;
-    for (const s of data['semestres']) {
-      stmp = new Semestre(s['numero'], s['infos']);
-      for (const ue of s['ue']) {
-        for (const t in UEType) {
-          if (isNaN(Number(t)) && UEType[t] === ue['type']) {
-            ttmp = UEType[t];
-            break;
-          }
-        }
-
-        uetmp = new UE(ue['nom'], ue['initiales'], ttmp);
-        for (const l of ue['liens']) {
-          uetmp.ajoutLien(this.parseLien(l));
-        }
-
-        stmp.ajoutUe(uetmp);
-      }
-
-      for (const l of s['liens']) {
-        stmp.ajoutLien(this.parseLien(l));
-      }
-
-      semestres.push(stmp);
-    }
-
-    this._semestres = semestres;
-    this._liensPrimaires = liensPrimaires;
-    this._liensSecondaires = liensSecondaires;
-    this._liensPlus = liensPlus;
-    this._groupesSecondaires = groupesSecondaires;*/
   }
 }

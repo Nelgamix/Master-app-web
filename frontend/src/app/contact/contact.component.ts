@@ -54,7 +54,6 @@ export class ContactComponent implements OnInit {
     }
 
     if (this.message.length > 5) { // eventuellement escape?
-      console.log(btoa(this.message));
       hp = hp.set('message', this.b64EncodeUnicode(this.message));
     } else {
       return;
@@ -67,7 +66,6 @@ export class ContactComponent implements OnInit {
       } else {
         this.erreur = true;
       }
-      console.log(data['recu']);
     });
   }
 }

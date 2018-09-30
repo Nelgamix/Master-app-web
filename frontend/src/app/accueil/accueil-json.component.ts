@@ -8,6 +8,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {AccueilData} from '../model/accueil/AccueilData';
 import {LZStringService} from 'ng-lz-string';
 import {JsonPipe} from '@angular/common';
+import {UEType} from '../model/accueil/interfaces';
 
 @Component({
   selector: 'app-accueil-json',
@@ -17,6 +18,9 @@ export class AccueilJsonComponent implements OnInit {
   data: any;
   dataJson: any;
   accueilData: AccueilData;
+
+  UEType = UEType;
+  keys = Object.keys;
 
   constructor(private accueilService: AccueilService,
               private lz: LZStringService,
