@@ -22,6 +22,12 @@ export class AccueilJsonComponent implements OnInit {
   accueilData: AccueilData;
   error: string;
 
+  visibilityOnLiensPrimaires = true;
+  visibilityOnLiensSecondaires = true;
+  visibilityOnGroupesSecondaires = false;
+  visibilityOnSemestres = false;
+  visibilityOnLiensPlus = false;
+
   UEType = UEType;
   keys = Object.keys;
 
@@ -62,6 +68,14 @@ export class AccueilJsonComponent implements OnInit {
     this.accueilData.groupesSecondaires.push(new Groupe());
   }
 
+  addLienPlus() {
+    this.accueilData.liensPlus.push(new Groupe());
+  }
+
+  addLienToLienPlus(lienPlus: Groupe) {
+    lienPlus.liens.push(new Lien());
+  }
+
   addLienToGroupe(groupe: Groupe) {
     groupe.liens.push(new Lien());
   }
@@ -92,6 +106,14 @@ export class AccueilJsonComponent implements OnInit {
 
   deleteGroupeSecondaire(groupe: Groupe) {
     this.delete(this.accueilData.groupesSecondaires, groupe);
+  }
+
+  deleteLienPlus(lienPlus: Groupe) {
+    this.delete(this.accueilData.liensPlus, lienPlus);
+  }
+
+  deleteLienFromLienPlus(lienPlus: Groupe, lien: Lien) {
+    this.delete(lienPlus.liens, lien);
   }
 
   deleteLienFromGroupe(groupe: Groupe, lien: Lien) {
