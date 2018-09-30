@@ -33,6 +33,7 @@
     "core-js": "^2.5.7",
     "marked": "^0.5.0",
     "moment": "^2.22.2",
+    "ng-lz-string": "^1.5.3",
     "ngx-color-picker": "^6.7.0",
     "ngx-contextmenu": "^5.0.3",
     "ngx-cookie-service": "^1.0.10",

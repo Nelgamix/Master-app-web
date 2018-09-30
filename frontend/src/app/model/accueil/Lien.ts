@@ -1,3 +1,6 @@
+import {ILien} from './interfaces';
+import {Utils} from '../../Utils';
+
 export class Lien {
   // Validate URL (@diegoperini)
   static readonly VALID_URL = new RegExp(
@@ -37,9 +40,17 @@ export class Lien {
     '$', 'i'
   );
 
-  private nom: string;
-  private description: string;
-  private url: string;
+  private _nom: string;
+  private _description: string;
+  private _url: string;
+
+  static construct(e: ILien) {
+    return new Lien(
+      e.nom,
+      e.description,
+      e.url
+    );
+  }
 
   /**
    * Retourne un boolean indiquant si le lien est bien valide
@@ -49,24 +60,48 @@ export class Lien {
     return Lien.VALID_URL.test(url);
   }
 
-  constructor(nom: string, description: string = '', url: string = '') {
-    this.nom = nom;
-    this.description = description;
+  constructor(nom: string = '',
+              description: string = '',
+              url: string = '') {
+    this._nom = nom;
+    this._description = description;
 
     if (url === '' || url === '#' || Lien.checkUrl(url)) {
-      this.url = url;
+      this._url = url;
     } else {
       throw new Error('Lien invalide: ' + url);
     }
   }
 
-  public getNom(): string {
-    return this.nom;
+  get nom(): string {
+    return this._nom;
   }
-  public getDescription(): string {
-    return this.description;
+
+  get description(): string {
+    return this._description;
   }
-  public getUrl(): string {
-    return this.url;
+
+  get url(): string {
+    return this._url;
+  }
+
+  set nom(value: string) {
+    this._nom = value;
+  }
+
+  set description(value: string) {
+    this._description = value;
+  }
+
+  set url(value: string) {
+    this._url = value;
+  }
+
+  format() {
+    return Utils.bundleMinimalObject({
+      nom: this.nom,
+      url: this.url,
+      description: this.description
+    });
   }
 }

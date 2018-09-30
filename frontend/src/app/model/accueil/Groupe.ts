@@ -1,24 +1,40 @@
 import {Lien} from './Lien';
+import {IGroupe} from './interfaces';
+import {Utils} from '../../Utils';
 
 export class Groupe {
-  private nom: string;
-  private liens: Lien[];
+  private _nom: string;
+  private readonly _liens: Lien[];
 
-  constructor(nom: string) {
-    this.nom = nom;
-    this.liens = [];
+  static construct(e: IGroupe) {
+    return new Groupe(
+      e.nom,
+      e.liens.map(Lien.construct)
+    );
   }
 
-  public getNom(): string {
-    return this.nom;
+  constructor(nom: string = '',
+              liens: Lien[] = []) {
+    this._nom = nom;
+    this._liens = liens;
   }
 
-  public getLiens(): Lien[] {
-    return this.liens;
+  get nom(): string {
+    return this._nom;
   }
 
-  ajoutLien(lien: Lien): boolean {
-    const l = this.liens.length;
-    return l + 1 === this.liens.push(lien);
+  get liens(): Lien[] {
+    return this._liens;
+  }
+
+  set nom(value: string) {
+    this._nom = value;
+  }
+
+  format() {
+    return Utils.bundleMinimalObject({
+      nom: this.nom,
+      liens: this.liens.map(e => e.format())
+    });
   }
 }

@@ -1,4 +1,4 @@
-<ng-container [ngSwitch]="vue">
+<ng-container [ngSwitch]="vue" *ngIf="accueilData">
   <div *ngSwitchCase="VueType.ACCUEIL">
     <div class="row section">
       <div class="col">
@@ -8,31 +8,31 @@
           <span class="badge badge-success float-right" id="liens-plus" (click)="openLiensPlus()">&#8226;&#8226;&#8226;</span>
         </h4>
         <div class="row">
-          <div class="col-lg-3 col-md-6 col-12 mb-2" *ngFor="let l of liensPrimaires">
-            <a class="quick-link" href="{{l.getUrl()}}">
+          <div class="col-lg-3 col-md-6 col-12 mb-2" *ngFor="let l of accueilData.liensPrimaires">
+            <a class="quick-link" href="{{l.url}}">
               <div>
                 <h5>
-                  <b>{{l.getNom()}}</b>
+                  <b>{{l.nom}}</b>
                 </h5>
               </div>
               <div>
-                {{l.getDescription()}}
+                {{l.description}}
               </div>
             </a>
           </div>
         </div>
         <!--Liens secondaires-->
         <div class="row">
-          <div class="col-lg-2 col-md-4 col-sm-12 mb-2" *ngFor="let g of groupesSecondaires">
+          <div class="col-lg-2 col-md-4 col-sm-12 mb-2" *ngFor="let g of accueilData.groupesSecondaires">
             <div class="dropdown" ngbDropdown>
-              <div class="dropdown-toggle quick-link" style="border-top-color: green" ngbDropdownToggle><b>{{g.getNom()}}</b></div>
+              <div class="dropdown-toggle quick-link" style="border-top-color: green" ngbDropdownToggle><b>{{g.nom}}</b></div>
               <div class="dropdown-menu" ngbDropdownMenu>
-                <a *ngFor="let o of g.getLiens()" href="{{o.getUrl()}}" class="dropdown-item">{{o.getNom()}}</a>
+                <a *ngFor="let o of g.liens" href="{{o.url}}" class="dropdown-item">{{o.nom}}</a>
               </div>
             </div>
           </div>
-          <div class="col-lg-2 col-md-4 col-sm-12 mb-2" *ngFor="let l of liensSecondaires">
-            <a class="quick-link" style="border-top-color: #0077ff" href="{{l.getUrl()}}"><b>{{l.getNom()}}</b></a>
+          <div class="col-lg-2 col-md-4 col-sm-12 mb-2" *ngFor="let l of accueilData.liensSecondaires">
+            <a class="quick-link" style="border-top-color: #0077ff" href="{{l.url}}"><b>{{l.nom}}</b></a>
           </div>
         </div>
       </div>
@@ -46,29 +46,29 @@
         </h4>
         <div class="row">
           <div class="col">
-            <ngb-tabset #tab="ngbTabset" justify="fill" type="pills">
-              <ngb-tab id="tab{{s.getNumero()}}" title="Semestre {{s.getNumero()}}" *ngFor="let s of semestres">
+            <ngb-tabset #tab="ngbTabset" justify="fill" type="pills" [activeId]="tabActiveId">
+              <ngb-tab id="tab{{s.numero}}" title="Semestre {{s.numero}}" *ngFor="let s of accueilData.semestres">
                 <ng-template ngbTabContent>
                   <div class="row mt-2">
-                    <div class="col-lg-4 col-md-6 col-12 mb-2" *ngFor="let ue of s.getUe()">
+                    <div class="col-lg-4 col-md-6 col-12 mb-2" *ngFor="let ue of s.ue">
                       <div class="ue">
                         <div class="row">
                           <div class="col text-center text-truncate initiales-nom">
-                            <span *ngIf="ue.getInitiales().length > 0" class="initiales">[{{ue.getInitiales()}}] </span><span class="nom">{{ue.getNom()}}</span>
+                            <span *ngIf="ue.initiales.length > 0" class="initiales">[{{ue.initiales}}] </span><span class="nom">{{ue.nom}}</span>
                           </div>
                         </div>
                         <div class="row">
                           <div class="col text-center">
-                            <span class="type">{{ue.getTypeS()}}</span>
+                            <span class="type">{{ue.typeString}}</span>
                           </div>
                         </div>
                         <div class="row">
                           <div class="col text-center">
-                            <a class="btn btn-sm btn-warning m-1" href="http://www.google.fr/search?q={{ue.getNom()}}">
+                            <a class="btn btn-sm btn-warning m-1" href="http://www.google.fr/search?q={{ue.nom}}">
                               <img src="assets/icons/et_filtre.png" alt="Recherche sur google" class="d-inline-block" style="vertical-align: sub;">
                             </a>
                             <div class="btn-group">
-                              <a href="{{l.getUrl()}}" class="btn btn-sm btn-info" *ngFor="let l of ue.getLiens()">{{l.getNom()}}</a>
+                              <a href="{{l.url}}" class="btn btn-sm btn-info" *ngFor="let l of ue.liens">{{l.nom}}</a>
                             </div>
                           </div>
                         </div>
@@ -78,7 +78,7 @@
                   <div class="liensAdd mt-2">
                     <h5>Liens additionnels &amp; infos</h5>
                     <button class="btn btn-dark btn-sm w-100" type="button" (click)="onClickOpenModal(s)">
-                      Voir les infos &amp; liens du semestre {{s.getNumero()}}
+                      Voir les infos &amp; liens du semestre {{s.numero}}
                     </button>
                   </div>
                 </ng-template>
@@ -102,10 +102,10 @@
         </div>
       </div>
     </div>
-    <div class="row section" *ngFor="let g of liensPlus">
+    <div class="row section" *ngFor="let g of accueilData.liensPlus">
       <div class="col">
-        <h3>{{g.getNom()}}</h3>
-        <div class="row mb-2 mb-lg-0" *ngFor="let l of g.getLiens()">
+        <h3>{{g.nom}}</h3>
+        <div class="row mb-2 mb-lg-0" *ngFor="let l of g.liens">
           <div class="col-lg-3 col-md-4 col-12">
             <h5>
               <img
@@ -115,14 +115,14 @@
                 height="24"
                 onError="this.src = 'assets/liens_plus_icons/default.svg'"
                 style="margin-right: 8px">
-              {{l.getNom()}}
+              {{l.nom}}
             </h5>
           </div>
           <div class="col-lg-5 col-md-8 col-12">
-            {{l.getDescription()}}
+            {{l.description}}
           </div>
           <div class="col-lg-4 col-md-12 col-12">
-            <a href="{{l.getUrl()}}">{{l.getUrl()}}</a>
+            <a href="{{l.url}}">{{l.url}}</a>
           </div>
         </div>
       </div>

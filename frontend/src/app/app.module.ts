@@ -1,7 +1,7 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NgModule} from '@angular/core';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {NgbDateAdapter, NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {HttpClientModule} from '@angular/common/http';
 import {MomentModule} from 'angular2-moment';
 import {FormsModule} from '@angular/forms';
@@ -57,12 +57,16 @@ import {EnumKeysPipe} from './pipes/enumKeys.pipe';
 import {ModalEtCoursDetailsComponent} from './modal/et-cours-details.component';
 import {MarkdownModule} from 'ngx-markdown';
 import {NgxJsonViewerModule} from 'ngx-json-viewer';
+import {AccueilJsonComponent} from './accueil/accueil-json.component';
+import {LZStringModule, LZStringService} from 'ng-lz-string';
+import {MomentDateAdapter} from './moment-date-adapter';
 
 @NgModule({
   declarations: [
     AppComponent,
     MessageComponent,
     AccueilComponent,
+    AccueilJsonComponent,
     EtComponent,
     EtDetailsComponent,
     EtInfoComponent,
@@ -108,14 +112,17 @@ import {NgxJsonViewerModule} from 'ngx-json-viewer';
     }),
     HttpClientModule,
     MomentModule,
-    NgxChartsModule
+    NgxChartsModule,
+    LZStringModule
   ],
   providers: [
     EmploiTempsService,
     DatesService,
     NotesService,
     MessageService,
-    CookieService
+    CookieService,
+    LZStringService,
+    [{provide: NgbDateAdapter, useClass: MomentDateAdapter}]
   ],
   bootstrap: [AppComponent],
   entryComponents: [

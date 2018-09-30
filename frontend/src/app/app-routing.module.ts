@@ -5,9 +5,11 @@ import {EtComponent} from './et/et.component';
 import {AccueilComponent} from './accueil/accueil.component';
 import {RouterModule, Routes} from '@angular/router';
 import {NgModule} from '@angular/core';
+import {AccueilJsonComponent} from './accueil/accueil-json.component';
 
 const appRoutes: Routes = [
   {path: 'accueil',         component: AccueilComponent},
+  {path: 'accueil-json',    component: AccueilJsonComponent},
   {path: 'et',              component: EtComponent},
   {path: 'et/:year/:week',  component: EtComponent},
   {path: 'evenements',      component: EvenementsComponent},

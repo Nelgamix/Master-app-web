@@ -1,29 +1,27 @@
 {
-  "primaire": [
-    [
-      {
-        "nom": "ADE M2GI Classique",
-        "description": "Emploi du temps.",
-        "url": "https://ade-sts.grenet.fr/direct/?resources=9888&projectId=7&data=1d04874d83cdeb5385d65d6b866a55a8d69dd3eac92a4c3b251eabfaebcfeeece1ad7e9965f1d08ec86f839c03d7c55aedc5434d4a4b357a3de531f9a55c6ba30d0c3641b6fe233b32a63d42d29c99af67c5f6923b60b09b60ebae19a89fba7d"
-      },
-      {
-        "nom": "ADE M2GI Alternance",
-        "description": "Emploi du temps.",
-        "url": "https://ade-sts.grenet.fr/direct/?resources=9830&projectId=7&data=1d04874d83cdeb5385d65d6b866a55a8d69dd3eac92a4c3b251eabfaebcfeeece1ad7e9965f1d08ec86f839c03d7c55aedc5434d4a4b357a3de531f9a55c6ba30d0c3641b6fe233b32a63d42d29c99af67c5f6923b60b09b60ebae19a89fba7d"
-      },
-      {
-        "nom": "Zimbra UGA",
-        "description": "Webmail de l'UGA.",
-        "url": "https://webmail.etu.univ-grenoble-alpes.fr"
-      },
-      {
-        "nom": "Moodle",
-        "description": "Moodle de l'IM²AG.",
-        "url": "https://im2ag-moodle.e.ujf-grenoble.fr/course/index.php?categoryid=34"
-      }
-    ]
+  "liensPrimaires": [
+    {
+      "nom": "ADE M2GI Classique",
+      "description": "Emploi du temps.",
+      "url": "https://ade-sts.grenet.fr/direct/?resources=9888&projectId=7&data=1d04874d83cdeb5385d65d6b866a55a8d69dd3eac92a4c3b251eabfaebcfeeece1ad7e9965f1d08ec86f839c03d7c55aedc5434d4a4b357a3de531f9a55c6ba30d0c3641b6fe233b32a63d42d29c99af67c5f6923b60b09b60ebae19a89fba7d"
+    },
+    {
+      "nom": "ADE M2GI Alternance",
+      "description": "Emploi du temps.",
+      "url": "https://ade-sts.grenet.fr/direct/?resources=9830&projectId=7&data=1d04874d83cdeb5385d65d6b866a55a8d69dd3eac92a4c3b251eabfaebcfeeece1ad7e9965f1d08ec86f839c03d7c55aedc5434d4a4b357a3de531f9a55c6ba30d0c3641b6fe233b32a63d42d29c99af67c5f6923b60b09b60ebae19a89fba7d"
+    },
+    {
+      "nom": "Zimbra UGA",
+      "description": "Webmail de l'UGA.",
+      "url": "https://webmail.etu.univ-grenoble-alpes.fr"
+    },
+    {
+      "nom": "Moodle",
+      "description": "Moodle de l'IM²AG.",
+      "url": "https://im2ag-moodle.e.ujf-grenoble.fr/course/index.php?categoryid=34"
+    }
   ],
-  "secondaire": [
+  "groupesSecondaires": [
     {
       "nom": "UGA",
       "liens": [
@@ -44,7 +42,9 @@
           "url": "http://formations.univ-grenoble-alpes.fr/fr/catalogue/master-XB/sciences-technologies-sante-STS/master-informatique-program-master-informatique/parcours-genie-informatique-classique-2e-annee-subprogram-genie-informatique-m2-classique.html"
         }
       ]
-    },
+    }
+  ],
+  "liensSecondaires": [
     {
       "nom": "GitHub",
       "url": "https://github.com/"
@@ -66,34 +66,34 @@
       "url": "https://www.gsmarena.com/"
     }
   ],
-  "liens-plus": [
+  "liensPlus": [
     {
       "nom": "Général",
       "liens": [
         {
           "nom": "Google Docs",
           "description": "Documents by Google.",
-          "lien": "https://www.google.fr/intl/fr/docs/about/"
+          "url": "https://www.google.fr/intl/fr/docs/about/"
         },
         {
           "nom": "Google Mail",
           "description": "Mails by Google.",
-          "lien": "https://www.google.com/gmail/"
+          "url": "https://www.google.com/gmail/"
         },
         {
           "nom": "ROMMA",
           "description": "Réseau d'Observation Météo du Massif Alpin.",
-          "lien": "http://romma.fr/"
+          "url": "http://romma.fr/"
         },
         {
           "nom": "Dealabs",
           "description": "Bon plans et codes promo.",
-          "lien": "https://www.dealabs.com/"
+          "url": "https://www.dealabs.com/"
         },
         {
           "nom": "Pastebin",
           "description": "Enregistrer du texte brut.",
-          "lien": "https://pastebin.com/"
+          "url": "https://pastebin.com/"
         }
       ]
     },
@@ -103,37 +103,37 @@
         {
           "nom": "YouTube",
           "description": "Plateforme de VOD.",
-          "lien": "https://www.youtube.com/"
+          "url": "https://www.youtube.com/"
         },
         {
           "nom": "Twitch",
           "description": "Plateforme de streaming.",
-          "lien": "https://www.twitch.tv/"
+          "url": "https://www.twitch.tv/"
         },
         {
           "nom": "Spotify Web",
           "description": "Plateforme de streaming musique.",
-          "lien": "https://open.spotify.com/"
+          "url": "https://open.spotify.com/"
         },
         {
           "nom": "Soundcloud",
           "description": "Plateforme de streaming musique.",
-          "lien": "https://soundcloud.com/"
+          "url": "https://soundcloud.com/"
         },
         {
           "nom": "Netflix",
           "description": "Plateforme de films & séries.",
-          "lien": "https://www.netflix.com/"
+          "url": "https://www.netflix.com/"
         },
         {
           "nom": "9Gag",
           "description": "GIFS, vidéos et images diverses.",
-          "lien": "https://9gag.com/"
+          "url": "https://9gag.com/"
         },
         {
           "nom": "Wallhaven",
           "description": "Fond d'écrans.",
-          "lien": "https://alpha.wallhaven.cc/"
+          "url": "https://alpha.wallhaven.cc/"
         }
       ]
     },
@@ -143,12 +143,12 @@
         {
           "nom": "Twitter",
           "description": "Twits.",
-          "lien": "https://www.twitter.com/"
+          "url": "https://www.twitter.com/"
         },
         {
           "nom": "Reddit",
           "description": "Réseau social.",
-          "lien": "https://www.reddit.com/"
+          "url": "https://www.reddit.com/"
         }
       ]
     },
@@ -158,22 +158,22 @@
         {
           "nom": "Amazon",
           "description": "Tout & n'importe quoi.",
-          "lien": "https://www.amazon.fr/"
+          "url": "https://www.amazon.fr/"
         },
         {
           "nom": "AliExpress",
           "description": "Boutique asiatique.",
-          "lien": "https://fr.aliexpress.com/"
+          "url": "https://fr.aliexpress.com/"
         },
         {
           "nom": "Humble Bundle",
           "description": "Boutique & bundles de jeux vidéos (dématérialisé).",
-          "lien": "https://www.humblebundle.com/"
+          "url": "https://www.humblebundle.com/"
         },
         {
           "nom": "Instant-Gaming",
           "description": "Boutique de jeux vidéos (dématérialisé).",
-          "lien": "https://www.instant-gaming.com/fr/"
+          "url": "https://www.instant-gaming.com/fr/"
         }
       ]
     },
@@ -183,32 +183,32 @@
         {
           "nom": "Steam Store",
           "description": "Page de la boutique.",
-          "lien": "https://store.steampowered.com/"
+          "url": "https://store.steampowered.com/"
         },
         {
           "nom": "Steam Community",
           "description": "Page communauté.",
-          "lien": "https://steamcommunity.com/"
+          "url": "https://steamcommunity.com/"
         },
         {
           "nom": "Steam Charts",
           "description": "Historique et stats du nombre de joueurs sur Steam.",
-          "lien": "http://steamcharts.com/"
+          "url": "http://steamcharts.com/"
         },
         {
           "nom": "SteamSpy",
           "description": "Stats et infos pour Steam.",
-          "lien": "https://steamspy.com/"
+          "url": "https://steamspy.com/"
         },
         {
           "nom": "SteamDB",
           "description": "Stats et infos pour Steam.",
-          "lien": "https://steamdb.info/"
+          "url": "https://steamdb.info/"
         },
         {
           "nom": "SteamPrices",
           "description": "Historique des prix des jeux vidéos sur Steam.",
-          "lien": "https://www.steamprices.com/fr/"
+          "url": "https://www.steamprices.com/fr/"
         }
       ]
     }
@@ -216,6 +216,8 @@
   "semestres": [
     {
       "numero": 7,
+      "debut": "2017-09-01",
+      "fin": "2018-01-15",
       "ue": [
         {
           "nom": "Sémantique des langages de programmation et compilation",
@@ -336,7 +338,7 @@
           ]
         }
       ],
-      "infos": "",
+      "info": "",
       "liens": [
         {
           "nom": "Test (pas de lien)",
@@ -346,6 +348,8 @@
     },
     {
       "numero": 8,
+      "debut": "2018-01-15",
+      "fin": "2018-06-01",
       "ue": [
         {
           "nom": "Sécurité des systèmes informatiques",
@@ -444,11 +448,13 @@
           ]
         }
       ],
-      "infos": "**Mot de passe Moodle DevOps**: `DEVOPS_2018`\r\n\r\n**Login CS**: `M1Info_M2GI_2018`, `Quantum_or_not_quantum?`",
+      "info": "**Mot de passe Moodle DevOps**: `DEVOPS_2018`\r\n\r\n**Login CS**: `M1Info_M2GI_2018`, `Quantum_or_not_quantum?`",
       "liens": []
     },
     {
       "numero": 9,
+      "debut": "2018-06-01",
+      "fin": "2019-01-15",
       "ue": [
         {
           "nom": "Systèmes et applications répartis",
@@ -511,13 +517,14 @@
           ]
         }
       ],
-      "infos": "",
       "liens": []
     },
     {
       "numero": 10,
+      "debut": "2019-01-15",
+      "fin": "2019-08-30",
       "ue": [],
-      "infos": "Semestre de stage. Aucun cours, TD ou TP ne sera proposé.",
+      "info": "Semestre de stage. Aucun cours, TD ou TP ne sera proposé.",
       "liens": []
     }
   ]

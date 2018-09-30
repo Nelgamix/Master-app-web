@@ -1,0 +1,195 @@
+<ng-container *ngIf="accueilData">
+  <h3 class="mt-1">Liens primaires</h3>
+  <div class="form-row mb-1" *ngFor="let l of accueilData.liensPrimaires">
+    <div class="col-4">
+      <input class="form-control font-weight-bold" type="text" [(ngModel)]="l.nom" placeholder="Nom du lien">
+    </div>
+    <div class="col">
+      <input class="form-control font-italic" type="url" [(ngModel)]="l.url" placeholder="URL du lien">
+    </div>
+    <div class="col-auto">
+      <button class="btn btn-danger" (click)="deleteLienPrimaire(l)">X</button>
+    </div>
+  </div>
+  <div>
+    <button class="btn btn-block btn-success" (click)="addLienPrimaire()">+ lien</button>
+  </div>
+
+  <h3 class="mt-3">Groupes de liens secondaires</h3>
+  <div class="mb-3" *ngFor="let g of accueilData.groupesSecondaires">
+    <div class="form-row">
+      <div class="col">
+        <div class="mb-2">
+          <input class="form-control font-weight-bold" type="text" [(ngModel)]="g.nom" placeholder="Nom du groupe de liens">
+        </div>
+
+        <div class="pl-2" style="border-left: 3px solid #666">
+          <div class="form-row mb-1" *ngFor="let l of g.liens">
+            <div class="col-4">
+              <input class="form-control" type="text" [(ngModel)]="l.nom" placeholder="Nom du lien">
+            </div>
+            <div class="col">
+              <input class="form-control font-italic" type="url" [(ngModel)]="l.url" placeholder="URL du lien">
+            </div>
+            <div class="col-auto">
+              <button class="btn btn-danger" (click)="deleteLienFromGroupe(g, l)">X</button>
+            </div>
+          </div>
+          <div>
+            <button class="btn btn-block btn-success" (click)="addLienToGroupe(g)">+ lien</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-auto">
+        <button class="btn btn-danger h-100" (click)="deleteGroupeSecondaire(g)">X</button>
+      </div>
+    </div>
+  </div>
+  <div>
+    <button class="btn btn-block btn-success" (click)="addGroupeSecondaire()">+ groupe</button>
+  </div>
+
+  <h3 class="mt-3">Liens secondaires</h3>
+  <div class="form-row mb-1" *ngFor="let l of accueilData.liensSecondaires">
+    <div class="col-4">
+      <input class="form-control font-weight-bold" type="text" [(ngModel)]="l.nom" placeholder="Nom du lien">
+    </div>
+    <div class="col">
+      <input class="form-control font-italic" type="url" [(ngModel)]="l.url" placeholder="URL du lien">
+    </div>
+    <div class="col-auto">
+      <button class="btn btn-danger" (click)="deleteLienSecondaire(l)">X</button>
+    </div>
+  </div>
+  <div>
+    <button class="btn btn-block btn-success" (click)="addLienSecondaire()">+ lien</button>
+  </div>
+
+  <h3 class="mt-3">Semestres</h3>
+  <div class="form-row mb-3" *ngFor="let s of accueilData.semestres">
+    <div class="col">
+      <div class="form-row mb-2">
+        <div class="col-2">
+          <input class="form-control font-weight-bold mb-1" type="number" [(ngModel)]="s.numero" placeholder="X">
+          <div class="input-group mb-1">
+            <input class="form-control" placeholder="YYYY-MM-DD" name="dpd" [(ngModel)]="s.debut" ngbDatepicker #dd="ngbDatepicker">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary calendar" (click)="dd.toggle()" type="button">
+                <img src="assets/icons/calendar.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
+              </button>
+            </div>
+          </div>
+          <div class="input-group mb-1">
+            <input class="form-control" placeholder="YYYY-MM-DD" name="dpf" [(ngModel)]="s.fin" ngbDatepicker #df="ngbDatepicker">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary calendar" (click)="df.toggle()" type="button">
+                <img src="assets/icons/calendar.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <textarea class="form-control" rows="5" [(ngModel)]="s.info" placeholder="Information du semestre"></textarea>
+        </div>
+      </div>
+
+      <div class="pl-2 mb-2" style="border-left: 3px solid #666">
+        <div class="form-row mb-1" *ngFor="let l of s.liens">
+          <div class="col-4">
+            <input class="form-control" type="text" [(ngModel)]="l.nom" placeholder="Nom du lien">
+          </div>
+          <div class="col">
+            <input class="form-control font-italic" type="url" [(ngModel)]="l.url" placeholder="URL du lien">
+          </div>
+          <div class="col-auto">
+            <button class="btn btn-danger" (click)="deleteLienFromSemestre(s, l)">X</button>
+          </div>
+        </div>
+        <div>
+          <button class="btn btn-block btn-success" (click)="addLienToSemestre(s)">+ lien</button>
+        </div>
+      </div>
+
+      <div class="pl-2" style="border-left: 3px solid #666">
+        <div class="pl-2" *ngFor="let u of s.ue" style="border-left: 3px solid #bb6f00">
+          <div class="form-row mb-2">
+            <div class="col">
+              <div class="form-row mb-1">
+                <div class="col-3">
+                  <input class="form-control" type="text" [(ngModel)]="u.initiales" placeholder="XXX">
+                </div>
+                <div class="col">
+                  <input class="form-control" type="text" [(ngModel)]="u.nom" placeholder="Nom de l'UE">
+                </div>
+                <div class="col-4">
+                  <input class="form-control" type="text" [(ngModel)]="u.type" placeholder="Type de l'UE">
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="col">
+                  <div class="pl-2" style="border-left: 3px solid #0069a5">
+                    <div class="form-row mb-1" *ngFor="let l of u.liens">
+                      <div class="col-4">
+                        <input class="form-control" type="text" [(ngModel)]="l.nom" placeholder="Nom du lien">
+                      </div>
+                      <div class="col">
+                        <input class="form-control font-italic" type="url" [(ngModel)]="l.url" placeholder="URL du lien">
+                      </div>
+                      <div class="col-auto">
+                        <button class="btn btn-danger" (click)="deleteLienFromUe(u, l)">X</button>
+                      </div>
+                    </div>
+                    <div>
+                      <button class="btn btn-block btn-success" (click)="addLienToUe(u)">+ lien</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-auto">
+              <button class="btn btn-danger h-100" (click)="deleteUeFromSemestre(s, u)">X</button>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <button class="btn btn-block btn-success" (click)="addUeToSemestre(s)">+ ue</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-auto">
+      <button class="btn btn-danger h-100" (click)="deleteSemestre(s)">X</button>
+    </div>
+  </div>
+  <div>
+    <button class="btn btn-block btn-success" (click)="addSemestre()">+ semestre</button>
+  </div>
+
+  <div class="mt-3">
+    <button class="btn btn-block btn-primary" (click)="openModal(content)">Voir les données formatées</button>
+  </div>
+</ng-container>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Données formatées</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <textarea class="form-control" rows="16" [ngModel]="dataJson" readonly #dataInput placeholder="Données formatées"></textarea>
+    <div class="row mt-2">
+      <div class="col">
+        <button class="btn btn-primary btn-block" (click)="copyData(dataInput)">Copier le contenu</button>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Fermer</button>
+  </div>
+</ng-template>

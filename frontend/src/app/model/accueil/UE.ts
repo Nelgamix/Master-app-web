@@ -1,41 +1,70 @@
-import {UeType} from './UEType';
 import {Lien} from './Lien';
+import {IUE, UEType} from './interfaces';
+import {Utils} from '../../Utils';
 
 export class UE {
-  private initiales: string;
-  private nom: string;
-  private type: UeType;
-  private liens: Lien[];
+  private _initiales: string;
+  private _nom: string;
+  private _type: UEType;
+  private readonly _liens: Lien[];
 
-  constructor(nom: string, initiales: string = '', type: UeType = UeType.GENERAL) {
-    this.liens = [];
-    this.nom = nom;
-    this.initiales = initiales;
-    this.type = type;
+  static construct(e: IUE) {
+    return new UE(
+      e.nom,
+      e.initiales,
+      e.type,
+      e.liens.map(Lien.construct)
+    );
   }
 
-  public getNom(): string {
-    return this.nom;
+  constructor(nom: string = '',
+              initiales: string = '',
+              type: UEType = UEType.GENERAL,
+              liens: Lien[] = []) {
+    this._liens = liens;
+    this._nom = nom;
+    this._initiales = initiales;
+    this._type = type;
   }
 
-  public getInitiales(): string {
-    return this.initiales;
+  get initiales(): string {
+    return this._initiales;
   }
 
-  public getType(): UeType {
-    return this.type;
+  get nom(): string {
+    return this._nom;
   }
 
-  public getTypeS(): string {
-    return this.type.toString();
+  get type(): UEType {
+    return this._type;
   }
 
-  public getLiens(): Lien[] {
-    return this.liens;
+  get typeString(): string {
+    return this._type.toString();
   }
 
-  public ajoutLien(lien: Lien): boolean {
-    const l = this.liens.length;
-    return l + 1 === this.liens.push(lien);
+  get liens(): Lien[] {
+    return this._liens;
+  }
+
+  set initiales(value: string) {
+    this._initiales = value;
+  }
+
+  set nom(value: string) {
+    this._nom = value;
+  }
+
+  set type(value: UEType) {
+    this._type = value;
+  }
+
+  format() {
+    return Utils.bundleMinimalObject({
+      nom: this.nom,
+      initiales: this.initiales,
+      type: this.typeString,
+      liens: this.liens.map(e => e.format())
+    });
   }
 }
