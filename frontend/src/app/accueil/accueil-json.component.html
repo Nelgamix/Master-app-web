@@ -1,3 +1,13 @@
+<div class="btn-group">
+  <button class="btn btn-danger" (click)="deleteAll()">Tout supprimer</button>
+  <button class="btn btn-warning" (click)="loadData()">Charger depuis le serveur</button>
+  <button class="btn btn-primary" (click)="openModalInput(loadFromString)">Charger depuis une chaîne de caractère</button>
+</div>
+
+<div class="alert alert-danger mt-2" *ngIf="error">
+  {{error}}
+</div>
+
 <ng-container *ngIf="accueilData">
   <h3 class="mt-1">Liens primaires</h3>
   <div class="form-row mb-1" *ngFor="let l of accueilData.liensPrimaires">
@@ -172,26 +182,42 @@
   </div>
 
   <div class="mt-3">
-    <button class="btn btn-block btn-primary" (click)="openModal(content)">Voir les données formatées</button>
+    <button class="btn btn-block btn-primary" (click)="openModalOutput(formattedData)">Voir les données formatées</button>
   </div>
 </ng-container>
 
-<ng-template #content let-modal>
+<ng-template #formattedData let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Données formatées</h4>
+    <h4 class="modal-title">Données formatées</h4>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
-    <textarea class="form-control" rows="16" [ngModel]="dataJson" readonly #dataInput placeholder="Données formatées"></textarea>
+    <textarea class="form-control" rows="16" [ngModel]="dataOutputJson" readonly #dataOutput placeholder="Données formatées"></textarea>
     <div class="row mt-2">
       <div class="col">
-        <button class="btn btn-primary btn-block" (click)="copyData(dataInput)">Copier le contenu</button>
+        <button class="btn btn-primary btn-block" (click)="copyData(dataOutput)">Copier le contenu</button>
       </div>
     </div>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Fermer</button>
+  </div>
+</ng-template>
+
+<ng-template #loadFromString let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Charger données</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <textarea class="form-control" rows="16" [(ngModel)]="dataInputJson" placeholder="Données formatées"></textarea>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="modal.close(dataInputJson)">Charger</button>
+    <button type="button" class="btn btn-outline-dark" (click)="modal.dismiss()">Fermer</button>
   </div>
 </ng-template>

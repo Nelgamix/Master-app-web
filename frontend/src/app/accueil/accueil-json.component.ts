@@ -16,8 +16,10 @@ import {UEType} from '../model/accueil/interfaces';
 })
 export class AccueilJsonComponent implements OnInit {
   data: any;
-  dataJson: any;
+  dataOutputJson: any;
+  dataInputJson: any;
   accueilData: AccueilData;
+  error: string;
 
   UEType = UEType;
   keys = Object.keys;
@@ -27,6 +29,10 @@ export class AccueilJsonComponent implements OnInit {
               private modalService: NgbModal) {}
 
   ngOnInit() {
+    this.loadData();
+  }
+
+  loadData() {
     this.accueilService.getAccueilData('assets/data.json').subscribe(data => {
       this.accueilData = data;
     });
@@ -96,10 +102,31 @@ export class AccueilJsonComponent implements OnInit {
     this.delete(this.accueilData.semestres, semestre);
   }
 
-  openModal(content): void {
-    this.dataJson = new JsonPipe().transform(this.accueilService.formatData());
-    this.data = this.lz.compress(this.dataJson);
+  deleteAll() {
+    const a = confirm('Are you sure you want to discard this data?');
+    if (a) {
+      this.accueilData = new AccueilData();
+    }
+  }
+
+  openModalOutput(content): void {
+    this.dataOutputJson = new JsonPipe().transform(this.accueilService.formatData());
+    this.data = this.lz.compress(this.dataOutputJson);
     this.modalService.open(content, {size: 'lg'});
+  }
+
+  openModalInput(content): void {
+    const ref = this.modalService.open(content, {size: 'lg'});
+    ref.result.then((d) => {
+      try {
+        const jd = JSON.parse(d);
+        this.accueilData = this.accueilService.loadAccueilData(jd);
+        this.error = null;
+      } catch (e) {
+        this.error = 'Not valid JSON';
+        console.error('Not valid JSON');
+      }
+    }, () => {});
   }
 
   copyData(input) {

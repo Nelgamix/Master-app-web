@@ -24,6 +24,10 @@ export class AccueilService {
     );
   }
 
+  loadAccueilData(data: any): AccueilData {
+    return this.parseData(data);
+  }
+
   get semestres(): Semestre[] {
     return this.accueilData.semestres;
   }
