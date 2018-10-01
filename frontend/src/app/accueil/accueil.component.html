@@ -29,14 +29,14 @@
         <div class="row">
           <div class="col-lg-2 col-md-4 col-sm-12 mb-2" *ngFor="let g of accueilData.groupesSecondaires">
             <div class="dropdown" ngbDropdown>
-              <div class="dropdown-toggle quick-link" style="border-top-color: green" ngbDropdownToggle><b>{{g.nom}}</b></div>
+              <div class="dropdown-toggle quick-link quick-link-light quick-group" ngbDropdownToggle><b>{{g.nom}}</b></div>
               <div class="dropdown-menu" ngbDropdownMenu>
                 <a *ngFor="let o of g.liens" href="{{o.url}}" class="dropdown-item">{{o.nom}}</a>
               </div>
             </div>
           </div>
           <div class="col-lg-2 col-md-4 col-sm-12 mb-2" *ngFor="let l of accueilData.liensSecondaires">
-            <a class="quick-link" style="border-top-color: #0077ff" href="{{l.url}}"><b>{{l.nom}}</b></a>
+            <a class="quick-link quick-link-light" href="{{l.url}}"><b>{{l.nom}}</b></a>
           </div>
         </div>
       </div>
